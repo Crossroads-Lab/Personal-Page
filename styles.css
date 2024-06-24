@@ -1,0 +1,279 @@
+@import url('https://crossroads-lab.github.io/Design-System/css/index.css');
+
+/* Theme */
+:root {
+  --background-color: #B0E7F6;
+  --content-background-color: white;
+  --button-background: #84D2E8;
+  --profile-background: linear-gradient(45deg, #B0E7F6, #C3EBDA);
+  --background-direction: 90deg;
+  --background-offset: calc(0.3 * var(--viewport-width));
+  --background: linear-gradient(var(--background-direction), var(--background-color) var(--background-offset), var(--content-background-color) var(--background-offset));
+}
+
+/* General html elements */
+html, body, * {
+  font-family: var(--font-family-rounded);
+  color: var(--dark);
+}
+
+html, body {
+  background: var(--background);
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+}
+
+main {
+  --main-padding-horizontal: max(50% - 0.5 * var(--width-70-percent), var(--padding));
+  --main-padding-vertical: var(--padding-half);
+  --main-padding-top: calc(var(--safearea-top) + var(--main-padding-vertical));
+  --main-padding-left: calc(var(--safearea-left) + var(--main-padding-horizontal));
+  --main-padding-bottom: calc(var(--safearea-bottom) + var(--main-padding-vertical));
+  --main-padding-right: calc(var(--safearea-right) + var(--main-padding-horizontal));
+  padding: var(--main-padding-top) var(--main-padding-left) var(--main-padding-bottom) var(--main-padding-right);
+}
+
+a {
+  text-decoration: none;
+  -webkit-decoration: none;
+  -webkit-text-decoration: none;
+}
+
+/*************************
+       Card Styles
+**************************/
+#card {
+  flex: 1;
+  background: var(--content-background-color);
+  gap: var(--size-24-36);
+  padding-top: var(--padding-half);
+  --_shadow: -10px 0px 40px #10050122;
+  box-shadow: var(--_shadow);
+  -webkit-box-shadow: var(--_shadow);
+  -moz-box-shadow: var(--_shadow);
+}
+
+#profile {
+  width: var(--size-128-192);
+  height: var(--size-128-192);
+  border-radius: var(--border-radius-round);
+  border: 3px solid var(--content-background-color);
+  background: var(--profile-background);
+}
+
+#name b,
+#name {
+  font-size: var(--size-28-32);
+}
+
+#name b {
+  font-weight: 800;
+}
+
+#tagline {
+  font-size: var(--size-16-18);
+}
+
+#pronouns {
+  font-family: var(--handwriting-font-family);
+  color: var(--gray-3);
+  font-size: var(--size-20-24);
+}
+
+#card nav {
+  gap: 24px;
+}
+
+#card nav .button {
+  width: 48px;
+  height: 48px;
+  background: var(--button-background);
+}
+
+#download {
+  display: none;
+}
+
+#card :not(nav) .linkedin {
+  padding: var(--text-gap) 0;
+  background: var(--purple-pink-diagonal);
+  --_shadow: 0px -4px 20px #10050122;
+  box-shadow: var(--_shadow);
+  -webkit-box-shadow: var(--_shadow);
+  -moz-box-shadow: var(--_shadow);
+}
+
+#card :not(nav) .linkedin span {
+  color: var(--light);
+  font-weight: 500;
+  padding-top: 2px;
+  font-size: var(--size-16-18);
+}
+
+/*************************
+       Info Styles
+**************************/
+#info {
+  flex: 1.5;
+  background: var(--content-background-color);
+  gap: 24px;
+}
+
+#info h1,
+#info h2,
+#info span {
+  padding: 0;
+  margin: 0;
+  line-height: 150%;
+  text-wrap: balance;
+  flex-shrink: 1;
+}
+
+#info h1 {
+  font-size: var(--size-64-80);
+  font-weight: 800;
+  margin: calc(-0.2 * var(--size-64-96)) 0;
+}
+
+#info h2 {
+  font-size: var(--size-20-24);
+  font-weight: 500;
+  margin: calc(-0.2 * var(--size-20-24)) 0;
+}
+
+#info nav .button {
+  text-transform: uppercase;
+  background: var(--button-background);
+  color: var(--content-background-color);
+  font-size: var(--size-12-14) !important;
+  padding-top: calc(var(--button-padding-vertical) + 2px);
+  flex-grow: 1;
+}
+
+#info span {
+  font-size: var(--size-14-16);
+  font-weight: 400;
+}
+
+#experience {
+  gap: calc(0.5 * var(--gap-half));
+  flex-wrap: wrap;
+  cursor: default;
+}
+
+#experience > * {
+  font-size: 12.5px;
+  padding: 10px 16px !important;
+  padding-top: 13px;
+  color: var(--gray-2);
+  background: var(--gray-6);
+  font-weight: 400;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  /* flex-grow: 1; */
+}
+
+/*************************
+    Touchscreen Styles
+**************************/
+@media (hover: hover) and (pointer: fine), (-ms-high-contrast: active), (forced-colors: active) {
+  /* Card */
+  #share {
+    display: none;
+  }
+
+  #download {
+    display: flex;
+  }
+
+  #card :not(nav) .linkedin {
+    transition: var(--transition-time);
+  }
+
+  #card :not(nav) .linkedin:hover {
+    opacity: 0.8;
+  }
+
+  /* Info */
+  #experience > * {
+    cursor: pointer;
+    outline: 1.5px solid transparent;
+    transition: var(--transition-time);
+  }
+
+  #info nav .button:hover,
+  #experience > *:hover {
+    background: none;
+    color: var(--ocean);
+    outline: 1.5px solid var(--_shadow-color);
+    --_shadow-color: var(--button-background);
+    --_shadow-offset: 5px;
+    --_shadow: var(--_shadow-offset) var(--_shadow-offset) var(--_shadow-color);
+    -webkit-box-shadow: var(--_shadow);
+    -moz-box-shadow: var(--_shadow);
+    box-shadow: var(--_shadow);
+  }
+}
+
+/*************************
+     Responsive Styles
+**************************/
+@media only screen and (max-width: 1200px) {
+  /* Theme */
+  :root {
+    --background-direction: 180deg;
+    --background-offset: calc(0.3 * var(--viewport-height));
+  }
+
+  /* Generic html elements */
+  html, body {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    overflow-x: hidden !important;
+  }
+
+  main {
+  padding: 0;
+  gap: var(--gap);
+}
+
+  /* Card */
+  #card {
+    --_shadow: none;
+    width: var(--viewport-width);
+    padding-top: 0;
+    margin-top: max(0.7 * var(--background-offset) - var(--main-padding-top) - var(--border-radius-4x), var(--main-padding-top) + 0.5 * var(--size-128-192));
+    border-top-left-radius: var(--border-radius-4x);
+    border-top-right-radius: var(--border-radius-4x);
+  }
+
+  #profile {
+    margin-top: calc(-0.5 * var(--size-128-192));
+  }
+
+  #card :not(nav):has(.linkedin) {
+    max-height: 0;
+  }
+
+  #card :not(nav) .linkedin {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: calc(48px + var(--safearea-bottom));
+    padding-bottom: calc(var(--text-gap) + var(--safearea-bottom));
+  }
+
+  /* Info */
+  #info {
+    width: var(--viewport-width);
+    padding-bottom: calc(48px + var(--safearea-bottom) + var(--padding));
+    padding-left: var(--main-padding-horizontal);
+    padding-right: var(--main-padding-horizontal);
+  }
+
+  .row.responsive {
+    flex-direction: column;
+  }
+}

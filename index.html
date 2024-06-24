@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>William Brendel, PhD in AI | Product Strategist & Machine Learning Expert</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+    <link href="/styles.css" rel="stylesheet">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  </head>
+  <body class="row responsive center">
+    <main class="row fill responsive center">
+      <!-- CARD -->
+      <div id="card" class="column middle">
+        <div title="Hi, my name is William Brendel, and this is my profile image" id="profile" class="image-container">
+          <img src="https://crossroad-venture-studio.github.io/Design-System/assets/profiles/will.png" alt="Profile image"/>
+        </div>
+        <span title="My name is William Brendel" id="name">
+          <b>William</b> Brendel
+        </span>
+        <span title="My pronouns are He / Him / His" id="pronouns">
+          He / Him / His
+        </span>
+        <svg width="49" height="2" viewBox="0 0 49 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.5 1H48.5" stroke="#828282" stroke-linecap="round"/>
+        </svg>
+        <span title="I am an advisor, strategist and innovator" id="tagline">
+          Advisor &bull; Strategist &bull; Innovator
+        </span>
+        <nav class="row">
+          <a title="Click to go to my LinkedIn page" class="button round" href="https://www.linkedin.com/in/william-brendel" target="_blank">
+            <img width="20px" src="https://crossroad-venture-studio.github.io/Design-System/icons/socials/linkedin-light.svg" alt="LinkedIn icon"/>
+          </a>
+          <a title="Click to book a 30min call with me" class="button round" href="https://calendly.com/william-brendel/30min" target="_blank">
+            <img width="20px" src="https://crossroad-venture-studio.github.io/Design-System/icons/actions/call-filled-light.svg" alt="Call icon"/>
+          </a>
+          <button title="Click to share my website" id="share" class="button round">
+            <img width="20px" src="https://crossroad-venture-studio.github.io/Design-System/icons/actions/share-filled-light.svg" alt="Share icon"/>
+          </button>
+          <a title="Click to download my resume" id="download" class="button round" href="https://drive.google.com/file/d/1-qw4cwJ1QFVux6fVsKS-ZYSJsKztBVNp/view?usp=drive_link" target="_blank">
+            <img width="20px" src="https://crossroad-venture-studio.github.io/Design-System/icons/menu/download-wired-light.svg" alt="Download icon"/>
+          </a>
+        </nav>         
+        <div class="column fill bottom extend">
+          <a title="Click to connect on LinkedIn" class="linkedin row text-gap center middle extend" href="https://www.linkedin.com/in/william-brendel" target="_blank">
+            <span>Let's connect</span>
+            <img width="20px" src="https://crossroad-venture-studio.github.io/Design-System/icons/socials/linkedin-light.svg"/>
+          </a>
+        </div>
+      </div>
+      <!-- INFORMATION -->
+      <div id="info" class="column">
+        <h1 title="Hi! Below is a summary of my resume">
+          Hi,
+        </h1>
+        <h2 title="My name is William Brendel. I am a digital product creator and AI expert.">
+          My name is William Brendel. I am a digital product creator and AI expert.
+        </h2>
+        <nav class="row extend gap-half">
+          <a title="Click to download my resume" class="button round" href="https://drive.google.com/file/d/1-qw4cwJ1QFVux6fVsKS-ZYSJsKztBVNp/view?usp=drive_link" target="_blank">
+            Resume
+          </a>
+          <a title="Click to schedule 30 min with me" class="button round" href="https://calendly.com/william-brendel/30min" target="_blank">
+            Schedule 30 min with me
+          </a>
+        </nav>
+        <span title="In need to grow your business and team, to scale your product strategy, or to use new technologies to keep up with competition, and in front of a fast changing business landscape, you may be indecisive on how to execute. I spent more than a decade helping top tech companies like Google, Amazon, and Snap, shipping products that are used by 100+ millions of users daily. Thinking outside the box, focusing on MVPs, being agile, failing, iterating and learning fast, being user-centric, and leading by example, are how, together, we succeed.">
+          In need to grow your business and team, to scale your product strategy, or to use new technologies to keep up with competition, and in front of a fast changing business landscape, you may be indecisive on how to execute. I spent more than a decade helping top tech companies like Google, Amazon, and Snap, shipping products that are used by 100+ millions of users daily. Thinking outside the box, focusing on MVPs, being agile, failing, iterating and learning fast, being user-centric, and leading by example, are how, together, we succeed.
+        </span>
+        <a title="This is brief summary of my experiences" id="experience" class="row extend" href="https://www.linkedin.com/in/william-brendel" target="_blank">
+          <div title="I have 20+ years Software Development. Click to know more">20+ years Software Development</div>
+          <div title="I have 18+ years Machine Learning. Click to learn more">18+ years Machine Learning</div>
+          <div title="I have 8+ years Management and Product Strategy. Click to view more">8+ years Management and Product Strategy</div>
+          <div title="I am a 2 times founder. Click to know more">2x Founder</div>
+          <div title="I have 30+ patents and publications. Click to see more">30+ patents and publications</div>
+          <div title="I am fluent in English and French. Click for more information">Fluent in English and French</div>
+        </a>
+      </div>
+    </main>
+  </body>
+  <script>
+    let elmt = document.getElementById('share');
+    if (elmt) {
+      if (typeof navigator.share === 'function') {
+        elmt.style.display = 'flex';
+        elmt.addEventListener('click', () => navigator.share({
+          title: 'William Brendel\'s webpage',
+          text: 'View a summary of my professional experience, download my resume and connect on LinkedIn',
+          url: window.location.href || document.URL || 'william-brendel.com'
+        }));
+      } else {
+        elmt.style.display = 'none';
+        elmt = document.getElementById('download');
+        elmt && (elmt.style.display = 'flex');
+      }
+    }
+  </script>
+</html>
