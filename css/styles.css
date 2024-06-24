@@ -1,11 +1,8 @@
-@import url('https://crossroads-lab.github.io/Design-System/css/core/index.css');
+@import url('https://crossroads-lab.github.io/Design-System/css/index.css');
+@import './theme.css';
 
-/* Theme */
+/* Globals */
 :root {
-  --background-color: #B0E7F6;
-  --content-background-color: white;
-  --button-background: #84D2E8;
-  --profile-background: linear-gradient(45deg, #B0E7F6, #C3EBDA);
   --background-direction: 90deg;
   --background-offset: calc(0.3 * var(--viewport-width));
   --background: linear-gradient(var(--background-direction), var(--background-color) var(--background-offset), var(--content-background-color) var(--background-offset));
@@ -30,6 +27,9 @@ main {
   --main-padding-left: calc(var(--safearea-left) + var(--main-padding-horizontal));
   --main-padding-bottom: calc(var(--safearea-bottom) + var(--main-padding-vertical));
   --main-padding-right: calc(var(--safearea-right) + var(--main-padding-horizontal));
+  --main-gap: var(--gap);
+
+  gap: var(--main-gap);
   padding: var(--main-padding-top) var(--main-padding-left) var(--main-padding-bottom) var(--main-padding-right);
 }
 
@@ -75,7 +75,7 @@ a {
 }
 
 #pronouns {
-  font-family: var(--handwriting-font-family);
+  font-family: var(--font-family-handwriting);
   color: var(--gray-3);
   font-size: var(--size-20-24);
 }
@@ -145,8 +145,8 @@ a {
   text-transform: uppercase;
   background: var(--button-background);
   color: var(--content-background-color);
-  font-size: var(--size-12-14) !important;
-  padding-top: calc(var(--button-padding-vertical) + 2px);
+  font-size: var(--size-12-14);
+  padding-top: calc(var(--_padding-vertical) + 2px);
   flex-grow: 1;
 }
 
@@ -163,7 +163,7 @@ a {
 
 #experience > * {
   font-size: 12.5px;
-  padding: 10px 16px !important;
+  padding: 10px 16px;
   padding-top: 13px;
   color: var(--gray-2);
   background: var(--gray-6);
@@ -231,7 +231,7 @@ a {
   }
 
   body {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
   }
 
   main {

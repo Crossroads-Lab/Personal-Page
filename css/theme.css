@@ -1,0 +1,7 @@
+/* Theme */
+:root {
+  --background-color: #B0E7F6;
+  --content-background-color: white;
+  --button-background: #84D2E8;
+  --profile-background: linear-gradient(45deg, #B0E7F6, #C3EBDA);
+}
