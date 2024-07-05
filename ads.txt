@@ -1,0 +1,5 @@
+# < SSP/Exchange Domain > (required), < SellerAccountID > (required), < PaymentsType > (required), < TAGID > (optional)
+# For example: greenadexchange.com, 12345, DIRECT, AEC242
+# See:
+# - https://iabtechlab.com/ads-txt-about/
+# - https://setupad.com/blog/ads-txt-guide-for-publishers/
