@@ -62,22 +62,34 @@ a {
 }
 
 #name b,
+#name strong,
 #name {
   font-size: var(--size-28-32);
 }
 
-#name b {
+#name b,
+#name strong {
   font-weight: 800;
 }
 
 #tagline {
   font-size: var(--size-16-18);
+  padding: 0;
+  margin: 0;
+  list-style-position: none;
+  list-style-type: none;
+}
+
+#tagline li {
+  display: inline;
 }
 
 #pronouns {
   font-family: var(--font-family-handwriting);
   color: var(--gray-3);
   font-size: var(--size-20-24);
+  padding: 0;
+  margin: 0;
 }
 
 #card nav {
@@ -130,9 +142,9 @@ a {
 }
 
 #info h1 {
-  font-size: var(--size-64-80);
+  font-size: var(--size-56-72);
   font-weight: 800;
-  margin: calc(-0.2 * var(--size-64-96)) 0;
+  margin: calc(-0.2 * var(--size-56-72)) 0;
 }
 
 #info h2 {
