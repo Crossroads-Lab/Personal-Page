@@ -157,8 +157,7 @@
       }
 
       .degree,
-      .position,
-      .award {
+      .position {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -166,22 +165,18 @@
         font-weight: 500;
       }
       .degree *,
-      .position *,
-      .award * {
+      .position * {
         font-size: inherit;
       }
-      .degree .title,
-      .award .title {
+      .degree .title {
         font-weight: 300;
       }
       .degree .title,
-      .position .title,
-      .award .title {
+      .position .title {
         flex: 1;
       }
       .degree .sep::before,
-      .position .sep::before,
-      .award .sep::before {
+      .position .sep::before {
         content: '-';
       }
       .degree::before {
@@ -189,9 +184,6 @@
       }
       .position::before {
         content: url("data:image/svg+xml,<svg width='12' height='10.5' viewBox='0 0 8 7' fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M2.44472 0.110557L2.14472 0.710557C2.07823 0.843538 2.17493 1 2.32361 1H2.8C2.91046 1 3 0.910457 3 0.8V0.7C3 0.589543 3.08954 0.5 3.2 0.5H4.8C4.91046 0.5 5 0.589543 5 0.7V0.8C5 0.910457 5.08954 1 5.2 1H5.67639C5.82507 1 5.92177 0.843538 5.85528 0.710557L5.55528 0.110557C5.5214 0.0428005 5.45215 0 5.37639 0H2.62361C2.54785 0 2.4786 0.0428004 2.44472 0.110557Z'/><path fill-rule='evenodd' clip-rule='evenodd' d='M7 1.5C7.55228 1.5 8 1.94772 8 2.5C8 2.5 6.09756 3.72387 4.5 3.96062V3.7C4.5 3.58954 4.41046 3.5 4.3 3.5H3.7C3.58954 3.5 3.5 3.58954 3.5 3.7V3.96062C1.90244 3.72387 0 2.5 0 2.5C0 1.94772 0.447715 1.5 1 1.5H7Z'/><path d='M1 7H7C7.55228 7 8 6.55228 8 6V3C8 3 6.09756 4.22387 4.5 4.46062C4.5 4.46062 4.5 5 4 5C3.5 5 3.5 4.46062 3.5 4.46062C1.90244 4.22387 0 3 0 3V6C0 6.55228 0.447715 7 1 7Z'/></svg>");
-      }
-      .award::before {
-        content: '✓'
       }
 
       li,
@@ -263,14 +255,14 @@
               </svg>
             </div>
             <span title="experience">
-              2x Founder <span style="font-weight: 400;">｜</span> PhD in AI
+              2x Founder
             </span>
-            <!-- <span title="experience">
+            <span title="experience">
               30+ patents and publications in AI
             </span>
             <span title="experience">
               with 1800+ citations
-            </span> -->
+            </span>
           </div>
           <!-- <div class="column spread middle">
             <svg title="Crossroads Venture Studio, Inc." width="100" height="9.5" viewBox="0 0 54 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,15 +305,15 @@
             </svg>
           </div> -->
           <div class="column spread text-gap-two-third">
-            <!-- <span title="experience" class="row width-100-percent">
-              <span class="text-align-right fill">Software Engineering:</span> &emsp;20<span class="description">+ years</span>
-            </span> -->
             <span title="experience" class="row width-100-percent">
-              <span class="text-align-right fill">Machine Learning (ML):</span> &emsp;20<span class="description">+ years</span>
+              <span class="text-align-right fill">Software Engineering:</span> &emsp;20<span class="description">+ years</span>
             </span>
-            <!-- <span title="experience" class="row width-100-percent">
+            <span title="experience" class="row width-100-percent">
+              <span class="text-align-right fill">Machine Learning (ML):</span> &emsp;18<span class="description">+ years</span>
+            </span>
+            <span title="experience" class="row width-100-percent">
               <span class="text-align-right fill">Tech Industry:</span> &emsp;13<span class="description">+ years</span>
-            </span> -->
+            </span>
             <span title="experience" class="row width-100-percent">
               <span class="text-align-right fill">Management and product strategy:</span> &emsp;8<span class="description">+ years</span>
             </span>
@@ -331,18 +323,53 @@
           </div>
         </div>
       </section>
-      <!-- <section>
+      <section>
         <h2 title="Profile">
           Together, we succeed
         </h2>
         <span class="description justify" title="Job description">
           Ready to scale your business, grow your team, or harness new tech in a fast-paced world? It’s easy to feel stuck on how to execute. As a 2x founder, I have been in your shoes. With over a decade of experience at tech giants, I've launched products used by 100M+ daily users. No secret here: success is about execution and discipline. It’s prioritizing MVPs, being agile, embracing failure while iterating quickly. It’s about putting both business and users first. It’s not just thinking outside the box, it’s leading by example. That’s how, together, we succeed.
         </span>
-      </section> -->
+      </section>
       <section>
-        <h2 title="Startup experience">
-          Startup & leadership experience
+        <h2 title="Education">
+          Education
         </h2>
+        <div class="degrees" title="Degrees">
+          <div class="degree" title="Degree">
+            <span class="title" title="Job title"><b>PhD</b> in Computer Science and <b>Artificial Intelligence</b>, Oregon State University, Corvallis, OR</span>
+            <span class="graduation-year" title="Graduation year"> June 2011</span>
+          </div>
+          <div class="degree" title="Degree">
+            <span class="title" title="Job title">Master in Electrical Engineering and Computer Science, CPE Lyon, France</span>
+            <!-- <span class="graduation-year" title="Graduation year"> 2004</span> -->
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 title="Industry experience">
+          Industry experience
+        </h2>
+        <div class="job" title="Job">
+          <span class="company" title="Company name">Inovexus</span>
+          <div class="position" title="Job position">
+            <span class="title" title="Job title">Mentor / Advisor</span>
+            <span class="start-date" title="Job start date">July 2023</span>
+            <span class="sep"></span>
+            <span class="end-date" title="Job end date">Present</span>
+          </div>
+          <span class="description" title="Job description">
+            Giving back to entrepreneurs by sharing my experience both as a Technical and Product Executive:
+            <ul>
+              <li>
+                Currently mentoring 2 startups, <a title="Invio" class="link" href="https://invyo.io/" target="_blank">invyo.io</a> and <a title="Quideos" class="link" href="https://quideos.com/" target="_blank">quideos.com</a>
+              </li>
+              <li>
+                $2M seed funding raised after 9 months in the mentorship program
+              </li>
+            </ul>
+          </span>
+        </div>
         <div class="job" title="Job">
           <span class="company" title="Company name">Crossroads Venture Studio, Inc.</span>
           <div class="position" title="Job position">
@@ -352,7 +379,7 @@
             <span class="end-date" title="Job end date">Present</span>
           </div>
           <span class="description" title="Job description">
-            For each incubated startup: providing product-market fit strategy, product design, and technical execution:
+            Provide the initial team, strategic direction to reach product-market fit, and execution to startup launch:
             <ul>
               <li>
                 8+ projects, including <a title="Gococo" class="link" href="https://gococo.ai" target="_blank">gococo.ai</a> and <a title="Automarketer" class="link" href="https://automarketer.ai" target="_blank">automarketer.ai</a> &mdash; see our portfolio: <a title="Crossroads venture studio" class="link" href="https://crossroadsventurestudio.com" target="_blank">crossroadsventurestudio.com</a>
@@ -372,7 +399,7 @@
             <span class="end-date" title="Job end date">May 2023</span>
           </div>
           <span class="description" title="Job description">
-            AI health-tech startup that helps reduce chronic disease symptoms via AI-generated personalized nutrition:
+            Co-founded a health-tech startup to help people with chronic disease to reduce their symptoms via personalized nutrition:
             <ul>
               <li>
                 Recruited and directed a team of 2-12 engineers, product designers, and UX researchers
@@ -387,9 +414,11 @@
           </span>
         </div>
       </section>
+    </main>
+    <main class="column">
       <section>
-        <h2 title="Industry experience">
-          Industry experience
+        <h2 title="Industry experience continued">
+          Industry experience continued
         </h2>
         <div class="job" title="Job">
           <span class="company" title="Company name">Snap Inc.</span>
@@ -414,6 +443,7 @@
             </ul>
           </span>
         </div>
+
         <div class="job" title="Job">
           <span class="company" title="Company name">Amazon • A9</span>
           <div class="position" title="Job position">
@@ -434,6 +464,7 @@
             </ul>
           </span>
         </div>
+
         <div class="job" title="Job">
           <span class="company" title="Company name">Google • Youtube</span>
           <div class="position" title="Job position">
@@ -455,50 +486,10 @@
           </span>
         </div>
       </section>
-    </main>
-    <main class="column">
       <section>
-        <h2 title="Education">
-          Education & Research
+        <h2 title="Scientific community service">
+          Scientific community service
         </h2>
-        <div class="degrees" title="Degrees">
-          <div class="degree" title="Degree">
-            <span class="title" title="Degree title"><b>PhD</b> in Computer Science and <b>Artificial Intelligence</b>, Oregon State University, Corvallis, OR</span>
-            <span class="graduation-year" title="Graduation year"> June 2011</span>
-          </div>
-          <div class="degree" title="Degree">
-            <span class="title" title="Degree title">Master in Electrical Engineering and Computer Science, CPE Lyon, France</span>
-            <!-- <span class="graduation-year" title="Graduation year"> 2004</span> -->
-          </div>
-          <div class="award" title="Patents, publications, and citations">
-            <span class="title" title="Award title">30+ Patents and publications, with 1800+ citations: <a class="link" title="Google Scholar" href="https://scholar.google.com/citations?user=mR3fVeIAAAAJ" target="_blank">scholar.google.com/citations?user=mR3fVeIAAAAJ</a></span>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h2 title="Volunteering and community service">
-          Volunteering
-        </h2>
-        <div class="job" title="Job">
-          <span class="company" title="Company name">Inovexus</span>
-          <div class="position" title="Job position">
-            <span class="title" title="Job title">Mentor / Advisor</span>
-            <span class="start-date" title="Job start date">July 2023</span>
-            <span class="sep"></span>
-            <span class="end-date" title="Job end date">Present</span>
-          </div>
-          <span class="description" title="Job description">
-            Giving back to entrepreneurs by sharing my experience both as a Technical and Product Executive:
-            <ul>
-              <li>
-                Currently mentoring 2 startups, <a title="Invio" class="link" href="https://invyo.io/" target="_blank">invyo.io</a> and <a title="Quideos" class="link" href="https://quideos.com/" target="_blank">quideos.com</a>
-              </li>
-              <li>
-                $2M seed funding raised after 9 months in the mentorship program
-              </li>
-            </ul>
-          </span>
-        </div>
         <div class="job" title="Volunteer">
           <span class="company" title="Organization name">IEEE/CVF Computer Society Conference on Computer Vision and Pattern Recognition</span>
           <div class="position" title="Job position">
@@ -556,15 +547,6 @@
           <div class="pill">Strong ethic</div>
           <div class="pill">ROI</div>
         </div>
-      </section>
-
-      <section>
-        <h2 title="Profile">
-          Together, we succeed
-        </h2>
-        <span class="description justify" title="Job description">
-          Ready to scale your business, grow your team, or harness new tech in a fast-paced world? It’s easy to feel stuck on how to execute. As a 2x founder, I have been in your shoes. With over a decade of experience at tech giants, I've launched products used by 100M+ daily users. No secret here: success is about execution and discipline. It’s prioritizing MVPs, being agile, embracing failure while iterating quickly. It’s about putting both business and users first. It’s not just thinking outside the box, it’s leading by example. That’s how, together, we succeed.
-        </span>
       </section>
 
       <section title="Scan LinkedIn QR code" class="row fill bottom right text-gap">
