@@ -9,9 +9,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="var(--background-color, #000000)">
 
-    <!-- Links -->
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <!-- Fonts -->
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload fonts asynchronously to improve initial page load -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <!-- Fallback for browsers with JavaScript disabled -->
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+        type="text/css"
+      />
+    </noscript>
+
+    <!-- Favicon -->
     <link href="assets/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- Other links, like styles -->
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+
+    <!-- Page script -->
+    <script src="scripts/index.js" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -51,94 +76,73 @@
         }
       }
     </script>
-    </style>
   </head>
-  <body class="row responsive center">
-    <main class="row fill responsive center" title="William Brendel's webpage">
-      <!-- CARD -->
-      <div id="card" class="column middle" title="Summary of William Brendel's information">
-        <div title="Hi, my name is William Brendel, and this is my profile image" id="profile" class="image-container">
-          <img src="assets/profile.webp" alt="Profile image" loading="lazy"/>
+  <body>
+    <img id="background" src="assets/background.webp"/>
+    <!-- Main content area where chat messages will be displayed -->
+    <main id="content">
+      <div id="welcome">
+        <div>
+          <h2>Hi, I'm <b>William</b> Brendel</h2>
+          <h1>Where should we start?</h1>
+          <span><i>You can click the</i> <b>︙</b> <i>button to access my info,<br/>or simply chat with me</i><br/>⤵</span>
         </div>
-        <span title="My name is William Brendel" id="name">
-          <strong>William</strong> Brendel
-        </span>
-        <p title="My pronouns are He / Him / His" id="pronouns">
-          He / Him / His
-        </p>
-        <svg width="49" height="2" viewBox="0 0 49 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 1H48.5" stroke="#828282" stroke-linecap="round"/>
-        </svg>
-        <ul title="I am an advisor, strategist and innovator" id="tagline">
-          <li>Strategist</li> &bull; <li>Innovator</li> &bull; <li>Pioneer</li>
-        </ul>
-        <nav class="row">
-          <a title="Click to go to my LinkedIn page" class="button round" href="https://www.linkedin.com/in/william-brendel" target="_blank">
-            <img width="20px" loading="lazy" src="https://crossroads-lab.github.io/Design-System/icons/socials/linkedin-light.svg" alt="LinkedIn icon"/>
-          </a>
-          <a title="Click to book a 30min call with me" class="button round" href="https://calendly.com/william-brendel/30min" target="_blank">
-            <img width="20px" loading="lazy" src="https://crossroads-lab.github.io/Design-System/icons/actions/call-filled-light.svg" alt="Call icon"/>
-          </a>
-          <button title="Click to share my website" id="share" class="button round">
-            <img width="20px" loading="lazy" src="https://crossroads-lab.github.io/Design-System/icons/actions/share-filled-light.svg" alt="Share icon"/>
-          </button>
-          <a title="Click to download my resume" id="download" class="button round" href="assets/William Brendel Resume - 2025.pdf" target="_blank">
-            <img width="20px" loading="lazy" src="https://crossroads-lab.github.io/Design-System/icons/menu/download-wired-light.svg" alt="Download icon"/>
-          </a>
-        </nav>         
-        <div class="column fill bottom extend">
-          <a title="Click to connect on LinkedIn" class="linkedin row text-gap center middle extend" href="https://www.linkedin.com/in/william-brendel" target="_blank">
-            <span>Let's connect</span>
-            <img width="20px" loading="lazy" src="https://crossroads-lab.github.io/Design-System/icons/socials/linkedin-light.svg"/>
-          </a>
-        </div>
-      </div>
-      <!-- INFORMATION -->
-      <div id="info" class="column">
-        <h1 title="Hi! Below is a summary of my resume">
-          Hi,
-        </h1>
-        <h2 title="My name is William Brendel. I am a digital product builder and AI expert.">
-          My name is William Brendel. I am a healthtech product builder and AI expert.
-        </h2>
-        <nav class="row extend gap-half">
-          <a title="Click to download my resume" class="button round" href="assets/William Brendel Resume - 2025.pdf" target="_blank">
-            Resume
-          </a>
-          <a title="Click to schedule 30 min with me" class="button round" href="https://calendly.com/william-brendel/30min" target="_blank">
-            Schedule 30 min with me
-          </a>
-        </nav>
-        <span title="I’m a 2x founder and engineering leader with 20+ years in AI and product development, including a decade at Google, Amazon, and Snap. I’ve shipped systems used by 100M+ people and now lead teams building healthtech tools like real-time scribing and autonomous coding. From scaling architecture to achieving SOC 2 + HIPAA readiness, I focus on execution, security, and velocity—without losing sight of people. Great products come from strong teams, fast iteration, and user empathy. That’s how I lead. That’s how I build.">
-          I’m a 2x founder and engineering leader with 20+ years in AI and product development, including a decade at Google, Amazon, and Snap. I’ve shipped systems used by 100M+ people and now lead teams building healthtech tools like real-time scribing and autonomous coding. From scaling architecture to achieving SOC 2 + HIPAA readiness, I focus on execution, security, and velocity—without losing sight of people. Great products come from strong teams, fast iteration, and user empathy. That’s how I lead. That’s how I build.
-        </span>
-        <a title="This is brief summary of my experiences" id="experience" class="row extend" href="https://www.linkedin.com/in/william-brendel" target="_blank">
-          <div title="I am a 2 times founder. Click to know more">2x Founder</div>
-          <div title="I have 20+ years Software Development. Click to know more">20+ years Software Development</div>
-          <div title="I have 20+ years Machine Learning. Click to learn more">20+ years Machine Learning</div>
-          <div title="I have 10+ years Management and Product Strategy. Click to view more">10+ years Management and Product Strategy</div>
-          <div title="I am a mentor and advisor. Click for more information">Advisor — Mentor</div>
-          <div title="I have 30+ patents and publications, with 2100+ citations. Click to see more">30+ patents and publications — 2100+ citations</div>
-          <div title="I am fluent in English and French. Click for more information">Fluent in English and French</div>
-        </a>
       </div>
     </main>
+    <div id="chat-input-container">
+      <!-- Chat options -->
+      <div id="chat-options">
+        <a id="chat-options-linkedin" class="button liquid-glass" title="Click to go to my LinkedIn page" href="https://www.linkedin.com/in/william-brendel" target="_blank">
+          <img src="assets/icons/linkedin.svg"/>
+          View my LinkedIn
+        </a>
+        <button id="chat-options-share-profile" class="liquid-glass">
+          <img src="assets/icons/share.svg"/>
+          Share my profile
+        </button>
+        <a id="chat-options-book-call" class="button liquid-glass" title="Click to book a 30min call with me" href="https://calendly.com/william-brendel/30min" target="_blank">
+          <img src="assets/icons/call.svg"/>
+          Book 30min with me
+        </a>
+        <a id="chat-options-download-resume" class="button liquid-glass" title="Click to download my resume" href="assets/William Brendel Resume - 2025.pdf" target="_blank">
+          <img src="assets/icons/download.svg"/>
+          Download my resume
+        </a>
+      </div>
+      <!-- User input form -->
+      <form id="chat-input-form" class="liquid-glass">
+        <!-- Left-side input actions (attachments, options) -->
+        <div id="chat-input-left-buttons">
+          <button id="options" type="button">
+            <span>︙</span>
+          </button>
+        </div>
+
+        <!-- Main chat textarea -->
+        <textarea
+          id="chat-input"
+          placeholder="Ask me anything…"
+          rows="1"
+        ></textarea>
+
+        <!-- Right-side input actions (send, voice, etc.) -->
+        <div id="chat-input-right-buttons">
+          <button id="send" class="liquid-glass">
+            <img src="assets/icons/arrow-up.svg">
+          </button>
+          <button id="stop" class="liquid-glass">
+            <div></div>
+          </button>
+        </div>
+      </form>
+    </div>
+    <svg style="display: none;">
+      <filter id="liquid-glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <!-- feTurbulence creates a noise pattern for the distortion -->
+        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="0" result="turbulence" />
+        <!-- feDisplacementMap uses the noise pattern to warp the image beneath -->
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
   </body>
-  <script>
-    let elmt = document.getElementById('share');
-    if (elmt) {
-      if (typeof navigator.share === 'function') {
-        elmt.style.display = 'flex';
-        elmt.addEventListener('click', () => navigator.share({
-          title: 'William Brendel\'s webpage',
-          text: 'View a summary of my professional experience, download my resume and connect on LinkedIn',
-          url: window.location.href || document.URL || 'william-brendel.com'
-        }));
-      } else {
-        elmt.style.display = 'none';
-        elmt = document.getElementById('download');
-        elmt && (elmt.style.display = 'flex');
-      }
-    }
-  </script>
 </html>

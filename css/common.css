@@ -1,0 +1,365 @@
+/* 
+ * =====================================================
+ * CSS Custom Properties (Variables)
+ * =====================================================
+ * These variables define the design system and can be
+ * referenced throughout the stylesheet
+ */
+
+:root {
+  /* -------------------- Colors -------------------- */
+  --color: #111;                          /* Main text color (dark gray) */
+  --background: white;                    /* Main background color */
+  --background-sidebar: #F0F0F0;          /* Sidebar background (light gray) */
+  --link-color: #3DA5E0;                  /* Hyperlink color (blue) */
+  --liquid-glass-background: white;   /* chat bar and other buttons (transparent-white) */
+  --liquid-glass-border-color: var(--liquid-glass-background);
+  --send: #FFFFFFEE;
+  --contact-button: #FFF;
+  --blue: #2D9CDB;
+
+  /* -------------------- Dimensions -------------------- */
+  /* Viewn content width */
+  --main-width: max(512px, 40%);
+  --main-max-width: calc(100% - 2 * var(--padding));
+  --chat-form-height: min(max(6.2840dvw, 48px), 56px);
+
+  /* -------------------- Border Radius -------------------- */
+  --border-radius-round: max(100vw, 100vh);  /* Fully rounded (circular) */
+  --border-radius: 8px;                      /* Base border radius */
+  --border-radius-2x: calc(var(--border-radius) * 2);  /* 16px */
+  --border-radius-4x: calc(var(--border-radius) * 4);  /* 32px */
+
+  /* -------------------- Safe Areas -------------------- */
+  /* Handle device notches and system UI (iOS, Android) */
+  --safearea-top: env(safe-area-inset-top, 0px);
+  --safearea-bottom: env(safe-area-inset-bottom, 0px);
+  --safearea-left: env(safe-area-inset-left, 0px);
+  --safearea-right: env(safe-area-inset-right, 0px);
+  --safearea: var(--safearea-top) var(--safearea-left) var(--safearea-bottom) var(--safearea-right);
+
+  /* -------------------- Padding -------------------- */
+  /* Responsive padding: scales between 16px and 24px based on viewport */
+  --padding: min(max(2.4169dvw, 16px), 24px);
+  /* Combined safe area + padding for each side */
+  --safearea-padding-top: calc(var(--safearea-top) + var(--padding));
+  --safearea-padding-left: calc(var(--safearea-left) + var(--padding));
+  --safearea-padding-bottom: calc(var(--safearea-bottom) + var(--padding));
+  --safearea-padding-right: calc(var(--safearea-right) + var(--padding));
+
+  /* -------------------- Animation -------------------- */
+  --transition-time: 300ms;  /* Standard duration for all transitions */
+
+  /* -------------------- Filters -------------------- */
+  --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
+  /* --blur-filter: blur(10px) url(#liquid-glass-distortion); */
+  --blur-filter: blur(10px) saturate(180%);
+}
+
+/* 
+ * =====================================================
+ * Global Styles
+ * =====================================================
+ * Applied to all elements for consistency
+ */
+
+*, *::before, *::after {
+  /* -------------------- Font -------------------- */
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+
+  /* -------------------- Other -------------------- */
+  -webkit-tap-highlight-color: transparent;  /* Remove tap highlight on mobile */
+  box-sizing: border-box;                    /* Include padding/border in element dimensions */
+  overflow-anchor: auto;                     /* Prevent scroll anchoring issues */
+  scroll-behavior: smooth;                   /* Smooth scrolling for anchor links */
+}
+
+/* Allow auto overscroll behavior for elements that explicitly need it */
+*:not(.overscroll-behavior-auto) {
+  overscroll-behavior: none;  /* Prevent bounce scrolling on iOS/Android */
+}
+
+/* Only allow overflow on media elements and body */
+*:not(img):not(video):not(canvas):not(body) {
+  overflow: visible;
+}
+
+/* Remove default focus outline */
+*:focus {
+  outline: none;
+  outline-style: none;
+}
+
+/* 
+ * =====================================================
+ * Hide Scrollbars
+ * =====================================================
+ * Create a cleaner interface by hiding scrollbars while
+ * maintaining scroll functionality
+ */
+
+/* Safari and Chrome */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+/* 
+ * =====================================================
+ * Remove Number Input Arrows/Spinners
+ * =====================================================
+ */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* 
+ * =====================================================
+ * HTML & Body Base Styles
+ * =====================================================
+ */
+
+html,
+body {
+  min-height: -webkit-fill-available;  /* Fix iOS viewport height issue */
+  background: var(--background);
+  color: var(--color);
+  font-weight: 300;                    /* Light font weight for body text */
+  font-size: 14px;                     /* Base font size */
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;         /* Prevent body scroll (container handles it) */
+}
+
+/* Apply transition effect to all child elements for smooth animations */
+body *::before,
+body *::after,
+body * {
+  transition: var(--transition-time);
+}
+
+/* Reset default margins and padding */
+html,
+body,
+table,
+pre {
+  margin: 0;
+  padding: 0;
+}
+
+/* 
+ * =====================================================
+ * Link and Button Reset
+ * =====================================================
+ * Remove default browser styling for consistent appearance
+ */
+
+.link, .link:visited, .link:active, .link:disabled,
+.button, .button:visited, .button:active, .button:disabled,
+button, button:visited, button:active, button:disabled {
+  opacity: 1;
+  /* Remove default link/button appearance */
+  color: inherit;
+  text-decoration: none;
+  -webkit-decoration: none;
+  -webkit-text-decoration: none;
+  /* Enable pointer events */
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* 
+ * =====================================================
+ * Main Content Area
+ * =====================================================
+ */
+
+main {
+  flex-direction: column;
+  flex-grow: 1;                   /* Take up remaining space */
+  max-height: 100dvh;             /* Limit to viewport height */
+}
+
+/* 
+ * =====================================================
+ * Pre-formatted Text
+ * =====================================================
+ * For code blocks and preformatted content
+ */
+
+pre {
+  word-wrap: break-word;          /* Wrap long words */
+  white-space: pre-wrap;          /* Preserve whitespace but wrap text */
+}
+
+/* 
+ * =====================================================
+ * Disable User Selection
+ * =====================================================
+ * Prevent text selection on interactive elements for
+ * better UX on touch devices
+ */
+
+nav,
+img,
+button,
+input[type=submit],
+input[type=button],
+input[type=reset],
+a,
+.user-select-none {
+  -webkit-touch-callout: none;    /* iOS Safari */
+  -webkit-user-select: none;      /* Safari */
+  -khtml-user-select: none;       /* Konqueror HTML */
+  -moz-user-select: none;         /* Old versions of Firefox */
+  -ms-user-select: none;          /* Internet Explorer/Edge */
+  user-select: none;              /* Modern browsers */
+}
+
+/* 
+ * =====================================================
+ * Button Styles
+ * =====================================================
+ * Custom button styling for consistent appearance
+ */
+
+.button,
+button {
+  overflow: hidden;
+  opacity: 1;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  
+  /* -------------------- Alignment -------------------- */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  
+  /* -------------------- Typography -------------------- */
+  font-weight: 500;               /* Medium font weight */
+  font-size: 12px;
+  text-wrap: balance;             /* Balance text across lines */
+  text-decoration: none;
+  -webkit-decoration: none;
+  -webkit-text-decoration: none;
+  
+  /* -------------------- Prevent Text Selection -------------------- */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 
+ * =====================================================
+ * Utility Classes
+ * =====================================================
+ */
+
+/* Hide elements completely (removes from layout) */
+.hidden {
+  display: none !important;
+}
+
+.close-button {
+  --size: 18px;
+  position: relative;
+  min-width: var(--size);
+  max-width: var(--size);
+  max-height: var(--size);
+  aspect-ratio: 1/1;
+  background: rgb(from var(--color) r g b / 0.4);
+  color: var(--background);
+  border-radius: var(--border-radius-round);
+  cursor: pointer;
+}
+
+.close-button::after {
+  position: absolute;
+  --font-size: 16px;
+  top: calc(var(--size) - 0.5 * var(--font-size));
+  left: calc(0.5 * (var(--size) - var(--font-size)));
+  width: var(--font-size);
+  min-width: var(--font-size);
+  max-width: var(--font-size);
+  height: var(--font-size);
+  min-height: var(--font-size);
+  max-height: var(--font-size);
+  text-align: center;
+  vertical-align: center;
+  content: "×";
+  font-size: var(--font-size);
+  font-weight: 400;
+  line-height: 0;
+}
+
+button,
+.button,
+.vertical-trim {
+  /* 1. Set the 'edge' targets for the trim */
+  text-edge: ascender descender;
+  
+  /* 2. Trim the leading (extra space) from both top and bottom */
+  leading-trim: both;
+}
+
+.liquid-glass {
+  background: rgb(from var(--liquid-glass-background) r g b / 0.05) !important;
+  backdrop-filter: var(--blur-filter) !important;
+  -webkit-backdrop-filter: var(--blur-filter) !important;
+  --shadow: inset -8px -8px 20px rgb(from var(--liquid-glass-border-color) r g b / 0.3), /* Bottom-right inner glow */
+    inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.1),      /* Subtle overall rim */
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow);
+  -webkit-box-shadow: var(--shadow);
+}
+
+/*
+ * =====================================================
+ * HOVER EFFECTS (DESKTOP ONLY)
+ * =====================================================
+ * Interactive feedback for devices with hover capability
+ */
+
+@media (hover: hover) and (pointer: fine), (-ms-high-contrast: active), (forced-colors: active) {
+  button {
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.7;
+  }
+
+  .liquid-glass:hover {
+    opacity: 1;
+    background: rgb(from var(--liquid-glass-background) r g b / 0.2) !important;
+  }
+
+  a.liquid-glass:hover,
+  button.liquid-glass:hover {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.8) !important;
+  }
+}
