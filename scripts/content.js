@@ -5,10 +5,10 @@
 // --------------------------------------------------------------------------
 
 export const content = document.getElementById("content");
-export const background = document.getElementById("background");
 
 let userScrolling = false, scrollTop = 0;
 
+// When the user scroll, especially when the chat content is being generated.
 content.addEventListener("scroll", () => {
   const totalHeight = content.scrollHeight;       // Total content height
   const scrolledFromTop = content.scrollTop;      // Pixels hidden at top
@@ -28,6 +28,7 @@ content.addEventListener("scroll", () => {
   scrollTop = scrolledFromTop;
 });
 
+// When the chat content changes.
 export const onContentchange = () => {
   const length = content.childNodes.length;
   if (length) {
@@ -48,12 +49,12 @@ export const onContentchange = () => {
     // Get the content inside size, and its percentage.
     const height = end - start, threshold = content.offsetHeight * 0.4;
     const windowWidth = Math.max(window.innerWidth || 0, document.documentElement.clientWidth || 0);
-    console.log(window.innerWidth - 668);
+ 
+    // Blur background image if needed.
     if (height > threshold || (windowWidth < 1180 && width > Math.min(window.innerWidth - 500, 500))) {
-      // Blur background image.
-      background.classList.add("blured");
+      document.body.setAttribute("blured", "");
     } else {
-      background.classList.remove("blured");
+      document.body.removeAttribute("blured");
     }
 
     // Smoothly scroll to the bottom
@@ -64,6 +65,7 @@ export const onContentchange = () => {
   }
 }
 
+// Progressive text display.
 export const displayTextContent = (text, container = content, delay) => {
   let i = 0, l = text.length, timeoutId;
   userScrolling = false, scrollTop = 0;

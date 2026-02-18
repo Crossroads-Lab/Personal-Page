@@ -7,7 +7,13 @@
     <!-- Default meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="var(--background-color, #000000)">
+    <!-- Apple: Transparent Mode notch color -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Android/Chrome: Dark Mode notch color -->
+    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+    <!-- Android/Chrome: Light Mode notch color -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
     <!-- Fonts -->
     <!-- Preconnect to Google Fonts for faster loading -->
@@ -78,14 +84,13 @@
     </script>
   </head>
   <body>
-    <img id="background" src="assets/background.webp"/>
     <!-- Main content area where chat messages will be displayed -->
     <main id="content">
       <div id="welcome">
         <div>
           <h2>Hi, I'm <b>William</b> Brendel</h2>
           <h1>Where should we start?</h1>
-          <span><i>You can click the</i> <b>︙</b> <i>button to access my info,<br/>or simply chat with me</i><br/>⤵</span>
+          <span><i>You can click the</i> <b>︙</b> <i>button to access my info,<br/>or simply chat with me</i><br/>↴</span>
         </div>
       </div>
     </main>

@@ -1,0 +1,42 @@
+<head>
+  <!-- 1. CRITICAL: Ensure no other meta tags conflict -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <style>
+    /* 2. Remove all root backgrounds to prevent 'locking' the notch */
+    html, body {
+      background: transparent !important;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* 3. The Layered Background Trick */
+    #background-bleed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* Forces Safari to treat this as a single background context */
+      background: 
+        linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), 
+        url("assets/background.webp") no-repeat right 70% / cover scroll;
+      z-index: -10;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      /* Only the text/buttons respect the notch */
+      padding-top: env(safe-area-inset-top);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="background-bleed"></div>
+  <main>Your content here.</main>
+</body>

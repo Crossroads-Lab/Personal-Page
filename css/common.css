@@ -18,12 +18,6 @@
   --contact-button: #FFF;
   --blue: #2D9CDB;
 
-  /* -------------------- Dimensions -------------------- */
-  /* Viewn content width */
-  --main-width: max(512px, 40%);
-  --main-max-width: calc(100% - 2 * var(--padding));
-  --chat-form-height: min(max(6.2840dvw, 48px), 56px);
-
   /* -------------------- Border Radius -------------------- */
   --border-radius-round: max(100vw, 100vh);  /* Fully rounded (circular) */
   --border-radius: 8px;                      /* Base border radius */
@@ -40,12 +34,20 @@
 
   /* -------------------- Padding -------------------- */
   /* Responsive padding: scales between 16px and 24px based on viewport */
+  /* --padding: min(max(2.4169dvw, 16px), 24px); */
   --padding: min(max(2.4169dvw, 16px), 24px);
   /* Combined safe area + padding for each side */
   --safearea-padding-top: calc(var(--safearea-top) + var(--padding));
   --safearea-padding-left: calc(var(--safearea-left) + var(--padding));
   --safearea-padding-bottom: calc(var(--safearea-bottom) + var(--padding));
   --safearea-padding-right: calc(var(--safearea-right) + var(--padding));
+  --safearea-padding: var(--safearea-padding-top) var(--safearea-padding-left) var(--safearea-padding-bottom) var(--safearea-padding-right);
+
+  /* -------------------- Dimensions -------------------- */
+  /* Viewn content width */
+  --main-width: max(512px, 40%);
+  --main-max-width: calc(100dvw - 2 * var(--padding));
+  --chat-form-height: min(max(6.2840dvw, 48px), 56px);
 
   /* -------------------- Animation -------------------- */
   --transition-time: 300ms;  /* Standard duration for all transitions */
@@ -138,14 +140,16 @@ input[type=number] {
 
 html,
 body {
+  width: 100dvw;
+  height: 100dvh;
+}
+
+body {
   min-height: -webkit-fill-available;  /* Fix iOS viewport height issue */
   background: var(--background);
   color: var(--color);
   font-weight: 300;                    /* Light font weight for body text */
   font-size: 14px;                     /* Base font size */
-  width: 100%;
-  height: 100%;
-  overflow: hidden !important;         /* Prevent body scroll (container handles it) */
 }
 
 /* Apply transition effect to all child elements for smooth animations */
@@ -162,6 +166,7 @@ table,
 pre {
   margin: 0;
   padding: 0;
+  border: 0;
 }
 
 /* 
@@ -327,12 +332,15 @@ button,
 }
 
 .liquid-glass {
-  background: rgb(from var(--liquid-glass-background) r g b / 0.05) !important;
+  background: rgb(from var(--liquid-glass-background) r g b / 0.05);
   backdrop-filter: var(--blur-filter) !important;
   -webkit-backdrop-filter: var(--blur-filter) !important;
-  --shadow: inset -8px -8px 20px rgb(from var(--liquid-glass-border-color) r g b / 0.3), /* Bottom-right inner glow */
-    inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.1),      /* Subtle overall rim */
-    0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow1: inset -8px -8px 20px rgb(from var(--liquid-glass-border-color) r g b / 0.3); /* Bottom-right inner glow */
+  --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.1);      /* Subtle overall rim */
+  --shadow3: 0 2px 8px rgba(0, 0, 0, 0.05);                                             /* Subtle shadow */
+  --shadow: var(--shadow1),
+    var(--shadow2),
+    var(--shadow3);
   box-shadow: var(--shadow);
   -webkit-box-shadow: var(--shadow);
 }
@@ -355,11 +363,11 @@ button,
 
   .liquid-glass:hover {
     opacity: 1;
-    background: rgb(from var(--liquid-glass-background) r g b / 0.2) !important;
+    background: rgb(from var(--liquid-glass-background) r g b / 0.2);
   }
 
   a.liquid-glass:hover,
   button.liquid-glass:hover {
-    background: rgb(from var(--liquid-glass-background) r g b / 0.8) !important;
+    background: rgb(from var(--liquid-glass-background) r g b / 0.8);
   }
 }

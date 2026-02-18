@@ -1,0 +1,235 @@
+/* Import base styles and variables from common.css */
+@import "./common.css";
+
+/* 
+ * =====================================================
+ * USER CHAT INPUT
+ * =====================================================
+ * Where the user input the query
+ */
+
+#chat-input-container {
+  position: relative;
+  width: var(--main-width);
+  max-width: var(--main-max-width);
+  min-height: var(--chat-form-height);
+  z-index: 999;
+}
+
+#chat-input-form {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto;
+
+  border-radius: calc(0.5 * var(--chat-form-height) + 4px);
+  padding: 8px;
+  z-index: 999;
+}
+
+#chat-input-form button > img {
+  filter: var(--icon-filter);
+}
+
+#chat-input-left-buttons {
+  display: flex;
+  align-items: center;
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#chat-input-right-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#chat-input-left-buttons,
+#chat-input-right-buttons {
+  min-width: calc(0.125 * var(--chat-form-height));
+}
+
+#chat-input-form.multiline #chat-input-left-buttons,
+#chat-input-form.multiline #chat-input-right-buttons {
+  grid-row: 3;
+}
+
+#chat-input {
+  /* Appearance */
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  max-height: 30dvh;
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: inherit;
+  background: none;
+  outline: none;
+  text-decoration: none;
+  -webkit-decoration: none;
+  -webkit-text-decoration: none;
+  box-shadow: none;         /* Removes internal embossed shadow */
+
+  /* Pointer event */
+  pointer-events: auto;
+  cursor: text;
+
+  /* Annimation */
+  transition: var(--transition-time);
+
+  /* Spacing */
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+
+  /* Typography */
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  
+  /* Vertical alignment */
+  align-self: center;
+}
+
+#chat-input::placeholder {
+  color: inherit;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+#chat-input-form.multiline #chat-input {
+  grid-column: -1 / 1;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+#stop,
+#options,
+#send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--chat-form-height) - 16px);
+  aspect-ratio: 1/1;
+  border-radius: var(--border-radius-round);
+}
+
+#options {
+  font-size: 16px;
+}
+
+body:not([thinking]) #stop {
+  display: none;
+}
+
+body[thinking] #chat-input,
+body[thinking] #options {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+body[thinking] #send {
+  display: none;
+}
+
+#stop > div {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--color);
+}
+
+#options {
+  background: none;
+}
+
+#chat-input-form[empty] #send {
+  opacity: 0.8;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+#chat-input-form[empty] #send > * {
+  opacity: 0.6;
+}
+
+#chat-options {
+  position: absolute;
+  bottom: calc(var(--chat-form-height) + 8px);
+  left: calc(8px + 0.5 * (var(--chat-form-height) - 56px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#chat-options a {
+  width: 100%;
+}
+
+#chat-options a,
+#chat-options a:visited,
+#chat-options a:active,
+#chat-options a:link {
+  color: var(--color);
+}
+
+#chat-options a,
+#chat-options button {
+  justify-content: flex-start;
+  border-radius: var(--border-radius-round);
+  padding: 12px;
+  gap: 16px;
+}
+
+#chat-input-container:not([options-on]) #chat-options {
+  pointer-events: none;
+  gap: 6px;
+  bottom: calc(var(--chat-form-height) + 6px);
+}
+
+#chat-input-container:not([options-on]) #chat-options * {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#chat-input-container:not([options-on]) #chat-input-form,
+body:has(#chat-input-container:not([options-on])) {
+  pointer-events: none;
+}
+
+/*
+ * =====================================================
+ * HOVER EFFECTS (DESKTOP ONLY)
+ * =====================================================
+ * Interactive feedback for devices with hover capability
+ */
+
+@media (hover: hover) and (pointer: fine), (-ms-high-contrast: active), (forced-colors: active) {
+  #options:hover {
+    opacity: 1;
+  }
+
+  #options:hover > * {
+    margin-bottom: 4px;
+  }
+
+  #chat-input-container[options-on] #options:hover > * {
+    margin-bottom: -2px;
+  }
+}
+
+/* 
+ * =====================================================
+ * MOBILE RESPONSIVE LAYOUT
+ * =====================================================
+ * Layout changes for screens 740px and smaller
+ */
+@media only screen and (max-width: 512px) {
+  #chat-input-form.liquid-glass {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+}
