@@ -8,7 +8,7 @@
 .thinking-loader b {
   font-size: 24px !important;
   animation: thinking-loader-pulse 1.5s infinite ease-in-out;
-  padding-bottom: 4px;
+  align-self: center;
 }
 
 @keyframes thinking-loader-pulse {
