@@ -123,6 +123,7 @@
 
 #options::before {
   content: "︙";
+  color: var(--color) !important;
 }
 
 #chat-input-container[options-on] #options::before {
