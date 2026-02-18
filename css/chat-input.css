@@ -126,7 +126,6 @@
 }
 
 #chat-input-container[menu-visible] #chat-menu-button::before {
-  /* font-size: 13px; */
   transform: rotate(90deg);
 }
 
