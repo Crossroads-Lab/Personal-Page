@@ -42,9 +42,9 @@ main::after {
 }
 
 #welcome {
-  --h1-size: min(max(3.3837vw, 24px), 32px);
+  --h1-size: min(max(3.6254vw, 28px), 32px);
   --h2-size: min(max(2.2961vw, 18px), 20px);
-  --span-size: min(max(1.6918vw, 12px), 16px);
+  --span-size: min(max(1.8127vw, 14px), 16px);
   display: flex;
   flex-direction: column;
   width: 100%;
