@@ -1,14 +1,15 @@
 .thinking-loader {
   display: flex;
   align-items: center;
+  justify-content: center;
   vertical-align: middle;
   gap: 3px;
 }
 
 .thinking-loader b {
   font-size: 24px !important;
+  margin-bottom: 3.5px;
   animation: thinking-loader-pulse 1.5s infinite ease-in-out;
-  align-self: center;
 }
 
 @keyframes thinking-loader-pulse {
