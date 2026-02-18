@@ -188,6 +188,7 @@ body[thinking] #send {
   justify-content: space-between;
   padding: 8px 12px;
   font-size: 12px;
+  font-weight: 400;
   gap: 24px;
 }
 
