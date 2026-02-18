@@ -18,9 +18,10 @@ form.onclick =
   event => event.stopPropagation();
 
 // Interrupt thinking.
-const stopThinking = reset => {
+const stopThinking = () => {
   document.body.removeAttribute("thinking");
   content.innerHTML = "";
+  typeof stopDisplay === "function" && stopDisplay();
 }
 
 // Start thinking.
@@ -122,7 +123,7 @@ input.addEventListener("keydown", event => {
 // --------------------------------------------------------------------------
 // Form submission handler
 // --------------------------------------------------------------------------
-
+let stopDisplay;
 form.addEventListener("submit", event => {
   event.preventDefault();
 
@@ -143,7 +144,7 @@ form.addEventListener("submit", event => {
       // Fill content.
       const dummyText = `When I was a PM at Snap, one of my engineers wanted to ship a “beauty score” based group AR filter. You’d take a selfie with your friends and it would put a crown on the most beautiful person in the shot. The tech was already built. I raised concerns due to risks for teens. Instead of blocking, I brought it to design for feedback, and later we repurpose the tech for ad targeting instead. We avoided a PR crisis and my engineer got promoted along the way.`;
       
-      displayTextContent(
+      stopDisplay = displayTextContent(
         dummyText,
         content.appendChild(document.createElement("span"))
       );
