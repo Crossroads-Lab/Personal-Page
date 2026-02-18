@@ -333,8 +333,8 @@ button,
 
 .liquid-glass {
   background: rgb(from var(--liquid-glass-background) r g b / 0.05);
-  backdrop-filter: var(--blur-filter) !important;
-  -webkit-backdrop-filter: var(--blur-filter) !important;
+  backdrop-filter: var(--blur-filter);
+  -webkit-backdrop-filter: var(--blur-filter);
   --shadow1: inset -8px -8px 20px rgb(from var(--liquid-glass-border-color) r g b / 0.3); /* Bottom-right inner glow */
   --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.1);      /* Subtle overall rim */
   --shadow3: 0 2px 8px rgba(0, 0, 0, 0.05);                                             /* Subtle shadow */
@@ -367,7 +367,12 @@ button,
   }
 
   a.liquid-glass:hover,
-  button.liquid-glass:hover {
+  button.liquid-glass:hover,
+  .button.liquid-glass:hover,
+  .liquid-glass > a:hover,
+  .liquid-glass > button:hover,
+  .liquid-glass > .button:hover {
+    opacity: 1;
     background: rgb(from var(--liquid-glass-background) r g b / 0.8);
   }
 }

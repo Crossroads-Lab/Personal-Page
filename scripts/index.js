@@ -1,1 +1,1 @@
-import "./input-chat-form.js";
+import "./chat-input-form.js";

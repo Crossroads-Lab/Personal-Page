@@ -1,5 +1,6 @@
 /* Import base styles and variables from common.css */
 @import "./common.css";
+@import "./thinking-loader.css";
 
 /* 
  * =====================================================
@@ -91,34 +92,6 @@ main::after {
 #welcome h2 {
   font-weight: 200;
   font-size: var(--h2-size);
-}
-
-.pulse {
-  display: flex;
-  align-items: center;
-  vertical-align: middle;
-  gap: 3px;
-}
-
-.pulse b {
-  font-size: 24px !important;
-  animation: pulse 1.5s infinite ease-in-out;
-  padding-bottom: 3px;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
 }
 
 /* 

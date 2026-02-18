@@ -7,7 +7,6 @@
  * =====================================================
  * Where the user input the query
  */
-
 #chat-input-container {
   position: relative;
   width: var(--main-width);
@@ -106,7 +105,7 @@
 }
 
 #stop,
-#options,
+#chat-menu-button,
 #send {
   display: flex;
   align-items: center;
@@ -116,22 +115,19 @@
   border-radius: var(--border-radius-round);
 }
 
-#options {
+#chat-menu-button {
   font-size: 16px;
   background: none;
 }
 
-#options::before {
+#chat-menu-button::before {
   content: "︙";
   color: var(--color) !important;
 }
 
-#chat-input-container[options-on] #options::before {
-  content: "✕";
-  transition: none !important;
-  font-weight: 500;
+#chat-input-container[menu-visible] #chat-menu-button::before {
   font-size: 13px;
-  margin-bottom: 0;
+  transform: rotate(90deg);
 }
 
 body:not([thinking]) #stop {
@@ -139,7 +135,7 @@ body:not([thinking]) #stop {
 }
 
 body[thinking] #chat-input,
-body[thinking] #options {
+body[thinking] #chat-menu-button {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -166,47 +162,61 @@ body[thinking] #send {
   opacity: 0.6;
 }
 
-#chat-options {
+#chat-menu {
   position: absolute;
   bottom: calc(var(--chat-form-height) + 8px);
   left: calc(8px + 0.5 * (var(--chat-form-height) - 56px));
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
-#chat-options a {
+#chat-menu a {
   width: 100%;
 }
 
-#chat-options a,
-#chat-options a:visited,
-#chat-options a:active,
-#chat-options a:link {
+#chat-menu a,
+#chat-menu a:visited,
+#chat-menu a:active,
+#chat-menu a:link {
   color: var(--color);
 }
 
-#chat-options a,
-#chat-options button {
-  justify-content: flex-start;
-  border-radius: var(--border-radius-round);
-  padding: 12px;
-  gap: 16px;
+#chat-menu a,
+#chat-menu button {
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  gap: 24px;
 }
 
-#chat-input-container:not([options-on]) #chat-options {
+#chat-menu a > img,
+#chat-menu button  > img {
+  height: 16px;
+  aspect-ratio: 1 / 1;
+}
+
+#chat-menu > :not(:first-child) {
+  --border-top-color: #FFFFFF55;
+  border-top: 1px solid var(--border-top-color);
+}
+
+#chat-input-container:not([menu-visible]) #chat-menu {
   pointer-events: none;
-  gap: 6px;
-  bottom: calc(var(--chat-form-height) + 6px);
+  transform: scale(0.8);
+  transform-origin: left bottom;
+  visibility: hidden;
+  opacity: 0;
 }
 
-#chat-input-container:not([options-on]) #chat-options * {
+#chat-input-container:not([menu-visible]) #chat-menu * {
   opacity: 0;
   pointer-events: none;
 }
 
-#chat-input-container:not([options-on]) #chat-input-form,
-body:has(#chat-input-container:not([options-on])) {
+#chat-input-container:not([menu-visible]) #chat-input-form,
+body:has(#chat-input-container:not([menu-visible])) {
   pointer-events: none;
 }
 
@@ -216,13 +226,22 @@ body:has(#chat-input-container:not([options-on])) {
  * =====================================================
  * Interactive feedback for devices with hover capability
  */
-
 @media (hover: hover) and (pointer: fine), (-ms-high-contrast: active), (forced-colors: active) {
-  #options:hover {
+  #chat-menu-button:hover {
     opacity: 1;
   }
 
-  #options:hover::before {
+  #chat-menu > a,
+  #chat-menu > button {
+    opacity: 0.8;
+  }
+
+  #chat-menu > a:hover,
+  #chat-menu > button:hover {
+    opacity: 1;
+  }
+
+  #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
     margin-bottom: 4px;
   }
 }
@@ -237,5 +256,12 @@ body:has(#chat-input-container:not([options-on])) {
   #chat-input-form.liquid-glass {
     background: rgb(from var(--liquid-glass-background) r g b / 0.5);
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+
+  #chat-menu.liquid-glass {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+  }
+  #chat-menu > :not(:first-child) {
+    --border-top-color: #FFFFFF33;
   }
 }

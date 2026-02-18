@@ -1,0 +1,27 @@
+.thinking-loader {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 3px;
+}
+
+.thinking-loader b {
+  font-size: 24px !important;
+  animation: thinking-loader-pulse 1.5s infinite ease-in-out;
+  padding-bottom: 4px;
+}
+
+@keyframes thinking-loader-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+}

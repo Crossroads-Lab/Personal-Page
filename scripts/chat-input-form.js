@@ -1,6 +1,7 @@
 "use strict"
 
 import { content, displayTextContent } from "./content.js";
+import { createThinkingNode } from "./createThinkingNode.js";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -9,27 +10,28 @@ import { content, displayTextContent } from "./content.js";
 const input = document.getElementById("chat-input");
 const form = document.getElementById("chat-input-form");
 const chatContainer = document.getElementById("chat-input-container");
-const optionsButton = document.getElementById("options");
+const menuButton = document.getElementById("chat-menu-button");
 const leftActions = document.getElementById("chat-input-left-buttons");
 const rightActions = document.getElementById("chat-input-right-buttons");
-const share = document.getElementById("chat-options-share-profile");
+const share = document.getElementById("chat-menu-share-profile");
 
 form.onclick =
   event => event.stopPropagation();
 
 // Interrupt thinking.
-const stopThinking = () => {
-  document.body.removeAttribute("thinking");
-  content.innerHTML = "";
-  typeof stopDisplay === "function" && stopDisplay();
-}
+const stopThinking = () => (
+  document.body.removeAttribute("thinking"),
+  content.innerHTML = "",
+  typeof stopDisplay === "function" && stopDisplay()
+);
 
 // Start thinking.
-const startThinking = () => {
+const startThinking = text => (
   // Set the thinking state.
-  document.body.setAttribute("thinking", "");
-  content.innerHTML = "<span class=\"pulse\"><b>●</b> Thinking…</span>";
-}
+  document.body.setAttribute("thinking", ""),
+  content.innerHTML = "",
+  content.appendChild(createThinkingNode(text))
+);
 
 // Check if thinking.
 const isThinking = () => document.body.hasAttribute("thinking");
@@ -47,16 +49,16 @@ document.getElementById("stop").onclick = event => {
 }
 
 // Options toggle.
-optionsButton.onclick = event => {
+menuButton.onclick = event => {
   event.stopPropagation();
-  chatContainer.hasAttribute("options-on", "") ?
-    chatContainer.removeAttribute("options-on")
-    : chatContainer.setAttribute("options-on", "");
+  chatContainer.hasAttribute("menu-visible", "") ?
+    chatContainer.removeAttribute("menu-visible")
+    : chatContainer.setAttribute("menu-visible", "");
 }
 
 document.body.onclick = 
 form.onclick = () => {
-  chatContainer.removeAttribute("options-on");
+  chatContainer.removeAttribute("menu-visible");
 }
 
 // Options buttons.
