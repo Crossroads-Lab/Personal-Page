@@ -129,6 +129,7 @@
 #chat-input-container[options-on] #options::before {
   content: "✕";
   transition: none !important;
+  font-weight: 500;
   font-size: 12px;
   margin-bottom: 0;
 }
