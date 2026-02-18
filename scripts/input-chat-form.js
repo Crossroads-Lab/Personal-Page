@@ -31,6 +31,9 @@ const startThinking = () => {
   content.innerHTML = "<span class=\"pulse\"><b>●</b> Thinking…</span>";
 }
 
+// Check if thinking.
+const isThinking = () => document.body.hasAttribute("thinking");
+
 // Stop current thinking.
 document.getElementById("stop").onclick = () => {
   stopThinking();
@@ -137,6 +140,8 @@ form.addEventListener("submit", event => {
     setTimeout(() => {
       // Reset form.
       resetForm();
+
+      if (!isThinking()) return;
 
       // Stop thinking.
       stopThinking();
