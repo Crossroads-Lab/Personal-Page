@@ -66,18 +66,20 @@ export const onContentchange = () => {
 }
 
 // Progressive text display.
-export const displayTextContent = (text, container = content, delay) => {
+export const displayTextContent = (text, done, container = content, delay) => {
   let i = 0, l = text.length, timeoutId;
   userScrolling = false, scrollTop = 0;
   (delay === undefined || delay === null) && (
-    delay = Math.round(Math.max(200 - text.length, 0) * 0.20 + 5)
+    delay = Math.round(Math.max(200 - text.length, 0) * 0.15 + 5)
   );
   const breakTimeout = () => clearTimeout(timeoutId);
   const f = () => {
     container.innerHTML += text.charAt(i);
     requestAnimationFrame(() => (
       onContentchange(),
-      ++i < l && (timeoutId = setTimeout(f, delay))
+      ++i < l && (timeoutId = setTimeout(f, delay)) || (
+        typeof done === "function" && done()
+      )
     ));
   }
   f();

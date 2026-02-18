@@ -39,7 +39,11 @@ document.getElementById("stop").onclick = event => {
   event.stopPropagation();
 
   stopThinking();
-  // More action to be defined below...
+  stopDisplay = displayTextContent(
+    "If there's anything else you want to know, ask away!",
+    endDisplay,
+    content.appendChild(document.createElement("span"))
+  );
 }
 
 // Options toggle.
@@ -128,7 +132,7 @@ input.addEventListener("keydown", event => {
 // --------------------------------------------------------------------------
 // Form submission handler
 // --------------------------------------------------------------------------
-let stopDisplay;
+let stopDisplay, endDisplay = () => stopDisplay = null;
 form.addEventListener("submit", event => {
   event.preventDefault();
 
@@ -153,6 +157,7 @@ form.addEventListener("submit", event => {
       
       stopDisplay = displayTextContent(
         dummyText,
+        endDisplay,
         content.appendChild(document.createElement("span"))
       );
       
