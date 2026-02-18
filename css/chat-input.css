@@ -49,8 +49,8 @@
   min-width: calc(0.125 * var(--chat-form-height));
 }
 
-#chat-input-form.multiline #chat-input-left-buttons,
-#chat-input-form.multiline #chat-input-right-buttons {
+body:not([thinking]) #chat-input-form.multiline #chat-input-left-buttons,
+body:not([thinking]) #chat-input-form.multiline #chat-input-right-buttons {
   grid-row: 3;
 }
 
@@ -98,7 +98,7 @@
   opacity: 0.7;
 }
 
-#chat-input-form.multiline #chat-input {
+body:not([thinking]) #chat-input-form.multiline #chat-input {
   grid-column: -1 / 1;
   margin-bottom: 8px;
   margin-top: 0;
