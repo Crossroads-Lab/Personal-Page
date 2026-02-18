@@ -118,6 +118,18 @@
 
 #options {
   font-size: 16px;
+  background: none;
+}
+
+#options::before {
+  content: "︙";
+}
+
+#chat-input-container[options-on] #options::before {
+  content: "✕";
+  transition: none !important;
+  font-size: 12px;
+  margin-bottom: 0;
 }
 
 body:not([thinking]) #stop {
@@ -140,10 +152,6 @@ body[thinking] #send {
   height: 10px;
   border-radius: 2px;
   background: var(--color);
-}
-
-#options {
-  background: none;
 }
 
 #chat-input-form[empty] #send {
@@ -212,12 +220,8 @@ body:has(#chat-input-container:not([options-on])) {
     opacity: 1;
   }
 
-  #options:hover > * {
+  #options:hover::before {
     margin-bottom: 4px;
-  }
-
-  #chat-input-container[options-on] #options:hover > * {
-    margin-bottom: -2px;
   }
 }
 
