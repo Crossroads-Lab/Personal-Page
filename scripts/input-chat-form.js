@@ -35,7 +35,9 @@ const startThinking = () => {
 const isThinking = () => document.body.hasAttribute("thinking");
 
 // Stop current thinking.
-document.getElementById("stop").onclick = () => {
+document.getElementById("stop").onclick = event => {
+  event.stopPropagation();
+
   stopThinking();
   // More action to be defined below...
 }
