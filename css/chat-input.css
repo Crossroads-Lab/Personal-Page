@@ -75,9 +75,6 @@ body:not([thinking]) #chat-input-form.multiline #chat-input-right-buttons {
   pointer-events: auto;
   cursor: text;
 
-  /* Annimation */
-  transition: var(--transition-time);
-
   /* Spacing */
   margin: 0;
   padding: 0 8px;

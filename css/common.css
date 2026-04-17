@@ -153,9 +153,9 @@ body {
 }
 
 /* Apply transition effect to all child elements for smooth animations */
-body *::before,
-body *::after,
-body * {
+body:not([loading]) *::before,
+body:not([loading]) *::after,
+body:not([loading]) * {
   transition: var(--transition-time);
 }
 
