@@ -1,0 +1,64 @@
+"use strict";
+
+/**
+ * Boot-time resource loading + a single `ask()` entry point, shared by the
+ * HTTP server and the CLI.
+ *
+ * Everything heavy — the ONNX embedding model, the VectorStore, the
+ * SectionResolver, the answer prompt — loads once per process and stays
+ * resident. Nothing here is per-request.
+ */
+
+require("../llms/src/xenova/env");
+
+const fs = require("fs").promises;
+
+const CONFIG          = require("../config");
+const VectorStore     = require("../llms/src/VectorStore");
+const SectionResolver = require("../llms/src/actions/query/SectionResolver");
+const buildAnalyze    = require("../llms/src/xenova/buildAnalyzeQuery");
+const runQuery        = require("../llms/src/actions/query");
+const prewarm         = require("../llms/src/xenova/prewarm");
+const claudeRun       = require("../llms/src/claude");
+
+let enginePromise;
+
+const build = async () => {
+  const started = Date.now();
+
+  // Only the feature-extraction model. See CONFIG.PREWARM.
+  await prewarm(CONFIG.PREWARM);
+
+  const [store, resolver, answerPrompt] = await Promise.all([
+    VectorStore.create(CONFIG.DATASET),
+    SectionResolver.create(CONFIG.MARKDOWNS),
+    fs.readFile(CONFIG.ANSWER_PROMPT, "utf8"),
+  ]);
+
+  // Mode 1 with domain anchors, NLI disabled. See CONFIG.CLASSIFIER.
+  const analyzeQuery = await buildAnalyze({ store, ...CONFIG.CLASSIFIER });
+
+  const boot = ((Date.now() - started) / 1000).toFixed(1);
+  console.log(`Engine ready in ${boot}s — ${store.length} documents, ${store.vecDim} dimensions.`);
+
+  const ask = (rawQuery) => runQuery({
+    rawQuery,
+    store,
+    resolver,
+    analyzeQuery,
+    runLLM:           claudeRun,
+    prompts:          { answer: answerPrompt },
+    llmConfig:        CONFIG.HAIKU45,
+    greetingTemplate: CONFIG.GREETING,
+    fallbackAnswer:   CONFIG.FALLBACK,
+  });
+
+  return { ask, store, resolver, analyzeQuery };
+};
+
+/** Idempotent — the first call builds, every later call returns the same engine. */
+const getEngine = () => enginePromise || (enginePromise = build());
+
+module.exports = Object.freeze(Object.defineProperty(getEngine, "getEngine", {
+  value: getEngine,
+}));

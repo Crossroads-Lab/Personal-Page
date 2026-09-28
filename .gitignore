@@ -60,3 +60,14 @@ buck-out/
 
 # Compiled files
 compiled/
+
+# ── RAG backend (server/) ─────────────────────────────────────────────────
+# NOTE: GitHub Pages publishes this repo from the root, so anything committed
+# under server/ is also served at https://william-brendel.com/server/...
+# The corpus and prompts being public is fine — it's all public info, and a
+# future browser port would need them fetchable anyway. A secret would NOT be
+# fine, hence .env below. Never `git add -f` it.
+server/.env
+server/node_modules/
+server/.model_cache/
+server/llms/.model_cache/
