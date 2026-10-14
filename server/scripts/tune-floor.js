@@ -15,16 +15,19 @@
  * precision rises monotonically with it.
  */
 
-require("../llms/src/xenova/env");
 
 const CONFIG          = require("../config");
-const VectorStore     = require("../llms/src/VectorStore");
-const SectionResolver = require("../llms/src/actions/query/SectionResolver");
-const buildAnalyze    = require("../llms/src/xenova/buildAnalyzeQuery");
-const search          = require("../llms/src/VectorStore/search");
-const unionHits       = require("../llms/src/actions/query/unionHits");
-const prewarm         = require("../llms/src/xenova/prewarm");
-const { MAX_OUTPUT_ROWS } = require("../llms/src/VectorStore/constants");
+
+// AFTER config: config sets XENOVA_CACHE_DIR, which this reads to locate
+// the ONNX model cache outside node_modules.
+require("llms/src/xenova/env");
+const VectorStore     = require("llms/src/VectorStore");
+const SectionResolver = require("llms/src/actions/query/SectionResolver");
+const buildAnalyze    = require("llms/src/xenova/buildAnalyzeQuery");
+const search          = require("llms/src/VectorStore/search");
+const unionHits       = require("llms/src/actions/query/unionHits");
+const prewarm         = require("llms/src/xenova/prewarm");
+const { MAX_OUTPUT_ROWS } = require("llms/src/VectorStore/constants");
 
 // expected === null means "should retrieve nothing".
 const GOLDEN = [

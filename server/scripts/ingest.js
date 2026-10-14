@@ -13,17 +13,20 @@
  *   npm run ingest -- career/snap.md # one file
  */
 
-require("../llms/src/xenova/env");
 
 const fs   = require("fs").promises;
 const path = require("path");
 
 const CONFIG           = require("../config");
-const buildBinary      = require("../llms/src/actions/generate/binary");
-const vectorize        = require("../llms/src/xenova/vectorize");
-const claudeRun        = require("../llms/src/claude");
-const deriveDocumentId = require("../llms/src/utilities/deriveDocumentId");
-const makeLimit        = require("../llms/src/utilities/makeLimit");
+
+// AFTER config: config sets XENOVA_CACHE_DIR, which this reads to locate
+// the ONNX model cache outside node_modules.
+require("llms/src/xenova/env");
+const buildBinary      = require("llms/src/actions/generate/binary");
+const vectorize        = require("llms/src/xenova/vectorize");
+const claudeRun        = require("llms/src/claude");
+const deriveDocumentId = require("llms/src/utilities/deriveDocumentId");
+const makeLimit        = require("llms/src/utilities/makeLimit");
 const manifest         = require("./manifest");
 
 const args      = process.argv.slice(2);

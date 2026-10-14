@@ -21,7 +21,7 @@ const path   = require("path");
 const crypto = require("crypto");
 
 const CONFIG           = require("../config");
-const deriveDocumentId = require("../llms/src/utilities/deriveDocumentId");
+const deriveDocumentId = require("llms/src/utilities/deriveDocumentId");
 
 const MANIFEST_PATH = path.join(CONFIG.DATASET, "manifest.json");
 

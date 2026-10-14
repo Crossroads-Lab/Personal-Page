@@ -9,17 +9,20 @@
  * resident. Nothing here is per-request.
  */
 
-require("../llms/src/xenova/env");
 
 const fs = require("fs").promises;
 
 const CONFIG          = require("../config");
-const VectorStore     = require("../llms/src/VectorStore");
-const SectionResolver = require("../llms/src/actions/query/SectionResolver");
-const buildAnalyze    = require("../llms/src/xenova/buildAnalyzeQuery");
-const runQuery        = require("../llms/src/actions/query");
-const prewarm         = require("../llms/src/xenova/prewarm");
-const claudeRun       = require("../llms/src/claude");
+
+// AFTER config: config sets XENOVA_CACHE_DIR, which this reads to locate
+// the ONNX model cache outside node_modules.
+require("llms/src/xenova/env");
+const VectorStore     = require("llms/src/VectorStore");
+const SectionResolver = require("llms/src/actions/query/SectionResolver");
+const buildAnalyze    = require("llms/src/xenova/buildAnalyzeQuery");
+const runQuery        = require("llms/src/actions/query");
+const prewarm         = require("llms/src/xenova/prewarm");
+const claudeRun       = require("llms/src/claude");
 const manifest        = require("../scripts/manifest");
 
 let enginePromise;

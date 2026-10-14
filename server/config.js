@@ -2,9 +2,17 @@
 
 require("dotenv").config();
 const path = require("path");
-const Pricing = require("./llms/src/claude/Pricing");
+const Pricing = require("llms/src/claude/Pricing");
 
 const ROOT = __dirname;
+
+// Point the ONNX model cache outside node_modules.
+//
+// llms resolves its default cache relative to its own package directory,
+// which lands in node_modules/llms/.model_cache — a path `npm ci` deletes.
+// Without this, every deploy would re-download ~125MB from HuggingFace at
+// boot. Set before anything requires llms/src/xenova/env.
+process.env.XENOVA_CACHE_DIR ||= path.join(ROOT, ".model_cache");
 
 /**
  * Current first-party Anthropic rates (USD per 1M tokens).

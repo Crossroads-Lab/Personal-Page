@@ -10,17 +10,20 @@
  *   npm run retrieve -- "how do you handle disagreement?"
  */
 
-require("../llms/src/xenova/env");
 
 const CONFIG              = require("../config");
-const VectorStore         = require("../llms/src/VectorStore");
-const SectionResolver     = require("../llms/src/actions/query/SectionResolver");
-const buildAnalyze        = require("../llms/src/xenova/buildAnalyzeQuery");
-const search              = require("../llms/src/VectorStore/search");
-const unionHits           = require("../llms/src/actions/query/unionHits");
-const serializeQueryContext = require("../llms/src/xenova/serializeQueryContext");
-const prewarm             = require("../llms/src/xenova/prewarm");
-const { MAX_OUTPUT_ROWS } = require("../llms/src/VectorStore/constants");
+
+// AFTER config: config sets XENOVA_CACHE_DIR, which this reads to locate
+// the ONNX model cache outside node_modules.
+require("llms/src/xenova/env");
+const VectorStore         = require("llms/src/VectorStore");
+const SectionResolver     = require("llms/src/actions/query/SectionResolver");
+const buildAnalyze        = require("llms/src/xenova/buildAnalyzeQuery");
+const search              = require("llms/src/VectorStore/search");
+const unionHits           = require("llms/src/actions/query/unionHits");
+const serializeQueryContext = require("llms/src/xenova/serializeQueryContext");
+const prewarm             = require("llms/src/xenova/prewarm");
+const { MAX_OUTPUT_ROWS } = require("llms/src/VectorStore/constants");
 
 const QUERIES = process.argv.slice(2).length
   ? [process.argv.slice(2).join(" ")]
@@ -55,7 +58,7 @@ const main = async () => {
     );
 
     const hits = unionHits(await Promise.all(
-      searchable.map(seg => search(store, seg.vec))
+      searchable.map(seg => search(store, seg.vec, CONFIG.RETRIEVAL))
     ));
 
     const enriched = [];
