@@ -119,3 +119,48 @@ main::after {
     gap: 8px;
   }
 }
+/*
+ * =====================================================
+ * FOLLOW-UP QUESTIONS
+ * =====================================================
+ * Rendered after an answer finishes typing. Clicking one asks it —
+ * the cheapest way to show a visitor what else there is to ask about.
+ */
+
+.follow-ups {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 14px;
+  /* main * sets width: fit-content; this container needs to opt out so the
+     buttons inside can size themselves independently. */
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.follow-up {
+  font-family: inherit;
+  font-size: 0.875em;
+  text-align: left;
+  color: var(--blue);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--blue) 35%, transparent);
+  border-radius: var(--border-radius-round);
+  padding: 6px 14px;
+  cursor: pointer;
+  max-width: 100%;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.follow-up:hover,
+.follow-up:focus-visible {
+  background: color-mix(in srgb, var(--blue) 10%, transparent);
+  border-color: var(--blue);
+}
+
+/* The answer sits in a blurred-background state on longer replies; keep the
+   follow-ups legible against it. */
+body[blured] .follow-up {
+  background: color-mix(in srgb, var(--background) 70%, transparent);
+}

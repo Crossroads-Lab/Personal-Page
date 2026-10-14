@@ -25,8 +25,16 @@ const apiKey = process.env.NEREUS_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API
  */
 const PRICING = Object.freeze({
   // ── Current generation ──────────────────────────────────────────────────
+  //
+  // Note the cache-read multiplier is NOT a uniform 0.1x any more. Fable 5.1
+  // reads at 0.025x and the 5.5 models at 0.05x, which makes them materially
+  // cheaper than their .0 predecessors for cache-heavy workloads even where
+  // the base input price is identical.
+  "claude-fable-5-1":          new Pricing({ input: { standard: 10.00, cacheWrite: 12.50, cacheRead: 0.25 }, output: { standard: 50.00 }, batchDiscount: 0.50 }),
   "claude-fable-5":            new Pricing({ input: { standard: 10.00, cacheWrite: 12.50, cacheRead: 1.00 }, output: { standard: 50.00 }, batchDiscount: 0.50 }),
+  "claude-opus-5-5":           new Pricing({ input: { standard:  4.00, cacheWrite:  5.00, cacheRead: 0.20 }, output: { standard: 20.00 }, batchDiscount: 0.50 }),
   "claude-opus-5":             new Pricing({ input: { standard:  5.00, cacheWrite:  6.25, cacheRead: 0.50 }, output: { standard: 25.00 }, batchDiscount: 0.50 }),
+  "claude-sonnet-5-5":         new Pricing({ input: { standard:  2.00, cacheWrite:  2.50, cacheRead: 0.10 }, output: { standard: 10.00 }, batchDiscount: 0.50 }),
   "claude-opus-4-8":           new Pricing({ input: { standard:  5.00, cacheWrite:  6.25, cacheRead: 0.50 }, output: { standard: 25.00 }, batchDiscount: 0.50 }),
   "claude-sonnet-5":           new Pricing({ input: { standard:  2.00, cacheWrite:  2.50, cacheRead: 0.20 }, output: { standard: 10.00 }, batchDiscount: 0.50 }),
   "claude-haiku-4-5":          new Pricing({ input: { standard:  1.00, cacheWrite:  1.25, cacheRead: 0.10 }, output: { standard:  5.00 }, batchDiscount: 0.50 }),
@@ -83,6 +91,30 @@ const FABLE5_CONFIG = Object.freeze({
   pricing: PRICING["claude-fable-5"],
 });
 
+/**
+ * Claude Fable 5.1 — same capability tier and base price as Fable 5, but
+ * cache reads are 0.025x base instead of 0.1x. Prefer this over FABLE5_CONFIG.
+ */
+const FABLE51_CONFIG = Object.freeze({
+  ...BASE,
+  model: "claude-fable-5-1",
+  max_tokens: 16000,
+  pricing: PRICING["claude-fable-5-1"],
+});
+
+/**
+ * Claude Opus 5.5 — strictly better value than Opus 5: cheaper on every axis
+ * ($4/$20 against $5/$25) with cache reads at 0.05x base rather than 0.1x.
+ * Prefer this over OPUS5_CONFIG for new work.
+ */
+const OPUS55_CONFIG = Object.freeze({
+  ...BASE,
+  model: "claude-opus-5-5",
+  max_tokens: 16000,
+  thinking: { type: "adaptive" },
+  pricing: PRICING["claude-opus-5-5"],
+});
+
 /** Claude Opus 5 — thinking is adaptive by default; do not send temperature. */
 const OPUS5_CONFIG = Object.freeze({
   ...BASE,
@@ -90,6 +122,19 @@ const OPUS5_CONFIG = Object.freeze({
   max_tokens: 16000,
   thinking: { type: "adaptive" },
   pricing: PRICING["claude-opus-5"],
+});
+
+/**
+ * Claude Sonnet 5.5 — same base and output price as Sonnet 5 ($2/$10) but
+ * half the cache-read rate ($0.10 against $0.20). For anything with a large
+ * stable system prompt, this is a free saving over Sonnet 5.
+ */
+const SONNET55_CONFIG = Object.freeze({
+  ...BASE,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
+  thinking: { type: "adaptive" },
+  pricing: PRICING["claude-sonnet-5-5"],
 });
 
 /** Claude Opus 4.8 — adaptive must be set explicitly; omitting it means no thinking. */
@@ -187,10 +232,13 @@ const OPUS4_CONFIG = OPUS5_CONFIG;
  * All named presets and the shared PRICING table hang off this object as
  * non-enumerable properties, so callers have a single import path.
  */
-const DEFAULT_CONFIG = { ...SONNET5_CONFIG };
+const DEFAULT_CONFIG = { ...SONNET55_CONFIG };
 
 for (const [name, value] of Object.entries({
-  FABLE5_CONFIG, OPUS5_CONFIG, OPUS48_CONFIG, SONNET5_CONFIG, HAIKU45_CONFIG,
+  FABLE51_CONFIG, FABLE5_CONFIG,
+  OPUS55_CONFIG, OPUS5_CONFIG, OPUS48_CONFIG,
+  SONNET55_CONFIG, SONNET5_CONFIG,
+  HAIKU45_CONFIG,
   SONNET46_CONFIG, SONNET45_CONFIG, OPUS4_CONFIG,
   BASE, PRICING,
 })) {

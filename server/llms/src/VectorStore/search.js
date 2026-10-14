@@ -85,6 +85,13 @@ const captureTopK = (hits, k = 5) => {
 };
 
 const search = (target, queryVec, {
+  // Cosine floor. Defaults to ABSOLUTE_FLOOR, which is calibrated for a
+  // topically diverse corpus. A narrow corpus — every section about one
+  // subject — compresses scores into a tight band well above 0.3, so the
+  // default floors nothing and every query returns the full candidate set.
+  // Exposing it per-call lets a caller tune to its own score distribution
+  // without editing shared constants.
+  floor           = ABSOLUTE_FLOOR,
   maxRows         = Infinity,
   rerank: rerankEnabled = RERANK_ENABLED,
   rerankThreshold = RERANK_THRESHOLD,
@@ -107,11 +114,11 @@ const search = (target, queryVec, {
   // ── 1-3. Score every document ──────────────────────────────────
   const allHits = [];
   for (let i = 0, l = store.length; i !== l; ++i) {
-    allHits.push(...store[i].score(queryVec, ABSOLUTE_FLOOR));
+    allHits.push(...store[i].score(queryVec, floor));
   }
 
   if (allHits.length === 0) {
-    onTrace?.({ stage: "scored", hitCount: 0, scoreStats: null, floor: ABSOLUTE_FLOOR });
+    onTrace?.({ stage: "scored", hitCount: 0, scoreStats: null, floor });
     return [];
   }
 
@@ -123,7 +130,7 @@ const search = (target, queryVec, {
     stage:      "scored",
     hitCount:   allHits.length,
     scoreStats: scoreStats(allHits),
-    floor:      ABSOLUTE_FLOOR,
+    floor,
     topScores:  allHits.slice(0, 5).map(h => h.score),
   });
 

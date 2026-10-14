@@ -165,6 +165,11 @@ const run = async ({
   maxRetries = 2,
   maxOutputRows = MAX_OUTPUT_ROWS,
   fallbackAnswer,
+  // Forwarded verbatim to VectorStore search. The cosine `floor` in
+  // particular is corpus-specific: the default is calibrated for a
+  // topically diverse corpus, and a narrow one needs it raised or nothing
+  // is ever pruned.
+  searchOptions = {},
 }) => {
   const analysis = await analyzeQuery(rawQuery);
   const stats = new Stats();
@@ -221,6 +226,7 @@ const run = async ({
   const perSegmentHits = await Promise.all(
     searchableSegments.map(({ seg, index }) =>
       search(store, seg.vec, {
+        ...searchOptions,
         onTrace: trace?.forSegment(index, seg.text),
       })
     )

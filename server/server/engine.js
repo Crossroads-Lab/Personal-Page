@@ -20,6 +20,7 @@ const buildAnalyze    = require("../llms/src/xenova/buildAnalyzeQuery");
 const runQuery        = require("../llms/src/actions/query");
 const prewarm         = require("../llms/src/xenova/prewarm");
 const claudeRun       = require("../llms/src/claude");
+const manifest        = require("../scripts/manifest");
 
 let enginePromise;
 
@@ -28,6 +29,27 @@ const build = async () => {
 
   // Only the feature-extraction model. See CONFIG.PREWARM.
   await prewarm(CONFIG.PREWARM);
+
+  // Fail fast on a stale corpus. Section ranges are byte offsets into the
+  // markdown; if the markdown moved, the resolver returns misaligned text
+  // rather than an error, and the model fabricates to bridge the gaps.
+  // Refusing to start is strictly better than answering wrongly in his name.
+  const integrity = await manifest.verify();
+  if (!integrity.ok) {
+    const detail = [
+      ...integrity.stale.map(id => `stale (edited since ingest): ${id}`),
+      ...integrity.missing.map(id => `missing markdown: ${id}`),
+      ...integrity.untracked.map(id => `never ingested: ${id}`),
+    ];
+    throw new Error(
+      `Corpus is out of sync with the vector store` +
+      (integrity.reason ? ` (${integrity.reason})` : "") + ".\n  " +
+      (detail.join("\n  ") || "") +
+      "\n\n  Section ranges are byte offsets into the markdown, so serving " +
+      "this would\n  return misaligned text and invite fabricated answers. " +
+      "Run: npm run ingest"
+    );
+  }
 
   const [store, resolver, answerPrompt] = await Promise.all([
     VectorStore.create(CONFIG.DATASET),
@@ -49,6 +71,7 @@ const build = async () => {
     runLLM:           claudeRun,
     prompts:          { answer: answerPrompt },
     llmConfig:        CONFIG.HAIKU45,
+    searchOptions:    CONFIG.RETRIEVAL,
     greetingTemplate: CONFIG.GREETING,
     fallbackAnswer:   CONFIG.FALLBACK,
   });

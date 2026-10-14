@@ -2,6 +2,7 @@
 
 import { content, displayTextContent } from "./content.js";
 import { createThinkingNode } from "./createThinkingNode.js";
+import { ask } from "./api.js";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -17,6 +18,10 @@ const share = document.getElementById("chat-menu-share-profile");
 
 form.onclick =
   event => event.stopPropagation();
+
+// In-flight request, so the stop button can actually cancel it rather than
+// just hiding a response that still arrives and costs money.
+let inFlight = null;
 
 // Interrupt thinking.
 const stopThinking = () => (
@@ -40,6 +45,8 @@ const isThinking = () => document.body.hasAttribute("thinking");
 document.getElementById("stop").onclick = event => {
   event.stopPropagation();
 
+  inFlight?.abort();
+  inFlight = null;
   stopThinking();
   stopDisplay = displayTextContent(
     "If there's anything else you want to know, ask away!",
@@ -135,37 +142,65 @@ input.addEventListener("keydown", event => {
 // Form submission handler
 // --------------------------------------------------------------------------
 let stopDisplay, endDisplay = () => stopDisplay = null;
-form.addEventListener("submit", event => {
+form.addEventListener("submit", async event => {
   event.preventDefault();
 
   const message = input.value.trim();
+  if (!message) return;
 
-  if (message) {
-    console.log("Sending message:", message);
-    startThinking();
+  resetForm();
+  startThinking();
 
-    // Simulate query.
-    setTimeout(() => {
-      // Reset form.
-      resetForm();
+  const controller = new AbortController();
+  inFlight = controller;
 
-      if (!isThinking()) return;
+  const { text, followUps, aborted } = await ask(message, controller.signal);
 
-      // Stop thinking.
-      stopThinking();
+  // The user hit stop, or started another question while this was running.
+  // Either way this response is stale — the newer request owns the screen.
+  if (aborted || inFlight !== controller) return;
+  inFlight = null;
+  if (!isThinking()) return;
 
-      // Fill content.
-      const dummyText = `When I was a PM at Snap, one of my engineers wanted to ship a “beauty score” based group AR filter. You’d take a selfie with your friends and it would put a crown on the most beautiful person in the shot. The tech was already built. I raised concerns due to risks for teens. Instead of blocking, I brought it to design for feedback, and later we repurpose the tech for ad targeting instead. We avoided a PR crisis and my engineer got promoted along the way.`;
-      
-      stopDisplay = displayTextContent(
-        dummyText,
-        endDisplay,
-        content.appendChild(document.createElement("span"))
-      );
-      
-    }, 3000);
-  }
+  stopThinking();
+
+  stopDisplay = displayTextContent(
+    text,
+    () => {
+      endDisplay();
+      renderFollowUps(followUps);
+    },
+    content.appendChild(document.createElement("span"))
+  );
 });
+
+/**
+ * Render follow-up questions as clickable prompts. Clicking one asks it,
+ * which is the cheapest way to show a visitor what else the corpus covers.
+ */
+const renderFollowUps = (questions) => {
+  if (!questions?.length) return;
+
+  const list = document.createElement("div");
+  list.className = "follow-ups";
+
+  for (const question of questions) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "follow-up";
+    // textContent, not innerHTML — these strings come from the model.
+    button.textContent = question;
+    button.onclick = (event) => {
+      event.stopPropagation();
+      input.value = question;
+      resize();
+      form.dispatchEvent(new Event("submit"));
+    };
+    list.appendChild(button);
+  }
+
+  content.appendChild(list);
+};
 
 const resetForm = () => {
   // Reset input.

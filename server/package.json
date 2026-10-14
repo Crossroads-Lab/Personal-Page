@@ -9,7 +9,10 @@
     "ingest": "node scripts/ingest.js",
     "ask": "node scripts/ask.js",
     "prewarm": "node scripts/prewarm.js",
-    "retrieve": "node scripts/retrieve.js"
+    "retrieve": "node scripts/retrieve.js",
+    "tune-floor": "node scripts/tune-floor.js",
+    "manifest": "node scripts/manifest.js",
+    "verify": "node scripts/manifest.js --verify"
   },
   "author": "William Brendel",
   "license": "MIT",

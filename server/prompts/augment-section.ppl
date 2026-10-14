@@ -1,0 +1,169 @@
+CONTEXT
+  subject: William Brendel — engineering executive, 2x founder, PhD in AI.
+  product: A chat box on his personal site, william-brendel.com, that answers
+           as him. Sections come from his resume, his stories, and his stated
+           views.
+  audience: Recruiters, hiring managers, founders, engineers, and investors
+            who landed on his page. They type interview questions, not
+            documentation lookups.
+
+INPUT
+  $section:
+    description:
+      One section of a first-person document about William. Has a header and
+      body content. The content is written as "I did X" — it is his voice.
+    format: text/markdown
+
+OUTPUT
+  $rows:
+    description: JSON array, no markdown, no preamble.
+    format: JSON
+    schema:
+      [
+        {
+          "register": "string", // one of: behavioral, values, factual, logistics, narrative
+          "angle": "string",    // one of: What, Why, How, When, Who, Where
+          "question": "string",
+          "variants": ["string"],
+          "anchors": ["string"]
+        }
+      ]
+
+GOAL
+  description:
+    Generate retrieval rows so that a visitor's question finds this section.
+    Work backward: facts first, register and angle second, question and
+    downstream fields last.
+
+    The single most important job: a visitor almost never uses the words in
+    the section. They ask "tell me about a time you failed" and the section
+    says "we overbuilt features before validating demand." Your generated
+    questions and variants are the bridge. If you only rephrase the section's
+    own vocabulary, you have done nothing.
+
+  REASONING:
+
+    # Extract facts
+
+    Extract every discrete fact or claim from the section. A fact is discrete
+    if a visitor could independently ask about it.
+
+    Critical: only use what is in $section. Never add outside knowledge about
+    William, even if it seems obviously true. A plausible invented fact is
+    indistinguishable from a hallucination at review time, and this corpus
+    speaks in his name.
+
+    # Assign a register
+
+    The register is what KIND of question this fact answers. It drives the
+    phrasings a visitor would actually use:
+
+      - behavioral — a story about something he did. Visitors reach these
+        with "tell me about a time you…", "describe a situation where…",
+        "give me an example of…". The classic interview stems.
+      - values     — a stated view, principle, or preference. Reached with
+        "how do you think about…", "what's your take on…", "do you believe…".
+      - factual    — a role, date, number, employer, credential, outcome.
+        Reached with "what did you do at…", "how long were you…", "how many…".
+      - logistics  — contact, availability, what he wants next, compensation,
+        location. Reached with "how do I reach you", "are you open to…".
+      - narrative  — context or framing that supports a story without being
+        the story. Reached obliquely; generate fewer rows for these.
+
+    A section can produce rows of different registers. A story about a
+    decision usually yields both behavioral rows (the situation) and values
+    rows (what it says about how he works).
+
+    # Derive angles
+
+    For each fact, identify applicable angles: What (defines), Why (reason or
+    cause), How (process or approach), When (timing or condition), Who
+    (people involved), Where (place or company).
+
+    Stay within the angle — a What row must not explain Why. If blending feels
+    natural, split into two rows. One row per (fact, angle) pair.
+
+    # Compose rows
+
+    FOREACH angle of fact
+
+      # Derive the question
+
+      The single most natural question a visitor would type to get this fact.
+
+        - Address him directly, second person: "what did YOU do at Snap",
+          not "what did William do at Snap". Visitors talk to the box.
+        - Be specific to this section. Test: strip the header — would the
+          question still identify which section it came from? If it could
+          equally match a sibling section, it is too broad. Rewrite.
+        - Naturalness gate: would a recruiter or engineer actually type this?
+            Wrong: "What was the technical debt reduction percentage?"
+            Right: "What did you actually fix at iScribeHealth?"
+            Wrong: "What is the subject's position on work-life balance?"
+            Right: "How do you feel about 80-hour weeks?"
+        - Usefulness gate: the answer must tell them something the header
+          alone would not. If it just restates the header, skip the row.
+
+      # Derive anchors
+
+      Short search fragments, no question marks — what someone would type into
+      a search box rather than ask aloud.
+
+        - Maximum 2 anchors.
+        - 2 to 5 meaningful terms each.
+        - Range from broad to specific.
+        - Prefer proper nouns where the fact has them: employer, product,
+          technology, credential. "snap ar filter decision", "iscribe soc 2".
+
+      # Derive variants
+
+      Other ways a visitor would reach this same fact and angle. This is where
+      most retrieval recall is won or lost.
+
+        - Ownership rule: every variant must be fully answered by THIS row's
+          fact and angle. If another row would answer it better, discard it —
+          a misplaced variant steals recall from the correct row.
+        - Keep variants in the row's angle. A How row's variants ask How.
+        - 3 to 7 variants. Within them:
+
+          - IF register is behavioral, THEN at least 2 variants must use
+            standard interview stems, phrased generically enough that someone
+            who has never read this section would type them:
+              "tell me about a time you failed"
+              "describe a conflict with a colleague"
+              "give me an example of a hard decision you made"
+              "what's your biggest mistake"
+            This is the highest-value line in this prompt. A story about
+            overbuilding before validating demand MUST carry "tell me about a
+            time you failed" and "what's a mistake you've made" as variants,
+            even though neither phrase appears anywhere in the section.
+
+          - IF register is values, THEN at least 2 variants must be the
+            abstract form of the question, with no reference to the specific
+            situation:
+              "how do you handle disagreement"
+              "what's your management style"
+              "how do you think about technical debt"
+
+          - IF register is factual, THEN at least 1 variant must be the
+            casual form ("what'd you do at Amazon", "how long were you at
+            Snap") and at least 1 the fragment form ("snap tenure",
+            "amazon role").
+
+          - At least 1 variant across every register must be a sentence
+            fragment or search-style phrase, not a grammatical question.
+
+          - At least 1 variant must avoid every distinctive noun the section
+            uses. If the section says "beauty score filter", that variant must
+            not contain "beauty", "score", or "filter". This forces coverage of
+            visitors who describe the situation rather than name it.
+
+        - Do NOT generate variants that are the section's own sentences
+          lightly reworded. Those already retrieve well from the body vectors.
+          Your job is the phrasings the body will never match.
+
+      # Coverage check
+
+      Before emitting, read your rows against this: if a visitor asked the
+      five most obvious interview questions this section could answer, would
+      at least one row match each? If a standard question has no row, add it.

@@ -68,7 +68,11 @@ module.exports = Object.freeze({
   DATASET:   path.join(ROOT, "data/vectorized-dataset"),
 
   ANSWER_PROMPT:  path.join(ROOT, "prompts/answer.ppl"),
-  AUGMENT_PROMPT: path.join(ROOT, "llms/src/actions/generate/binary/prompts/augment-section.ppl"),
+  // Domain-specific. The vendored llms copy is written for water-treatment
+  // reference docs — it asks for sensory descriptors (colour, texture, smell)
+  // and its examples are organisms and chemicals. Against first-person career
+  // stories it generates near-useless rows.
+  AUGMENT_PROMPT: path.join(ROOT, "prompts/augment-section.ppl"),
 
   PRICING,
   HAIKU45,
@@ -140,6 +144,38 @@ module.exports = Object.freeze({
       },
     },
   }),
+
+  /**
+   * Retrieval tuning.
+   *
+   * `floor` is the cosine cutoff. The library default (ABSOLUTE_FLOOR, 0.3)
+   * assumes a topically diverse corpus; every section here is about one
+   * person, so scores compress into a narrow band well above 0.3 and the
+   * default prunes nothing — every query returned the full 12 rows.
+   *
+   * Swept against a 19-query labeled set (`npm run tune-floor`), measured
+   * after the domain-specific augment prompt and question-shaped headers:
+   *
+   *   floor   hit@1   hit@3   rows
+   *   0.30     87%    100%    12.0
+   *   0.75     87%    100%     6.4
+   *   0.80     87%    100%     4.2   <- chosen
+   *   0.82     93%    100%     3.5
+   *   0.84     80%     87%     2.7
+   *   0.90     67%     67%     1.4
+   *
+   * 0.82 peaks on hit@1 but sits one step from the cliff. 0.80 holds hit@3
+   * at 100% with two steps of margin for 0.7 extra rows — the safer trade on
+   * a corpus that will grow.
+   *
+   * For reference, before the augmentation rewrite the best achievable was
+   * hit@1 67% / hit@3 80% at floor 0.68. The gain came from the prompt and
+   * headers, not from tuning.
+   *
+   * Re-run the sweep after any significant corpus change — the right floor is
+   * a property of the score distribution, not a constant.
+   */
+  RETRIEVAL: Object.freeze({ floor: 0.80 }),
 
   /** Greeting shown when the analyzer sees a bare greeting and nothing else. */
   GREETING: "Hi — I'm William. Ask me about my work, my background, or how I think about building things.",

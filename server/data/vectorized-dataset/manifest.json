@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-09-28T20:35:14.696Z",
+  "documents": {
+    "background|education_and_research": "c847521a91beefac017b69b5388c95958f169cf91b5e149e9cfc91015791b589",
+    "background|skills": "854a6793d4bf88e45fddb6059f8ef9b741cd5195fa4de0dfeee6da09e642cc29",
+    "background|summary": "46bb7bee44d6f7943c8492ca8645142ae0316c2d1a50efa62799a825e76046fd",
+    "career|amazon_a9": "c06702e20e24ab39f2ed71ead1ef33502e68e5e86f5b72b963bf1011b9e5561e",
+    "career|crossroads_venture_studio": "57c87be77fd285283a0bc8efe04d2d019f225ffcaaed9245b88d0b46236b5e58",
+    "career|google_youtube": "b4ccdcb46928f9ecf6e2e2fc2498ae038368926a9dc0856090dd25f5bf40c1fe",
+    "career|heali_ai": "991c5461b634f43cbf7a9ebe3be4f8f1e566ec1197948996448dbf795f8ff091",
+    "career|infineon": "7916a6c88ec5252170ffa6c3486078659956a4538f530816e9980cd3691bafcd",
+    "career|iscribehealth": "e60cb6ec661744cad695d3c06e7bc384b21528f8d483c4afedcfa33816e07d47",
+    "career|snap": "3e8a10c5227cf81ed3652e60275378f0aaa04ac9b5609d5fe31025e20f4afb80",
+    "logistics|contact_and_links": "10d5b86424f3189c12f5f969335882e6d71a4af6386424af14c83b3729787e16",
+    "logistics|intro": "c40f80e7da7d2ac9513de716655d7d4312bba1248f9da39f02e7ab4cd55dbd16",
+    "logistics|questions_i_ask": "5f0ee663afda2657f721634e89c88bd1b1a800f8d156d9b97f0f5961c39405f1",
+    "logistics|what_im_looking_for": "00967ed76475b1f305de13ab3720cb2504dbeadd1987b396ebfbb25304457b0f",
+    "logistics|why_i_left_iscribehealth": "e7d1a2835715c600a9648feb989a679b5f74d5d628f2bd3dbe33c05a09fa228b",
+    "perspective|firing_and_accountability": "e3d45575832adc1ee946efa676906e68579dfa9489de4c7a80e23c2772920a27",
+    "perspective|first_90_days": "b8cd44f53ecbf4b63d46b71032dc86b6765f5ca3c09d037fae6a24e40f0bd495",
+    "perspective|future_of_healthcare_ai": "48a354eb059c13bf650185078ba812fe4914fc9c3015cfa5b3839d06b13bca15",
+    "perspective|how_i_run_teams": "bc72c160585a83bb36b6251c6d4fbbf94acfb422fad45fd76e086c3efd01f071",
+    "perspective|influences": "c237b5bcd332ce76457a293d1763d2cabfc43c6dc958af8554702dd344e5ddbe",
+    "perspective|work_hours": "a39972cd04f98d765d867bfd2ec6d90ea4aff80e5c238021bdcf4f06254b93a0",
+    "stories|heali_early_team": "26b3731498acbc9aae6dda4e66b363990ab7a6fc37a52a4054a8e8d3f4286baf",
+    "stories|heali_nutrition_engine": "82630ca0369235613328528bd947a84a944bff90cfede7cb4cc1e78c2388875d",
+    "stories|heali_overbuilt_before_validating": "8dff8e2a0f5b40eef2803b14bf926b9bdca4e66054dac1e3bacd2f0285729ff1",
+    "stories|iscribe_tech_debt_tradeoff": "6cae4e8d4bc32e6d8ebaff4635c206d53a91a94736450c75cfce0756b7584b27",
+    "stories|iscribe_turnaround": "5f328423282d7cf547d82501b1733ba811dada321a35123c07a02af07808b69b",
+    "stories|snap_beauty_score_filter": "be629c0475e42c2e5e2a92603fbd07e394b24cb50ccb5f8da72973bd12ba0e72",
+    "stories|youtube_shipping_past_politics": "2f6c3f1b2d682f16c5c66cce9e5821dc9d58eb11ca19e7a80321d2f2645fa9ae"
+  }
+}

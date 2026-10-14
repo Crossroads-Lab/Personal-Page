@@ -73,8 +73,16 @@ export const displayTextContent = (text, done, container = content, delay) => {
     delay = Math.round(Math.max(200 - text.length, 0) * 0.15 + 5)
   );
   const breakTimeout = () => clearTimeout(timeoutId);
+
+  // Append into a text node rather than `container.innerHTML +=`.
+  // Two reasons: the text now comes from a language model, so treating it as
+  // markup would let a crafted corpus section or answer inject HTML; and
+  // innerHTML re-parses the entire container on every keystroke, which is
+  // O(n^2) in the length of the answer.
+  const sink = container.appendChild(document.createTextNode(""));
+
   const f = () => {
-    container.innerHTML += text.charAt(i);
+    sink.data += text.charAt(i);
     requestAnimationFrame(() => (
       onContentchange(),
       ++i < l && (timeoutId = setTimeout(f, delay)) || (

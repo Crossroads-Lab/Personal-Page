@@ -24,6 +24,7 @@ const vectorize        = require("../llms/src/xenova/vectorize");
 const claudeRun        = require("../llms/src/claude");
 const deriveDocumentId = require("../llms/src/utilities/deriveDocumentId");
 const makeLimit        = require("../llms/src/utilities/makeLimit");
+const manifest         = require("./manifest");
 
 const args      = process.argv.slice(2);
 const noAugment = args.includes("--no-augment");
@@ -82,9 +83,12 @@ const main = async () => {
       limit,
     } : {}),
     onError: ({ stage, sectionIndex, cause }) => {
-      const first = cause.message.split(";")[0];
-      console.warn(`  soft error [${stage}] section ${sectionIndex}: ${first}`);
-      (softErrors[stage] ||= []).push(sectionIndex);
+      // documentId matters more than sectionIndex here: without it a failure
+      // report can't be turned into a targeted re-run.
+      const first = cause.message.split(";")[0].replace(/^runWithRetry: /, "");
+      const id = deriveDocumentId(file);
+      console.warn(`  soft error [${stage}] ${id} §${sectionIndex}: ${first}`);
+      (softErrors[stage] ||= []).push({ documentId: id, file, sectionIndex });
     },
   })));
 
@@ -112,15 +116,33 @@ const main = async () => {
     console.log(`  ✓ ${input.documentId.padEnd(42)} ${(r.value.length / 1024).toFixed(1)} KB`);
   }
 
-  console.log(`\nDone. ${ok} built, ${failed} failed.`);
+  // Record what the bins were built from, so a later markdown edit is
+  // detectable instead of silently corrupting section ranges.
+  if (ok) {
+    const m = await manifest.write();
+    console.log(`\nManifest written — ${Object.keys(m.documents).length} documents.`);
+  }
 
-  const augmentFailures = (softErrors.augment || []).length;
-  if (augmentPrompt && augmentFailures) {
+  console.log(`Done. ${ok} built, ${failed} failed.`);
+
+  const augFails = softErrors.augment || [];
+  if (augmentPrompt && augFails.length) {
+    // Group by file so the retry command is copy-pasteable.
+    const byFile = new Map();
+    for (const f of augFails) {
+      byFile.set(f.file, (byFile.get(f.file) || 0) + 1);
+    }
+    const rel = [...byFile].map(([f, n]) =>
+      `${path.relative(CONFIG.MARKDOWNS, f)} (${n})`);
+
     console.error(
-      `\n  WARNING: ${augmentFailures} section(s) failed augmentation.\n` +
-      `  Those sections have breadcrumb + body vectors only — retrieval on\n` +
-      `  abstract queries will be materially worse. Fix the cause and re-run;\n` +
-      `  ingest is idempotent.`
+      `\n  WARNING: ${augFails.length} section(s) across ${byFile.size} document(s) ` +
+      `failed augmentation.\n` +
+      `  Those sections carry breadcrumb + body vectors only, so abstract\n` +
+      `  queries will retrieve them less well.\n\n` +
+      `  Affected: ${rel.join(", ")}\n\n` +
+      `  Retry just those (ingest is idempotent):\n` +
+      `    npm run ingest -- ${[...byFile.keys()].map(f => path.relative(CONFIG.MARKDOWNS, f)).join(" ")}`
     );
     process.exit(2);
   }
