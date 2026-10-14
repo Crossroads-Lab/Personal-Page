@@ -81,15 +81,40 @@ export const displayTextContent = (text, done, container = content, delay) => {
   // O(n^2) in the length of the answer.
   const sink = container.appendChild(document.createTextNode(""));
 
+  // The character loop is driven by setTimeout ALONE, and the layout/scroll
+  // pass is coalesced to at most one per animation frame.
+  //
+  // It used to await a requestAnimationFrame between every character, so each
+  // one cost a whole frame PLUS `delay` — which made the delay computed above
+  // meaningless (a frame is ~16ms at 60fps, against a 5ms target) and tied
+  // typing speed to the frame rate. Wherever rAF is throttled — a background
+  // tab, low-power mode, an offscreen or de-prioritised view — it collapsed.
+  // Measured in a throttled pane: rAF at 1fps, so the answer typed at one
+  // character per second.
+  //
+  // Coalescing is also strictly less work than before: onContentchange reads
+  // offsetTop/offsetHeight/offsetWidth and issues a smooth scrollTo, so
+  // running it per character forced a synchronous layout per character.
+  let framePending = false;
+  const scheduleUpdate = () => {
+    if (framePending) return;
+    framePending = true;
+    requestAnimationFrame(() => {
+      framePending = false;
+      onContentchange();
+    });
+  };
+
   const f = () => {
     sink.data += text.charAt(i);
-    requestAnimationFrame(() => (
-      onContentchange(),
-      ++i < l && (timeoutId = setTimeout(f, delay)) || (
-        typeof done === "function" && done()
-      )
-    ));
-  }
+    scheduleUpdate();
+    if (++i < l) {
+      timeoutId = setTimeout(f, delay);
+    } else {
+      scheduleUpdate();
+      typeof done === "function" && done();
+    }
+  };
   f();
   return breakTimeout;
 }
