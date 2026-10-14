@@ -3,9 +3,10 @@
 const _run = require("./run");
 const batch = require("./batch");
 const {
-  OPUS4_CONFIG,
-  SONNET45_CONFIG,
+  OPUS55_CONFIG,
+  SONNET55_CONFIG,
   SONNET46_CONFIG,
+  HAIKU55_CONFIG,
   HAIKU45_CONFIG,
 } = require("./config");
 
@@ -25,49 +26,71 @@ const specialize = config => {
   return Object.freeze(f);
 }
 
-// --- Opus 4 ---
+// --- Opus 5.5 ---
 
 /**
- * @function run.opus4
+ * @function run.opus55
  * @memberof run
  * @async
- * @description A specialized version of `run` pre-configured with `OPUS4_CONFIG`.
+ * @description A specialized version of `run` pre-configured with `OPUS55_CONFIG`.
  * @param {string|Object}            prompt    - The primary user prompt.
  * @param {...(string|Object|Array)} documents - Variadic list of documents to append.
  * @returns {Promise<Object>} See {@link run} for return structure details.
  */
 
 /**
- * @function run.opus4.batch
- * @memberof run.opus4
+ * @function run.opus55.batch
+ * @memberof run.opus55
  * @async
- * @description A specialized version of `batch` pre-configured with `OPUS4_CONFIG`.
+ * @description A specialized version of `batch` pre-configured with `OPUS55_CONFIG`.
  * @param {...(Object|Array)} requests - See {@link batch} for request structure.
  * @returns {Promise<Object>} See {@link batch} for return structure details.
  */
-run.opus4 = specialize(OPUS4_CONFIG);
+run.opus55 = specialize(OPUS55_CONFIG);
 
-// --- Sonnet 4.5 ---
+// --- Sonnet 5.5 ---
 
 /**
- * @function run.sonnet45
+ * @function run.sonnet55
  * @memberof run
  * @async
- * @description A specialized version of `run` pre-configured with `SONNET45_CONFIG`.
+ * @description A specialized version of `run` pre-configured with `SONNET55_CONFIG`.
  * @param {string|Object}            prompt    - The primary user prompt.
  * @param {...(string|Object|Array)} documents - Variadic list of documents to append.
  * @returns {Promise<Object>} See {@link run} for return structure details.
  */
 
 /**
- * @function run.sonnet45.batch
- * @memberof run.sonnet45
+ * @function run.sonnet55.batch
+ * @memberof run.sonnet55
  * @async
- * @description A specialized version of `batch` pre-configured with `SONNET45_CONFIG`.
+ * @description A specialized version of `batch` pre-configured with `SONNET55_CONFIG`.
  * @param {...(Object|Array)} requests - See {@link batch} for request structure.
  * @returns {Promise<Object>} See {@link batch} for return structure details.
  */
-run.sonnet45 = specialize(SONNET45_CONFIG);
+run.sonnet55 = specialize(SONNET55_CONFIG);
+
+// --- Haiku 5.5 ---
+
+/**
+ * @function run.haiku55
+ * @memberof run
+ * @async
+ * @description A specialized version of `run` pre-configured with `HAIKU55_CONFIG`.
+ * @param {string|Object}            prompt    - The primary user prompt.
+ * @param {...(string|Object|Array)} documents - Variadic list of documents to append.
+ * @returns {Promise<Object>} See {@link run} for return structure details.
+ */
+
+/**
+ * @function run.haiku55.batch
+ * @memberof run.haiku55
+ * @async
+ * @description A specialized version of `batch` pre-configured with `HAIKU55_CONFIG`.
+ * @param {...(Object|Array)} requests - See {@link batch} for request structure.
+ * @returns {Promise<Object>} See {@link batch} for return structure details.
+ */
+run.haiku55 = specialize(HAIKU55_CONFIG);
 
 // --- Sonnet 4.6 ---
 

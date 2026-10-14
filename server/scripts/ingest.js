@@ -59,7 +59,7 @@ const main = async () => {
   const augmentPrompt = noAugment ? null : await fs.readFile(CONFIG.AUGMENT_PROMPT, "utf8");
   console.log(noAugment
     ? "Augmentation OFF — breadcrumb + body vectors only."
-    : `Augmentation ON — ${CONFIG.SONNET5.model}.`);
+    : `Augmentation ON — ${CONFIG.SONNET55.model}.`);
 
   // Shared limiter so total in-flight LLM calls stay bounded across all files.
   const limit = makeLimit(4);
@@ -79,7 +79,7 @@ const main = async () => {
     ...(augmentPrompt ? {
       runLLM:    claudeRun,
       prompt:    augmentPrompt,
-      llmConfig: CONFIG.SONNET5,
+      llmConfig: CONFIG.SONNET55,
       limit,
     } : {}),
     onError: ({ stage, sectionIndex, cause }) => {

@@ -9,16 +9,20 @@ const apiKey = process.env.NEREUS_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API
  * @constant
  * @readonly
  * @description
- * Per-model pricing (USD per 1M tokens). Cache write is 1.25x standard input
- * (5-minute TTL); cache read is 0.1x standard input.
+ * Per-model pricing (USD per 1M tokens), from Anthropic's pricing page.
+ * Cache write is 1.25x standard input (5-minute TTL).
  *
  * | Model             | Input  | Cache Write | Cache Read | Output |
  * |-------------------|--------|-------------|------------|--------|
+ * | claude-fable-5-1  | $10.00 | $12.50      | $0.25      | $50.00 |
  * | claude-fable-5    | $10.00 | $12.50      | $1.00      | $50.00 |
+ * | claude-opus-5-5   |  $4.00 |  $5.00      | $0.20      | $20.00 |
  * | claude-opus-5     |  $5.00 |  $6.25      | $0.50      | $25.00 |
  * | claude-opus-4-8   |  $5.00 |  $6.25      | $0.50      | $25.00 |
+ * | claude-sonnet-5-5 |  $2.00 |  $2.50      | $0.10      | $10.00 |
  * | claude-sonnet-5   |  $2.00 |  $2.50      | $0.20      | $10.00 |
  * | claude-sonnet-4-6 |  $3.00 |  $3.75      | $0.30      | $15.00 |
+ * | claude-haiku-5-5  |  $0.10 |  $0.125     | $0.01      |  $0.50 |  (prompts <= 100K tokens)
  * | claude-haiku-4-5  |  $1.00 |  $1.25      | $0.10      |  $5.00 |
  *
  * @type {Object.<string, Pricing>}
@@ -34,14 +38,17 @@ const PRICING = Object.freeze({
   "claude-fable-5":            new Pricing({ input: { standard: 10.00, cacheWrite: 12.50, cacheRead: 1.00 }, output: { standard: 50.00 }, batchDiscount: 0.50 }),
   "claude-opus-5-5":           new Pricing({ input: { standard:  4.00, cacheWrite:  5.00, cacheRead: 0.20 }, output: { standard: 20.00 }, batchDiscount: 0.50 }),
   "claude-opus-5":             new Pricing({ input: { standard:  5.00, cacheWrite:  6.25, cacheRead: 0.50 }, output: { standard: 25.00 }, batchDiscount: 0.50 }),
+  // Haiku 5.5 is priced by prompt length. These are the rates for prompts of
+  // 100,000 tokens or fewer; a longer prompt pays 5x ($0.50 / $0.625 /
+  // $0.05 / $2.50). Pricing holds one rate card, and Nereus prompts stay far
+  // below the threshold, so the cost logged for a >100K prompt is low by 5x.
+  "claude-haiku-5-5":          new Pricing({ input: { standard:  0.10, cacheWrite:  0.125, cacheRead: 0.01 }, output: { standard:  0.50 }, batchDiscount: 0.50 }),
   "claude-sonnet-5-5":         new Pricing({ input: { standard:  2.00, cacheWrite:  2.50, cacheRead: 0.10 }, output: { standard: 10.00 }, batchDiscount: 0.50 }),
   "claude-opus-4-8":           new Pricing({ input: { standard:  5.00, cacheWrite:  6.25, cacheRead: 0.50 }, output: { standard: 25.00 }, batchDiscount: 0.50 }),
   "claude-sonnet-5":           new Pricing({ input: { standard:  2.00, cacheWrite:  2.50, cacheRead: 0.20 }, output: { standard: 10.00 }, batchDiscount: 0.50 }),
   "claude-haiku-4-5":          new Pricing({ input: { standard:  1.00, cacheWrite:  1.25, cacheRead: 0.10 }, output: { standard:  5.00 }, batchDiscount: 0.50 }),
 
-  // ── Legacy, still live. Retired models (claude-sonnet-4-20250514,
-  //    claude-opus-4-20250514) are intentionally absent — see the
-  //    deprecated aliases below.
+  // ── Legacy, still live. (Retired and removed: claude-sonnet-4-20250514, claude-opus-4-20250514.)
   "claude-sonnet-4-6":         new Pricing({ input: { standard:  3.00, cacheWrite:  3.75, cacheRead: 0.30 }, output: { standard: 15.00 }, batchDiscount: 0.50 }),
   "claude-haiku-4-5-20251001": new Pricing({ input: { standard:  1.00, cacheWrite:  1.25, cacheRead: 0.10 }, output: { standard:  5.00 }, batchDiscount: 0.50 }),
 });
@@ -159,8 +166,26 @@ const SONNET5_CONFIG = Object.freeze({
 });
 
 /**
- * Claude Haiku 4.5 — cheapest tier, for high-throughput classification,
- * extraction, and retrieve-and-paraphrase work.
+ * Claude Haiku 5.5 — the current Haiku: cheapest tier, for high-throughput
+ * classification, extraction, chat and retrieve-and-paraphrase work. A tenth
+ * of Haiku 4.5's price for prompts up to 100K tokens.
+ *
+ * Current-generation rules apply: no `temperature` / `top_p` / `top_k`
+ * (non-default values are a 400), no `budget_tokens`. Thinking is adaptive
+ * and on by default; depth is set with `output_config.effort` (default
+ * `medium`).
+ */
+const HAIKU55_CONFIG = Object.freeze({
+  ...BASE,
+  model: "claude-haiku-5-5",
+  max_tokens: 16000,
+  thinking: { type: "adaptive" },
+  pricing: PRICING["claude-haiku-5-5"],
+});
+
+/**
+ * Claude Haiku 4.5 — the previous Haiku, kept for existing callers. Prefer
+ * HAIKU55_CONFIG.
  *
  * Pre-4.6 model: it accepts `temperature` (verified against the live API) and
  * does NOT accept `thinking: {type:"adaptive"}`. `thinking: null` keeps an
@@ -176,8 +201,8 @@ const HAIKU45_CONFIG = Object.freeze({
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Legacy presets — retained for existing callers. Each nulls the keys the
-// current-generation default would otherwise contribute.
+// Legacy preset — retained for existing callers. It sets or nulls the keys
+// the current-generation default would otherwise contribute.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Claude Sonnet 4.6 — accepts temperature. Prefer SONNET5_CONFIG for new code. */
@@ -191,37 +216,10 @@ const SONNET46_CONFIG = Object.freeze({
 });
 
 /**
- * @deprecated Alias for {@link SONNET5_CONFIG}.
- *
- * `claude-sonnet-4-20250514` is RETIRED — the API returns
- * `404 not_found_error` for it (verified against the live API). The name is
- * kept so existing imports keep resolving, but it now points at Sonnet 5.
- *
- * This is not cosmetic: `server/endpoints/knowledgeBase/knowledgeBaseUpload.js`
- * used this preset for its `generate` and `augment` stages, so every
- * augmentation call was 404ing. Augmentation failures are per-section SOFT
- * errors, so the pipeline reported success while writing binaries that had
- * only breadcrumb + body vectors.
- *
- * Update call sites to SONNET5_CONFIG and delete this alias.
- */
-const SONNET45_CONFIG = SONNET5_CONFIG;
-
-/**
- * @deprecated Alias for {@link OPUS5_CONFIG}.
- *
- * `claude-opus-4-20250514` is RETIRED (404 from the live API). Opus 5 is also
- * a third of the price: $5/$25 against Opus 4's $15/$75.
- *
- * Update call sites to OPUS5_CONFIG and delete this alias.
- */
-const OPUS4_CONFIG = OPUS5_CONFIG;
-
-/**
  * @constant
  * @readonly
  * @description
- * Application default. Points at {@link SONNET5_CONFIG}.
+ * Application default. Points at {@link SONNET55_CONFIG}.
  *
  * The default MUST be a current-generation model, because it is the merge
  * base for every other config. A base carrying `temperature` breaks every
@@ -238,8 +236,8 @@ for (const [name, value] of Object.entries({
   FABLE51_CONFIG, FABLE5_CONFIG,
   OPUS55_CONFIG, OPUS5_CONFIG, OPUS48_CONFIG,
   SONNET55_CONFIG, SONNET5_CONFIG,
-  HAIKU45_CONFIG,
-  SONNET46_CONFIG, SONNET45_CONFIG, OPUS4_CONFIG,
+  HAIKU55_CONFIG, HAIKU45_CONFIG,
+  SONNET46_CONFIG,
   BASE, PRICING,
 })) {
   Object.defineProperty(DEFAULT_CONFIG, name, { value });

@@ -12,51 +12,75 @@ const ROOT = __dirname;
  * these override it so cost accounting reflects reality.
  */
 const PRICING = Object.freeze({
-  "claude-haiku-4-5": new Pricing({
-    input:  { standard: 1.00, cacheWrite: 1.25, cacheRead: 0.10 },
-    output: { standard: 5.00 },
+  // Haiku 5.5 is priced by prompt length. These are the rates for prompts of
+  // 100,000 tokens or fewer; a longer prompt pays 5x ($0.50 / $0.625 / $0.05
+  // / $2.50). Pricing holds one rate card, so a >100K prompt would be logged
+  // 5x low — not a concern here, since retrieval caps context at a handful of
+  // sections and a full request runs ~4K tokens.
+  "claude-haiku-5-5": new Pricing({
+    input:  { standard: 0.10, cacheWrite: 0.125, cacheRead: 0.01 },
+    output: { standard: 0.50 },
     batchDiscount: 0.50,
   }),
-  "claude-sonnet-5": new Pricing({
-    input:  { standard: 2.00, cacheWrite: 2.50, cacheRead: 0.20 },
+  "claude-sonnet-5-5": new Pricing({
+    input:  { standard: 2.00, cacheWrite: 2.50, cacheRead: 0.10 },
     output: { standard: 10.00 },
     batchDiscount: 0.50,
   }),
 });
 
 /**
- * Answer-path model. Haiku 4.5 — cheapest tier, and this is a
- * retrieve-and-paraphrase task. Swap to SONNET5 if voice quality
- * doesn't hold up against real questions.
+ * Answer-path model. Haiku 5.5 — cheapest tier, and this is a
+ * retrieve-and-paraphrase task. Swap to SONNET55 if voice quality doesn't
+ * hold up against real questions.
  *
- * `thinking: null` is deliberate: normalizeConfig deep-merges over the
- * vendored DEFAULT_CONFIG (Sonnet 4.6), which carries
- * `thinking: {type:"disabled"}`. Null keeps that from leaking into a
- * Haiku request.
+ * Ten times cheaper than the Haiku 4.5 this replaced ($0.10/$0.50 against
+ * $1/$5), which takes a query from roughly $0.005 to $0.0005.
+ *
+ * No `temperature`: Haiku 5.5 rejects it (verified against the live API),
+ * unlike Haiku 4.5 which accepted it. `thinking: adaptive` is the inverse —
+ * valid here, rejected on 4.5. The two Haikus are not drop-in compatible.
+ *
+ * Thinking is OFF for cost, not correctness. Adaptive works fine with the
+ * JSON output contract — run.js filters to text blocks, so thinking blocks
+ * never reach parseResponseJson, and three consecutive runs produced valid
+ * JSON. It just costs 20-40% more output tokens ($0.0012 against $0.0010 per
+ * query) for a retrieve-and-paraphrase task that does not visibly benefit.
+ *
+ * Turn it on if answer quality ever needs the headroom; measure first.
  */
-const HAIKU45 = Object.freeze({
+const HAIKU55 = Object.freeze({
   apiKey: process.env.ANTHROPIC_API_KEY,
-  model: "claude-haiku-4-5",
+  model: "claude-haiku-5-5",
   max_tokens: 2048,
-  temperature: 0.4,
-  thinking: null,
+  thinking: undefined,
   maxRetries: 3,
-  pricing: PRICING["claude-haiku-4-5"],
+  pricing: PRICING["claude-haiku-5-5"],
 });
 
-/** Ingest-path model. Augmentation quality compounds across every query. */
-const SONNET5 = Object.freeze({
+/**
+ * Ingest-path model. Augmentation quality compounds across every query, so
+ * this stays on a stronger model than the answer path.
+ *
+ * Sonnet 5.5 rather than Sonnet 5: identical base and output pricing, half
+ * the cache-read rate.
+ *
+ * `temperature: null` is deliberate — Sonnet 5.5 rejects the parameter, and
+ * null is dropped by the Config class, so a value inherited from the merge
+ * base can never reach the request.
+ *
+ * Thinking is left on here, unlike the answer path. Ingest runs once per
+ * corpus change rather than per visitor, so the extra output tokens are
+ * negligible, and augmentation quality compounds across every later query.
+ */
+const SONNET55 = Object.freeze({
   apiKey: process.env.ANTHROPIC_API_KEY,
-  model: "claude-sonnet-5",
+  model: "claude-sonnet-5-5",
   max_tokens: 4096,
-  // Both null deliberately. Config.js:120 drops null keys entirely, which is
-  // how we stop the vendored DEFAULT_CONFIG (Sonnet 4.6) from leaking
-  // `temperature: 0.5` and `thinking: {type:"disabled"}` into the request.
-  // Sonnet 5 rejects `temperature` outright: "deprecated for this model".
   temperature: null,
-  thinking: null,
+  thinking: { type: "adaptive" },
   maxRetries: 3,
-  pricing: PRICING["claude-sonnet-5"],
+  pricing: PRICING["claude-sonnet-5-5"],
 });
 
 module.exports = Object.freeze({
@@ -75,8 +99,8 @@ module.exports = Object.freeze({
   AUGMENT_PROMPT: path.join(ROOT, "prompts/augment-section.ppl"),
 
   PRICING,
-  HAIKU45,
-  SONNET5,
+  HAIKU55,
+  SONNET55,
 
   /**
    * Only the feature-extraction model is ever loaded. A bare prewarm()
@@ -153,29 +177,27 @@ module.exports = Object.freeze({
    * person, so scores compress into a narrow band well above 0.3 and the
    * default prunes nothing — every query returned the full 12 rows.
    *
-   * Swept against a 19-query labeled set (`npm run tune-floor`), measured
-   * after the domain-specific augment prompt and question-shaped headers:
+   * Swept against a 19-query labeled set (`npm run tune-floor`):
    *
    *   floor   hit@1   hit@3   rows
    *   0.30     87%    100%    12.0
-   *   0.75     87%    100%     6.4
-   *   0.80     87%    100%     4.2   <- chosen
-   *   0.82     93%    100%     3.5
-   *   0.84     80%     87%     2.7
-   *   0.90     67%     67%     1.4
+   *   0.70     87%    100%     8.3
+   *   0.78     87%    100%     5.1   <- chosen
+   *   0.80     80%     93%     4.3
+   *   0.84     80%     87%     2.8
    *
-   * 0.82 peaks on hit@1 but sits one step from the cliff. 0.80 holds hit@3
-   * at 100% with two steps of margin for 0.7 extra rows — the safer trade on
-   * a corpus that will grow.
+   * Caveat on reading that table too closely: with only 15 on-topic queries,
+   * a single one flipping moves a column by 6.7%, so neighbouring rows are
+   * within noise of each other. 0.78 is picked because it holds hit@3 at
+   * 100% and is not an isolated spike — 0.70 does too, and 0.78 gets there
+   * with 3 fewer rows of context. Growing the golden set is what would make
+   * finer tuning meaningful.
    *
-   * For reference, before the augmentation rewrite the best achievable was
-   * hit@1 67% / hit@3 80% at floor 0.68. The gain came from the prompt and
-   * headers, not from tuning.
-   *
-   * Re-run the sweep after any significant corpus change — the right floor is
-   * a property of the score distribution, not a constant.
+   * Re-run the sweep after any corpus change. The right floor is a property
+   * of the score distribution, not a constant — re-ingesting four documents
+   * was enough to move the previous pick.
    */
-  RETRIEVAL: Object.freeze({ floor: 0.80 }),
+  RETRIEVAL: Object.freeze({ floor: 0.78 }),
 
   /** Greeting shown when the analyzer sees a bare greeting and nothing else. */
   GREETING: "Hi — I'm William. Ask me about my work, my background, or how I think about building things.",

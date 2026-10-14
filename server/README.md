@@ -28,10 +28,43 @@ into the file, so edits invalidate them.
 
 ## Running
 
+    npm run verify                        # are the bins in sync with the markdown?
     npm run retrieve -- "your question"   # retrieval only, no API key, no cost
+    npm run tune-floor                    # sweep the cosine floor, no cost
     npm run ask -- "your question"        # full loop, one-shot
     npm run ask                           # full loop, interactive
-    npm run app                           # HTTP server
+    npm run app                           # HTTP server on :3002
+
+## Running the whole thing locally
+
+Two processes — the API, and a static server for the site. They are separate
+on purpose: in production the site is on GitHub Pages and only `/query` is
+dynamic, so a dead backend degrades to "the chat box is broken" rather than
+"the site is down".
+
+    # terminal 1 — the API
+    cd server && ALLOWED_ORIGIN='*' npm run app
+
+    # terminal 2 — the site
+    cd .. && python3 -m http.server 8000
+
+Then open http://localhost:8000. `scripts/api.js` points at
+`http://localhost:3002` for localhost and `https://api.william-brendel.com`
+everywhere else, so no configuration is needed to switch between them.
+
+Worth knowing: stop the API and the chat box still answers, in William's
+voice, telling the visitor to email instead. That path is deliberate — test
+it by killing the API process and asking a question.
+
+## Models
+
+| Path | Model | Cost |
+|---|---|---|
+| Answers (`/query`) | Claude Haiku 5.5 | ~$0.001/query |
+| Ingest augmentation | Claude Sonnet 5.5 | ~$3 per full re-ingest |
+
+Haiku 5.5 and Haiku 4.5 are NOT drop-in compatible: 5.5 rejects
+`temperature` and accepts `thinking: adaptive`; 4.5 is the exact inverse.
 
 ## Notes
 

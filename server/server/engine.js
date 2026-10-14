@@ -70,7 +70,7 @@ const build = async () => {
     analyzeQuery,
     runLLM:           claudeRun,
     prompts:          { answer: answerPrompt },
-    llmConfig:        CONFIG.HAIKU45,
+    llmConfig:        CONFIG.HAIKU55,
     searchOptions:    CONFIG.RETRIEVAL,
     greetingTemplate: CONFIG.GREETING,
     fallbackAnswer:   CONFIG.FALLBACK,
