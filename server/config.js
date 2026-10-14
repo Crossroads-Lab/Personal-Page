@@ -185,25 +185,35 @@ module.exports = Object.freeze({
    * person, so scores compress into a narrow band well above 0.3 and the
    * default prunes nothing — every query returned the full 12 rows.
    *
-   * Swept against a 19-query labeled set (`npm run tune-floor`):
+   * Swept against a 19-query labeled set (`npm run tune-floor`), after the
+   * segmentation fix in llms v1.4.0:
    *
    *   floor   hit@1   hit@3   rows
-   *   0.30     87%    100%    12.0
-   *   0.70     87%    100%     8.3
-   *   0.78     87%    100%     5.1   <- chosen
-   *   0.80     80%     93%     4.3
-   *   0.84     80%     87%     2.8
+   *   0.30     67%     93%    12.0
+   *   0.74     60%     93%     5.5
+   *   0.78     67%     93%     3.6   <- chosen
+   *   0.82     73%     93%     2.1
+   *   0.84     60%     73%     1.7
    *
-   * Caveat on reading that table too closely: with only 15 on-topic queries,
-   * a single one flipping moves a column by 6.7%, so neighbouring rows are
-   * within noise of each other. 0.78 is picked because it holds hit@3 at
-   * 100% and is not an isolated spike — 0.70 does too, and 0.78 gets there
-   * with 3 fewer rows of context. Growing the golden set is what would make
-   * finer tuning meaningful.
+   * These read WORSE than the pre-fix numbers (hit@1 87%, hit@3 100%), and
+   * that is worth understanding rather than treating as a regression.
    *
-   * Re-run the sweep after any corpus change. The right floor is a property
-   * of the score distribution, not a constant — re-ingesting four documents
-   * was enough to move the previous pick.
+   * Before the fix, multi-sentence headers were not recognised as headers and
+   * leaked into the corpus as content, so a document could occupy several of
+   * the top slots with header text that matched a question almost verbatim —
+   * these headers are written as questions. hit@3 is measured per document,
+   * so extra sections from the target document inflated it. The old score was
+   * partly measuring "did a header match", not "did we retrieve content worth
+   * answering from".
+   *
+   * Section count fell 125 -> 94 with the fix. Answer quality is unchanged on
+   * spot checks: the failure and disagreement queries both still return the
+   * right story from a single source.
+   *
+   * 0.82 scores slightly better but sits one step from a cliff at 0.84. 0.78
+   * keeps hit@3 at 93% with margin, for 1.5 more rows of context.
+   *
+   * Re-run the sweep after any corpus or segmentation change.
    */
   RETRIEVAL: Object.freeze({ floor: 0.78 }),
 

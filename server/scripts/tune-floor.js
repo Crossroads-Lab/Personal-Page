@@ -52,7 +52,7 @@ const GOLDEN = [
   ["what's the weather today?",                    null],
 ];
 
-const FLOORS = [0.70, 0.72, 0.74, 0.76, 0.78, 0.80, 0.82, 0.84];
+const FLOORS = [0.30, 0.70, 0.74, 0.78, 0.80, 0.82, 0.84, 0.86];
 
 const main = async () => {
   await prewarm(CONFIG.PREWARM);
