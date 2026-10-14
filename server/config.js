@@ -84,7 +84,12 @@ const HAIKU55 = Object.freeze({
 const SONNET55 = Object.freeze({
   apiKey: process.env.ANTHROPIC_API_KEY,
   model: "claude-sonnet-5-5",
-  max_tokens: 4096,
+  // 16000, not 4096. Augmentation emits one row per (fact, angle) pair, so a
+  // dense section — stories/iscribe_turnaround lists six separate
+  // achievements — can need well over 4096 tokens. Past the ceiling the JSON
+  // array is cut mid-write and fails to parse, which surfaced as "response is
+  // not a valid JSON array" and failed identically on every retry.
+  max_tokens: 16000,
   temperature: null,
   thinking: { type: "adaptive" },
   maxRetries: 3,
