@@ -2,7 +2,7 @@
 
 ## What was your role at Heali and when?
 
-I co-founded Heali AI and served as Chief Science Officer and Head of Product from May 2019 to March 2023. It was an AI-driven HealthTech startup focused on personalized nutrition for chronic disease management.
+I co-founded Heali AI and served as Chief Science Officer and Head of Product from May 2019 to May 2023. It was an AI-driven HealthTech startup focused on personalized nutrition for chronic disease management.
 
 ## What did you do at Heali AI?
 

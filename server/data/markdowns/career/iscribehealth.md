@@ -2,7 +2,7 @@
 
 ## What was your role at iScribeHealth and when?
 
-I was VP of Engineering at iScribeHealth from January 2025 to August 2025, running a 10-person engineering organization on a $2M annual budget.
+I was VP of Engineering at iScribeHealth from January 2025 to July 2025, running a 10-person engineering organization on a $2M annual budget.
 
 ## What did you own at iScribeHealth? What were you responsible for?
 

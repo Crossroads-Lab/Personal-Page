@@ -2,7 +2,7 @@
 
 ## What was your role at Google and YouTube and when?
 
-I was a Machine Learning Engineer at Google on YouTube from July 2011 to November 2012.
+I was a Machine Learning Engineer at Google on YouTube from August 2011 to November 2012.
 
 ## What did you build at YouTube?
 
