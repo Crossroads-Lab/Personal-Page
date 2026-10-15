@@ -60,7 +60,11 @@ const PRICING = Object.freeze({
 const HAIKU55 = Object.freeze({
   apiKey: process.env.ANTHROPIC_API_KEY,
   model: "claude-haiku-5-5",
-  max_tokens: 2048,
+  // 4096, not 2048. An answer drawing on several sections plus its follow-up
+  // questions ran past 2048 and was cut mid-string, so the JSON would not
+  // parse. Output is billed per token used, not per token allowed, so the
+  // headroom is free; a truncated answer is not.
+  max_tokens: 4096,
   thinking: undefined,
   maxRetries: 3,
   pricing: PRICING["claude-haiku-5-5"],
@@ -164,6 +168,40 @@ module.exports = Object.freeze({
           "how big was your team?",
           "have you raised funding?",
           "what do you think the industry looks like in five years?",
+
+          // Added 2026-10-15. The anchors above were written for a corpus of
+          // 28 career-fact documents, and every one of them is a specific,
+          // past-tense question about a job. The corpus has since grown to 50
+          // and gained whole shapes of content they do not cover: origin
+          // stories, convictions, personal background, the book, hobbies.
+          //
+          // The symptom was severe and silent. "How did you get into AI?" —
+          // the literal first header in stories/how_i_ended_up_in_ai.md —
+          // classified as CONVERSATIONAL at 0.22, so the segment was dropped
+          // BEFORE retrieval ran and the model declined a question the corpus
+          // answers at length. No retrieval floor could have rescued it.
+          //
+          // Casually-phrased questions were scoring worse than formal ones,
+          // which is backwards for a page whose visitors are mostly casual.
+          // Anchors are embedded at engine build, so adding them costs a
+          // restart, not a re-ingest.
+          "how did you get into AI?",
+          "how did you end up doing this?",
+          "where are you from?",
+          "how did you end up in the United States?",
+          "tell me something interesting about yourself",
+          "what's your best story?",
+          "what do you do outside of work?",
+          "what are your hobbies?",
+          "what are your values?",
+          "what do you believe about AI?",
+          "what keeps you awake at night?",
+          "have you written a book?",
+          "how old are you?",
+          "can you work in Europe?",
+          "why should I hire you?",
+          "what was your childhood like?",
+          "what's the most misunderstood thing about you?",
         ],
       },
       SUPPORT: {
@@ -220,10 +258,66 @@ module.exports = Object.freeze({
    *
    * Re-run the sweep after any corpus or segmentation change.
    */
-  RETRIEVAL: Object.freeze({ floor: 0.78 }),
+  /**
+   * Cosine floor for retrieval.
+   *
+   * 0.70, chosen by running the 50-question executive interview battery
+   * through the real engine (`npm run coverage`) rather than by sweeping the
+   * golden set. Grounded answers, out of 50:
+   *
+   *     floor 0.82 -> 14      floor 0.78 -> 21
+   *     floor 0.74 -> 31      floor 0.70 -> 40
+   *
+   * Note this CONTRADICTS `npm run tune-floor`, which recommends 0.82. That
+   * sweep is not wrong, it is answering a different question: its golden set
+   * is 15 short factual lookups ("what did you do at Snap?"), and a short
+   * query against a short section scores high. Real visitors ask long,
+   * multi-clause behavioural questions, which score lower against the same
+   * sections — so a floor tuned on the golden set silently hides material
+   * that is present and relevant.
+   *
+   * Verified at 0.70, because more recall is only good if it stays honest:
+   *   - the answers newly surfaced are genuinely grounded, not stitched —
+   *     spot-checked on the questions that flipped from declined to answered
+   *   - off-topic still declines cleanly (sourdough, World Cup, "write me a
+   *     scraper") with no source attached
+   *
+   * Lower floors return more rows, so context cost per query rises. At this
+   * corpus size that is fractions of a cent and worth it.
+   */
+  RETRIEVAL: Object.freeze({ floor: 0.70 }),
 
   /** Greeting shown when the analyzer sees a bare greeting and nothing else. */
   GREETING: "Hi — I'm William. Ask me about my work, my background, or how I think about building things.",
+
+  /**
+   * Openers offered when there is nothing to generate follow-ups from.
+   *
+   * The library's buildSimpleResponse() returns followUpQuestions: [] for
+   * every path that skips retrieval — a bare greeting, an off-topic decline,
+   * and the fallback. Those are exactly the moments a visitor has least idea
+   * what to ask, and until now each one was a dead end.
+   *
+   * Curated rather than generated, deliberately: there is no retrieved
+   * context to generate from, these need to be instant and free, and they are
+   * the one place the page gets to choose what it shows off. Each maps to a
+   * section that answers it well.
+   *
+   * STARTER_COUNT are sampled per response so a second visit looks different.
+   */
+  STARTERS: Object.freeze([
+    "How did you get into AI?",
+    "What's your background?",
+    "Why did you leave big tech?",
+    "What are your core values?",
+    "What keeps you awake at night?",
+    "Tell me about a time a project failed.",
+    "What's your best story from grad school?",
+    "How would you approach AI adoption at a company?",
+    "What's the hardest technical decision you've made?",
+    "What are you looking for in a role?",
+  ]),
+  STARTER_COUNT: 3,
 
   /**
    * Rate limits. Sized for a personal page: a genuinely curious visitor asks

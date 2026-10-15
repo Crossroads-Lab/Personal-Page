@@ -28,6 +28,21 @@ const resolveQuery = (body) => {
   return null;
 };
 
+/**
+ * A few opener questions, sampled without replacement so one response never
+ * shows the same question twice. Partial Fisher-Yates over a copy — the pool
+ * is small and this runs once per greeting, so clarity beats cleverness.
+ */
+const pickStarters = () => {
+  const pool = [...(CONFIG.STARTERS || [])];
+  const n = Math.min(CONFIG.STARTER_COUNT ?? 3, pool.length);
+  for (let i = 0; i < n; ++i) {
+    const j = i + Math.floor(Math.random() * (pool.length - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n);
+};
+
 const main = async () => {
   // Build the engine BEFORE listening so the first visitor never pays boot cost.
   const engine = await getEngine();
@@ -72,6 +87,13 @@ const main = async () => {
     try {
       const result = await engine.ask(query);
       const { stats, ...body } = result;
+
+      // Paths that skip retrieval — greeting, off-topic decline, fallback —
+      // come back from the library with no follow-ups, which leaves the
+      // visitor facing an empty input box at the one moment they have least
+      // idea what to ask. Offer curated openers instead.
+      if (!body.followUpQuestions?.length) body.followUpQuestions = pickStarters();
+
       res.json(body);
     } catch (err) {
       console.error("query:", err.message);
