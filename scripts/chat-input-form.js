@@ -187,7 +187,9 @@ const renderFollowUps = (questions) => {
   for (const question of questions) {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "follow-up";
+    // liquid-glass so a chip reads as the same material as the input bar,
+    // which is where clicking one puts the question anyway.
+    button.className = "follow-up liquid-glass";
     // textContent, not innerHTML — these strings come from the model.
     button.textContent = question;
     button.onclick = (event) => {
