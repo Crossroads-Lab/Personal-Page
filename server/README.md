@@ -46,9 +46,15 @@ dynamic, so a dead backend degrades to "the chat box is broken" rather than
     cd server && ALLOWED_ORIGIN='*' npm run app
 
     # terminal 2 — the site
-    cd .. && python3 -m http.server 8000
+    cd server && npm run site
 
-Then open http://localhost:8000. `scripts/api.js` points at
+Then open http://localhost:8000.
+
+`npm run site` rather than `python3 -m http.server`: the latter sends no
+Cache-Control, so a browser keeps serving a stale scripts/*.js after you edit
+it. ES modules make that worse — a cached module is reused across reloads, so
+an edit looks like it did nothing and you end up debugging code the page is
+not running. `npm run site` sends no-store. `scripts/api.js` points at
 `http://localhost:3002` for localhost and `https://api.william-brendel.com`
 everywhere else, so no configuration is needed to switch between them.
 
