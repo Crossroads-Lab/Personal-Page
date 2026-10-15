@@ -51,11 +51,47 @@ Plus Anthropic usage. Measured today: **$0.00118/query**. `guard.js` caps the
 world at 600 queries/day, so the absolute worst case is ~$0.71/day; realistic
 traffic on a personal page is pennies.
 
-**The honest alternative:** Lightsail is $5/month for 1 GB RAM, 2 vCPU, 40 GB
-SSD, 2 TB transfer, **static IPv4 included** — about half the EC2 price for
-this exact workload, because the IPv4 and the disk are in the bundle. You
-ruled Lightsail out earlier; I am noting it once because the cost gap is real
-and you are cost-sensitive. Everything below is EC2, as you asked.
+### Decisions already taken, so they are not relitigated
+
+**EC2, not Lightsail.** Lightsail is ~$5/month for the same workload because
+the IP and disk are bundled. It was considered and rejected on reliability:
+Lightsail does not expose instance auto-recovery or CloudWatch instance
+actions, which EC2 does. (Both are one VM in one AZ — the difference is the
+operational tooling, not the hardware.) Will's call, 2026-10-15.
+
+**EC2, not Lambda.** Measured, not assumed: a genuinely cold process — node
+start, config, Xenova ONNX load, all 28 bins, embed a query, score 3,787
+vectors — takes **0.56–0.75 s** on an M-series Mac. On Lambda's slower vCPU
+plus container-image init that becomes a realistic **3–6 s** cold start. The
+blocker is not the number, it is the frequency: Lambda goes cold after
+~5–15 minutes idle, and on a sparse personal page nearly every visitor is
+the first visitor, so a cold start would be the normal case rather than the
+exception. `guard.js` also keeps its rate-limit counters in memory, which
+does not survive multiple concurrent instances.
+
+**No free tier.** The account dates from 2013-10-14, so the 12-month free
+tier is long gone and `freetier get-free-tier-usage` reports nothing active.
+Every number here is on-demand.
+
+**The public IPv4 charge is unavoidable.** It looks like it could be dodged
+by putting the instance in a private subnet behind CloudFront, but the server
+must reach the internet *outbound* to call the Anthropic API. That needs
+either a public IP ($3.65/month) or a NAT Gateway (~$32/month). The public IP
+is the cheap option.
+
+### Getting it below $10
+
+The only real lever left is commitment, and it should wait:
+
+| | $/month |
+|---|---|
+| on-demand (start here) | 10.42 |
+| 1-year Compute Savings Plan, no upfront (~28% off compute) | ≈ 8.70 |
+| 3-year (~50% off compute) | ≈ 6.90 |
+
+Run on-demand for a month first. A Savings Plan is a real commitment and the
+discount applies to compute only — the IPv4 and the disk are unaffected
+either way. Revisit once there is a month of actual usage to size it against.
 
 **Sizing:** measured RSS of the running engine is 134–199 MB with the NLI
 classifier disabled (`CLASSIFIER.thresholds` at 0, so DeBERTa never loads).
@@ -196,6 +232,25 @@ brew install --cask session-manager-plugin
 **DNS stays at GoDaddy.** One A record `api` → the Elastic IP. No Route 53
 needed, saves the hosted-zone fee and a migration.
 
+**Reliability — the reason EC2 was chosen, so it must actually be wired up.**
+Three layers, all free:
+
+1. **Instance auto-recovery.** Modern Nitro instance types (t4g included)
+   recover by default when the *underlying host* fails: the instance restarts
+   on healthy hardware keeping its id, private IP and EBS volume. Confirm it
+   is on rather than assume it — `aws ec2 describe-instance-attribute
+   --attribute disableApiStop` and the instance's maintenance options.
+   Because the Elastic IP is associated, it survives the move.
+2. **systemd restarts the process.** `Restart=always` with `RestartSec=5` in
+   the unit, so a crash or OOM-kill comes back without anyone watching.
+3. **CloudWatch alarm on `StatusCheckFailed_Instance`** with an EC2 `recover`
+   action, plus email. This covers the case where the instance is up but
+   wedged, which auto-recovery alone does not catch.
+
+What none of this covers is an AZ outage — that needs a second instance in
+another AZ, which doubles the bill. Out of scope for a personal page; worth
+recording so the limit is known rather than discovered.
+
 ---
 
 ## 4. Steps I can run, once 2a–2e are done
@@ -212,7 +267,7 @@ In order, each verifiable before the next.
 | 6 | **You** add the GoDaddy A record `api` → that IP | `dig api.william-brendel.com` |
 | 7 | Caddy gets the certificate on first request | `curl https://api.william-brendel.com/health` from outside |
 | 8 | Point `scripts/api.js` at the real host and ship the frontend | the live site answers a question |
-| 9 | CloudWatch alarm on `StatusCheckFailed` → your email | force it and see the mail |
+| 9 | CloudWatch alarm on `StatusCheckFailed_Instance` → EC2 `recover` + your email; confirm auto-recovery is on | force it and see the mail |
 
 Rollback at any point: previous artifacts stay in the versioned bucket, so a
 redeploy is one SSM command with the older key.
