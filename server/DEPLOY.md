@@ -233,23 +233,36 @@ brew install --cask session-manager-plugin
 needed, saves the hosted-zone fee and a migration.
 
 **Reliability — the reason EC2 was chosen, so it must actually be wired up.**
-Three layers, all free:
 
-1. **Instance auto-recovery.** Modern Nitro instance types (t4g included)
-   recover by default when the *underlying host* fails: the instance restarts
-   on healthy hardware keeping its id, private IP and EBS volume. Confirm it
-   is on rather than assume it — `aws ec2 describe-instance-attribute
-   --attribute disableApiStop` and the instance's maintenance options.
-   Because the Elastic IP is associated, it survives the move.
-2. **systemd restarts the process.** `Restart=always` with `RestartSec=5` in
-   the unit, so a crash or OOM-kill comes back without anyone watching.
-3. **CloudWatch alarm on `StatusCheckFailed_Instance`** with an EC2 `recover`
-   action, plus email. This covers the case where the instance is up but
-   wedged, which auto-recovery alone does not catch.
+The two status checks mean different things and take *different* actions.
+AWS is explicit: "automatic instance recovery does not operate if only the
+instance status check fails" ([Automatic instance
+recovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-recover.html)).
+Pairing `recover` with the instance check — which this doc did until
+2026-10-15 — builds an alarm whose action AWS will not apply.
 
-What none of this covers is an AZ outage — that needs a second instance in
-another AZ, which doubles the bill. Out of scope for a personal page; worth
-recording so the limit is known rather than discovered.
+| Layer | Catches | Action |
+|---|---|---|
+| 1. Simplified auto-recovery (**on by default**) | host hardware/software failure → `StatusCheckFailed_System` | AWS migrates to a healthy host |
+| 2. CloudWatch alarm on `StatusCheckFailed_System` | same, but faster and with notification | `recover` + SNS email |
+| 3. CloudWatch alarm on `StatusCheckFailed_Instance` | the OS itself is broken/unreachable | **`reboot`** + SNS email |
+| 4. `systemd Restart=always`, `RestartSec=5` | the node process crashes or is OOM-killed | restart |
+| 5. systemd timer curling `/health` | process alive but wedged — **both status checks still pass** | restart the unit |
+
+Layer 5 matters more than it looks: a hung event loop keeps the instance
+healthy as far as EC2 is concerned, so nothing in layers 1–4 notices. That is
+the failure mode most likely to actually take this API down.
+
+A recovery preserves the instance id, the private **and Elastic IP**,
+metadata, attached EBS volumes and the AZ. It loses RAM and resets OS uptime
+— i.e. it looks like an unplanned reboot, which is why layer 4 must bring the
+service back by itself. Simplified recovery is not supported for instances
+with instance-store volumes attached at launch; t4g.micro on EBS is fine.
+
+What none of this covers is an **AZ outage** — that needs a second instance in
+another AZ behind a load balancer, which more than doubles the bill. Out of
+scope for a personal page; recorded so the limit is known rather than
+discovered.
 
 ---
 
@@ -267,7 +280,7 @@ In order, each verifiable before the next.
 | 6 | **You** add the GoDaddy A record `api` → that IP | `dig api.william-brendel.com` |
 | 7 | Caddy gets the certificate on first request | `curl https://api.william-brendel.com/health` from outside |
 | 8 | Point `scripts/api.js` at the real host and ship the frontend | the live site answers a question |
-| 9 | CloudWatch alarm on `StatusCheckFailed_Instance` → EC2 `recover` + your email; confirm auto-recovery is on | force it and see the mail |
+| 9 | The five reliability layers: confirm simplified recovery is on, `StatusCheckFailed_System` → `recover`, `StatusCheckFailed_Instance` → `reboot`, both → SNS email, plus the `/health` timer | `aws ec2 describe-instances` shows recovery enabled; kill the unit and watch it come back |
 
 Rollback at any point: previous artifacts stay in the versioned bucket, so a
 redeploy is one SSM command with the older key.
@@ -352,7 +365,12 @@ rather than hold the power to delete the box).
                  "logs:GetLogEvents", "logs:FilterLogEvents",
                  "logs:DescribeLogGroups", "logs:DescribeLogStreams"],
       "Resource": "*",
-      "Condition": { "StringEquals": { "aws:RequestedRegion": "us-east-1" } } }
+      "Condition": { "StringEquals": { "aws:RequestedRegion": "us-east-1" } } },
+
+    { "Sid": "AlarmEmail", "Effect": "Allow",
+      "Action": ["sns:CreateTopic", "sns:Subscribe", "sns:GetTopicAttributes",
+                 "sns:SetTopicAttributes", "sns:ListSubscriptionsByTopic"],
+      "Resource": "arn:aws:sns:us-east-1:<ACCOUNT_ID>:personal-page-alarms" }
   ]
 }
 ```
@@ -368,6 +386,11 @@ Two notes on that policy:
 - `ec2:RunInstances` with `RequestedRegion` is still broad enough to launch an
   expensive instance. If you want that tightened, add a condition on
   `ec2:InstanceType`. Your budget alarm from 2b is the backstop either way.
+- The alarm `recover` and `reboot` actions use `arn:aws:automate:us-east-1:ec2:*`
+  targets, which need no service role — so nothing here requires IAM writes.
+- **You will have to click a confirmation link.** An SNS email subscription is
+  pending until the address confirms it, and an unconfirmed topic silently
+  delivers nothing. Worth testing the alarm once rather than trusting it.
 
 Then:
 
