@@ -61,6 +61,14 @@ menuButton.onclick = event => {
   chatContainer.hasAttribute("menu-visible", "") ?
     chatContainer.removeAttribute("menu-visible")
     : chatContainer.setAttribute("menu-visible", "");
+
+  // The hint exists to point at this button. Once it has been pressed the
+  // hint has done its job, so retire it. It fades rather than being removed:
+  // #welcome is centre-aligned, so taking the element out would re-centre the
+  // block and jump the headline at the moment the menu opens. It may already
+  // be gone — asking a question clears all of #welcome — hence the optional
+  // chaining.
+  document.getElementById("welcome-hint")?.setAttribute("dismissed", "");
 }
 
 document.body.onclick = 

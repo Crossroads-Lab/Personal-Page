@@ -67,6 +67,23 @@ main::after {
   padding-top: 16px;
   font-weight: 300;
   color: rgb(from var(--color) r g b / 0.6);
+  transition: opacity 260ms ease;
+}
+
+/* Set by chat-input-form.js the first time the menu button is pressed: the
+   hint points at that button, so it is spent once the button is used. Opacity
+   only — it keeps its space on purpose, because #welcome centres its children
+   and removing it would shift the headline just as the menu opens. */
+#welcome-hint[dismissed] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Someone who prefers less motion gets the same outcome without the fade. */
+@media (prefers-reduced-motion: reduce) {
+  #welcome > div:first-of-type > span:last-of-type {
+    transition: none;
+  }
 }
 
 #welcome i {
