@@ -30,7 +30,33 @@ body:before {
   background: url("../assets/background.webp") no-repeat right 70% / cover scroll;
 }
 
-/* 
+/*
+ * =====================================================
+ * WELCOME HEADLINE
+ * =====================================================
+ * "start?" is set in a serif italic against the Poppins of the rest of the
+ * line — the one word the question turns on, and the only type contrast on
+ * the page.
+ *
+ * 1.24em is an optical match, not a nominal one. Measured off the canvas at
+ * 100px: Poppins has an x-height of 54.8 and Times italic 44.19, so Times set
+ * at the same nominal size reads as a step DOWN. 54.8 / 44.19 = 1.24 puts the
+ * x-heights level, which is the right target here because "start?" is all
+ * lowercase. (Matching cap-heights instead would want only 1.05 — wrong for a
+ * word with no capital in it.)
+ *
+ * The stack ends in the generic `serif` on purpose. Times New Roman ships on
+ * macOS and Windows but not on Android or most Linux, where `serif` resolves
+ * to Noto Serif — a different face, but still a serif italic against a sans,
+ * which is the whole point of the contrast.
+ */
+#welcome h1 .accent {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-size: 1.24em;
+}
+
+/*
  * =====================================================
  * MOBILE RESPONSIVE LAYOUT
  * =====================================================

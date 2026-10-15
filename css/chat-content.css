@@ -139,15 +139,20 @@ main::after {
   max-width: 100%;
 }
 
-/* Styling comes from .liquid-glass (common.css) — the same material as the
-   input bar, so the chips read as part of it rather than as links. The rim is
-   that class's inset box-shadow, so there is no border here to fight it, and
-   hover is inherited too. Only shape and type are set below. */
+/* The pill itself comes from .liquid-glass (common.css) — the same material
+   as the input bar, so a chip reads as part of that surface. The rim is that
+   class's inset box-shadow, so there is no border here to fight it, and hover
+   comes with it. Only shape, type and colour are set below.
+
+   The text stays --blue: the glass alone gives no hint that a chip is
+   clickable, and blue is the one cue on the page that says it is. Tried
+   against the suit navy sampled from the portrait (#404860 and darker
+   mixes) — those read as body text at this size, so the lighter blue won. */
 .follow-up {
   font-family: inherit;
   font-size: 0.875em;
   text-align: left;
-  color: inherit;
+  color: var(--blue);
   border: 0;
   border-radius: var(--border-radius-round);
   padding: 10px 18px;
