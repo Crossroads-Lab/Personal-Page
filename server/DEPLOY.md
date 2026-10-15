@@ -93,10 +93,16 @@ Run on-demand for a month first. A Savings Plan is a real commitment and the
 discount applies to compute only — the IPv4 and the disk are unaffected
 either way. Revisit once there is a month of actual usage to size it against.
 
-**Sizing:** measured RSS of the running engine is 134–199 MB with the NLI
-classifier disabled (`CLASSIFIER.thresholds` at 0, so DeBERTa never loads).
-1 GB is genuinely enough with a swap file. Start at **t4g.micro**; it is one
-`modify-instance-attribute` to move to small if memory alarms fire.
+**Sizing:** measured RSS of the running engine is **326 MB** on the current
+50-document corpus, with the NLI classifier disabled (`CLASSIFIER.thresholds`
+at 0, so DeBERTa never loads). It was 134–199 MB at 28 documents on
+2026-10-14 — the corpus grew 79% and resident memory grew with it, so treat
+this as a number that moves with the corpus rather than a fixed cost.
+
+1 GB is still enough with a swap file, but the margin is now ~600 MB rather
+than ~800 MB. Start at **t4g.micro** and watch it: another doubling of the
+corpus would make t4g.small the honest choice. Moving up is one
+`modify-instance-attribute` and a reboot.
 
 ---
 
