@@ -167,7 +167,10 @@ main::after {
    mixes) — those read as body text at this size, so the lighter blue won. */
 .follow-up {
   font-family: inherit;
-  font-size: 0.875em;
+  /* Was 0.875em, which rendered at 12.25px against 14px body copy and read as
+     fine print. A chip is the primary next action, so it matches the answer
+     text rather than sitting under it — equal weight, not louder. */
+  font-size: 1em;
   text-align: left;
   color: var(--blue);
   border: 0;
