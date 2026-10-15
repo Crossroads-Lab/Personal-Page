@@ -18,13 +18,12 @@
   "author": "William Brendel",
   "license": "MIT",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.0",
     "@xenova/transformers": "^2.17.2",
     "cors": "^2.8.5",
     "dictionary-en": "^4.0.0",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "llms": "github:williambrendel/llms#v1.7.0",
+    "llms": "github:williambrendel/llms#v1.8.0",
     "nspell": "^2.1.5"
   }
 }
