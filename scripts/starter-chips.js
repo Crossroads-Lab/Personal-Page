@@ -98,11 +98,22 @@ container?.addEventListener("scroll", markOverflow, { passive: true });
 
 const render = (starters) => {
   if (!container) return;
+  // Mounted in the "entering" state so the chips arrive as the same staggered
+  // wave they leave on, rather than appearing fully formed the instant the
+  // fetch lands — after a beat of empty space that reads as a glitch.
+  container.setAttribute("entering", "");
   container.replaceChildren(
     ...starters.map(({ label, q }) => chip(label, () => ask(q))),
     chip(CONTACT_LABEL, openContactMenu, true),
   );
   markOverflow();
+
+  // Two frames, not one. A single rAF can run before the browser has styled
+  // the nodes that were just inserted, and the start state would never be
+  // committed — the chips would simply appear, with no transition to run
+  // from. The second frame guarantees there is something to animate out of.
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => container.removeAttribute("entering")));
 };
 
 // Fade the chips while the visitor is composing, and bring them back if they

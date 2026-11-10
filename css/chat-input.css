@@ -386,7 +386,6 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   /* The chips must keep their shape — shrinking them squeezes the text into
      the rounded ends long before the row runs out of room. */
   padding: 2px 0;
-  transition: opacity 240ms ease, transform 240ms ease;
 }
 
 #starter-chips::-webkit-scrollbar {
@@ -444,8 +443,36 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   padding: 10px 18px;
   cursor: pointer;
   max-width: 100%;
-  transition: background-color 120ms ease;
+
+  /* The row leaves and returns as a wave rather than as a slab: each chip is
+     held back a little longer than the one before it. Four chips moving in
+     lockstep read as one object being hidden; the same four offset by 45ms
+     read as a set of options stepping aside, which is what they are.
+
+     A custom property rather than four `transition-delay` rules, because the
+     delay must apply to opacity and translate WITHOUT applying to
+     background-color — a hover that takes 135ms to begin feels broken. */
+  --stagger: 0ms;
 }
+
+/* The `#starter-chips` prefix is load-bearing. common.css carries a blanket
+   `body:not([loading]) * { transition: var(--transition-time) }`, which at
+   (0,1,1) outranks a bare `.starter-chip` — so the per-chip timing above was
+   being replaced wholesale by `all 0.3s` and the wave never ran. The id puts
+   this out of its reach. */
+#starter-chips .starter-chip {
+  transition:
+    background-color 120ms ease,
+    opacity 200ms ease var(--stagger),
+    translate 260ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--stagger);
+}
+
+/* Left to right, out and back. The step is small on purpose: much past 50ms
+   and the last chip is visibly late rather than part of the same gesture. */
+#starter-chips .starter-chip:nth-child(2) { --stagger: 45ms; }
+#starter-chips .starter-chip:nth-child(3) { --stagger: 90ms; }
+#starter-chips .starter-chip:nth-child(4) { --stagger: 135ms; }
+#starter-chips .starter-chip:nth-child(5) { --stagger: 180ms; }
 
 /* The odd one out, and it should look it: every other chip asks a question
    and keeps the visitor on the page, this one leaves it. It takes the weight
@@ -466,6 +493,11 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
    none` does not touch them, and a padding or font-size change would resize
    the chip without any of the four being involved.
 
+   `translate` is the one thing NOT pinned here: it is what carries the
+   staggered wave, and freezing it would snap a chip into place if it were
+   pressed mid-animation. Nothing sets it on press, so there is nothing to
+   pin.
+
    `button.starter-chip` and the doubled `:hover:active` are deliberate. The
    glass rules in common.css are `button.liquid-glass:hover`, which outranks
    a plain `.starter-chip:active` — so a press was still taking the hover
@@ -477,7 +509,6 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
 button.starter-chip:hover:active {
   transform: none;
   scale: 1;
-  translate: none;
   rotate: none;
   padding: 10px 18px;
   font-size: 1em;
@@ -501,9 +532,22 @@ button.starter-chip:hover:active {
    the phone block). Sliding the other way reads as the chips running off the
    screen rather than tucking behind the thing that replaced them. */
 #chat-input-container[input-focused] #starter-chips {
-  opacity: 0;
-  transform: translateY(-12px);
+  /* The row is inert as a whole; the moving is done per chip, below. */
   pointer-events: none;
+}
+
+#chat-input-container[input-focused] .starter-chip {
+  opacity: 0;
+  translate: 0 -12px;
+}
+
+/* First paint: the same wave, arriving. Without it the row appears fully
+   formed the instant the fetch lands, which after a beat of empty space
+   reads as a glitch rather than as an offer. starter-chips.js sets the
+   attribute, then drops it once the browser has the start state. */
+#starter-chips[entering] .starter-chip {
+  opacity: 0;
+  translate: 0 10px;
 }
 
 /* Gone for good once a conversation exists — the model's follow-ups are
@@ -549,8 +593,11 @@ body[chat-started] #starter-chips {
     margin: 0 0 14px 50%;
   }
   /* Chips above the bar here, so "behind the bar" is downwards. */
-  #chat-input-container[input-focused] #starter-chips {
-    transform: translateY(12px);
+  #chat-input-container[input-focused] .starter-chip {
+    translate: 0 12px;
+  }
+  #starter-chips[entering] .starter-chip {
+    translate: 0 -10px;
   }
   .starter-chip.liquid-glass {
     background: rgb(from var(--liquid-glass-background) r g b / 0.5);
@@ -567,7 +614,11 @@ body[chat-started] #starter-chips {
 @media (prefers-reduced-motion: reduce) {
   body::after,
   #chat-input-left-buttons,
-  #starter-chips {
+  #starter-chips,
+  .starter-chip {
     transition: none;
+  }
+  #starter-chips .starter-chip {
+    --stagger: 0ms;
   }
 }

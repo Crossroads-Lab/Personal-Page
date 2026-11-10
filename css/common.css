@@ -176,6 +176,8 @@ pre {
  * Remove default browser styling for consistent appearance
  */
 
+/* Appearance only. The state selectors are here to beat the user agent's own
+   :visited / :disabled styling, which is about colour and opacity. */
 .link, .link:visited, .link:active, .link:disabled,
 .button, .button:visited, .button:active, .button:disabled,
 button, button:visited, button:active, button:disabled {
@@ -187,6 +189,21 @@ button, button:visited, button:active, button:disabled {
   -webkit-text-decoration: none;
   /* Enable pointer events */
   pointer-events: auto;
+}
+
+/* Box model, unstyled states ONLY.
+ *
+ * These used to carry the same state list as the rule above, and that was a
+ * real bug: `button:active { padding: 0 }` meant every button on the site
+ * threw away its padding for as long as it was held down, collapsing to the
+ * size of its own text. It looked exactly like a press animation nobody
+ * wrote, and it was invisible to a scripted click, which releases too fast
+ * for the state to paint — it only showed up holding the mouse down.
+ *
+ * It also outranked the components: `button:active` is more specific than a
+ * bare `.follow-up`, so a chip's own padding lost to it. A component now has
+ * to opt out of nothing, because the reset no longer reaches into :active. */
+.link, .button, button {
   margin: 0;
   padding: 0;
   border: 0;
