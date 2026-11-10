@@ -171,7 +171,9 @@ cat > "$WORK/params.json" <<JSON
   "chown -R app:app /opt/personal-page/releases/$SHA",
   "ln -sfn /opt/personal-page/releases/$SHA /opt/personal-page/current",
   "systemctl restart personal-page",
-  "rm -f /tmp/$SHA.tar.gz"
+  "rm -f /tmp/$SHA.tar.gz",
+  "cd /opt/personal-page/releases && ls -1dt */ | tail -n +3 | xargs -r rm -rf",
+  "df -h / | awk 'NR==2{print \"disk after prune: \"\$3\" of \"\$2\", \"\$5}'"
 ]}
 JSON
 

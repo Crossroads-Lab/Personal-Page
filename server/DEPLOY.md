@@ -8,6 +8,33 @@
 > here. Never paste a key, an account number, an instance id or an IP into
 > this file.
 
+## It is live
+
+Deployed 2026-11-10. `https://api.william-brendel.com` serves the corpus over
+TLS from a t4g.micro in us-east-1, and `william-brendel.com` talks to it.
+
+| | |
+|---|---|
+| instance | `i-09c285c48ade2b871`, t4g.micro, us-east-1a |
+| address | `44.199.113.186` (Elastic IP), `api` A record at GoDaddy |
+| certificate | Let's Encrypt, auto-renewing, via Caddy |
+| memory | 344 MB of 910 MB used; 2 GB swap, untouched |
+| disk | 65% of 8 GB with two releases kept |
+| boot | engine ready in 1.5s, 50 documents |
+
+**Deploy with `npm --prefix server run ship`** — from the Mac, the way Nereus
+does it. The GitHub workflow is the backup and needs no maintenance to stay
+that way.
+
+Reliability, as wired: Nitro auto-recovery (default, on), a
+`StatusCheckFailed_System` alarm that recovers, a `StatusCheckFailed_Instance`
+alarm that reboots, `systemd Restart=always`, and a timer that curls `/health`
+every two minutes and restarts a wedged process — the failure no EC2 status
+check can see. All three units are enabled at boot.
+
+**Outstanding:** confirm the SNS email subscription, or the alarms fire into
+nothing.
+
 The battle plan for putting `server/` on AWS. Modelled on Nereus
 (`Nereus/nereus-infra/README.md`) but scaled down hard: Nereus runs ECS
 Fargate across two regions for ~$770/month, and this is one small box.
