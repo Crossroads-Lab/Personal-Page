@@ -21,13 +21,13 @@ Description: >-
 Parameters:
   GitHubOwner:
     Type: String
-    Default: Crossroads-Lab
+    Default: williambrendel
     Description: >-
       Owner of the Personal-Page repo. GitHub's OIDC subject is matched
       LITERALLY, so this must be the real owner or the workflow's token will
       never match this role and the deploy will fail while looking like an AWS
-      problem. Change to williambrendel after transferring the repo and
-      redeploy this stack.
+      problem. The repo moved out of Crossroads-Lab on 2026-11-10;
+      this default reflects that.
 
   GitHubRepo:
     Type: String

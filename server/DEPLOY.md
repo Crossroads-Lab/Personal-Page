@@ -181,7 +181,7 @@ token**: repository access = `williambrendel/llms` only, permission =
 **Contents: Read-only**, expiry 1 year. Then add it to this repo:
 
 ```bash
-gh secret set LLMS_READ_TOKEN --repo Crossroads-Lab/Personal-Page
+gh secret set LLMS_READ_TOKEN --repo williambrendel/Personal-Page
 ```
 
 The token is used **only inside the CI runner**, to build `node_modules`.
@@ -194,26 +194,25 @@ One CloudFormation stack, `personal-page-bootstrap`, creating:
 - the **GitHub OIDC provider** (`token.actions.githubusercontent.com`) — your
   account has none yet, so this creates it
 - **`personal-page-deploy`** — the role GitHub assumes, trusted *only* for
-  `repo:Crossroads-Lab/Personal-Page:ref:refs/heads/main`
+  `repo:williambrendel/Personal-Page:ref:refs/heads/main`
 - **`personal-page-instance`** — the instance profile the box runs as
 - the **artifact S3 bucket**, private, versioned, public access blocked
 
 The template exists now: `server/infra/bootstrap.yml` (validated against
 CloudFormation). The repo owner is a **parameter**, not a literal, because the
-OIDC subject is matched literally and the repo may move out of Crossroads-Lab:
+OIDC subject is matched literally, and this repo has already moved owners once:
 
 ```bash
 aws cloudformation deploy \
   --template-file server/infra/bootstrap.yml \
   --stack-name personal-page-bootstrap \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides GitHubOwner=Crossroads-Lab \
   --profile will
 ```
 
-After transferring the repo, re-run the same command with
-`GitHubOwner=williambrendel`. The stack's `TrustedSubject` output prints the
-exact string the role trusts — compare it against the workflow's token if a
+The repo moved to `williambrendel` on 2026-11-10 and that is now the
+parameter's default, so no override is needed. The stack's `TrustedSubject`
+output prints the exact string the role trusts — compare it against the workflow's token if a
 deploy ever fails to assume the role.
 
 ---
