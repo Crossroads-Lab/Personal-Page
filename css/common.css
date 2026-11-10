@@ -140,7 +140,13 @@ input[type=number] {
 
 html,
 body {
-  width: 100dvw;
+  /* 100%, not 100dvw. The viewport units INCLUDE the scrollbar, so the
+     moment a scrollbar appears the body is wider than the area it can be
+     seen in: the page gains a horizontal scrollbar it never needed, and the
+     right edge of the body — background and all — sits underneath the
+     vertical scrollbar as a strip that does not match the page. 100% is the
+     containing block, which is the area actually available. */
+  width: 100%;
   height: 100dvh;
 }
 

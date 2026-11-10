@@ -27,21 +27,30 @@ body:before {
   left: 0;
   width: 100%;
   height: 100%;
-  /* The portrait is 1389x2000 and the page background is the same colour as
-     its backdrop (#E3E5E6), so the image only has to be as large as the
-     person and the colour fills everything else.
-     
-     The size is width-aware on purpose. `auto 100%` scaled him to the
-     viewport HEIGHT and let the width fall where it may — so narrowing the
-     window did nothing at all to him, and on a tall narrow window he ran off
-     the side at full size. The pair below caps him in both directions at
-     once: 88% of the width, or 61vh worth of width, whichever is smaller.
-     61vh is 88% of 69.45vh, and 69.45 is the portrait's own aspect ratio
-     (1389/2000) — so the second term is "88% of the height" expressed as a
-     width, and the two agree. `contain` would do the capping but not the
-     88%, and the 88% is what makes him smaller than the frame rather than
-     exactly as tall as it. */
-  background: url("../assets/background.webp") no-repeat right bottom / min(88%, 61vh) auto scroll;
+  /* Sized to land him exactly where `cover` on the OLD artwork put him.
+   *
+   * That artwork was 4096x2726 — LANDSCAPE, with him occupying 27.4% of its
+   * width and 65.7% of its height, hard against the right edge. `cover`
+   * therefore scaled by width on a wide window and by height on a narrow
+   * one, and he came out at max(0.437 x W, 0.657 x H) tall either way.
+   *
+   * The replacement artwork is 1389x2000 — PORTRAIT, cropped tight, with him
+   * filling 84% of its height. Same `cover` on this canvas makes him the
+   * whole screen, which is what went wrong: the sizing was never the bug,
+   * the change of canvas was.
+   *
+   * So the number is reconstructed rather than guessed. He should be
+   * max(0.437W, 0.657H) tall; he is 84% of this image's height; so the image
+   * must be max(0.520W, 0.782H), and the 0.8 is him a fifth smaller again,
+   * which is what was asked for. Measured, not eyeballed — see the canvas
+   * figures above.
+   *
+   * `bottom`, not the old `70%`: with `cover` the image overflowed and 70%
+   * cropped the top, pushing his head down. This image is smaller than the
+   * viewport, so a percentage would float him in open space instead. His
+   * feet are 0.3% off the bottom of the crop, so anchoring the crop to the
+   * bottom seats him on the floor, which is where 70% effectively had him. */
+  background: url("../assets/background.webp") no-repeat right bottom / auto max(41.6vw, 62.6vh) scroll;
 }
 
 /*
@@ -86,9 +95,9 @@ body:before {
  */
 @media only screen and (max-width: 600px) {
   body:before {
-    /* Same arithmetic, a little more generous: a phone has the width to
-       spare and he is the only thing on the middle of the screen. */
-    background-size: min(94%, 65vh) auto;
+    /* A phone is tall and narrow, so the vh term already governs and the
+       formula needs no help — only the anchor changes, because there is no
+       column of text beside him to leave room for. */
     background-position: center bottom;
   }
 }
