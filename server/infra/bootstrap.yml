@@ -60,10 +60,16 @@ Parameters:
     AllowedValues: ["yes", "no"]
     Default: "yes"
     Description: >-
-      "no" if this account already has the token.actions.githubusercontent.com
-      provider. It is global and may only exist once per account. Checked on
-      2026-10-14 for this account: none existed. Confirm with
-      `aws iam list-open-id-connect-providers --profile will`.
+      "no" ONLY if the token.actions.githubusercontent.com provider already
+      exists and was created outside this stack. It is global and may exist
+      only once per account.
+
+      DO NOT flip this to "no" on an update of a stack that created it. The
+      condition then evaluates false, CloudFormation deletes the provider it
+      owns, and every deploy fails with "The web identity token provided could
+      not be validated" — which reads like a thumbprint or clock problem and
+      is actually nothing there at all. That happened on 2026-11-10. Check
+      with `aws iam list-open-id-connect-providers` before changing it.
 
 Conditions:
   NewProvider: !Equals [!Ref CreateGitHubProvider, "yes"]
