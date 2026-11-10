@@ -9,7 +9,7 @@
 :root {
   /* -------------------- Colors -------------------- */
   --color: #111;                          /* Main text color (dark gray) */
-  --background: white;                    /* Main background color */
+  --background: #E3E5E6;                  /* Main background color — matches the portrait's own backdrop, so the image can be small and the colour fills the rest */
   --background-sidebar: #F0F0F0;          /* Sidebar background (light gray) */
   --link-color: #3DA5E0;                  /* Hyperlink color (blue) */
   --liquid-glass-background: white;   /* chat bar and other buttons (transparent-white) */
