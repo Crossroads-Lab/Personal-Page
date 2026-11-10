@@ -45,7 +45,8 @@ Parameters:
     Description: >-
       "no" if this account already has the token.actions.githubusercontent.com
       provider. It is global and may only exist once per account. Checked on
-      2026-10-14 for account 092633985894: none existed.
+      2026-10-14 for this account: none existed. Confirm with
+      `aws iam list-open-id-connect-providers --profile will`.
 
 Conditions:
   NewProvider: !Equals [!Ref CreateGitHubProvider, "yes"]
