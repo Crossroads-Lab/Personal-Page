@@ -61,12 +61,23 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/".insteadOf "ssh://git@github.com/williambrendel/"
           git config --global --add url."https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/".insteadOf "git@github.com:williambrendel/"
-          # Fail HERE with a clear message, not three minutes later inside
-          # npm ci with a misleading one.
-          if git ls-remote "https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/llms.git" HEAD >/dev/null 2>&1; then
-            echo "llms is reachable"
+          # Fail HERE, not three minutes later inside npm ci. Print git's own
+          # error rather than swallowing it: an exit code alone cannot tell
+          # an auth failure from a network or TLS one, and guessing from it
+          # cost three runs. Actions masks the token, so the URL in any error
+          # appears as ***.
+          echo "git $(git --version | awk '{print $3}')"
+          if OUT=$(git ls-remote "https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/llms.git" HEAD 2>&1); then
+            echo "llms is reachable: $(echo "$OUT" | head -1 | cut -c1-16)"
           else
-            echo "::error::cannot read williambrendel/llms with LLMS_READ_TOKEN — check the token's Repository access includes it, and that it has not expired"
+            echo "::error::cannot read williambrendel/llms — git said:"
+            echo "$OUT"
+            # Does the token work at all, outside git? Separates "bad token"
+            # from "git cannot reach github".
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' \
+                     -H "Authorization: Bearer ${LLMS_READ_TOKEN}" \
+                     https://api.github.com/repos/williambrendel/llms)
+            echo "api.github.com/repos/williambrendel/llms -> HTTP $CODE (200 means the token is fine and git is the problem)"
             exit 1
           fi
 
