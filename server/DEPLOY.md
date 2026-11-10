@@ -22,8 +22,8 @@ TLS from a t4g.micro in us-east-1, and `william-brendel.com` talks to it.
 | disk | 65% of 8 GB with two releases kept |
 | boot | engine ready in 1.5s, 50 documents |
 
-**Deploy with `npm --prefix server run ship`** — from the Mac, the way Nereus
-does it. The GitHub workflow is the backup and needs no maintenance to stay
+**Deploy with `npm --prefix server run ship`** — from the Mac, the way the
+larger projects on it do. The GitHub workflow is the backup and needs no maintenance to stay
 that way.
 
 Reliability, as wired: Nitro auto-recovery (default, on), a
@@ -81,13 +81,13 @@ Mac are other projects, whose own tooling prunes at scale; `scripts/ship.sh`
 deliberately prunes nothing, because nothing it creates is worth the risk of
 touching someone else's layers.
 
-The battle plan for putting `server/` on AWS. Modelled on Nereus
-(`Nereus/nereus-infra/README.md`) but scaled down hard: Nereus runs ECS
-Fargate across two regions for ~$770/month, and this is one small box.
+The battle plan for putting `server/` on AWS. Modelled on a larger
+production system of mine, scaled down hard: that one runs containers across
+multiple regions, and this is one small box.
 
-What carries over from Nereus is the *practice*, not the architecture:
+What carries over is the *practice*, not the architecture:
 
-| Nereus practice | Here |
+| The practice there | Here |
 |---|---|
 | GitHub reaches AWS by OIDC, **no stored AWS keys** | same |
 | Deploy role scoped to one repo + one branch | same |
@@ -210,8 +210,8 @@ These are real and I found them while surveying. None are large.
 ## 2. What you do once, by hand (I should not do these)
 
 These create identities. Giving an automated operator the power to create IAM
-roles is the same as giving it admin, so — exactly as Nereus does with
-`iam/nereus-iam.yml` ("run ONCE, by an admin") — you run these.
+roles is the same as giving it admin, so — exactly as the larger system does,
+where the identity stack is marked "run ONCE, by an admin" — you run these.
 
 ### 2a. Pick a region and set it on your profile
 
@@ -246,8 +246,8 @@ Type the value yourself — I will not handle the key.
 
 ### 2d. Create a fine-grained GitHub token for the private `llms` dependency
 
-`williambrendel/llms` is **private**, so `npm ci` needs read access. Nereus
-solves this with `LLMS_READ_TOKEN` as a BuildKit secret.
+`williambrendel/llms` is **private**, so `npm ci` needs read access. The
+larger system solves this with `LLMS_READ_TOKEN` as a BuildKit secret.
 
 GitHub → Settings → Developer settings → **Fine-grained personal access
 token**: repository access = `williambrendel/llms` only, permission =
@@ -383,7 +383,8 @@ redeploy is one SSM command with the older key.
 
 ## 5. The deploy workflow, once it exists
 
-Same shape as Nereus's `deploy-containers.yml`, minus the container:
+Same shape as the container deploy workflow it is modelled on, minus the
+container:
 
 1. `workflow_dispatch`, main only, after the tests pass
 2. OIDC into `personal-page-deploy` — no keys anywhere
