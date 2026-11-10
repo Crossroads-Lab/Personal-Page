@@ -425,11 +425,19 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   font-family: inherit;
   font-size: 1em;
   text-align: left;
-  /* Body colour, not --blue. A follow-up chip sits on the page background
-     where blue reads fine; these sit over the portrait's navy suit, where it
-     does not. Legibility first — the shape and the glass already say the
-     chip is pressable. */
-  color: var(--color);
+  /* 300, not the 400 a <button> inherits from the user agent. The body is
+     300 and the headline above is 400, so a 400 chip was the heaviest text
+     on an opening screen that is mostly whitespace — four of them read as a
+     toolbar rather than as suggestions.
+
+     Body colour, not --blue: a follow-up chip sits on the page background
+     where blue reads fine, these sit over the portrait's navy suit, where it
+     does not. Held back to 72% so the row settles under the headline instead
+     of competing with it — #111 at 72% over the glass is still around 11:1,
+     miles clear of the 4.5:1 floor, so this costs nothing in legibility. */
+  font-weight: 300;
+  color: rgb(from var(--color) r g b / 0.72);
+
   -webkit-tap-highlight-color: transparent;
   border: 0;
   border-radius: var(--border-radius-round);
@@ -437,6 +445,16 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   cursor: pointer;
   max-width: 100%;
   transition: background-color 120ms ease;
+}
+
+/* The odd one out, and it should look it: every other chip asks a question
+   and keeps the visitor on the page, this one leaves it. It takes the weight
+   the questions just gave up — same size, same shape, held a step firmer,
+   which is enough to read as "not another question" without needing a second
+   colour or a divider. */
+.starter-chip[data-contact] {
+  font-weight: 400;
+  color: var(--color);
 }
 
 /* Pressing a chip sends its question — the row has done its job and the page
