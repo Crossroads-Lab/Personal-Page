@@ -459,11 +459,33 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
 
 /* Pressing a chip sends its question — the row has done its job and the page
    moves on. It must not flinch first: no scale, no fade, no reflow, because
-   the chips sit directly under the thing the eye is about to follow. */
+   the chips sit directly under the thing the eye is about to follow.
+   
+   Everything that could move it is pinned, not just `transform`: `scale`,
+   `translate` and `rotate` are separate properties now and a `transform:
+   none` does not touch them, and a padding or font-size change would resize
+   the chip without any of the four being involved.
+
+   `button.starter-chip` and the doubled `:hover:active` are deliberate. The
+   glass rules in common.css are `button.liquid-glass:hover`, which outranks
+   a plain `.starter-chip:active` — so a press was still taking the hover
+   treatment (background to 80% white, opacity to 0.7), and a chip that pales
+   and flattens under the finger reads as one that shrank. The press now has
+   a state of its own: a touch deeper than rest, and nothing else. */
 .starter-chip:active,
-.starter-chip:focus {
+.starter-chip:focus,
+button.starter-chip:hover:active {
   transform: none;
+  scale: 1;
+  translate: none;
+  rotate: none;
+  padding: 10px 18px;
+  font-size: 1em;
   opacity: 1;
+}
+
+button.starter-chip:hover:active {
+  background: rgb(from var(--liquid-glass-background) r g b / 0.45);
 }
 
 .starter-chip:focus-visible {
