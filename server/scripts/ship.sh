@@ -136,8 +136,24 @@ fi
 # ── 4. Ship ──────────────────────────────────────────────────────────────
 step "upload"
 TARBALL="$WORK/$SHA.tar.gz"
-tar --exclude='.env' --exclude='.model_cache' --exclude='node_modules/.cache' \
+# COPYFILE_DISABLE and the ._* exclude are both about macOS. BSD tar writes an
+# AppleDouble sidecar "._name" for every file with extended attributes, and
+# those extract on Linux as ordinary files. The VectorStore globs *.bin, so
+# ._snap.bin became a document it tried to parse, and the service crash-looped
+# on "Invalid VECT binary: magic mismatch (got 0x7160500)" — which is
+# AppleDouble's own magic, 00 05 16 07, read little-endian. The real .bin
+# files were never touched. GitHub's Linux runner cannot produce these, so
+# this is a Mac-only failure the workflow would never have shown.
+COPYFILE_DISABLE=1 tar \
+    --exclude='.env' --exclude='.model_cache' --exclude='node_modules/.cache' \
+    --exclude='._*' --exclude='.DS_Store' \
     -czf "$TARBALL" -C "$WORK" server
+
+# Prove it, rather than trust the flags: an AppleDouble file in the archive
+# means a crash-loop on the box, discovered minutes later.
+if tar -tzf "$TARBALL" | grep -qE '(^|/)\._'; then
+  fail "The tarball still contains AppleDouble (._*) files, which the VectorStore would try to parse as documents."
+fi
 echo "  $(du -h "$TARBALL" | cut -f1)  ->  s3://$BUCKET/releases/$SHA.tar.gz"
 aws s3 cp "$TARBALL" "s3://$BUCKET/releases/$SHA.tar.gz" \
   --profile "$PROFILE" --region "$REGION" --only-show-errors
