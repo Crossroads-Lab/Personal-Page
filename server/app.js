@@ -101,10 +101,52 @@ const main = async () => {
     }
   });
 
-  app.listen(CONFIG.PORT, () => {
+  const server = app.listen(CONFIG.PORT, () => {
     console.log(`Listening on http://localhost:${CONFIG.PORT}`);
     console.log(`  POST /query   GET /health`);
   });
+
+  // ── Graceful shutdown ────────────────────────────────────────────────────
+  //
+  // A deploy restarts this process, and systemd sends SIGTERM. Without a
+  // handler Node exits immediately and every in-flight request dies — which
+  // here means a visitor watching an answer type out gets a dead connection,
+  // after we have already paid Anthropic for the answer.
+  //
+  // So: stop accepting new connections, let the ones in progress finish, then
+  // exit 0. A query is one Claude call, normally ~6s; the cap is generous
+  // enough for a slow one and short enough that a deploy is not held hostage.
+  // systemd's own TimeoutStopSec must exceed SHUTDOWN_GRACE_MS or it will
+  // SIGKILL us mid-drain and undo the point of this.
+  const SHUTDOWN_GRACE_MS = 25_000;
+  let shuttingDown = false;
+
+  const shutdown = (signal) => {
+    if (shuttingDown) return;          // a second signal must not restart the clock
+    shuttingDown = true;
+    console.log(`${signal} — draining, then exiting.`);
+
+    // Stop accepting new connections; those already in flight run to
+    // completion. /health deliberately keeps answering ok — there is no load
+    // balancer to drain from, and Caddy proxies to this box either way, so a
+    // readiness flag would have nothing reading it.
+    server.close(() => {
+      console.log("Drained cleanly.");
+      process.exit(0);
+    });
+
+    // Backstop: a wedged request must not hold the deploy open forever.
+    const timer = setTimeout(() => {
+      console.error(`Still busy after ${SHUTDOWN_GRACE_MS}ms — exiting anyway.`);
+      process.exit(0);
+    }, SHUTDOWN_GRACE_MS);
+    timer.unref();                      // never let this timer keep us alive
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT",  () => shutdown("SIGINT"));
+
+  return server;
 };
 
 main().catch(err => {

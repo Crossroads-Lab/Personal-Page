@@ -103,7 +103,22 @@ const SONNET55 = Object.freeze({
 module.exports = Object.freeze({
   ROOT,
   PORT: Number(process.env.PORT) || 3002,
-  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN || "*",
+  /**
+   * CORS origin.
+   *
+   * In production this must be the site and nothing else: the API spends real
+   * money per request, so any page that can call it can spend Will's budget
+   * from a visitor's browser, and guard.js limits by IP — which is the
+   * visitor's, not the embedder's. "*" would let any site mount this as a
+   * free Claude proxy.
+   *
+   * Default by environment rather than a bare "*": production locks to the
+   * site, everything else stays open so `npm run site` on :8000, a file://
+   * page, or curl all keep working. ALLOWED_ORIGIN overrides either way, so
+   * a staging host can set its own.
+   */
+  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN
+    || (process.env.NODE_ENV === "production" ? "https://william-brendel.com" : "*"),
 
   MARKDOWNS: path.join(ROOT, "data/markdowns"),
   DATASET:   path.join(ROOT, "data/vectorized-dataset"),

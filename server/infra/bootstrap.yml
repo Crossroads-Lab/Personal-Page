@@ -1,0 +1,209 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Identities and storage for deploying the personal-page API (run ONCE, by an
+  admin). Creates: GitHub's sign-in to AWS (OIDC, so no AWS keys are stored
+  anywhere), the role the deploy workflow assumes, the role the EC2 instance
+  runs as, and the private bucket holding release artifacts and the embedding
+  model cache.
+
+  Deliberately NOT here: the EC2 instance, the security group or the Elastic
+  IP. Those are day-to-day resources that an operator with the scoped `pp`
+  profile creates and replaces; this stack is the part that needs admin and
+  should change almost never.
+
+  Deploy:
+    aws cloudformation deploy \
+      --template-file server/infra/bootstrap.yml \
+      --stack-name personal-page-bootstrap \
+      --capabilities CAPABILITY_NAMED_IAM \
+      --profile will
+
+Parameters:
+  GitHubOwner:
+    Type: String
+    Default: Crossroads-Lab
+    Description: >-
+      Owner of the Personal-Page repo. GitHub's OIDC subject is matched
+      LITERALLY, so this must be the real owner or the workflow's token will
+      never match this role and the deploy will fail while looking like an AWS
+      problem. Change to williambrendel after transferring the repo and
+      redeploy this stack.
+
+  GitHubRepo:
+    Type: String
+    Default: Personal-Page
+
+  DeployBranch:
+    Type: String
+    Default: main
+    Description: Only this branch may assume the deploy role.
+
+  CreateGitHubProvider:
+    Type: String
+    AllowedValues: ["yes", "no"]
+    Default: "yes"
+    Description: >-
+      "no" if this account already has the token.actions.githubusercontent.com
+      provider. It is global and may only exist once per account. Checked on
+      2026-10-14 for account 092633985894: none existed.
+
+Conditions:
+  NewProvider: !Equals [!Ref CreateGitHubProvider, "yes"]
+
+Resources:
+
+  # ── Artifacts ────────────────────────────────────────────────────────────
+  # Release tarballs and the 125 MB embedding model cache, which is gitignored
+  # and so cannot travel in the repo. Versioned so a bad release can be rolled
+  # back by redeploying an older key rather than rebuilding it.
+  Artifacts:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Sub "personal-page-artifacts-${AWS::AccountId}"
+      VersioningConfiguration: { Status: Enabled }
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
+      LifecycleConfiguration:
+        Rules:
+          # Keep the current release forever; stop paying for every past one.
+          - Id: expire-old-release-versions
+            Status: Enabled
+            NoncurrentVersionExpirationInDays: 30
+          - Id: abort-incomplete-uploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload: { DaysAfterInitiation: 7 }
+
+  # ── GitHub's sign-in to AWS ──────────────────────────────────────────────
+  GitHubProvider:
+    Type: AWS::IAM::OIDCProvider
+    Condition: NewProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList: [sts.amazonaws.com]
+
+  # ── The role the deploy workflow assumes ─────────────────────────────────
+  GitHubDeploy:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: personal-page-deploy
+      Description: Deploy workflow of the Personal-Page repo (one branch only)
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Sub "arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                "token.actions.githubusercontent.com:aud": sts.amazonaws.com
+                "token.actions.githubusercontent.com:sub": !Sub "repo:${GitHubOwner}/${GitHubRepo}:ref:refs/heads/${DeployBranch}"
+      Policies:
+        - PolicyName: ship-releases
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: PutAndReadReleases
+                Effect: Allow
+                Action: [s3:PutObject, s3:GetObject, s3:ListBucket, s3:GetBucketLocation]
+                Resource:
+                  - !GetAtt Artifacts.Arn
+                  - !Sub "${Artifacts.Arn}/*"
+
+              # Find the box to deploy to. Describe* cannot be resource-scoped.
+              - Sid: FindTheInstance
+                Effect: Allow
+                Action: [ec2:DescribeInstances, ssm:DescribeInstanceInformation]
+                Resource: "*"
+
+              # Run the release script on it. Restricted to this one instance
+              # by tag, and to the one AWS-owned shell document.
+              - Sid: RunTheReleaseScript
+                Effect: Allow
+                Action: ssm:SendCommand
+                Resource:
+                  - !Sub "arn:aws:ssm:${AWS::Region}::document/AWS-RunShellScript"
+                  - !Sub "arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:instance/*"
+                Condition:
+                  StringEquals: { "ssm:resourceTag/App": "personal-page" }
+
+              - Sid: ReadTheResult
+                Effect: Allow
+                Action: [ssm:GetCommandInvocation, ssm:ListCommandInvocations]
+                Resource: "*"
+
+  # ── The role the instance runs as ────────────────────────────────────────
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: personal-page-instance
+      Description: The personal-page EC2 box
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: ec2.amazonaws.com }
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        # Lets SSM manage the box: this is what replaces inbound SSH, so there
+        # is no port 22 open and no .pem to lose.
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - PolicyName: read-its-own-release-and-secret
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: PullReleasesAndModels
+                Effect: Allow
+                Action: [s3:GetObject, s3:ListBucket]
+                Resource:
+                  - !GetAtt Artifacts.Arn
+                  - !Sub "${Artifacts.Arn}/*"
+
+              # The Anthropic key, read at boot. The box can read it; the
+              # deploy role deliberately cannot.
+              - Sid: ReadTheAnthropicKey
+                Effect: Allow
+                Action: [ssm:GetParameter, ssm:GetParameters]
+                Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/personal-page/*"
+
+              - Sid: DecryptThatParameter
+                Effect: Allow
+                Action: kms:Decrypt
+                Resource: "*"
+                Condition:
+                  StringEquals: { "kms:ViaService": !Sub "ssm.${AWS::Region}.amazonaws.com" }
+
+              - Sid: WriteItsOwnLogs
+                Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents, logs:DescribeLogStreams]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/personal-page/*"
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: personal-page-instance
+      Roles: [!Ref InstanceRole]
+
+Outputs:
+  ArtifactBucket:
+    Description: Releases and the embedding model cache
+    Value: !Ref Artifacts
+  DeployRoleArn:
+    Description: role-to-assume for the GitHub workflow
+    Value: !GetAtt GitHubDeploy.Arn
+  InstanceProfileName:
+    Description: Attach this when launching the instance
+    Value: !Ref InstanceProfile
+  TrustedSubject:
+    Description: The exact OIDC subject this role trusts — compare if a deploy cannot assume it
+    Value: !Sub "repo:${GitHubOwner}/${GitHubRepo}:ref:refs/heads/${DeployBranch}"

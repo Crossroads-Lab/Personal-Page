@@ -15,7 +15,8 @@
     "verify": "node scripts/manifest.js --verify",
     "site": "python3 scripts/serve-site.py",
     "coverage": "node scripts/coverage.js",
-    "calibrate-gate": "node scripts/calibrate-gate.js"
+    "calibrate-gate": "node scripts/calibrate-gate.js",
+    "push-models": "bash scripts/push-models.sh"
   },
   "author": "William Brendel",
   "license": "MIT",

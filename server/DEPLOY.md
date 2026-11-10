@@ -110,23 +110,29 @@ corpus would make t4g.small the honest choice. Moving up is one
 
 These are real and I found them while surveying. None are large.
 
-1. **No graceful shutdown.** `app.js` only calls `app.listen`. A deploy
-   restart kills in-flight requests. Nereus's container drains on SIGTERM for
-   up to 25 s. Needs a `SIGTERM` handler that stops accepting, waits for
-   in-flight queries, exits 0.
-2. **`ALLOWED_ORIGIN` is `"*"`.** Fine locally, wrong in public. Must become
-   `https://william-brendel.com`.
-3. **`.model_cache` is gitignored** (125 MB, 0 files tracked). Nereus commits
-   theirs so a container boots offline. We will not commit 125 MB to a repo
-   that GitHub Pages serves; it goes to S3 instead (step 4).
-4. **No CI.** There is no `.github/workflows/` in this repo at all.
-5. **`server/` is publicly served.** GitHub Pages publishes from the repo
-   root, so everything under `server/` is already readable at
-   `https://william-brendel.com/server/...`. That is deliberate and fine for
-   the corpus, but it means **no secret may ever land there** — the deploy
-   must not write config files into `server/`.
-
----
+1. ~~**No graceful shutdown.**~~ **Done.** `app.js` drains on SIGTERM/SIGINT:
+   stops accepting connections, lets in-flight queries finish, exits 0, with a
+   25s backstop. Verified by sending SIGTERM two seconds into a 6.6s query —
+   it still returned HTTP 200 with a complete sourced answer, then exited.
+   **systemd's `TimeoutStopSec` must exceed 25s** or it will SIGKILL mid-drain
+   and undo this.
+2. ~~**`ALLOWED_ORIGIN` is `"*"`.**~~ **Done.** It now defaults by
+   environment: `https://william-brendel.com` when `NODE_ENV=production`,
+   `"*"` otherwise so `npm run site` and curl keep working. `ALLOWED_ORIGIN`
+   overrides either way. This matters more than ordinary CORS hygiene — the
+   API spends money per request and `guard.js` limits by the *visitor's* IP,
+   so `"*"` would let any site mount this as a free Claude proxy.
+3. ~~**`.model_cache` is gitignored.**~~ **Solved.** `npm run push-models`
+   syncs the 125 MB cache to `s3://personal-page-artifacts-<ACCOUNT_ID>/model-cache/`
+   once; the instance pulls it at provision and then runs with
+   `XENOVA_ALLOW_REMOTE_MODELS=false`, so nothing is fetched at boot. Not part
+   of the deploy: the weights change only when the model does.
+4. **No CI.** Still true — the deploy workflow is the next thing I write.
+5. **`server/` is publicly served.** Unchanged and deliberate. GitHub Pages
+   publishes from the repo root, so everything under `server/` is readable at
+   `https://william-brendel.com/server/...`. Fine for the corpus; it means
+   **no secret may ever land there**, and the deploy must not write config
+   files into `server/`.
 
 ## 2. What you do once, by hand (I should not do these)
 
@@ -192,13 +198,23 @@ One CloudFormation stack, `personal-page-bootstrap`, creating:
 - **`personal-page-instance`** — the instance profile the box runs as
 - the **artifact S3 bucket**, private, versioned, public access blocked
 
+The template exists now: `server/infra/bootstrap.yml` (validated against
+CloudFormation). The repo owner is a **parameter**, not a literal, because the
+OIDC subject is matched literally and the repo may move out of Crossroads-Lab:
+
 ```bash
 aws cloudformation deploy \
   --template-file server/infra/bootstrap.yml \
   --stack-name personal-page-bootstrap \
   --capabilities CAPABILITY_NAMED_IAM \
+  --parameter-overrides GitHubOwner=Crossroads-Lab \
   --profile will
 ```
+
+After transferring the repo, re-run the same command with
+`GitHubOwner=williambrendel`. The stack's `TrustedSubject` output prints the
+exact string the role trusts — compare it against the workflow's token if a
+deploy ever fails to assume the role.
 
 ---
 
