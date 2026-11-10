@@ -43,24 +43,36 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      # llms is a git dependency in a PRIVATE repo. The lockfile resolves it
-      # over ssh, which a runner has no key for, so rewrite those URLs to
-      # https and supply the read-only token through a credential helper —
-      # never in a URL, so it cannot land in a log.
-      - name: Read access to the private llms package
-        run: |
-          git config --global credential.https://github.com.helper \
-            '!f() { test "$1" = get && test -n "$LLMS_READ_TOKEN" || exit 0; echo username=x-access-token; echo "password=$LLMS_READ_TOKEN"; }; f'
-          git config --global url."https://github.com/williambrendel/".insteadOf "ssh://git@github.com/williambrendel/"
-          git config --global --add url."https://github.com/williambrendel/".insteadOf "git@github.com:williambrendel/"
+      # llms is a git dependency in a PRIVATE repo, and the lockfile resolves
+      # it over ssh, which the runner has no key for. Rewrite those URLs to
+      # https with the token supplied inline.
+      #
+      # A credential helper was tried first and failed in the worst way: it
+      # exits 0 when it cannot see the token, so git simply asked anonymously
+      # and GitHub answered "Repository not found" — which is what it says for
+      # a private repo you are not authorised for, rather than "denied". The
+      # result looked like a bad token or a missing repo and was neither.
+      #
+      # Inline is reliable because there is nothing to misfire. The token is a
+      # repo secret so Actions masks it in logs, and the runner is ephemeral.
+      - name: Authenticate to the private llms repo
         env:
           LLMS_READ_TOKEN: ${{ secrets.LLMS_READ_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/".insteadOf "ssh://git@github.com/williambrendel/"
+          git config --global --add url."https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/".insteadOf "git@github.com:williambrendel/"
+          # Fail HERE with a clear message, not three minutes later inside
+          # npm ci with a misleading one.
+          if git ls-remote "https://x-access-token:${LLMS_READ_TOKEN}@github.com/williambrendel/llms.git" HEAD >/dev/null 2>&1; then
+            echo "llms is reachable"
+          else
+            echo "::error::cannot read williambrendel/llms with LLMS_READ_TOKEN — check the token's Repository access includes it, and that it has not expired"
+            exit 1
+          fi
 
       - name: Install
         working-directory: server
         run: npm ci
-        env:
-          LLMS_READ_TOKEN: ${{ secrets.LLMS_READ_TOKEN }}
 
       # Refuse to ship a corpus whose vectors no longer match its markdown.
       # Section ranges are byte offsets, so a stale pairing does not error at
