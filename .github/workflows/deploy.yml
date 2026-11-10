@@ -37,7 +37,17 @@ jobs:
         if: github.ref_name != 'main'
         run: echo "::error::deploys run from main only" && exit 1
 
+      # persist-credentials: false is load-bearing. By default checkout writes
+      # http.https://github.com/.extraheader into the repo's git config, an
+      # Authorization header for GITHUB_TOKEN. That header WINS over
+      # credentials supplied in a URL, so every git call in the workspace
+      # authenticates as this repo's token — which cannot read the private
+      # llms repo, producing "Repository not found" no matter which token we
+      # pass. Cost three runs to find, because the header is only mentioned
+      # in checkout's post-job cleanup.
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
