@@ -12,6 +12,8 @@
 #                          (default: `gh auth token`)
 #
 # What it does, in order. Any failure stops it, nothing half-done:
+#   0. mac:    12 GB free, and Colima up — started here if it was not, and
+#              stopped again on the way out
 #   1. git:    working tree clean, and this commit is exactly origin/main —
 #              so what ships is what is on GitHub, not what is on this Mac
 #   2. corpus: npm run verify, because section ranges are byte offsets and a
@@ -19,6 +21,20 @@
 #              rather than an error
 #   3. build:  node_modules inside a linux/arm64 container
 #   4. ship:   tarball to S3, SSM swaps a symlink and restarts, health check
+#
+# Why this script babysits Colima and the disk
+# --------------------------------------------
+# Both have taken this Mac down, on 2026-11-10 (see server/DEPLOY.md, "Shipping
+# from this Mac"). Colima is a Linux VM and holds its memory whether or not a
+# build is running — about 5 GB of this machine's 16, idle — which ended in
+# Claude crashing against a full swap on a perfectly healthy disk. And a day of
+# heavy shipping once drove the disk to 0 bytes free in the middle of a deploy.
+#
+# So this script leaves the machine as it found it: Colima up only for the
+# build and only if it was down, and a refusal rather than a build when the
+# disk is tight. The COLIMA_STARTED flag is the important half — another
+# project on this Mac shares this Docker, and stopping a Colima they started
+# would kill their containers.
 #
 # Why a container and not just `npm ci` here
 # ------------------------------------------
@@ -58,7 +74,7 @@ fail() { printf '\nSTOPPED: %s\n' "$*" >&2; exit 1; }
 step() { printf '\n── %s\n' "$*"; }
 # Colima holds ~4 GB of this Mac's 16 while it runs, build or no build, so it
 # is started for the build and stopped again — but only if WE started it.
-# Another project (Reelish) uses the same Docker, and stopping a Colima
+# Another project on this Mac uses the same Docker, and stopping a Colima
 # somebody else is using would kill their containers. Runs on failures too,
 # which is the case that matters: a ship that dies at the health check must
 # not leave 4 GB held.

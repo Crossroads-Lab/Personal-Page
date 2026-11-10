@@ -35,6 +35,52 @@ check can see. All three units are enabled at boot.
 **Outstanding:** confirm the SNS email subscription, or the alarms fire into
 nothing.
 
+### Shipping from this Mac: Colima and disk
+
+The ship builds `node_modules` in a `linux/arm64` container, which is the only
+reason Docker is involved at all. Docker here is **Colima**, a Linux VM — not
+Docker Desktop. Two things about it have taken this machine down before, both
+on 2026-11-10, and `scripts/ship.sh` now handles both. The notes are here so
+that if the script is ever rewritten, the reasons survive it.
+
+**Colima holds its memory whether or not you are building.** It sat on ~5 GB
+of this Mac's 16 while idle, which is a third of the machine for nothing, and
+the result was Claude crashing against a full swap on a *healthy* disk. So:
+
+- `ship.sh` starts Colima only if it is not already running, and stops it on
+  exit — via the `cleanup` trap, so a ship that dies at the health check does
+  not leave the memory held. A `COLIMA_STARTED` flag means a Colima that
+  **someone else** started is left alone. That matters: another project on
+  this Mac uses the same Docker, and stopping it under them would
+  kill their containers.
+- Colima's own ceiling is 4 GB, set in `~/.colima/default/colima.yaml`
+  (`memory: 4`). That file is local, not in any repo, and only takes effect on
+  the next `colima start`.
+- `ps` RSS does not show a VM's real size. Use
+  `top -l 1 -o mem -n 10 -stats pid,mem,command` and look for
+  `com.apple.Virtualization.VirtualMachine`.
+
+**A build that fills the disk takes the whole Mac with it.** A day of heavy
+shipping once drove this machine to 0 bytes free mid-deploy. `ship.sh` now
+refuses to start under **12 GB** free and says what to clear. By hand:
+
+```bash
+df -h /System/Volumes/Data
+docker system df                        # what Docker is actually holding
+docker builder prune -f                 # build cache
+colima ssh -- sudo fstrim -a            # hand the blocks back to macOS —
+                                        # without this the Mac never sees them
+```
+
+**Never** remove another project's images, any Docker volume,
+or `~/Library/Application Support/Claude/vm_bundles`.
+
+This repo's Docker footprint is small — it pulls `node:24` and runs `npm ci`
+in it, with no image build and so no buildx cache. The heavy consumers on this
+Mac are other projects, whose own tooling prunes at scale; `scripts/ship.sh`
+deliberately prunes nothing, because nothing it creates is worth the risk of
+touching someone else's layers.
+
 The battle plan for putting `server/` on AWS. Modelled on Nereus
 (`Nereus/nereus-infra/README.md`) but scaled down hard: Nereus runs ECS
 Fargate across two regions for ~$770/month, and this is one small box.
