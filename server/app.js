@@ -29,9 +29,10 @@ const resolveQuery = (body) => {
 };
 
 /**
- * A few opener questions, sampled without replacement so one response never
- * shows the same question twice. Partial Fisher-Yates over a copy — the pool
- * is small and this runs once per greeting, so clarity beats cleverness.
+ * A few opener suggestions ({ label, q }), sampled without replacement so one
+ * response never shows the same question twice. Partial Fisher-Yates over a
+ * copy — the pool is small and this runs once per greeting, so clarity beats
+ * cleverness.
  */
 const pickStarters = () => {
   const pool = [...(CONFIG.STARTERS || [])];
@@ -103,7 +104,11 @@ const main = async () => {
       // come back from the library with no follow-ups, which leaves the
       // visitor facing an empty input box at the one moment they have least
       // idea what to ask. Offer curated openers instead.
-      if (!body.followUpQuestions?.length) body.followUpQuestions = pickStarters();
+      // Follow-ups are plain strings on the wire; the starters carry a chip
+      // label the answer screen has no use for, so only the question travels.
+      if (!body.followUpQuestions?.length) {
+        body.followUpQuestions = pickStarters().map(s => s.q);
+      }
 
       res.json(body);
     } catch (err) {

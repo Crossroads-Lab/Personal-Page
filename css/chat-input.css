@@ -311,17 +311,65 @@ body:not([chat-started]) #chat-input-left-buttons {
   transition: opacity 220ms ease, width 220ms ease;
 }
 
+/* With the ⋮ gone the text would start 16px from the rim — against it, by
+   the standards of a bar this wide. The inset grows to replace the button
+   and shrinks back as it returns, on the same curve. */
+body:not([chat-started]) #chat-input {
+  padding-left: 20px;
+}
+
+#chat-input {
+  transition: padding-left 220ms ease;
+}
+
+/* Focusing the box brings the ⋮ back early, in the same beat as the chips
+   leaving. Without it the chips simply vanish and the options they stood for
+   look gone; with it the visitor watches them fold into the button, which is
+   where they have lived all along. The padding gives way as the button takes
+   the space, so the two move as one. */
+body:not([chat-started]) #chat-input-container[input-focused] #chat-input-left-buttons {
+  width: calc(var(--chat-form-height) - 16px);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
+  padding-left: 8px;
+}
+
 /* ── Suggestion chips ──────────────────────────────────────────────────── */
 
 #starter-chips {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  /* One line. The labels are topics rather than questions precisely so they
+     fit (server/config.js STARTERS), and a row that wraps to three lines
+     stops reading as a row of options and starts reading as a list. */
+  flex-wrap: nowrap;
+  /* `safe` matters: with plain `center`, a row wider than its box overflows
+     equally both ways and the left end becomes unreachable, because you
+     cannot scroll to negative. `safe` falls back to flex-start exactly when
+     that would happen. */
+  justify-content: safe center;
   gap: 8px;
   width: var(--main-width);
   max-width: var(--main-max-width);
   margin: 14px auto 0;
+  /* Narrow phone, long labels: scroll rather than wrap or clip. */
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* The chips must keep their shape — shrinking them squeezes the text into
+     the rounded ends long before the row runs out of room. */
+  padding: 2px 0;
   transition: opacity 240ms ease, transform 240ms ease;
+}
+
+#starter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.starter-chip {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 /* Empty (not yet fetched, or retired) — no gap left behind. */
@@ -352,7 +400,12 @@ body:not([chat-started]) #chat-input-left-buttons {
 }
 
 /* Focused input: the chips step back behind the bar rather than vanish, so
-   clicking away without typing can bring them back. */
+   clicking away without typing can bring them back.
+
+   They move TOWARDS the bar, which means the direction follows the layout:
+   below a centred bar they slide up, above a bottom bar they slide down (see
+   the phone block). Sliding the other way reads as the chips running off the
+   screen rather than tucking behind the thing that replaced them. */
 #chat-input-container[input-focused] #starter-chips {
   opacity: 0;
   transform: translateY(-12px);
@@ -401,6 +454,10 @@ body[chat-started] #starter-chips {
   #starter-chips {
     order: -1;
     margin: 0 auto 14px;
+  }
+  /* Chips above the bar here, so "behind the bar" is downwards. */
+  #chat-input-container[input-focused] #starter-chips {
+    transform: translateY(12px);
   }
   .starter-chip.liquid-glass {
     background: rgb(from var(--liquid-glass-background) r g b / 0.5);
