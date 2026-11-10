@@ -20,7 +20,7 @@ const TIMEOUT_MS = 25000;
 
 const FAILURE_TEXT =
   "I can't reach my brain right now — that's on me, not you. " +
-  "Try again in a moment, or just email me at brendel.william@gmail.com.";
+  "Try again in a moment, or book time with me through the ⋮ menu at the bottom left.";
 
 /**
  * Join answer chunks. The model emits them with inconsistent leading
