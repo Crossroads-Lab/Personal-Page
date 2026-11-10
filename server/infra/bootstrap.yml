@@ -38,6 +38,23 @@ Parameters:
     Default: main
     Description: Only this branch may assume the deploy role.
 
+  GitHubOwnerId:
+    Type: String
+    Default: "1007811"
+    Description: >-
+      Numeric account id of the owner. Needed for the IMMUTABLE subject form,
+      which GitHub uses when a repository has use_immutable_subject set —
+      "repo:owner@ownerId/repo@repoId:..." rather than "repo:owner/repo:...".
+      It is on for this repo, almost certainly because it was transferred, and
+      it is the whole point of the feature: a renamed or re-created repo must
+      not inherit a trust granted to its name. Public information; check with
+      `gh api repos/<owner>/<repo>/actions/oidc/customization/sub`.
+
+  GitHubRepoId:
+    Type: String
+    Default: "819611274"
+    Description: Numeric repository id, for the immutable subject form.
+
   CreateGitHubProvider:
     Type: String
     AllowedValues: ["yes", "no"]
@@ -107,7 +124,16 @@ Resources:
             Condition:
               StringEquals:
                 "token.actions.githubusercontent.com:aud": sts.amazonaws.com
-                "token.actions.githubusercontent.com:sub": !Sub "repo:${GitHubOwner}/${GitHubRepo}:ref:refs/heads/${DeployBranch}"
+                # Both forms. A list here is an OR, and which one GitHub sends
+                # depends on whether the repo has immutable subjects enabled —
+                # a setting that can change under you (a transfer turns it on)
+                # and produces an opaque "Not authorized to perform
+                # sts:AssumeRoleWithWebIdentity" when it does. Trusting both
+                # is exact in either case: no wildcards, so no risk of
+                # matching an owner whose name merely starts the same way.
+                "token.actions.githubusercontent.com:sub":
+                  - !Sub "repo:${GitHubOwner}/${GitHubRepo}:ref:refs/heads/${DeployBranch}"
+                  - !Sub "repo:${GitHubOwner}@${GitHubOwnerId}/${GitHubRepo}@${GitHubRepoId}:ref:refs/heads/${DeployBranch}"
       Policies:
         - PolicyName: ship-releases
           PolicyDocument:
