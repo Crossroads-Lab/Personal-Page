@@ -60,8 +60,11 @@
    * and if the two were written out separately they would drift the first
    * time either changed. He fills 84% of the crop's height — measured off
    * the file, not estimated. */
-  --portrait-crop: max(41.6vw, 62.6vh);
-  --portrait-subject: calc(0.84 * var(--portrait-crop));
+  --portrait-crop: max(41.5vw, 62.4vh);
+  --portrait-subject: calc(0.8425 * var(--portrait-crop));
+  /* How wide he lands. He is 76.2% of the crop's width, and the crop is
+     0.6945 as wide as it is tall (1389/2000) — so 0.529 of its height. */
+  --portrait-width: calc(0.529 * var(--portrait-crop));
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */

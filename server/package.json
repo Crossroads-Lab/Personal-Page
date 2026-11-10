@@ -1,7 +1,7 @@
 {
   "name": "personal-page-server",
   "version": "1.0.0",
-  "description": "RAG backend for william-brendel.com — ask-nereus retrieval engine, personal corpus",
+  "description": "RAG backend for william-brendel.com \u2014 ask-nereus retrieval engine, personal corpus",
   "type": "commonjs",
   "main": "./app.js",
   "scripts": {
@@ -17,7 +17,8 @@
     "coverage": "node scripts/coverage.js",
     "calibrate-gate": "node scripts/calibrate-gate.js",
     "push-models": "bash scripts/push-models.sh",
-    "ship": "bash scripts/ship.sh"
+    "ship": "bash scripts/ship.sh",
+    "measure-actions": "node scripts/measure-actions.js"
   },
   "author": "William Brendel",
   "license": "MIT",

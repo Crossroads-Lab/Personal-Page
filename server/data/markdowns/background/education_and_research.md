@@ -4,6 +4,10 @@
 
 I hold a PhD in Computer Science and Artificial Intelligence from Oregon State University in Corvallis, completed in June 2011. Before that I earned a Master's in Electrical Engineering and Computer Science from CPE Lyon in France, finishing in 2004.
 
+## What was your PhD in? What did you research?
+
+Computer science and artificial intelligence, at Oregon State University, finished in June 2011. The research was computer vision: 3D reconstruction, spatiotemporal video segmentation, and event recognition in video. My advisor was Sinisa Todorovic, and I was his first doctoral student. That line of work turned into the rest of my career.
+
 ## What honours and awards have you received?
 
 Four, and they cover the span of it:

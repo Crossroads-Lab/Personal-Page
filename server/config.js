@@ -362,6 +362,21 @@ module.exports = Object.freeze({
   STARTER_COUNT: 3,
 
   /**
+   * Where one line per question is appended, or null for stdout only.
+   *
+   * Outside the release directory on purpose: a deploy unpacks a new
+   * /opt/personal-page/releases/<sha> and moves the `current` symlink, so a
+   * log kept beside the code is thrown away every time the thing worth
+   * diagnosing gets more frequent. stdout goes to the journal regardless —
+   * `journalctl -u personal-page` — and this file is the copy that can be
+   * read without root and kept longer than the journal holds.
+   */
+  QUERY_LOG: process.env.QUERY_LOG
+    || (process.env.NODE_ENV === "production"
+        ? "/opt/personal-page/logs/queries.log"
+        : null),
+
+  /**
    * Rate limits. Sized for a personal page: a genuinely curious visitor asks
    * a handful of questions, so 15/hour is generous for humans and hostile to
    * scripts. globalPerDay is the spend bound — at ~$0.01/query it caps the

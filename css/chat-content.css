@@ -176,3 +176,78 @@ main::after {
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
   }
 }
+
+/*
+ * =====================================================
+ * ANSWER ACTIONS
+ * =====================================================
+ * The destinations an answer can hand over directly — the resume, LinkedIn,
+ * the calendar — rather than describing where their buttons are.
+ *
+ * Deliberately NOT the follow-up treatment. A follow-up is blue and asks
+ * another question; these leave the page, so they take the body colour and
+ * carry the menu's own icon, which is what a visitor has already learned to
+ * associate with that destination. Rendered above the follow-ups: they
+ * answer what was asked, where a follow-up only proposes something else.
+ */
+.answer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  /* `main *` sets width: fit-content; this container opts out so its
+     children can size themselves, exactly as .follow-ups does. */
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.answer-action,
+.answer-action:visited,
+.answer-action:link,
+.answer-action:hover {
+  text-decoration: none;
+  -webkit-text-decoration: none;
+}
+
+.answer-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 400;
+  color: var(--color);
+  text-align: left;
+  border: 0;
+  border-radius: var(--border-radius-round);
+  padding: 9px 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+
+.answer-action:visited,
+.answer-action:link {
+  color: var(--color);
+}
+
+.answer-action > img {
+  height: 14px;
+  aspect-ratio: 1 / 1;
+  filter: var(--icon-filter);
+}
+
+/* Same reason as the starter chips: the reset in common.css no longer
+   reaches into :active, so nothing here collapses under the finger. */
+.answer-action:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media only screen and (max-width: 512px) {
+  .answer-action.liquid-glass {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+}

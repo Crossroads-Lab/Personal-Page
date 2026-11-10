@@ -17,8 +17,12 @@ const getEngine = require("./server/engine");
 const guard     = require("./server/guard");
 const { filterAsked } = require("./server/asked");
 const history = require("./server/history");
+const { actionsFor, warm: warmActions } = require("./server/actions");
+const { logQuery } = require("./server/log");
 
 const QUERY_KEYS = ["q", "question", "query", "message", "msg"];
+
+
 const MAX_QUERY_CHARS = 1000;
 
 const resolveQuery = (body) => {
@@ -47,8 +51,11 @@ const pickStarters = () => {
 };
 
 const main = async () => {
-  // Build the engine BEFORE listening so the first visitor never pays boot cost.
+  // Build the engine BEFORE listening so the first visitor never pays boot
+  // cost — and warm the action anchors in the same breath, for the same
+  // reason: they are a fixed set, embedded once.
   const engine = await getEngine();
+  await warmActions();
 
   const app = express();
   app.use(express.json({ limit: "16kb" }));
@@ -102,6 +109,8 @@ const main = async () => {
     // and capped here, before anything downstream sees it.
     const past = history.clean(req.body?.history);
 
+    const started = Date.now();
+
     try {
       const result = await engine.ask(query, { history: past });
       const { stats, ...body } = result;
@@ -126,6 +135,28 @@ const main = async () => {
         body.followUpQuestions =
           await filterAsked(pickStarters().map(s => s.q), asked);
       }
+
+      // Buttons that go where the question asked to go — the resume, the
+      // calendar, LinkedIn. Decided here from the question rather than by
+      // the model: see server/actions.js for why, and for the measured
+      // threshold. Costs one embedding and no money.
+      body.actions = await actionsFor(query);
+
+      // One line per question. The cited documentIds are the point: a wrong
+      // answer is nearly always a retrieval miss, and without them there is
+      // nothing to look at afterwards. See server/log.js for what is left
+      // out, and why the IP is one of those things.
+      logQuery({
+        ms:        Date.now() - started,
+        query,
+        intent:    result.user_intent,
+        sources:   [...new Set(
+          (body.answer || []).map(c => c?.source?.documentId).filter(Boolean)
+        )],
+        followUps: body.followUpQuestions,
+        actions:   body.actions,
+        turns:     past.length,
+      }, CONFIG.QUERY_LOG);
 
       res.json(body);
     } catch (err) {

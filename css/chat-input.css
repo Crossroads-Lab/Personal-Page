@@ -293,6 +293,34 @@ body:has(#chat-input-container:not([menu-visible])) {
  * in the chain real.
  */
 
+/* On a wide enough screen he stands to the right and the writing keeps out
+   of his way, which is how the design was drawn: headline, bar and chips in
+   the space beside him, not across him. Padding the body by his width makes
+   that automatic — the column is centred by flexbox, and flexbox is now
+   centring it in what is left.
+
+   Below 601px he is centred behind a full-width column instead, because
+   there is no "beside him" on a phone.
+
+   The two width overrides matter as much as the padding: --main-width is
+   `max(512px, 40%)` and --main-max-width is measured off the viewport, so
+   without them a 512px bar would simply ignore the narrowed column and run
+   under him anyway. */
+@media only screen and (min-width: 901px) {
+  body:not([chat-started]) {
+    /* The column keeps its own gutter; only the right side gives way. */
+    padding-left: calc(var(--safearea-left) + var(--padding));
+    padding-right: calc(var(--safearea-right) + var(--padding) + var(--portrait-width));
+  }
+
+  body:not([chat-started]) main,
+  body:not([chat-started]) #chat-input-container,
+  body:not([chat-started]) #starter-chips {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 /* Nothing scrolls before the first question. <main> is the only scrollable
    box on the page (chat-content.css gives it `overflow-y: auto !important`
    for the transcript), and in the opening state it holds one headline in a
@@ -327,7 +355,7 @@ body:not([chat-started])::after {
    Desktop only. On a phone the bar is at the bottom and the headline belongs
    at the top, with the portrait between them — pushing it down there would
    stack the whole page into the bottom third. */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 901px) {
   body:not([chat-started]) #welcome {
     justify-content: flex-end;
     padding-bottom: 4px;
@@ -588,7 +616,7 @@ body[chat-started] #starter-chips {
    — below the WHOLE container, chips included, so opening it never costs the
    visitor sight of the options it was opened from. 100% is the container's
    own height, which already grows with the chip row. */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 901px) {
   body:not([chat-started]) #chat-menu {
     top: calc(100% + 10px);
     bottom: auto;
@@ -602,12 +630,13 @@ body[chat-started] #starter-chips {
   }
 }
 
-/* 600, not the 512 the rest of the file uses: 512 is the width of the input
-   bar, and a 518px window is still a phone-shaped window — it was getting
-   the desktop layout, bar floating in mid-air with the headline above it.
-   The question is "is this portrait and hand-held", not "is the bar full
-   width", so the opening-state layout breaks later than the glass does. */
-@media only screen and (max-width: 600px) {
+/* 900, and the number is the bar's. The side-by-side layout only works
+   while the column left of him can still hold a 512px input bar: he takes
+   roughly 0.33 of the height in width, so below about 900px there is no
+   column left to write in and the headline ends up across his face. Above
+   it, the writing sits beside him as drawn. Nothing to do with the glass
+   treatment, which still breaks at 512. */
+@media only screen and (max-width: 900px) {
   /* The headline sits in the clear band between the top of the screen and
      the top of his head, centred in it — not centred in <main>, which runs
      down behind him and would hang the text over his face.

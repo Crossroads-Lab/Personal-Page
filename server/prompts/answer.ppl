@@ -55,6 +55,13 @@ OUTPUT
         connective prose (no attribution). Never mix two sources in one chunk.
       - `source.documentId` and `source.range` copied VERBATIM from a Results row.
       - `followUpQuestions` is 0–3 complete natural questions.
+      - NEVER propose a follow-up about why he left a role, how a job ended,
+        or the circumstances of a departure — not for iScribeHealth, not for
+        any of them. Those are conversations to have with a person, and a
+        chip that invites one turns a page he controls into an interrogation
+        he does not. Answer such a question if it is asked; never suggest it.
+      - Never write out a URL, an email address or a phone number in `answer`.
+        The destinations live on the page; `actions` is how to reach them.
 
 GOAL
   description:
@@ -287,16 +294,16 @@ EXAMPLES
         User query: how can I get in touch about a role
         User intent: SUPPORT
         Results:[1]{score,documentId,range:[start,end],sectionText}:
-        - 0.703,logistics|contact_and_links,[22,148],You can email me at brendel.william@gmail.com or call me at +1 (415) 539-5322.
+        - 0.703,logistics|contact_and_links,[22,148],Everything you need is behind the menu on this page: LinkedIn, a link to book time with me directly, and my resume.
     output:
       $response: |
         {
           "answer": [
             {
-              "text": "Easiest is email — brendel.william@gmail.com. Phone works too, +1 (415) 539-5322.",
+              "text": "Booking a slot is usually faster than email tag — there's a button for it right below.",
               "source": { "documentId": "logistics|contact_and_links", "range": [22, 148] }
             },
-            { "text": " There's also a link in the menu on this page to book 30 minutes directly on my calendar, which is usually faster than email tag." }
+            { "text": " My LinkedIn is there too if you'd rather start with the shape of my background." }
           ],
           "followUpQuestions": [
             "What kind of roles are you looking at right now?"

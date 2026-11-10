@@ -215,6 +215,7 @@ cat > "$WORK/params.json" <<JSON
 {"commands":[
   "set -euo pipefail",
   "install -d -o app -g app /opt/personal-page/releases",
+  "install -d -o app -g app /opt/personal-page/logs",
   "aws s3 cp s3://$BUCKET/releases/$SHA.tar.gz /tmp/$SHA.tar.gz --only-show-errors --region $REGION",
   "rm -rf /opt/personal-page/releases/$SHA",
   "install -d -o app -g app /opt/personal-page/releases/$SHA",

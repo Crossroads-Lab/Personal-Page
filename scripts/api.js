@@ -49,7 +49,7 @@ export const joinChunks = (chunks) => (chunks || [])
  *   conversation. There is no session on the backend, so the page carries it:
  *   it resolves follow-ups ("what about at Samsung?") and lets the backend
  *   drop follow-up suggestions that only reword something already asked.
- * @returns {Promise<{text: string, followUps: string[], ok: boolean}>}
+ * @returns {Promise<{text: string, followUps: string[], actions: string[], ok: boolean}>}
  */
 export const ask = async (query, external, history = []) => {
   const controller = new AbortController();
@@ -77,12 +77,13 @@ export const ask = async (query, external, history = []) => {
       return {
         text: joinChunks(body?.answer) || FAILURE_TEXT,
         followUps: [],
+        actions: [],
         ok: true,
       };
     }
 
     if (!response.ok) {
-      return { text: FAILURE_TEXT, followUps: [], ok: false };
+      return { text: FAILURE_TEXT, followUps: [], actions: [], ok: false };
     }
 
     const body = await response.json();
@@ -91,16 +92,19 @@ export const ask = async (query, external, history = []) => {
     return {
       text: text || FAILURE_TEXT,
       followUps: Array.isArray(body.followUpQuestions) ? body.followUpQuestions : [],
+      // Keys, not URLs. The backend has already dropped anything that is not
+      // one of the four it knows; the page maps them to the menu entries.
+      actions: Array.isArray(body.actions) ? body.actions : [],
       ok: Boolean(text),
     };
 
   } catch (error) {
     // Aborted by the stop button — the caller already cleared the screen and
     // has nothing to render.
-    if (external?.aborted) return { text: "", followUps: [], ok: true, aborted: true };
+    if (external?.aborted) return { text: "", followUps: [], actions: [], ok: true, aborted: true };
 
     // Timeout or network failure.
-    return { text: FAILURE_TEXT, followUps: [], ok: false };
+    return { text: FAILURE_TEXT, followUps: [], actions: [], ok: false };
 
   } finally {
     clearTimeout(timer);

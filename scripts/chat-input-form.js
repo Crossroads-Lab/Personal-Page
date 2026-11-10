@@ -220,7 +220,7 @@ form.addEventListener("submit", async event => {
   const sent = history.slice();
   const turn = remember({ q: message, a: "" });
 
-  const { text, followUps, aborted } = await ask(message, controller.signal, sent);
+  const { text, followUps, actions, aborted } = await ask(message, controller.signal, sent);
 
   // The user hit stop, or started another question while this was running.
   // Either way this response is stale — the newer request owns the screen.
@@ -238,11 +238,81 @@ form.addEventListener("submit", async event => {
     text,
     () => {
       endDisplay();
+      // Actions first: they answer the question that was asked, where the
+      // follow-ups only suggest another one.
+      renderActions(actions);
       renderFollowUps(followUps);
     },
     content.appendChild(document.createElement("span"))
   );
 });
+
+/**
+ * The four places an answer can send someone, keyed exactly as the backend
+ * whitelists them (server/app.js ACTIONS).
+ *
+ * The destination is read off the ⋮ menu rather than written here, so there
+ * is one list on the page and not two: change the Calendly link in
+ * index.html and this follows. A key whose element is missing renders
+ * nothing, which is the same outcome as the model inventing one.
+ */
+const ACTION_TARGETS = {
+  resume:   { id: "chat-menu-download-resume", label: "Download my resume" },
+  linkedin: { id: "chat-menu-linkedin",        label: "View my LinkedIn" },
+  book:     { id: "chat-menu-book-call",       label: "Book 30min with me" },
+  share:    { id: "chat-menu-share-profile",   label: "Share my profile" },
+};
+
+/**
+ * Render the answer's actions as buttons that actually go somewhere.
+ *
+ * Until now an answer could only describe the ⋮ menu — "open the menu at the
+ * bottom left and choose Download my resume" — which is a page telling
+ * someone where a button is instead of giving them one. These are the same
+ * destinations, put under the answer that called for them.
+ *
+ * Each is a clone of the menu entry, so it carries that entry's href, target
+ * and icon. Share has no href — it calls navigator.share — so that one
+ * forwards the click to the menu button rather than duplicating the logic.
+ */
+const renderActions = (actions) => {
+  const wanted = (actions || [])
+    .map(key => [key, ACTION_TARGETS[key]])
+    .filter(([, target]) => target && document.getElementById(target.id));
+  if (!wanted.length) return;
+
+  const list = document.createElement("div");
+  list.className = "answer-actions";
+
+  for (const [, target] of wanted) {
+    const source = document.getElementById(target.id);
+    const isLink = source.tagName === "A";
+    const node = document.createElement(isLink ? "a" : "button");
+    node.className = "answer-action liquid-glass";
+
+    if (isLink) {
+      node.href = source.href;
+      node.target = source.target || "_blank";
+      node.rel = "noopener";
+    } else {
+      node.type = "button";
+      // Share is behaviour, not a URL: let the one implementation run.
+      node.onclick = (event) => { event.stopPropagation(); source.click(); };
+    }
+
+    node.textContent = target.label;
+    const icon = source.querySelector("img");
+    if (icon) {
+      const copy = document.createElement("img");
+      copy.src = icon.src;
+      copy.alt = "";
+      node.appendChild(copy);
+    }
+    list.appendChild(node);
+  }
+
+  content.appendChild(list);
+};
 
 /**
  * Render follow-up questions as clickable prompts. Clicking one asks it,

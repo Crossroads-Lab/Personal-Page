@@ -35,6 +35,29 @@ check can see. All three units are enabled at boot.
 **Outstanding:** confirm the SNS email subscription, or the alarms fire into
 nothing.
 
+### Reading the query log
+
+One JSON line per question, so a bad answer can be explained afterwards. The
+cited `sources` are the useful field: a wrong answer is nearly always a
+retrieval miss, and that names the documents it actually drew on.
+
+```bash
+aws ssm start-session --target i-09c285c48ade2b871 --profile pp
+```
+
+```bash
+sudo tail -f /opt/personal-page/logs/queries.log | jq .
+```
+
+The same lines go to the journal (`journalctl -u personal-page -f`), which is
+the sink that always exists and already handles rotation. The file is the
+copy that can be read without root and kept past what the journal holds; it
+rotates itself at 8 MB, one generation. It lives outside
+`releases/<sha>` because a deploy replaces that directory.
+
+No IP is recorded. The rate limiter keeps one in memory, which is a
+different thing from writing it next to what somebody asked.
+
 ### Shipping from this Mac: Colima and disk
 
 The ship builds `node_modules` in a `linux/arm64` container, which is the only
