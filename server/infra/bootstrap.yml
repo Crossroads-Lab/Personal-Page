@@ -71,6 +71,13 @@ Parameters:
       is actually nothing there at all. That happened on 2026-11-10. Check
       with `aws iam list-open-id-connect-providers` before changing it.
 
+      Putting it back needs the value stated EXPLICITLY:
+      `--parameter-overrides CreateGitHubProvider=yes`. `aws cloudformation
+      deploy` keeps a stack's previous parameter values for anything it is
+      not given, rather than falling back to the template default, so simply
+      omitting the override leaves it at "no" and reports "No changes to
+      deploy".
+
 Conditions:
   NewProvider: !Equals [!Ref CreateGitHubProvider, "yes"]
 
