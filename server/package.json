@@ -16,7 +16,8 @@
     "site": "python3 scripts/serve-site.py",
     "coverage": "node scripts/coverage.js",
     "calibrate-gate": "node scripts/calibrate-gate.js",
-    "push-models": "bash scripts/push-models.sh"
+    "push-models": "bash scripts/push-models.sh",
+    "ship": "bash scripts/ship.sh"
   },
   "author": "William Brendel",
   "license": "MIT",
