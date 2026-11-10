@@ -262,3 +262,162 @@ body:has(#chat-input-container:not([menu-visible])) {
     --border-top-color: #FFFFFF33;
   }
 }
+/*
+ * =====================================================
+ * OPENING STATE
+ * =====================================================
+ * Before the first question the page is an invitation, not a transcript:
+ * on desktop the bar sits in the middle under the headline with suggestion
+ * chips beneath it, and the ⋮ is hidden because the chips already offer
+ * what it holds. Asking the first question moves the bar to the bottom and
+ * brings the ⋮ back. scripts/chat-input-form.js sets body[chat-started].
+ *
+ * The move is animated through flex-grow, which IS animatable -- so the bar
+ * glides down rather than jumping, with no absolute positioning or magic
+ * offsets to keep in sync.
+ *
+ * It grows a spacer BELOW the bar rather than shrinking <main> above it.
+ * Shrinking main looks equivalent and is not: #welcome is height: 100%, so a
+ * main collapsed to flex-grow: 0 resolves that percentage against a zero
+ * content box, and the headline spills out from behind the bar. Leaving main
+ * at flex: 1 and splitting the free space with a sibling keeps every height
+ * in the chain real.
+ */
+
+body::after {
+  content: "";
+  flex: 0 0 0;
+  min-height: 0;
+  transition: flex-grow 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Half the slack above the bar, half below: the bar lands in the middle. */
+body:not([chat-started])::after {
+  flex-grow: 1;
+}
+
+/* The ⋮ is redundant while the chips are up: the contact chip opens the
+   same menu. Collapsed rather than hidden, so the input does not shift
+   sideways when it returns. */
+body:not([chat-started]) #chat-input-left-buttons {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#chat-input-left-buttons {
+  transition: opacity 220ms ease, width 220ms ease;
+}
+
+/* ── Suggestion chips ──────────────────────────────────────────────────── */
+
+#starter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: var(--main-width);
+  max-width: var(--main-max-width);
+  margin: 14px auto 0;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+/* Empty (not yet fetched, or retired) — no gap left behind. */
+#starter-chips:empty {
+  display: none;
+}
+
+.starter-chip {
+  font-family: inherit;
+  font-size: 1em;
+  text-align: left;
+  color: var(--blue);
+  border: 0;
+  border-radius: var(--border-radius-round);
+  padding: 10px 18px;
+  cursor: pointer;
+  max-width: 100%;
+  transition: background-color 120ms ease;
+}
+
+.starter-chip[data-contact] {
+  color: var(--color);
+}
+
+.starter-chip:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Focused input: the chips step back behind the bar rather than vanish, so
+   clicking away without typing can bring them back. */
+#chat-input-container[input-focused] #starter-chips {
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+}
+
+/* Gone for good once a conversation exists — the model's follow-ups are
+   better than canned openers, because they know what was just said. */
+body[chat-started] #starter-chips {
+  display: none;
+}
+
+/* The menu opens where the chips are, so the chips step back while it is up.
+   Fading rather than removing keeps the block height stable, so the bar does
+   not hop when the menu opens and closes. */
+#chat-input-container[menu-visible] #starter-chips {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The menu normally hangs above the bar, anchored to the ⋮ that opens it.
+   In the opening state there is no ⋮ and the bar is in the middle of the
+   page, so hanging upwards would cover the headline; it drops below the bar
+   instead, centred on it, into the space the chips just vacated. */
+@media only screen and (min-width: 513px) {
+  body:not([chat-started]) #chat-menu {
+    top: calc(var(--chat-form-height) + 24px);
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: top center;
+  }
+
+  body:not([chat-started]) #chat-input-container:not([menu-visible]) #chat-menu {
+    transform: translateX(-50%) scale(0.8);
+  }
+}
+
+@media only screen and (max-width: 512px) {
+  /* The bar is already at the bottom on a phone, so the chips go above it
+     rather than off the end of the screen. */
+  #chat-input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #starter-chips {
+    order: -1;
+    margin: 0 auto 14px;
+  }
+  .starter-chip.liquid-glass {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+  /* A phone has no room to centre the bar, so it stays at the bottom and
+     only the chips and the ⋮ change. */
+  body:not([chat-started])::after {
+    flex-grow: 0;
+  }
+}
+
+/* Someone who prefers less motion gets the same layout without the glide. */
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  #chat-input-left-buttons,
+  #starter-chips {
+    transition: none;
+  }
+}

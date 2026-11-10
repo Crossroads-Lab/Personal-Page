@@ -65,6 +65,17 @@ const main = async () => {
     ...guard.stats(),
   }));
 
+  // Opening suggestions for a visitor who has not asked anything yet.
+  //
+  // Deliberately its own endpoint rather than a greeting through /query:
+  // this touches neither Claude nor the embedding model, so it is free and
+  // instant, and it is not worth spending a rate-limit slot on. The page
+  // carries its own fallback list, so a failure here costs nothing.
+  app.get("/starters", (_req, res) => {
+    res.set("Cache-Control", "public, max-age=300");
+    res.json({ starters: pickStarters() });
+  });
+
   app.post("/query", async (req, res) => {
     const query = resolveQuery(req.body);
 

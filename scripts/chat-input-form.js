@@ -61,14 +61,6 @@ menuButton.onclick = event => {
   chatContainer.hasAttribute("menu-visible", "") ?
     chatContainer.removeAttribute("menu-visible")
     : chatContainer.setAttribute("menu-visible", "");
-
-  // The hint exists to point at this button. Once it has been pressed the
-  // hint has done its job, so retire it. It fades rather than being removed:
-  // #welcome is centre-aligned, so taking the element out would re-centre the
-  // block and jump the headline at the moment the menu opens. It may already
-  // be gone — asking a question clears all of #welcome — hence the optional
-  // chaining.
-  document.getElementById("welcome-hint")?.setAttribute("dismissed", "");
 }
 
 document.body.onclick = 
@@ -180,6 +172,13 @@ form.addEventListener("submit", async event => {
 
   const message = input.value.trim();
   if (!message) return;
+
+  // First question ends the opening state: the bar glides from the middle of
+  // the page to the bottom, the ⋮ comes back, and the starter chips retire
+  // in favour of the follow-ups each answer brings. Set before the request,
+  // not after it, so the page commits to the conversation while the answer
+  // is still being written rather than sitting still and then jumping.
+  document.body.setAttribute("chat-started", "");
 
   resetForm();
   startThinking();
