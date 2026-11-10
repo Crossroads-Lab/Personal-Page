@@ -175,7 +175,7 @@ token**: repository access = `williambrendel/llms` only, permission =
 **Contents: Read-only**, expiry 1 year. Then add it to this repo:
 
 ```bash
-gh secret set LLMS_READ_TOKEN --repo williambrendel/Personal-Page
+gh secret set LLMS_READ_TOKEN --repo Crossroads-Lab/Personal-Page
 ```
 
 The token is used **only inside the CI runner**, to build `node_modules`.
@@ -188,7 +188,7 @@ One CloudFormation stack, `personal-page-bootstrap`, creating:
 - the **GitHub OIDC provider** (`token.actions.githubusercontent.com`) — your
   account has none yet, so this creates it
 - **`personal-page-deploy`** — the role GitHub assumes, trusted *only* for
-  `repo:williambrendel/Personal-Page:ref:refs/heads/main`
+  `repo:Crossroads-Lab/Personal-Page:ref:refs/heads/main`
 - **`personal-page-instance`** — the instance profile the box runs as
 - the **artifact S3 bucket**, private, versioned, public access blocked
 
