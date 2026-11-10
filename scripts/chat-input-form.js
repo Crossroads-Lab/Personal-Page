@@ -117,6 +117,18 @@ const resize = () => {
     16) &&
     form.classList.remove("multiline");
 
+  // An empty box is one line, always. Measuring it is what broke the live
+  // site: before the stylesheet applied, the textarea was stretched by its
+  // grid row, so scrollHeight read ~230px, that got written back as the
+  // height, and the form locked itself open at full height. Locally the CSS
+  // is on disk and applies before the first frame, so it never appeared.
+  // Returning here breaks the loop whatever the styling state.
+  if (!input.value) {
+    input.style.height = "";
+    form.classList.remove("multiline");
+    return;
+  }
+
   // Auto-resize textarea height to fit content
   input.style.height = "auto";                 // Reset first
   input.style.height = input.scrollHeight + "px"; // Then grow
@@ -128,11 +140,24 @@ input.addEventListener("input", resize);
 // Re-evaluate layout on viewport resize (mobile rotation, etc.)
 window.addEventListener("resize", resize);
 
-// Initial layout sync after first paint
-requestAnimationFrame(() => (
-  input.setAttribute("rows", input.getAttribute("rows") || 1),
-  resize()
-));
+// Initial layout sync once the page is genuinely styled.
+//
+// requestAnimationFrame fires after the first paint, which is not the same
+// as after the stylesheets apply — css/index.css pulls the rest in through
+// @import, and Poppins comes from Google Fonts. Measuring in that window
+// gives the metrics of an unstyled element. "load" waits for stylesheets;
+// fonts.ready waits for the face the text will actually be laid out in.
+const styled = Promise.all([
+  document.readyState === "complete"
+    ? Promise.resolve()
+    : new Promise(r => window.addEventListener("load", r, { once: true })),
+  document.fonts?.ready ?? Promise.resolve(),
+]);
+
+styled.then(() => {
+  input.setAttribute("rows", input.getAttribute("rows") || 1);
+  resize();
+});
 
 // --------------------------------------------------------------------------
 // Keyboard behavior
