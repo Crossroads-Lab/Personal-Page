@@ -1,0 +1,170 @@
+name: Deploy the API
+
+# Manual, from main only. The site itself is GitHub Pages and publishes on
+# push; this ships the backend in server/ to the EC2 instance.
+#
+# Shape:
+#   1. build node_modules on an arm64 runner, tar server/, push to S3
+#   2. tell the instance over SSM to pull that tarball and restart
+#
+# AWS sign-in is GitHub's OIDC token: no AWS keys are stored anywhere. The
+# role ARN and bucket live in repo secrets rather than in this file because
+# they contain the account id and this repository is public.
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write        # required to request the OIDC token
+  contents: read
+
+concurrency: deploy-personal-page
+
+env:
+  AWS_REGION: us-east-1
+  NODE_VERSION: "24"
+
+jobs:
+  deploy:
+    # arm64 on purpose. The runtime is dominated by native binaries —
+    # onnxruntime-node (92 MB), sharp, @napi-rs — and the target is a t4g
+    # (Graviton) instance. Building on the default x86 runner installs x86
+    # binaries that fail to load on the box, at require() time, long after
+    # the deploy reports success. Free and GA for public repositories.
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Refuse to deploy anything but main
+        if: github.ref_name != 'main'
+        run: echo "::error::deploys run from main only" && exit 1
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # llms is a git dependency in a PRIVATE repo. The lockfile resolves it
+      # over ssh, which a runner has no key for, so rewrite those URLs to
+      # https and supply the read-only token through a credential helper —
+      # never in a URL, so it cannot land in a log.
+      - name: Read access to the private llms package
+        run: |
+          git config --global credential.https://github.com.helper \
+            '!f() { test "$1" = get && test -n "$LLMS_READ_TOKEN" || exit 0; echo username=x-access-token; echo "password=$LLMS_READ_TOKEN"; }; f'
+          git config --global url."https://github.com/williambrendel/".insteadOf "ssh://git@github.com/williambrendel/"
+          git config --global --add url."https://github.com/williambrendel/".insteadOf "git@github.com:williambrendel/"
+        env:
+          LLMS_READ_TOKEN: ${{ secrets.LLMS_READ_TOKEN }}
+
+      - name: Install
+        working-directory: server
+        run: npm ci
+        env:
+          LLMS_READ_TOKEN: ${{ secrets.LLMS_READ_TOKEN }}
+
+      # Refuse to ship a corpus whose vectors no longer match its markdown.
+      # Section ranges are byte offsets, so a stale pairing does not error at
+      # runtime — it quietly returns misaligned text and invites the model to
+      # fabricate across the gaps. Cheaper to fail here.
+      - name: Verify the corpus matches its vectors
+        working-directory: server
+        run: npm run verify
+
+      - name: Package
+        id: package
+        run: |
+          set -euo pipefail
+          # .env must never ship (the box reads its key from SSM) and
+          # .model_cache travels separately — see scripts/push-models.sh.
+          tar --exclude='.env' \
+              --exclude='.model_cache' \
+              --exclude='node_modules/.cache' \
+              -czf "/tmp/${GITHUB_SHA}.tar.gz" -C . server
+          echo "size=$(du -h "/tmp/${GITHUB_SHA}.tar.gz" | cut -f1)" >> "$GITHUB_OUTPUT"
+          echo "key=releases/${GITHUB_SHA}.tar.gz" >> "$GITHUB_OUTPUT"
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload the release
+        run: |
+          aws s3 cp "/tmp/${GITHUB_SHA}.tar.gz" \
+            "s3://${{ secrets.AWS_ARTIFACT_BUCKET }}/${{ steps.package.outputs.key }}"
+          echo "uploaded ${{ steps.package.outputs.key }} (${{ steps.package.outputs.size }})"
+
+      - name: Find the instance
+        id: box
+        run: |
+          set -euo pipefail
+          ID=$(aws ec2 describe-instances \
+                 --filters "Name=tag:App,Values=personal-page" "Name=instance-state-name,Values=running" \
+                 --query 'Reservations[].Instances[].InstanceId' --output text)
+          if [ -z "$ID" ]; then
+            echo "::error::no running instance tagged App=personal-page — launch it first (server/DEPLOY.md)"
+            exit 1
+          fi
+          echo "id=$ID" >> "$GITHUB_OUTPUT"
+          echo "instance $ID"
+
+      # The release script runs on the box. It swaps a symlink rather than
+      # writing over a live directory, so a failed extract cannot leave a
+      # half-replaced install, and the previous release stays on disk for an
+      # instant rollback.
+      - name: Roll it out
+        run: |
+          set -euo pipefail
+          CMD=$(aws ssm send-command \
+            --instance-ids "${{ steps.box.outputs.id }}" \
+            --document-name AWS-RunShellScript \
+            --comment "deploy ${GITHUB_SHA::7}" \
+            --parameters commands='[
+              "set -euo pipefail",
+              "SHA=${{ github.sha }}",
+              "BUCKET=${{ secrets.AWS_ARTIFACT_BUCKET }}",
+              "install -d -o app -g app /opt/personal-page/releases",
+              "aws s3 cp s3://$BUCKET/releases/$SHA.tar.gz /tmp/$SHA.tar.gz",
+              "rm -rf /opt/personal-page/releases/$SHA",
+              "install -d -o app -g app /opt/personal-page/releases/$SHA",
+              "tar -xzf /tmp/$SHA.tar.gz -C /opt/personal-page/releases/$SHA --strip-components=1",
+              "ln -sfn /opt/personal-page/.model_cache /opt/personal-page/releases/$SHA/.model_cache",
+              "chown -R app:app /opt/personal-page/releases/$SHA",
+              "ln -sfn /opt/personal-page/releases/$SHA /opt/personal-page/current",
+              "systemctl restart personal-page",
+              "rm -f /tmp/$SHA.tar.gz"
+            ]' \
+            --query 'Command.CommandId' --output text)
+
+          echo "ssm command $CMD"
+          for i in $(seq 1 60); do
+            STATUS=$(aws ssm get-command-invocation --command-id "$CMD" \
+                       --instance-id "${{ steps.box.outputs.id }}" \
+                       --query Status --output text 2>/dev/null || echo Pending)
+            case "$STATUS" in
+              Success) echo "rollout ok"; break ;;
+              Failed|Cancelled|TimedOut)
+                echo "::error::rollout $STATUS"
+                aws ssm get-command-invocation --command-id "$CMD" \
+                  --instance-id "${{ steps.box.outputs.id }}" \
+                  --query 'StandardErrorContent' --output text
+                exit 1 ;;
+              *) sleep 5 ;;
+            esac
+          done
+
+      # The rollout succeeding only means systemd accepted the restart. This
+      # is the check that the service actually answers.
+      - name: Confirm it is serving
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 30); do
+            BODY=$(curl -fsS --max-time 10 https://api.william-brendel.com/health || true)
+            if echo "$BODY" | grep -q '"ok":true'; then
+              echo "healthy: $BODY"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::/health did not report ok within 150s"
+          exit 1

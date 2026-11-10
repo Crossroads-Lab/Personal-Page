@@ -423,7 +423,18 @@ Two notes on that policy:
 Then:
 
 ```bash
-aws configure --profile pp        # the new access key, region us-east-1
+# The policy is ~3.1 KB, over the 2048-byte inline limit, so attach it as a
+# managed policy rather than with put-user-policy:
+bash server/infra/make-operator-policy.sh
+aws iam create-user --user-name personal-page-operator --profile will
+ARN=$(aws iam create-policy --policy-name operate-personal-page \
+        --policy-document file:///tmp/pp-operator-policy.json \
+        --profile will --query 'Policy.Arn' --output text)
+aws iam attach-user-policy --user-name personal-page-operator --policy-arn "$ARN" --profile will
+
+# Then, in your own terminal — this prints a secret:
+aws iam create-access-key --user-name personal-page-operator --profile will
+aws configure --profile pp        # region us-east-1
 ```
 
 and every AWS command I run names `--profile pp` explicitly, so it is visible

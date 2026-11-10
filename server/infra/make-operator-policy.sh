@@ -5,6 +5,19 @@
 #
 #   bash server/infra/make-operator-policy.sh          # -> /tmp/pp-operator-policy.json
 #
+# Then attach it as a MANAGED policy, not an inline one:
+#
+#   ARN=$(aws iam create-policy --policy-name operate-personal-page \
+#           --policy-document file:///tmp/pp-operator-policy.json \
+#           --profile will --query 'Policy.Arn' --output text)
+#   aws iam attach-user-policy --user-name personal-page-operator \
+#           --policy-arn "$ARN" --profile will
+#
+# Inline user policies are capped at 2048 bytes and this one is ~3.1 KB
+# minified, so put-user-policy fails with LimitExceeded. Managed policies
+# allow 6144. Managed is the better fit anyway: it is versioned, so a bad
+# edit can be rolled back, and it can be detached without being destroyed.
+#
 # The account ID is NOT committed: this repo is public and GitHub Pages serves
 # it, so the policy lives here as a generator rather than as a file with real
 # identifiers in it.
