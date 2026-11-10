@@ -27,7 +27,7 @@ const FALLBACK = [
   { label: "Core values", q: "What are your core values?" },
 ];
 
-const CONTACT_LABEL = "Contact";
+const CONTACT_LABEL = "Contact info";
 
 /* A chip shows a topic and asks a sentence. Anything that arrives as a bare
    string — an older server, a cached response — becomes both, which is how
@@ -75,38 +75,34 @@ const ask = (question) => {
 const openContactMenu = () => chatContainer.setAttribute("menu-visible", "");
 
 /**
- * Trim the row until it fits on one line.
+ * Mark the row when it has more chips than fit, and say which way.
  *
- * Four chips fit across a desktop bar and do not fit across a phone, and the
- * exact point in between depends on which labels the server happened to send
- * and on whether Poppins has loaded yet. A breakpoint would have to guess all
- * three, so this measures instead: drop starters from the end until the row
- * stops overflowing. Contact is never dropped — it is the only chip that goes
- * somewhere the visitor cannot reach by typing.
+ * The row scrolls rather than wrapping or dropping anything, which on a phone
+ * means Contact can sit past the right edge — and a row with no visible edge
+ * looks like a row that ends there. The attribute drives a fade on whichever
+ * side has more, the one honest cue that there is.
  */
-const fit = () => {
-  // Hidden (chat started, or not laid out yet): nothing to measure, and a
-  // zero-width box would read as "everything overflows" and strip the row.
-  if (!container.clientWidth) return;
-  while (
-    container.scrollWidth > container.clientWidth &&
-    container.children.length > 2            // keep one starter + Contact
-  ) {
-    container.children[container.children.length - 2].remove();
-  }
+const markOverflow = () => {
+  if (!container.clientWidth) return;              // hidden: nothing to mark
+  const slack = container.scrollWidth - container.clientWidth;
+  if (slack < 2) return container.removeAttribute("overflowing");
+  const atStart = container.scrollLeft < 2;
+  const atEnd = container.scrollLeft > slack - 2;
+  container.setAttribute(
+    "overflowing",
+    atStart ? "end" : atEnd ? "start" : "both",
+  );
 };
 
-/** The last list fetched, so a resize can rebuild what a narrower one cut. */
-let current = [];
+container?.addEventListener("scroll", markOverflow, { passive: true });
 
 const render = (starters) => {
   if (!container) return;
-  current = starters;
   container.replaceChildren(
     ...starters.map(({ label, q }) => chip(label, () => ask(q))),
     chip(CONTACT_LABEL, openContactMenu, true),
   );
-  fit();
+  markOverflow();
 };
 
 // Fade the chips while the visitor is composing, and bring them back if they
@@ -120,15 +116,14 @@ fetchStarters().then((starters) => {
   render(starters);
   // Measured again once Poppins is in: the fallback face is a different
   // width, so a row that fits before the swap can overflow after it.
-  document.fonts?.ready.then(() => render(current));
+  document.fonts?.ready.then(markOverflow);
 });
 
-// A rotation or a resized window changes how many fit, in both directions,
-// so rebuild the full list and let fit() cut it again rather than only ever
-// removing. Skipped once a conversation exists — the chips are gone by then.
+// A rotation or a resized window changes whether the row overflows, and in
+// which direction. Skipped once a conversation exists — the chips are gone.
 let resizeTimer;
 window.addEventListener("resize", () => {
   if (document.body.hasAttribute("chat-started")) return;
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => render(current), 150);
+  resizeTimer = setTimeout(markOverflow, 150);
 });

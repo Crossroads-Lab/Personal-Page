@@ -341,20 +341,23 @@ module.exports = Object.freeze({
    * sent — the retrieval is only as good as the sentence it gets, and "Big
    * tech" on its own retrieves nothing.
    *
-   * The label is also what makes the row fit: four chips across 512px leaves
-   * roughly 80px of text each, which is a topic, not a sentence.
+   * The label still has to earn its width — a row of four across 512px — but
+   * a bare noun ("Background", "Hard calls") reads as a filing cabinet. A
+   * short phrase in his voice ("My background", "A project that fell over")
+   * says the same thing and sounds like him; where it no longer fits, the
+   * row scrolls rather than the labels shrinking.
    */
   STARTERS: Object.freeze([
-    { label: "Into AI",        q: "How did you get into AI?" },
-    { label: "Background",     q: "What's your background?" },
-    { label: "Big tech",       q: "Why did you leave big tech?" },
-    { label: "Core values",    q: "What are your core values?" },
-    { label: "Awake at night", q: "What keeps you awake at night?" },
-    { label: "A failure",      q: "Tell me about a time a project failed." },
-    { label: "Grad school",    q: "What's your best story from grad school?" },
-    { label: "AI adoption",    q: "How would you approach AI adoption at a company?" },
-    { label: "Hard calls",     q: "What's the hardest technical decision you've made?" },
-    { label: "Next role",      q: "What are you looking for in a role?" },
+    { label: "Getting into AI",     q: "How did you get into AI?" },
+    { label: "My background",       q: "What's your background?" },
+    { label: "Leaving big tech",    q: "Why did you leave big tech?" },
+    { label: "My core values",      q: "What are your core values?" },
+    { label: "What worries me",     q: "What keeps you awake at night?" },
+    { label: "A project that fell over", q: "Tell me about a time a project failed." },
+    { label: "A grad school story", q: "What's your best story from grad school?" },
+    { label: "Adopting AI",         q: "How would you approach AI adoption at a company?" },
+    { label: "My hardest call",     q: "What's the hardest technical decision you've made?" },
+    { label: "My next role",        q: "What are you looking for in a role?" },
   ].map(Object.freeze)),
   STARTER_COUNT: 3,
 

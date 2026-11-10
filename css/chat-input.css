@@ -296,6 +296,16 @@ body:not([chat-started])::after {
   flex-grow: 1;
 }
 
+/* #welcome is height: 100%, so it centres the headline inside main's whole
+   half of the page — which puts most of main's slack BETWEEN the headline
+   and the bar, and reads as the two having nothing to do with each other.
+   Sitting the headline at the bottom of main closes that gap; the slack
+   stays, above the headline, where it is just margin. */
+body:not([chat-started]) #welcome {
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}
+
 /* The ⋮ is redundant while the chips are up: the contact chip opens the
    same menu. Collapsed rather than hidden, so the input does not shift
    sideways when it returns. */
@@ -351,12 +361,22 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
      that would happen. */
   justify-content: safe center;
   gap: 8px;
-  width: var(--main-width);
+  /* Wider than the bar when the labels need it. The row is a child of the
+     512px container, so it is pulled back out to the viewport: `translate`
+     rather than `transform`, because `transform` is already spoken for by
+     the fade and the two would overwrite each other. A row that scrolls on a
+     1024px screen is a row hiding options there is room for. */
+  width: max-content;
   max-width: var(--main-max-width);
-  margin: 14px auto 0;
-  /* Narrow phone, long labels: scroll rather than wrap or clip. */
+  margin: 14px 0 0 50%;
+  translate: -50% 0;
+  /* Narrow phone, long labels: scroll rather than wrap or clip. The bar has
+     no room for a scrollbar at this size and a visible one would cut into
+     the chips, so the fade below is the cue instead. */
   overflow-x: auto;
   scrollbar-width: none;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
   /* The chips must keep their shape — shrinking them squeezes the text into
      the rounded ends long before the row runs out of room. */
   padding: 2px 0;
@@ -365,6 +385,24 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
 
 #starter-chips::-webkit-scrollbar {
   display: none;
+}
+
+/* A row that scrolls looks exactly like a row that ends, and on a phone the
+   chip past the right edge is Contact — the one thing a visitor cannot reach
+   by typing. Fading the overflowing side is the cue. The attribute (set by
+   scripts/starter-chips.js on scroll and resize) names which side has more,
+   so the fade is never on an edge with nothing behind it. */
+#starter-chips[overflowing="end"] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+
+#starter-chips[overflowing="start"] {
+  mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent);
+}
+
+#starter-chips[overflowing="both"] {
+  mask-image: linear-gradient(to right, transparent, #000 32px,
+                              #000 calc(100% - 32px), transparent);
 }
 
 .starter-chip {
@@ -394,6 +432,15 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   color: var(--color);
 }
 
+/* Pressing a chip sends its question — the row has done its job and the page
+   moves on. It must not flinch first: no scale, no fade, no reflow, because
+   the chips sit directly under the thing the eye is about to follow. */
+.starter-chip:active,
+.starter-chip:focus {
+  transform: none;
+  opacity: 1;
+}
+
 .starter-chip:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: 2px;
@@ -418,21 +465,15 @@ body[chat-started] #starter-chips {
   display: none;
 }
 
-/* The menu opens where the chips are, so the chips step back while it is up.
-   Fading rather than removing keeps the block height stable, so the bar does
-   not hop when the menu opens and closes. */
-#chat-input-container[menu-visible] #starter-chips {
-  opacity: 0;
-  pointer-events: none;
-}
-
 /* The menu normally hangs above the bar, anchored to the ⋮ that opens it.
    In the opening state there is no ⋮ and the bar is in the middle of the
-   page, so hanging upwards would cover the headline; it drops below the bar
-   instead, centred on it, into the space the chips just vacated. */
+   page, so hanging upwards would cover the headline. It drops below instead
+   — below the WHOLE container, chips included, so opening it never costs the
+   visitor sight of the options it was opened from. 100% is the container's
+   own height, which already grows with the chip row. */
 @media only screen and (min-width: 513px) {
   body:not([chat-started]) #chat-menu {
-    top: calc(var(--chat-form-height) + 24px);
+    top: calc(100% + 10px);
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
@@ -453,7 +494,7 @@ body[chat-started] #starter-chips {
   }
   #starter-chips {
     order: -1;
-    margin: 0 auto 14px;
+    margin: 0 0 14px 50%;
   }
   /* Chips above the bar here, so "behind the bar" is downwards. */
   #chat-input-container[input-focused] #starter-chips {

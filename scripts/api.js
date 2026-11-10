@@ -45,9 +45,11 @@ export const joinChunks = (chunks) => (chunks || [])
  *
  * @param {string} query
  * @param {AbortSignal} [external] - from the stop button.
+ * @param {string[]} [asked] - questions already put to the page this visit,
+ *   so the backend can drop follow-ups that only reword one of them.
  * @returns {Promise<{text: string, followUps: string[], ok: boolean}>}
  */
-export const ask = async (query, external) => {
+export const ask = async (query, external, asked = []) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
@@ -61,7 +63,7 @@ export const ask = async (query, external) => {
     const response = await fetch(`${API_BASE}/query`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: query }),
+      body: JSON.stringify({ q: query, asked }),
       signal: controller.signal,
     });
 

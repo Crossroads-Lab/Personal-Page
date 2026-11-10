@@ -15,6 +15,7 @@ const cors    = require("cors");
 const CONFIG    = require("./config");
 const getEngine = require("./server/engine");
 const guard     = require("./server/guard");
+const { filterAsked } = require("./server/asked");
 
 const QUERY_KEYS = ["q", "question", "query", "message", "msg"];
 const MAX_QUERY_CHARS = 1000;
@@ -100,14 +101,25 @@ const main = async () => {
       const result = await engine.ask(query);
       const { stats, ...body } = result;
 
+      // The model writes follow-ups from the answer alone and has no memory
+      // of the conversation, so it will re-offer a question already asked in
+      // different words. The page sends what it has asked; this drops the
+      // repeats. See server/asked.js for the threshold and why it sits where
+      // it does.
+      const asked = [...(Array.isArray(req.body?.asked) ? req.body.asked : []), query];
+      body.followUpQuestions = await filterAsked(body.followUpQuestions, asked);
+
       // Paths that skip retrieval — greeting, off-topic decline, fallback —
       // come back from the library with no follow-ups, which leaves the
       // visitor facing an empty input box at the one moment they have least
-      // idea what to ask. Offer curated openers instead.
+      // idea what to ask. Offer curated openers instead, minus anything they
+      // have already been through.
+      //
       // Follow-ups are plain strings on the wire; the starters carry a chip
       // label the answer screen has no use for, so only the question travels.
-      if (!body.followUpQuestions?.length) {
-        body.followUpQuestions = pickStarters().map(s => s.q);
+      if (!body.followUpQuestions.length) {
+        body.followUpQuestions =
+          await filterAsked(pickStarters().map(s => s.q), asked);
       }
 
       res.json(body);

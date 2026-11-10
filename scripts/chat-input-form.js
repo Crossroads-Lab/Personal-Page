@@ -167,6 +167,17 @@ input.addEventListener("keydown", event => {
 // Form submission handler
 // --------------------------------------------------------------------------
 let stopDisplay, endDisplay = () => stopDisplay = null;
+
+/**
+ * Everything asked this visit, oldest first.
+ *
+ * Kept on the page rather than the server because there are no sessions —
+ * the backend answers each question on its own. It travels with the request
+ * so the backend can drop follow-ups that reword something already covered;
+ * see server/server/asked.js. A reload starts it empty, which is correct:
+ * the transcript is gone too.
+ */
+const asked = [];
 form.addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -186,7 +197,11 @@ form.addEventListener("submit", async event => {
   const controller = new AbortController();
   inFlight = controller;
 
-  const { text, followUps, aborted } = await ask(message, controller.signal);
+  // Recorded before the request, so a question asked twice in a row is
+  // already known by the time the answer's follow-ups are judged.
+  asked.push(message);
+
+  const { text, followUps, aborted } = await ask(message, controller.signal, asked);
 
   // The user hit stop, or started another question while this was running.
   // Either way this response is stale — the newer request owns the screen.
