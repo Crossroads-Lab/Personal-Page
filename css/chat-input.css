@@ -293,6 +293,19 @@ body:has(#chat-input-container:not([menu-visible])) {
  * in the chain real.
  */
 
+/* Nothing scrolls before the first question. <main> is the only scrollable
+   box on the page (chat-content.css gives it `overflow-y: auto !important`
+   for the transcript), and in the opening state it holds one headline in a
+   composition sized to the window — so any scrollbar it shows is measuring
+   a rounding error, not content. It still costs the full gutter, which on a
+   narrow window is a pale stripe down an otherwise edge-to-edge page.
+   
+   The `!important` is not a preference; it is the only way past the one in
+   common.css, which is load-bearing for the transcript. */
+body:not([chat-started]) main {
+  overflow-y: hidden !important;
+}
+
 body::after {
   content: "";
   flex: 0 0 0;
@@ -595,6 +608,28 @@ body[chat-started] #starter-chips {
    The question is "is this portrait and hand-held", not "is the bar full
    width", so the opening-state layout breaks later than the glass does. */
 @media only screen and (max-width: 600px) {
+  /* The headline sits in the clear band between the top of the screen and
+     the top of his head, centred in it — not centred in <main>, which runs
+     down behind him and would hang the text over his face.
+     
+     The band is the viewport less however tall he renders; --portrait-subject
+     is that height, derived once in common.css. `max-height: 100%` is the
+     backstop for a short window where the band would be taller than main
+     has to give. */
+  body:not([chat-started]) #welcome {
+    justify-content: center;
+    height: calc(100dvh - var(--portrait-subject));
+    max-height: 100%;
+  }
+
+  /* main centres its children with `margin: auto` on its own ::before and
+     ::after (chat-content.css). That re-centres the band inside main and
+     undoes the whole point of measuring it, so the leading one is released
+     and #welcome starts at the top of main — where the band starts. */
+  body:not([chat-started]) main::before {
+    margin: 0;
+  }
+
   /* The bar is already at the bottom on a phone, so the chips go above it
      rather than off the end of the screen. */
   #chat-input-container {

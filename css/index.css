@@ -50,7 +50,7 @@ body:before {
    * viewport, so a percentage would float him in open space instead. His
    * feet are 0.3% off the bottom of the crop, so anchoring the crop to the
    * bottom seats him on the floor, which is where 70% effectively had him. */
-  background: url("../assets/background.webp") no-repeat right bottom / auto max(41.6vw, 62.6vh) scroll;
+  background: url("../assets/background.webp") no-repeat right bottom / auto var(--portrait-crop) scroll;
 }
 
 /*

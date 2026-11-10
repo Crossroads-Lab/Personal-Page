@@ -52,6 +52,17 @@
   /* -------------------- Animation -------------------- */
   --transition-time: 300ms;  /* Standard duration for all transitions */
 
+  /* How tall the portrait renders, and how much of that is him.
+   *
+   * css/index.css sets the background to --portrait-crop and the derivation
+   * of that number is documented there. It lives here because the layout
+   * needs it too: the headline is positioned against the top of his head,
+   * and if the two were written out separately they would drift the first
+   * time either changed. He fills 84% of the crop's height — measured off
+   * the file, not estimated. */
+  --portrait-crop: max(41.6vw, 62.6vh);
+  --portrait-subject: calc(0.84 * var(--portrait-crop));
+
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
   /* --blur-filter: blur(10px) url(#liquid-glass-distortion); */
