@@ -202,6 +202,20 @@ module.exports = Object.freeze({
           "why should I hire you?",
           "what was your childhood like?",
           "what's the most misunderstood thing about you?",
+
+          // Added 2026-11-09, same failure as the 2026-10-15 batch, found by
+          // npm run calibrate-gate: "How do you handle burnout?" classified
+          // CONVERSATIONAL and was dropped before retrieval, although
+          // perspective/work_hours.md answers it and the LONGER phrasing
+          // ("...for yourself or across your team?") retrieves it fine.
+          // Short, plain questions about wellbeing and working style had no
+          // anchor near them.
+          "how do you handle burnout?",
+          "how do you deal with stress?",
+          "what are your working hours?",
+          "how do you handle conflict on a team?",
+          "how do you give feedback?",
+          "what motivates you?",
         ],
       },
       SUPPORT: {
