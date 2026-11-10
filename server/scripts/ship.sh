@@ -38,6 +38,13 @@ NODE_IMAGE="node:24"
 ONLY_CHECK=0
 SKIP_HEALTH=0
 WORK=""
+COLIMA_STARTED=0
+
+# Free space this needs before it will start a build. The container pulls
+# node:24 (~1.1 GB) and installs 261 packages including onnxruntime-node, and
+# a build that runs out of room on this Mac has taken the whole machine down
+# with it before now. Refusing is cheaper than recovering.
+MIN_FREE_GB=12
 
 for a in "$@"; do
   case "$a" in
@@ -49,7 +56,20 @@ done
 
 fail() { printf '\nSTOPPED: %s\n' "$*" >&2; exit 1; }
 step() { printf '\n── %s\n' "$*"; }
-cleanup() { [[ -n "$WORK" ]] && rm -rf "$WORK"; return 0; }
+# Colima holds ~4 GB of this Mac's 16 while it runs, build or no build, so it
+# is started for the build and stopped again — but only if WE started it.
+# Another project (Reelish) uses the same Docker, and stopping a Colima
+# somebody else is using would kill their containers. Runs on failures too,
+# which is the case that matters: a ship that dies at the health check must
+# not leave 4 GB held.
+cleanup() {
+  [[ -n "$WORK" ]] && rm -rf "$WORK"
+  if [[ "$COLIMA_STARTED" == "1" ]]; then
+    printf '\n── stopping colima (this script started it)\n'
+    colima stop >/dev/null 2>&1 || true
+  fi
+  return 0
+}
 trap cleanup EXIT
 trap 'exit 130' INT TERM
 
@@ -57,7 +77,23 @@ trap 'exit 130' INT TERM
 step "checks"
 
 command -v docker >/dev/null || fail "Docker isn't installed. It is how node_modules gets built for linux/arm64."
-docker info >/dev/null 2>&1 || fail "Docker isn't running: start Docker Desktop (or 'colima start')."
+
+# Disk before Docker: a Colima started onto a full disk is a slower failure
+# than this one, and a build that fills the disk takes the Mac with it.
+FREE_GB="$(df -g /System/Volumes/Data | awk 'NR==2 {print $4}')"
+[[ "$FREE_GB" -ge "$MIN_FREE_GB" ]] || fail "Only ${FREE_GB}GB free, need ${MIN_FREE_GB}GB to build.
+  Free some up first — 'docker system df' to see what Docker is holding,
+  then 'docker builder prune -f' and 'colima ssh -- sudo fstrim -a' to hand
+  the blocks back to macOS."
+
+if ! docker info >/dev/null 2>&1; then
+  command -v colima >/dev/null \
+    || fail "Docker isn't running and colima isn't installed: start Docker Desktop."
+  printf '\n── starting colima (stopped again when this finishes)\n'
+  colima start >/dev/null 2>&1 || fail "colima start failed. Try 'colima start' by hand to see why."
+  COLIMA_STARTED=1
+  docker info >/dev/null 2>&1 || fail "colima started but Docker still isn't answering."
+fi
 command -v aws >/dev/null    || fail "The AWS CLI isn't installed."
 
 aws sts get-caller-identity --profile "$PROFILE" >/dev/null 2>&1 \

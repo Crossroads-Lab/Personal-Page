@@ -27,7 +27,7 @@ const FALLBACK = [
   { label: "Core values", q: "What are your core values?" },
 ];
 
-const CONTACT_LABEL = "Contact info";
+const CONTACT_LABEL = "How to reach me";
 
 /* A chip shows a topic and asks a sentence. Anything that arrives as a bare
    string — an older server, a cached response — becomes both, which is how

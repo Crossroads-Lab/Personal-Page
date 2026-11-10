@@ -24,6 +24,7 @@ const runQuery        = require("llms/src/actions/query");
 const prewarm         = require("llms/src/xenova/prewarm");
 const claudeRun       = require("llms/src/claude");
 const manifest        = require("../scripts/manifest");
+const { condense, preamble } = require("./history");
 
 let enginePromise;
 
@@ -66,12 +67,27 @@ const build = async () => {
   const boot = ((Date.now() - started) / 1000).toFixed(1);
   console.log(`Engine ready in ${boot}s — ${store.length} documents, ${store.vecDim} dimensions.`);
 
-  const ask = (rawQuery) => runQuery({
-    rawQuery,
+  /**
+   * @param {string} rawQuery
+   * @param {{history?: {q: string, a: string}[]}} [options]
+   *   `history` is the tail of the conversation as the PAGE recorded it —
+   *   there is no session store, so the client carries it. See
+   *   server/history.js for the caps and why it is quoted rather than
+   *   replayed as real turns.
+   */
+  const ask = (rawQuery, { history = [] } = {}) => runQuery({
+    // Retrieval runs on the condensed form so a follow-up still embeds to
+    // something; the model is shown the exchange and can resolve the rest.
+    rawQuery: history.length ? condense(rawQuery, history) : rawQuery,
     store,
     resolver,
     analyzeQuery,
-    runLLM:           claudeRun,
+    // The history rides in on the context string rather than as extra
+    // conversation turns: turns carry the authority of something the
+    // assistant actually said, and this came from the client.
+    runLLM:           history.length
+      ? (config, context) => claudeRun(config, preamble(history) + context)
+      : claudeRun,
     prompts:          { answer: answerPrompt },
     llmConfig:        CONFIG.HAIKU55,
     searchOptions:    CONFIG.RETRIEVAL,

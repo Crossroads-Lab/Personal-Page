@@ -45,11 +45,13 @@ export const joinChunks = (chunks) => (chunks || [])
  *
  * @param {string} query
  * @param {AbortSignal} [external] - from the stop button.
- * @param {string[]} [asked] - questions already put to the page this visit,
- *   so the backend can drop follow-ups that only reword one of them.
+ * @param {{q: string, a: string}[]} [history] - the tail of this visit's
+ *   conversation. There is no session on the backend, so the page carries it:
+ *   it resolves follow-ups ("what about at Samsung?") and lets the backend
+ *   drop follow-up suggestions that only reword something already asked.
  * @returns {Promise<{text: string, followUps: string[], ok: boolean}>}
  */
-export const ask = async (query, external, asked = []) => {
+export const ask = async (query, external, history = []) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
@@ -63,7 +65,7 @@ export const ask = async (query, external, asked = []) => {
     const response = await fetch(`${API_BASE}/query`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: query, asked }),
+      body: JSON.stringify({ q: query, history }),
       signal: controller.signal,
     });
 

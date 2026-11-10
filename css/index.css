@@ -63,6 +63,27 @@ body:before {
 
 /*
  * =====================================================
+ * PORTRAIT ON A PHONE
+ * =====================================================
+ * At viewport height the portrait is taller than the phone is wide, so it
+ * fills the screen and the headline, the chips and the bar all sit on top of
+ * him. `contain` sizes him to fit the width instead and anchors him to the
+ * bottom, which leaves the top of the screen clear for the headline and puts
+ * the chips and the bar over his legs rather than his face.
+ *
+ * Same breakpoint as the opening-state layout in chat-input.css: the two are
+ * one decision — headline top, portrait middle, bar bottom — and splitting
+ * them would give a band of widths with half of it applied.
+ */
+@media only screen and (max-width: 600px) {
+  body:before {
+    background-size: contain;
+    background-position: center bottom;
+  }
+}
+
+/*
+ * =====================================================
  * MOBILE RESPONSIVE LAYOUT
  * =====================================================
  * Layout changes for screens 740px and smaller

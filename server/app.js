@@ -16,6 +16,7 @@ const CONFIG    = require("./config");
 const getEngine = require("./server/engine");
 const guard     = require("./server/guard");
 const { filterAsked } = require("./server/asked");
+const history = require("./server/history");
 
 const QUERY_KEYS = ["q", "question", "query", "message", "msg"];
 const MAX_QUERY_CHARS = 1000;
@@ -97,8 +98,12 @@ const main = async () => {
       });
     }
 
+    // The page carries the transcript; there is no session store. Cleaned
+    // and capped here, before anything downstream sees it.
+    const past = history.clean(req.body?.history);
+
     try {
-      const result = await engine.ask(query);
+      const result = await engine.ask(query, { history: past });
       const { stats, ...body } = result;
 
       // The model writes follow-ups from the answer alone and has no memory
@@ -106,7 +111,7 @@ const main = async () => {
       // different words. The page sends what it has asked; this drops the
       // repeats. See server/asked.js for the threshold and why it sits where
       // it does.
-      const asked = [...(Array.isArray(req.body?.asked) ? req.body.asked : []), query];
+      const asked = [...past.map(t => t.q), query];
       body.followUpQuestions = await filterAsked(body.followUpQuestions, asked);
 
       // Paths that skip retrieval — greeting, off-topic decline, fallback —

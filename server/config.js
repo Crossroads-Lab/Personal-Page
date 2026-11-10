@@ -341,23 +341,23 @@ module.exports = Object.freeze({
    * sent — the retrieval is only as good as the sentence it gets, and "Big
    * tech" on its own retrieves nothing.
    *
-   * The label still has to earn its width — a row of four across 512px — but
-   * a bare noun ("Background", "Hard calls") reads as a filing cabinet. A
-   * short phrase in his voice ("My background", "A project that fell over")
-   * says the same thing and sounds like him; where it no longer fits, the
-   * row scrolls rather than the labels shrinking.
+   * A bare noun ("Background", "Hard calls") reads as a filing cabinet and
+   * tells a visitor nothing about what they would get. The label is a claim
+   * in his own voice instead — "Why I left big tech", "A project that
+   * failed" — short enough for a row, specific enough to be worth pressing.
+   * The row widens past the bar to hold them, and scrolls where it cannot.
    */
   STARTERS: Object.freeze([
-    { label: "Getting into AI",     q: "How did you get into AI?" },
-    { label: "My background",       q: "What's your background?" },
-    { label: "Leaving big tech",    q: "Why did you leave big tech?" },
-    { label: "My core values",      q: "What are your core values?" },
-    { label: "What worries me",     q: "What keeps you awake at night?" },
-    { label: "A project that fell over", q: "Tell me about a time a project failed." },
-    { label: "A grad school story", q: "What's your best story from grad school?" },
-    { label: "Adopting AI",         q: "How would you approach AI adoption at a company?" },
-    { label: "My hardest call",     q: "What's the hardest technical decision you've made?" },
-    { label: "My next role",        q: "What are you looking for in a role?" },
+    { label: "How I got into AI",       q: "How did you get into AI?" },
+    { label: "Where I've worked",       q: "What's your background?" },
+    { label: "Why I left big tech",     q: "Why did you leave big tech?" },
+    { label: "The values I lead by",    q: "What are your core values?" },
+    { label: "What keeps me up",        q: "What keeps you awake at night?" },
+    { label: "A project that failed",   q: "Tell me about a time a project failed." },
+    { label: "My best grad school story", q: "What's your best story from grad school?" },
+    { label: "How I'd roll out AI",     q: "How would you approach AI adoption at a company?" },
+    { label: "My hardest technical call", q: "What's the hardest technical decision you've made?" },
+    { label: "What I want next",        q: "What are you looking for in a role?" },
   ].map(Object.freeze)),
   STARTER_COUNT: 3,
 

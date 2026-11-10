@@ -169,15 +169,33 @@ input.addEventListener("keydown", event => {
 let stopDisplay, endDisplay = () => stopDisplay = null;
 
 /**
- * Everything asked this visit, oldest first.
+ * This visit's conversation, oldest first: `{ q, a }` per exchange.
  *
  * Kept on the page rather than the server because there are no sessions —
- * the backend answers each question on its own. It travels with the request
- * so the backend can drop follow-ups that reword something already covered;
- * see server/server/asked.js. A reload starts it empty, which is correct:
- * the transcript is gone too.
+ * the backend answers each question on its own, which is what keeps it one
+ * small process. So the page is the store, and the tail of it travels with
+ * each request: it is how "what about at Samsung?" still retrieves anything,
+ * and how the backend knows not to suggest a question already asked. See
+ * server/server/history.js.
+ *
+ * A plain array, deliberately — not localStorage. It costs a few KB of RAM,
+ * it is bounded by the trim below, and it dies with the tab, which is the
+ * right lifetime for a transcript the visitor can already see on screen.
  */
-const asked = [];
+const history = [];
+
+/**
+ * Keep only what the backend will actually read (server/history.js caps at
+ * four exchanges), so the request body stays small and the page never grows
+ * a list it does not use. Trimming here rather than at send time means the
+ * array itself never becomes the leak.
+ */
+const HISTORY_TURNS = 4;
+const remember = (turn) => {
+  history.push(turn);
+  if (history.length > HISTORY_TURNS) history.splice(0, history.length - HISTORY_TURNS);
+  return turn;
+};
 form.addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -197,11 +215,12 @@ form.addEventListener("submit", async event => {
   const controller = new AbortController();
   inFlight = controller;
 
-  // Recorded before the request, so a question asked twice in a row is
-  // already known by the time the answer's follow-ups are judged.
-  asked.push(message);
+  // Sent before this question is recorded: the history is what came BEFORE,
+  // and the backend adds the current question itself.
+  const sent = history.slice();
+  const turn = remember({ q: message, a: "" });
 
-  const { text, followUps, aborted } = await ask(message, controller.signal, asked);
+  const { text, followUps, aborted } = await ask(message, controller.signal, sent);
 
   // The user hit stop, or started another question while this was running.
   // Either way this response is stale — the newer request owns the screen.
@@ -210,6 +229,10 @@ form.addEventListener("submit", async event => {
   if (!isThinking()) return;
 
   stopThinking();
+
+  // The answer completes the exchange. Recorded now rather than after the
+  // typing finishes, so a question asked mid-animation still sees it.
+  turn.a = text;
 
   stopDisplay = displayTextContent(
     text,

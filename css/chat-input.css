@@ -300,10 +300,16 @@ body:not([chat-started])::after {
    half of the page — which puts most of main's slack BETWEEN the headline
    and the bar, and reads as the two having nothing to do with each other.
    Sitting the headline at the bottom of main closes that gap; the slack
-   stays, above the headline, where it is just margin. */
-body:not([chat-started]) #welcome {
-  justify-content: flex-end;
-  padding-bottom: 4px;
+   stays, above the headline, where it is just margin.
+   
+   Desktop only. On a phone the bar is at the bottom and the headline belongs
+   at the top, with the portrait between them — pushing it down there would
+   stack the whole page into the bottom third. */
+@media only screen and (min-width: 601px) {
+  body:not([chat-started]) #welcome {
+    justify-content: flex-end;
+    padding-bottom: 4px;
+  }
 }
 
 /* The ⋮ is redundant while the chips are up: the contact chip opens the
@@ -419,17 +425,18 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   font-family: inherit;
   font-size: 1em;
   text-align: left;
-  color: var(--blue);
+  /* Body colour, not --blue. A follow-up chip sits on the page background
+     where blue reads fine; these sit over the portrait's navy suit, where it
+     does not. Legibility first — the shape and the glass already say the
+     chip is pressable. */
+  color: var(--color);
+  -webkit-tap-highlight-color: transparent;
   border: 0;
   border-radius: var(--border-radius-round);
   padding: 10px 18px;
   cursor: pointer;
   max-width: 100%;
   transition: background-color 120ms ease;
-}
-
-.starter-chip[data-contact] {
-  color: var(--color);
 }
 
 /* Pressing a chip sends its question — the row has done its job and the page
@@ -471,7 +478,7 @@ body[chat-started] #starter-chips {
    — below the WHOLE container, chips included, so opening it never costs the
    visitor sight of the options it was opened from. 100% is the container's
    own height, which already grows with the chip row. */
-@media only screen and (min-width: 513px) {
+@media only screen and (min-width: 601px) {
   body:not([chat-started]) #chat-menu {
     top: calc(100% + 10px);
     bottom: auto;
@@ -485,7 +492,12 @@ body[chat-started] #starter-chips {
   }
 }
 
-@media only screen and (max-width: 512px) {
+/* 600, not the 512 the rest of the file uses: 512 is the width of the input
+   bar, and a 518px window is still a phone-shaped window — it was getting
+   the desktop layout, bar floating in mid-air with the headline above it.
+   The question is "is this portrait and hand-held", not "is the bar full
+   width", so the opening-state layout breaks later than the glass does. */
+@media only screen and (max-width: 600px) {
   /* The bar is already at the bottom on a phone, so the chips go above it
      rather than off the end of the screen. */
   #chat-input-container {
