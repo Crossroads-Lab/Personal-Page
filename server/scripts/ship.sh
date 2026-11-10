@@ -98,9 +98,23 @@ step "corpus"
 
 # ── 3. Build for linux/arm64 ─────────────────────────────────────────────
 step "build (linux/arm64)"
-WORK="$(mktemp -d)"
+
+# Under $HOME, not mktemp's default. colima shares $HOME but not /tmp or
+# /var/folders, and a bind mount of an unshared path does not fail — Docker
+# silently presents an EMPTY directory. npm then reports a missing
+# package-lock.json, which sends you looking at git archive instead of at
+# file sharing. Docker Desktop shares more by default, but $HOME works on
+# both, so this needs no branch.
+WORK="$(mktemp -d "$HOME/.personal-page-ship-XXXXXX")"
 git -C "$REPO" archive --format=tar "$SHA" | tar -x -C "$WORK"
 [[ -d "$WORK/server" ]] || fail "The archive has no server/ — wrong commit?"
+[[ -f "$WORK/server/package-lock.json" ]] || fail "The archive has no server/package-lock.json."
+
+# Prove the container can actually see the files before spending minutes on
+# a build that would fail confusingly. This is the check that was missing.
+docker run --rm --platform linux/arm64 -v "$WORK/server:/app" -w /app \
+  alpine test -f package-lock.json 2>/dev/null \
+  || fail "Docker cannot see $WORK. The mount came back empty, which means this path is not shared with the VM — on colima, check 'colima status' and the mounts it lists."
 
 docker run --rm --platform linux/arm64 \
   -v "$WORK/server:/app" -w /app \
