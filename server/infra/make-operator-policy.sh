@@ -15,6 +15,18 @@
 # capability), and ssm:GetParameter — the instance reads the Anthropic key at
 # boot, so the operator never needs to, and leaving it out means the key
 # cannot be read by anything but the box itself.
+#
+# Instance type is capped at the small ARM sizes, so the worst launch this
+# identity can make costs about $16/month rather than hundreds. That is
+# enforced here rather than caught by a billing alert hours later.
+#
+# Note the shape: RunInstances authorises against EVERY resource it touches —
+# image, subnet, volume, network interface, security group AND instance — but
+# ec2:InstanceType only exists in the instance context. A single statement
+# requiring that key would evaluate false for the volume and subnet and deny
+# the whole call, so the instance resource is split from the rest. The
+# supporting-resources statement is not a loophole: without the instance
+# statement there is no permission to create an instance at all.
 
 set -euo pipefail
 
@@ -34,10 +46,34 @@ cat > "$OUT" <<JSON
                  "s3:ListAllMyBuckets", "ssm:Describe*", "ssm:List*", "iam:GetInstanceProfile"],
       "Resource": "*" },
 
-    { "Sid": "RunTheOneInstance", "Effect": "Allow",
-      "Action": ["ec2:RunInstances", "ec2:CreateTags", "ec2:StartInstances",
-                 "ec2:StopInstances", "ec2:RebootInstances",
-                 "ec2:ModifyInstanceAttribute", "ec2:CreateSecurityGroup",
+    { "Sid": "LaunchOnlySmallArmInstances", "Effect": "Allow",
+      "Action": "ec2:RunInstances",
+      "Resource": "arn:aws:ec2:*:*:instance/*",
+      "Condition": {
+        "StringEquals": { "aws:RequestedRegion": "${REGION}" },
+        "StringLike":   { "ec2:InstanceType": ["t4g.nano", "t4g.micro", "t4g.small"] } } },
+
+    { "Sid": "RunInstancesSupportingResources", "Effect": "Allow",
+      "Action": "ec2:RunInstances",
+      "Resource": ["arn:aws:ec2:*::image/*",
+                   "arn:aws:ec2:*:*:subnet/*",
+                   "arn:aws:ec2:*:*:network-interface/*",
+                   "arn:aws:ec2:*:*:volume/*",
+                   "arn:aws:ec2:*:*:security-group/*",
+                   "arn:aws:ec2:*:*:key-pair/*",
+                   "arn:aws:ec2:*:*:placement-group/*"],
+      "Condition": { "StringEquals": { "aws:RequestedRegion": "${REGION}" } } },
+
+    { "Sid": "ResizeOnlyToSmallArm", "Effect": "Allow",
+      "Action": "ec2:ModifyInstanceAttribute",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals":       { "aws:RequestedRegion": "${REGION}" },
+        "StringLikeIfExists": { "ec2:InstanceType": ["t4g.nano", "t4g.micro", "t4g.small"] } } },
+
+    { "Sid": "ManageTheInstance", "Effect": "Allow",
+      "Action": ["ec2:CreateTags", "ec2:StartInstances", "ec2:StopInstances",
+                 "ec2:RebootInstances", "ec2:CreateSecurityGroup",
                  "ec2:AuthorizeSecurityGroupIngress", "ec2:RevokeSecurityGroupIngress",
                  "ec2:AllocateAddress", "ec2:AssociateAddress", "ec2:DisassociateAddress",
                  "ec2:ReleaseAddress"],

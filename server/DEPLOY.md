@@ -404,9 +404,16 @@ Two notes on that policy:
   so I can verify the parameter *exists*; `ssm:DescribeParameters` under
   "SeeTheAccount" already does that without exposing values, so **dropping it
   costs nothing.** My recommendation is to drop it.
-- `ec2:RunInstances` with `RequestedRegion` is still broad enough to launch an
-  expensive instance. If you want that tightened, add a condition on
-  `ec2:InstanceType`. Your budget alarm from 2b is the backstop either way.
+- ~~`ec2:RunInstances` is broad enough to launch an expensive instance.~~
+  **Fixed 2026-11-10.** Instance type is capped at `t4g.nano/micro/small`, so
+  the worst launch this identity can make costs about $16/month rather than
+  hundreds, enforced before anything starts rather than reported by a billing
+  alert hours later. Note the shape in `make-operator-policy.sh`:
+  `RunInstances` authorises against every resource it touches — image, subnet,
+  volume, network interface, security group *and* instance — but
+  `ec2:InstanceType` exists only in the instance context, so a single
+  statement requiring it denies the whole call. The instance resource is split
+  from the supporting ones.
 - The alarm `recover` and `reboot` actions use `arn:aws:automate:us-east-1:ec2:*`
   targets, which need no service role — so nothing here requires IAM writes.
 - **You will have to click a confirmation link.** An SNS email subscription is
