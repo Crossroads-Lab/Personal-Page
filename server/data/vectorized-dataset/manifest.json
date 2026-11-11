@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T04:07:46.402Z",
+  "generatedAt": "2026-11-11T04:29:37.885Z",
   "documents": {
     "background|book": "decb773a2a29182b2eadcb8b63f73fa38cf3cbbe095536dbddf517cb63f1485d",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
@@ -17,6 +17,7 @@
     "career|laika_studios": "4a9a76609c6196b1a269b7d1c390123420a344e89af13c7ed97602d7cc899f61",
     "career|snap": "3e8a10c5227cf81ed3652e60275378f0aaa04ac9b5609d5fe31025e20f4afb80",
     "career|viewplus_technologies": "7c8f3f376fe61fe240e84aacc5783cf379abf9151af4bdab8f0bee1107b73cbd",
+    "career|what_im_doing_now": "906387c8517589c214e60f7ef5f9468761c7f0bb5f079086682ad64402199fad",
     "logistics|contact_and_links": "d69ac20a600395e83bcd3767a38510a41988cdceb3bceca2014039c9d4610332",
     "logistics|intro": "c40f80e7da7d2ac9513de716655d7d4312bba1248f9da39f02e7ab4cd55dbd16",
     "logistics|questions_i_ask": "5f0ee663afda2657f721634e89c88bd1b1a800f8d156d9b97f0f5961c39405f1",
@@ -42,13 +43,14 @@
     "stories|heali_overbuilt_before_validating": "8dff8e2a0f5b40eef2803b14bf926b9bdca4e66054dac1e3bacd2f0285729ff1",
     "stories|how_i_became_a_pm": "6271d9583bbd4225222c7f5b7d2f2fe21c84d1d7185bb43dfa95805ad1a41547",
     "stories|how_i_ended_up_in_ai": "4695dd6de5e04e74c9f1140c1c93078fd787fdb91acd2361b77df189fc89ad3f",
+    "stories|iscribe_azure_or_aws": "2dc2c6cab040434505fb05a12747639946a6c50484b29c4dc3aa28f31eabb0b4",
     "stories|iscribe_outage_night": "45e8c2b6b06b6caae4cd3c0c4ced73691e8695396a0fcab1a7e9a212cb0229ec",
     "stories|iscribe_tech_debt_tradeoff": "e675f1c52578e8597e6d83656e3eec2fc2f99622b17a0f42587eb48f6c6154fa",
     "stories|iscribe_turnaround": "5f328423282d7cf547d82501b1733ba811dada321a35123c07a02af07808b69b",
     "stories|kelley_building_and_jensen_huang": "63bbcdb428496d0fe19aa16a907e42dbdd0af7a6995e419d1b6289b5e3fadff7",
     "stories|leaving_big_tech_for_heali": "5417f390ee362d5f37ea25b1eff020bbb39208f22235eaae7c195911cf2402f0",
     "stories|onboarding_my_own_director": "bf23a5d7e6c46f21975e17ce2117d49d1703384def74b7de3045ab19a72433cb",
-    "stories|snap_beauty_score_filter": "f6a2eafac73f483474e3facde215370d1dde985c226ec6550b2016e6a429ad60",
+    "stories|snap_beauty_score_filter": "be629c0475e42c2e5e2a92603fbd07e394b24cb50ccb5f8da72973bd12ba0e72",
     "stories|told_id_never_make_it": "7f3f8ea13d2db8793d8e2f02ebf59eb0f3ac577db5f54b76efaf57e628f6aeab",
     "stories|youtube_shipping_past_politics": "81ad666623d03a0acfbcfad9c6159a0cbfab2a2a24759ae20dc822eda60fb372"
   }

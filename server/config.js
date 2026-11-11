@@ -341,6 +341,13 @@ module.exports = Object.freeze({
    * sent — the retrieval is only as good as the sentence it gets, and "Big
    * tech" on its own retrieves nothing.
    *
+   * EVERY STARTER MUST BE A QUESTION THE CORPUS ANSWERS. A chip is a
+   * promise: the page offered it, so it had better not come back with "I
+   * haven't written that up". "What's the hardest technical decision you've
+   * made?" sat here for a day doing exactly that — nothing in the corpus is
+   * written as an answer to it, and no amount of retrieval tuning conjures
+   * one. Before adding a starter, ask it and read what comes back.
+   *
    * A bare noun ("Background", "Hard calls") reads as a filing cabinet and
    * tells a visitor nothing about what they would get. The label is a claim
    * in his own voice instead — "Why I left big tech", "A project that
@@ -348,16 +355,26 @@ module.exports = Object.freeze({
    * The row widens past the bar to hold them, and scrolls where it cannot.
    */
   STARTERS: Object.freeze([
-    { label: "How I got into AI",       q: "How did you get into AI?" },
-    { label: "Where I've worked",       q: "What's your background?" },
-    { label: "Why I left big tech",     q: "Why did you leave big tech?" },
-    { label: "The values I lead by",    q: "What are your core values?" },
-    { label: "What keeps me up",        q: "What keeps you awake at night?" },
-    { label: "A project that failed",   q: "Tell me about a time a project failed." },
-    { label: "My best grad school story", q: "What's your best story from grad school?" },
-    { label: "How I'd roll out AI",     q: "How would you approach AI adoption at a company?" },
+    // The behavioural set a recruiter actually works from — failure,
+    // conflict, pressure, obstacle, a hard call, people decisions — each
+    // one taken from a question the corpus is literally written to answer.
+    // `npm --prefix server run check-starters` asks all of them and fails
+    // on any that come back "I haven't written that up".
+    { label: "A time I failed",          q: "Tell me about a time you failed. What's your biggest mistake?" },
+    { label: "A time I disagreed",       q: "Tell me about a time you disagreed with someone." },
+    { label: "A call under pressure",    q: "Tell me about a critical decision you made under severe time pressure." },
+    { label: "My biggest obstacle",      q: "What's the biggest obstacle you've had to get past?" },
+    { label: "Letting someone go",       q: "Tell me about a time you had to manage a layoff or let someone go." },
+    { label: "What I'm proudest of",     q: "What's an achievement you're proud of?" },
     { label: "My hardest technical call", q: "What's the hardest technical decision you've made?" },
-    { label: "What I want next",        q: "What are you looking for in a role?" },
+    { label: "Onboarding my own boss",   q: "Tell me about onboarding a senior or executive hire." },
+    { label: "What my critics say",      q: "How would your toughest critic describe you?" },
+    { label: "My leadership style",      q: "What's the most misunderstood aspect of your leadership style?" },
+    // Not behavioural, because not every visitor is a recruiter.
+    { label: "The values I lead by",     q: "What are your core values?" },
+    { label: "What I want next",         q: "What are you looking for in a role?" },
+    { label: "What I'm building now",    q: "What are you doing now? What's your current role?" },
+    { label: "The book I wrote in",      q: "Have you written a book? What's your chapter about?" },
   ].map(Object.freeze)),
   STARTER_COUNT: 3,
 

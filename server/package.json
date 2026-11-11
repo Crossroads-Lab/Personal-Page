@@ -19,7 +19,8 @@
     "push-models": "bash scripts/push-models.sh",
     "ship": "bash scripts/ship.sh",
     "measure-actions": "node scripts/measure-actions.js",
-    "stamp": "node scripts/stamp-site.js"
+    "stamp": "node scripts/stamp-site.js",
+    "check-starters": "node scripts/check-starters.js"
   },
   "author": "William Brendel",
   "license": "MIT",
