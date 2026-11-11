@@ -43,7 +43,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=7083d38c" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=8517ab6e" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=a9aa97a8" type="module" defer></script>
@@ -244,15 +244,19 @@
                book cover should be looks like a broken image, not a
                placeholder. -->
           <div class="card-text">
-            <span class="badge">#1 Amazon bestseller · Technology</span>
+            <span class="badge">#1 Amazon<span class="wide-only"> bestseller</span> · Technology</span>
             <h3 class="card-title">The AI Transformation</h3>
             <p class="card-body">
               I wrote Chapter 5, <em>"AI: The Reality Beyond the Fantasy"</em>, in this
               multi-author book on thriving through AI's disruption.
             </p>
             <div class="card-actions">
+              <!-- aria-label so the name stays "Get it on Amazon" at every
+                   width: the two words that drop out on a phone are the two
+                   that say where the button goes, and a screen reader
+                   announcing "Get it" has been told nothing. -->
               <a class="btn btn--primary" href="https://www.amazon.com/dp/1968318747"
-                 target="_blank" rel="noopener">Get it on Amazon</a>
+                 target="_blank" rel="noopener" aria-label="Get it on Amazon"><span>Get it<span class="wide-only"> on Amazon</span></span></a>
               <button class="btn btn--ghost" type="button"
                       data-ask="What is your chapter in The AI Transformation about?">Ask about this</button>
             </div>
@@ -309,7 +313,7 @@
             </p>
             <div class="card-actions">
               <a class="btn btn--primary" href="https://www.youtube.com/watch?v=8_S0888ZWGw"
-                 target="_blank" rel="noopener">Watch on YouTube</a>
+                 target="_blank" rel="noopener" aria-label="Watch on YouTube"><span>Watch<span class="wide-only"> on YouTube</span></span></a>
               <button class="btn btn--ghost" type="button"
                       data-ask="What did you work on at Snap Research?">Ask about this</button>
             </div>

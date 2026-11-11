@@ -393,8 +393,23 @@
   .card-label { font-size: 11px; }
 
   /* Full width and side by side, so both are reachable with one thumb
-     rather than one of them being a second row to aim at. */
-  .card-actions .btn { flex: 1; font-size: 14px; }
+     rather than one of them being a second row to aim at.
+     
+     nowrap because that is what the pair is for: two equal halves. "Watch
+     on YouTube" wrapped to two lines while "Ask about this" stayed on one,
+     which made a row of two matched buttons look like a mistake. The
+     labels shorten instead (.wide-only below), which is what the spec's
+     own card table asks for on the book button. */
+  .card-actions .btn { flex: 1; font-size: 14px; white-space: nowrap; }
+
+  /* The words a phone has no room for. The accessible name does not change
+     with the viewport — the anchors carry an aria-label.
+     
+     `inline` matters: .btn is a flex container, so a bare <span> child
+     would be a flex ITEM and the 6px gap meant for a label and its icon
+     would open up inside the phrase. The label is wrapped in one span and
+     this one sits inside that, as ordinary inline text. */
+  .wide-only { display: none; }
 
   .card--book { flex-direction: row; gap: 16px; }
   .card--book .book-cover { width: 84px; }
