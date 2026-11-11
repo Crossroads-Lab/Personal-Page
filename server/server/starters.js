@@ -66,6 +66,7 @@ const fs   = require("fs").promises;
 const path = require("path");
 
 const CONFIG = require("../config");
+const deriveDocumentId = require("llms/src/utilities/deriveDocumentId");
 const { actionsFor } = require("./actions");
 
 /** How many chips deep the page can go before it has to ask the API. */
@@ -88,18 +89,34 @@ const normalise = (q) => String(q || "")
   .replace(/[?.!\s]+$/, "")
   .trim();
 
-/** `## heading` → body, in document order. */
+/**
+ * `## heading` → body, in document order, with the byte offset each
+ * section starts at.
+ *
+ * Byte offsets, not character offsets: a .bin stores section ranges as
+ * byte offsets into its source markdown, and this corpus is full of em
+ * dashes and curly quotes that are three bytes and one character. Getting
+ * that wrong would mis-attribute a citation by a few hundred bytes, which
+ * on a file this size means the wrong section entirely.
+ */
 const parseSections = (markdown) => {
   const sections = [];
   let current = null;
+  let offset = 0;
+
   for (const line of markdown.split("\n")) {
     const match = /^##\s+(.+?)\s*$/.exec(line);
-    if (match) sections.push(current = { heading: match[1], lines: [] });
+    if (match) sections.push(current = { heading: match[1], lines: [], start: offset });
     else if (current) current.lines.push(line);
+    offset += Buffer.byteLength(line, "utf8") + 1;    // + the newline
   }
-  return sections.map(({ heading, lines }) => ({
+
+  return sections.map(({ heading, lines, start }, i) => ({
     heading,
     body: lines.join("\n").trim(),
+    start,
+    // Up to the next heading, or the end of the file.
+    end: i + 1 < sections.length ? sections[i + 1].start : Infinity,
   }));
 };
 
@@ -124,10 +141,12 @@ const walk = async (dir) => {
  */
 const buildGraph = async (root) => {
   const graph = new Map();
+  const documents = new Map();     // documentId → sections, in order
 
   for (const file of await walk(root)) {
     const rel = path.relative(root, file);
     const sections = parseSections(await fs.readFile(file, "utf8"));
+    documents.set(deriveDocumentId(file), { file: rel, sections });
 
     sections.forEach((section, index) => {
       const key = normalise(section.heading);
@@ -156,7 +175,7 @@ const buildGraph = async (root) => {
     });
   }
 
-  return graph;
+  return { graph, documents };
 };
 
 /** "stories/x.md#Some heading" → { file, heading }. */
@@ -195,8 +214,89 @@ const expand = (graph, questions, depth) => {
   return out;
 };
 
+
+/**
+ * Follow-ups for an answer the engine produced, taken from the corpus.
+ *
+ * ── Why the model does not write these ──────────────────────────────────
+ *
+ * It used to, and a follow-up chip is a promise: the page offered the
+ * question, so there had better be an answer behind it. A model writing
+ * follow-ups from the answer it just produced has no idea what else is in
+ * the corpus, so it writes plausible next questions — and a plausible
+ * question about a corpus that does not cover it is a chip that leads
+ * straight to "I haven't written that up". The page talked someone into
+ * asking something it could not answer, which is worse than offering
+ * nothing.
+ *
+ * Observed live: an answer about raising problems early offered "How do you
+ * handle an engineer's work you think is headed the wrong way?" Nothing in
+ * the corpus answers it. The chip was the bug, not the answer.
+ *
+ * ── Where these come from instead ───────────────────────────────────────
+ *
+ * The answer cites its sources — documentId plus a byte range — so we know
+ * which documents it was actually built from, and which sections of them.
+ * The follow-ups are the OTHER sections of those documents: questions the
+ * author wrote, next to the material just quoted, every one of which has an
+ * answer by construction because it IS one.
+ *
+ * Free, deterministic, and it cannot promise something that is not there.
+ *
+ * @param {{documentId?: string, range?: number[]}[]} sources
+ * @param {string[]} asked - everything this visit has already been through
+ * @returns {string[]} questions, at most MAX_FOLLOW_UPS
+ */
+const followUpsFrom = (documents, sources, asked) => {
+  const seen = new Set((asked || []).map(normalise));
+
+  // Documents this answer actually drew on, most-quoted first: if two
+  // documents fed the answer, the one it leaned on is the one worth
+  // offering more of.
+  const weight = new Map();
+  const citedAt = new Map();          // documentId → Set of section indexes
+
+  for (const source of sources || []) {
+    const id = source?.documentId;
+    const doc = id && documents.get(id);
+    if (!doc) continue;
+
+    weight.set(id, (weight.get(id) || 0) + 1);
+    if (!citedAt.has(id)) citedAt.set(id, new Set());
+
+    const start = Array.isArray(source.range) ? source.range[0] : null;
+    if (start === null) continue;
+    const index = doc.sections.findIndex(s => start >= s.start && start < s.end);
+    if (index >= 0) citedAt.get(id).add(index);
+  }
+
+  const ranked = [...weight.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => id);
+  const out = [];
+
+  for (const id of ranked) {
+    const { sections } = documents.get(id);
+    const cited = citedAt.get(id) || new Set();
+
+    // Start after the last section the answer quoted and wrap around, so
+    // the first thing offered is what comes next in the document rather
+    // than whatever happens to be at the top of it.
+    const from = cited.size ? Math.max(...cited) : -1;
+    for (let i = 1; i <= sections.length; ++i) {
+      const section = sections[(from + i + sections.length) % sections.length];
+      if (cited.has(sections.indexOf(section))) continue;
+      const key = normalise(section.heading);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(section.heading);
+      if (out.length >= MAX_FOLLOW_UPS) return out;
+    }
+  }
+
+  return out;
+};
+
 const build = async () => {
-  const graph = await buildGraph(CONFIG.MARKDOWNS);
+  const { graph, documents } = await buildGraph(CONFIG.MARKDOWNS);
   const entries = [];
 
   for (const starter of CONFIG.STARTERS || []) {
@@ -270,6 +370,35 @@ const build = async () => {
     `${graph.size} sections indexed, ${DEPTH} levels deep.`);
 
   return {
+    /**
+     * The section a question is the heading of, served as written.
+     *
+     * Only for a question the page offered as a chip. Every chip now comes
+     * from the corpus, so a chip click is a visitor pressing a question we
+     * wrote — and the right answer is the section under it, not whatever
+     * retrieval makes of the words.
+     *
+     * That distinction matters because plenty of headings are not
+     * self-contained. "Which one matters most to you, and why that one?"
+     * means something only after the section listing the values; asked cold,
+     * retrieval cannot resolve "which one" and the answer is "I'm not sure
+     * which one you mean" — a duck, from a chip the page itself offered.
+     * Pressing it is unambiguous in a way typing it is not, so the two
+     * routes are deliberately different.
+     */
+    sectionFor: (question) => {
+      const node = graph.get(normalise(question));
+      return node && node.a ? node : null;
+    },
+
+    /**
+     * Follow-ups for an engine-produced answer, from the documents it
+     * cited. Empty when the answer cited nothing — a greeting, an
+     * off-topic decline, or a question the corpus does not cover — and the
+     * caller falls back to the openers, which are answerable by definition.
+     */
+    followUpsFor: (sources, asked) => followUpsFrom(documents, sources, asked),
+
     /** All of them, precomputed answer included where there is one. */
     all: () => entries,
 
@@ -339,4 +468,4 @@ const build = async () => {
   };
 };
 
-module.exports = { build, buildGraph, expand, parseSections, normalise, DEPTH };
+module.exports = { build, buildGraph, expand, followUpsFrom, parseSections, normalise, DEPTH };

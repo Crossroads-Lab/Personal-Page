@@ -45,13 +45,20 @@ export const joinChunks = (chunks) => (chunks || [])
  *
  * @param {string} query
  * @param {AbortSignal} [external] - from the stop button.
+ * @param {boolean} [fromChip] - true when the visitor pressed a question
+ *   the page offered rather than typing one. Every chip comes from the
+ *   corpus, so the backend answers it with the section it is the heading of
+ *   — as written, for nothing. A heading is not always a self-contained
+ *   question ("Which one matters most to you, and why that one?"), so this
+ *   has to be the page saying how the question arrived, not the backend
+ *   guessing from the text.
  * @param {{q: string, a: string}[]} [history] - the tail of this visit's
  *   conversation. There is no session on the backend, so the page carries it:
  *   it resolves follow-ups ("what about at Samsung?") and lets the backend
  *   drop follow-up suggestions that only reword something already asked.
  * @returns {Promise<{text: string, followUps: string[], actions: string[], ok: boolean}>}
  */
-export const ask = async (query, external, history = []) => {
+export const ask = async (query, external, history = [], fromChip = false) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
@@ -65,7 +72,7 @@ export const ask = async (query, external, history = []) => {
     const response = await fetch(`${API_BASE}/query`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: query, history }),
+      body: JSON.stringify({ q: query, history, chip: fromChip }),
       signal: controller.signal,
     });
 

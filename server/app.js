@@ -116,6 +116,41 @@ const main = async () => {
     // when the page's /starters call failed and it fell back to its own list
     // of questions — in which case the chips have no answer attached and ask
     // the normal way. Same text either way; this one just costs nothing.
+    // A question the page offered as a chip.
+    //
+    // Every chip comes from the corpus now — a starter, or a heading from
+    // the document an answer was built from — so pressing one is a visitor
+    // choosing a question we wrote, and the answer is the section under it.
+    // Served as written: no retrieval, no model, no cost.
+    //
+    // Gated on the page saying so rather than on the text alone, because a
+    // heading is not always a self-contained question. "Did you fix it?"
+    // pressed under the outage story is unambiguous; typed into the box
+    // halfway through a conversation about something else it is not, and
+    // that one belongs to retrieval.
+    if (req.body?.chip === true) {
+      const section = starters.sectionFor(query);
+      if (section) {
+        const asked = [...past.map(turn => turn.q), query];
+        const seen = new Set(asked.map(a => a.trim().toLowerCase()));
+        const followUpQuestions = section.siblings
+          .filter(h => !seen.has(h.trim().toLowerCase()))
+          .slice(0, 3);
+
+        logQuery({
+          ms: Date.now() - started, query, intent: "chip",
+          sources: ["corpus"], followUps: followUpQuestions,
+          actions: [], turns: past.length,
+        }, CONFIG.QUERY_LOG);
+
+        return res.json({
+          answer: [{ text: section.a }],
+          followUpQuestions,
+          actions: [],
+        });
+      }
+    }
+
     const preloaded = starters.answerFor(query);
     if (preloaded) {
       logQuery({
@@ -139,19 +174,30 @@ const main = async () => {
       const result = await engine.ask(query, { history: past });
       const { stats, ...body } = result;
 
-      // The model writes follow-ups from the answer alone and has no memory
-      // of the conversation, so it will re-offer a question already asked in
-      // different words. The page sends what it has asked; this drops the
-      // repeats. See server/asked.js for the threshold and why it sits where
-      // it does.
       const asked = [...past.map(t => t.q), query];
-      body.followUpQuestions = await filterAsked(body.followUpQuestions, asked);
 
-      // Paths that skip retrieval — greeting, off-topic decline, fallback —
-      // come back from the library with no follow-ups, which leaves the
-      // visitor facing an empty input box at the one moment they have least
-      // idea what to ask. Offer curated openers instead, minus anything they
-      // have already been through.
+      // Follow-ups come from the corpus, not from the model.
+      //
+      // A chip is a promise — the page offered the question, so there had
+      // better be an answer behind it. The model writes follow-ups from the
+      // answer it just produced and has no idea what else is in the corpus,
+      // so it writes plausible next questions, and a plausible question the
+      // corpus does not cover is a chip that leads straight to "I haven't
+      // written that up". Seen live: an answer about raising problems early
+      // offered "How do you handle an engineer's work you think is headed
+      // the wrong way?", which nothing here answers.
+      //
+      // The answer cites which documents it was built from, so instead we
+      // offer the other sections of those documents — questions the author
+      // wrote, beside the material just quoted, each of which has an answer
+      // because it IS one. See server/starters.js. Costs nothing.
+      const cited = (body.answer || []).map(chunk => chunk?.source).filter(Boolean);
+      body.followUpQuestions = starters.followUpsFor(cited, asked);
+
+      // Paths that cite nothing — greeting, off-topic decline, fallback —
+      // leave the visitor facing an empty input box at the one moment they
+      // have least idea what to ask. Offer the openers instead, which are
+      // answerable by definition, minus anything already been through.
       //
       // Follow-ups are plain strings on the wire; the starters carry a chip
       // label the answer screen has no use for, so only the question travels.

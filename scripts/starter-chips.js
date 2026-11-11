@@ -22,8 +22,8 @@
 // backend — asks the normal way and nothing looks different.
 // --------------------------------------------------------------------------
 
-import { API_BASE } from "./api.js?v=b970cf23";
-import { showPreloaded, registerAnswers } from "./chat-input-form.js?v=2648d29b";
+import { API_BASE } from "./api.js?v=01b9ad0a";
+import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=4e78ddf5";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");
@@ -89,12 +89,12 @@ const chip = (label, onClick) => {
   return b;
 };
 
-/** Put a question in the box and send it, exactly as if it had been typed. */
-const ask = (question) => {
-  input.value = question;
-  input.dispatchEvent(new Event("input"));     // let the form resize/enable
-  form.dispatchEvent(new Event("submit"));
-};
+/**
+ * Put a question in the box and send it, exactly as if it had been typed —
+ * except that the backend is told it was pressed, so it answers from the
+ * section the question is the heading of rather than from retrieval.
+ */
+const ask = (question) => askAsChip(question);
 
 /**
  * Press a chip: show what we already have, or ask for it.

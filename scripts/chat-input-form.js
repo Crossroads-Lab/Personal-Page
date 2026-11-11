@@ -2,7 +2,7 @@
 
 import { content, displayTextContent } from "./content.js?v=9235ae41";
 import { createThinkingNode } from "./createThinkingNode.js?v=287efe19";
-import { ask } from "./api.js?v=b970cf23";
+import { ask } from "./api.js?v=01b9ad0a";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -155,6 +155,23 @@ input.addEventListener("keydown", event => {
 let stopDisplay, endDisplay = () => stopDisplay = null;
 
 /**
+ * Set for exactly one submit, when the visitor pressed a question rather
+ * than typing one. Read and cleared by the submit handler.
+ *
+ * A flag rather than an argument because a chip asks by filling the box and
+ * dispatching submit — the same path a typed question takes, which is what
+ * keeps the two indistinguishable on screen. The backend needs to tell them
+ * apart even though the page does not.
+ */
+let pressed = false;
+export const askAsChip = (question) => {
+  pressed = true;
+  input.value = question;
+  input.dispatchEvent(new Event("input"));
+  form.dispatchEvent(new Event("submit"));
+};
+
+/**
  * This visit's conversation, oldest first: `{ q, a }` per exchange.
  *
  * Kept on the page rather than the server because there are no sessions —
@@ -206,7 +223,10 @@ form.addEventListener("submit", async event => {
   const sent = history.slice();
   const turn = remember({ q: message, a: "" });
 
-  const { text, followUps, actions, aborted } = await ask(message, controller.signal, sent);
+  const fromChip = pressed;
+  pressed = false;
+
+  const { text, followUps, actions, aborted } = await ask(message, controller.signal, sent, fromChip);
 
   // The user hit stop, or started another question while this was running.
   // Either way this response is stale — the newer request owns the screen.
@@ -498,9 +518,11 @@ const renderFollowUps = (questions) => {
       const held = answerFor(question);
       if (held && showPreloaded(held.q, held.a, held.f)) return;
 
-      input.value = question;
+      // Not in the shipped tree. Still a question the corpus wrote, so tell
+      // the backend it was pressed and it will answer from the section
+      // rather than from retrieval.
       resize();
-      form.dispatchEvent(new Event("submit"));
+      askAsChip(question);
     };
     list.appendChild(button);
   }
