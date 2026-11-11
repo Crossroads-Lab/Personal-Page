@@ -1,9 +1,8 @@
 "use strict"
 
-import { content, displayTextContent } from "./content.js";
-import { createThinkingNode } from "./createThinkingNode.js";
-import { ask } from "./api.js";
-import { releaseMenuAnchor } from "./starter-chips.js";
+import { content, displayTextContent } from "./content.js?v=9235ae41";
+import { createThinkingNode } from "./createThinkingNode.js?v=287efe19";
+import { ask } from "./api.js?v=8ae72ab6";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -59,11 +58,6 @@ document.getElementById("stop").onclick = event => {
 // Options toggle.
 menuButton.onclick = event => {
   event.stopPropagation();
-  // The Contact chip pins the menu to itself with inline insets; opening
-  // from the ⋮ means it belongs to the ⋮ again, so hand it back to the
-  // stylesheet rather than leaving it hanging off a chip that may not even
-  // be on screen any more.
-  releaseMenuAnchor();
   chatContainer.hasAttribute("menu-visible", "") ?
     chatContainer.removeAttribute("menu-visible")
     : chatContainer.setAttribute("menu-visible", "");

@@ -39,10 +39,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=3ec18fda" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=47f72834" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=3fd253cf" type="module" defer></script>
+    <script src="scripts/index.js?v=b2bf7aac" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -90,6 +90,15 @@
         <div>
           <h2>Hi, I'm <b>William</b> Brendel</h2>
           <h1>Where should we <span class="accent">start?</span></h1>
+          <!--
+            The four destinations, as icons. Filled by scripts/quick-links.js
+            from the ⋮ menu above, so the hrefs live in exactly one place.
+            Inside #welcome on purpose: that block sits at the bottom of main
+            on a wide screen (just above the input bar) and at the top of the
+            page on a phone (with the headline), which is both placements
+            without a second rule.
+          -->
+          <div id="quick-links" aria-label="Links"></div>
         </div>
       </div>
     </main>
@@ -110,7 +119,7 @@
         </a>
         <a id="chat-menu-download-resume" class="button" title="Click to download my resume" href="assets/William Brendel Resume - 2025.pdf" target="_blank">
           Download my resume
-          <img src="assets/icons/download.svg"/>
+          <img src="assets/icons/resume.svg"/>
         </a>
       </div>
       <!-- User input form -->

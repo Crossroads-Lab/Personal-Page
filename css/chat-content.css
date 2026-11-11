@@ -1,6 +1,6 @@
 /* Import base styles and variables from common.css */
-@import "./common.css";
-@import "./thinking-loader.css";
+@import "./common.css?v=b98dae52";
+@import "./thinking-loader.css?v=2cd080f4";
 
 /* 
  * =====================================================
@@ -247,6 +247,71 @@ main::after {
 
 @media only screen and (max-width: 512px) {
   .answer-action.liquid-glass {
+    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+}
+
+/*
+ * =====================================================
+ * QUICK LINKS
+ * =====================================================
+ * LinkedIn, share, calendar, resume — the four destinations, always on
+ * screen rather than behind a chip. Built by scripts/quick-links.js from
+ * the ⋮ menu, so the hrefs exist once.
+ *
+ * It lives inside #welcome, which is why there is no second rule for the
+ * phone: that block sits at the BOTTOM of main on a wide screen, putting
+ * these just above the input bar, and at the TOP of the page on a narrow
+ * one, putting them under the headline. One placement, both behaviours.
+ */
+#quick-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+#quick-links:empty {
+  display: none;
+}
+
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--border-radius-round);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+
+.quick-link > img {
+  height: 16px;
+  aspect-ratio: 1 / 1;
+  filter: var(--icon-filter);
+}
+
+/* The reset in common.css no longer reaches into :active, so nothing here
+   collapses under the finger — but pin it anyway: these are 40px targets
+   and a wobble at that size is the whole control moving. */
+.quick-link:active {
+  transform: none;
+  scale: 1;
+  width: 40px;
+  height: 40px;
+}
+
+.quick-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media only screen and (max-width: 512px) {
+  .quick-link.liquid-glass {
     background: rgb(from var(--liquid-glass-background) r g b / 0.5);
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
   }

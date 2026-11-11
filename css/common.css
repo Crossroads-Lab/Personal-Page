@@ -75,10 +75,11 @@
    * either one, at any width, without a single measurement.
    *
    * --portrait-floor is the bar plus the chip row plus their gaps.
-   * --portrait-top is the headline's share, and `clamp` keeps it sane
-   * between a short phone and a tall one. */
+   * --portrait-top is the headline's share — headline AND the quick-link
+   * icons under it — and `clamp` keeps it sane between a short phone and a
+   * tall one. */
   --portrait-floor: calc(var(--chat-form-height) + 68px);
-  --portrait-top: clamp(96px, 19dvh, 176px);
+  --portrait-top: clamp(150px, 26dvh, 236px);
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */

@@ -11,7 +11,7 @@
 // is that the suggestions are the same every time.
 // --------------------------------------------------------------------------
 
-import { API_BASE } from "./api.js";
+import { API_BASE } from "./api.js?v=8ae72ab6";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");
@@ -26,8 +26,6 @@ const FALLBACK = [
   { label: "Big tech",    q: "Why did you leave big tech?" },
   { label: "Core values", q: "What are your core values?" },
 ];
-
-const CONTACT_LABEL = "Contact me";
 
 /* A chip shows a topic and asks a sentence. Anything that arrives as a bare
    string — an older server, a cached response — becomes both, which is how
@@ -53,15 +51,13 @@ const fetchStarters = async () => {
   }
 };
 
-const chip = (label, onClick, isContact = false) => {
+const chip = (label, onClick) => {
   const b = document.createElement("button");
   b.type = "button";
   b.className = "starter-chip liquid-glass";
-  if (isContact) b.dataset.contact = "";
   // textContent, not innerHTML — these come over the wire.
   b.textContent = label;
-  // The handler gets the button, so the contact chip can be anchored to.
-  b.onclick = (event) => { event.stopPropagation(); onClick(b); };
+  b.onclick = (event) => { event.stopPropagation(); onClick(); };
   return b;
 };
 
@@ -72,76 +68,15 @@ const ask = (question) => {
   form.dispatchEvent(new Event("submit"));
 };
 
-const menu = document.getElementById("chat-menu");
-
-/** Gap between the chip and the panel it opens. */
-const MENU_GAP = 10;
-
-/** Clearance the panel must keep from the far edge of the screen. Without
- *  it "fits" includes landing flush against the bottom, which looks like
- *  something that has been cut off rather than something that was placed. */
-const MENU_MARGIN = 12;
-
-/**
- * Hang the menu off the chip that opened it.
- *
- * It used to sit centred under the input bar, which is a position with no
- * relationship to the control that produced it — the eye leaves "Contact
- * me" and has to find the panel somewhere else. Right edges aligned, and
- * below unless below would run off the screen, in which case above.
- *
- * Measured at open rather than in CSS because both answers depend on where
- * the chip landed, and the chip's position depends on how many chips the
- * server sent and how wide their labels are. The panel is `visibility:
- * hidden` when closed rather than `display: none`, so it already has a
- * height to measure.
- */
-const anchorMenuToChip = (chip) => {
-  if (!menu || !chatContainer) return;
-  const box = chatContainer.getBoundingClientRect();
-  const pin = chip.getBoundingClientRect();
-  const height = menu.offsetHeight;
-
-  // Right edges flush.
-  menu.style.left = "auto";
-  menu.style.right = `${Math.max(0, box.right - pin.right)}px`;
-
-  const roomBelow = window.innerHeight - pin.bottom - MENU_GAP - MENU_MARGIN;
-  if (roomBelow >= height) {
-    menu.style.top = `${pin.bottom - box.top + MENU_GAP}px`;
-    menu.style.bottom = "auto";
-    menu.style.transformOrigin = "top right";
-  } else {
-    menu.style.top = "auto";
-    menu.style.bottom = `${box.bottom - pin.top + MENU_GAP}px`;
-    menu.style.transformOrigin = "bottom right";
-  }
-};
-
-/** Hand the menu back to the stylesheet, for when the ⋮ opens it instead. */
-export const releaseMenuAnchor = () => {
-  if (!menu) return;
-  for (const prop of ["left", "right", "top", "bottom", "transformOrigin"]) {
-    menu.style[prop] = "";
-  }
-};
-
-/** The contact chip opens the same menu the ⋮ opens — one list, not two. */
-const openContactMenu = (chip) => {
-  anchorMenuToChip(chip);
-  chatContainer.setAttribute("menu-visible", "");
-};
-
 /**
  * Mark the row when it has more chips than fit, and say which way.
  *
- * The row scrolls rather than wrapping or dropping anything, which on a phone
- * means Contact can sit past the right edge — and a row with no visible edge
- * looks like a row that ends there. The attribute drives a fade on whichever
- * side has more, the one honest cue that there is.
+ * The row scrolls rather than wrapping or dropping anything, and a row with
+ * no visible edge looks like a row that ends there. The attribute drives a
+ * fade on whichever side has more — the one honest cue available.
  */
 const markOverflow = () => {
-  if (!container.clientWidth) return;              // hidden: nothing to mark
+  if (!container || !container.clientWidth) return;   // hidden: nothing to mark
   const slack = container.scrollWidth - container.clientWidth;
   if (slack < 2) return container.removeAttribute("overflowing");
   const atStart = container.scrollLeft < 2;
@@ -162,7 +97,6 @@ const render = (starters) => {
   container.setAttribute("entering", "");
   container.replaceChildren(
     ...starters.map(({ label, q }) => chip(label, () => ask(q))),
-    chip(CONTACT_LABEL, openContactMenu, true),
   );
   markOverflow();
 
@@ -196,10 +130,5 @@ window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     markOverflow();
-    // A menu left open across a resize would otherwise keep the insets it
-    // was given for the old layout.
-    const open = chatContainer?.hasAttribute("menu-visible");
-    const pin = container?.querySelector("[data-contact]");
-    if (open && pin) anchorMenuToChip(pin);
   }, 150);
 });
