@@ -43,7 +43,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=24fefb75" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=7083d38c" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=a9aa97a8" type="module" defer></script>
@@ -262,14 +262,28 @@
         <div class="more-row">
           <!-- 2. Press -->
           <article class="card">
+            <!-- The article's own header photo, credited "Courtesy of William
+                 Brendel" on the page — his picture, not the university's.
+                 Re-encoded from the 1920x700 original to 960x540 WebP and
+                 cropped to the card's 16:9 from the centre, rather than
+                 hot-linked: a card that goes blank when someone else's CMS
+                 changes a path is worse than no card. -->
+            <a class="card-media"
+               href="https://engineering.oregonstate.edu/all-stories/serendipity-and-oregon-state-led-william-brendels-career-ai"
+               target="_blank" rel="noopener" aria-label="Read the Oregon State article">
+              <img src="assets/press-osu.webp" width="960" height="540"
+                   alt="William Brendel in an office, the city through the windows behind him"
+                   loading="lazy" decoding="async">
+            </a>
             <span class="card-label" style="--c: var(--label-blue)">In the press</span>
             <h3 class="card-title">Serendipity and Oregon State led to William Brendel's career in AI</h3>
             <p class="card-body">
               Oregon State University College of Engineering on how my path into AI started.
             </p>
             <div class="card-actions">
-              <!-- Needs the article URL from LinkedIn Featured:
-                   <a class="btn btn--primary" href="…" target="_blank" rel="noopener">Read the story</a> -->
+              <a class="btn btn--primary"
+                 href="https://engineering.oregonstate.edu/all-stories/serendipity-and-oregon-state-led-william-brendels-career-ai"
+                 target="_blank" rel="noopener">Read the story</a>
               <button class="btn btn--ghost" type="button"
                       data-ask="How did Oregon State lead you into AI?">Ask about this</button>
             </div>
@@ -323,12 +337,17 @@
             </div>
           </div>
           <hr>
-          <!-- The three top papers go here, one line each: title · venue ·
-               year · citations. Left out until the real ones are to hand. -->
+          <!-- The three top papers go here, one line each:
+               <p class="paper">Title · venue · year · N citations</p>
+               Left out rather than guessed: Scholar answers a request from
+               here with a 429 bot wall, so the titles and counts have to
+               come off the profile by hand. The button below goes to the
+               real thing in the meantime, which is the part that matters. -->
           <p class="previously">Previously at Google · Amazon · Snap</p>
           <div class="card-actions">
-            <!-- Needs the Google Scholar profile URL:
-                 <a class="btn btn--primary" href="…" target="_blank" rel="noopener">View on Google Scholar</a> -->
+            <a class="btn btn--primary"
+               href="https://scholar.google.com/citations?user=mR3fVeIAAAAJ&amp;hl=en"
+               target="_blank" rel="noopener">View on Google Scholar</a>
             <button class="btn btn--ghost" type="button"
                     data-ask="What is your most cited research about?">Ask about this</button>
           </div>

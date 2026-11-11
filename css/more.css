@@ -263,6 +263,18 @@
   background: var(--line-on-dark);
 }
 
+/* One top paper per line. Unused until the three are to hand (index.html),
+   but the shape is settled so adding them is three lines of content and no
+   layout decisions. */
+.paper {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-on-dark-2);
+}
+
+.paper:last-of-type { margin-bottom: 6px; }
+
 .previously {
   margin: 0;
   font-size: 13px;
