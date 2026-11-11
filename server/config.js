@@ -501,7 +501,7 @@ module.exports = Object.freeze({
       from: ["career/what_im_doing_now.md#What are you doing now? What's your current role? What are you working on?"],
     },
     {
-      label: "The book I wrote in",
+      label: "The book I co-wrote",
       q: "Have you written a book? What's your chapter about?",
       from: [
         "background/book.md#Have you written a book? Are you a published author?",

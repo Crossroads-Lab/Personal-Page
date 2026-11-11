@@ -39,7 +39,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=5e8b6bcb" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=dd8eedeb" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=4bbeedc3" type="module" defer></script>
@@ -49,7 +49,7 @@
 
     <!-- SEO | Generic -->
     <meta name="description" content="I'm a Product Strategist & Machine Learning Expert">
-    <meta name="image" content="assets/profile.webp">
+    <meta name="image" content="https://william-brendel.com/assets/profile.webp">
     
     <!-- SEO | Open Graph meta tags -->
     <meta property="og:locale" content="en_US">
@@ -88,7 +88,14 @@
     <main id="content">
       <div id="welcome">
         <div>
-          <h2>Hi, I'm <b>William</b> Brendel</h2>
+          <!-- A <p>, not an <h2>. It reads as a line above the title and it
+               used to be marked up as one, which put an h2 ahead of the h1
+               in the document and gave anyone navigating by heading a
+               hierarchy that starts half way down. It is a greeting, not a
+               section: #welcome h2 in css/chat-content.css styles it either
+               way, so the class carries the look and the tag tells the
+               truth. -->
+          <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
           <h1>Where should we <span class="accent">start?</span></h1>
           <!--
             The four destinations, as icons. Filled by scripts/quick-links.js
@@ -172,7 +179,7 @@
       </button>
       <a id="dest-book-call" class="button" title="Click to book a 30min call with me" href="https://calendly.com/william-brendel/30min" target="_blank">
         Book 30min with me
-        <img src="assets/icons/call.svg"/>
+        <img src="assets/icons/calendar.svg"/>
       </a>
       <a id="dest-resume" class="button" title="Click to download my resume" href="assets/William Brendel Resume - 2026.pdf" target="_blank">
         Download my resume

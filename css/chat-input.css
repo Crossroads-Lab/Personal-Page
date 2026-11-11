@@ -412,8 +412,13 @@ body:not([chat-started])::after {
      Body colour, not --blue: a follow-up chip sits on the page background
      where blue reads fine, these sit over the portrait's navy suit, where it
      does not. Held back to 72% so the row settles under the headline instead
-     of competing with it — #111 at 72% over the glass is still around 11:1,
-     miles clear of the 4.5:1 floor, so this costs nothing in legibility. */
+     of competing with it — over the page background that is around 11:1,
+     miles clear of the 4.5:1 floor.
+
+     Over the PORTRAIT it is not, which is what that figure missed: measured
+     on a phone render, a chip over the navy suit came to 4.9:1 against 7.6:1
+     for the one over the pale chair. The small-screen block near the bottom
+     of this file puts the ink back to full strength for exactly that reason. */
   font-weight: 300;
   color: rgb(from var(--color) r g b / 0.72);
 
@@ -590,6 +595,19 @@ body[chat-started] #starter-chips {
   .starter-chip.liquid-glass {
     background: rgb(from var(--liquid-glass-background) r g b / 0.5);
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+  }
+
+  /* Full strength here, not the 72% the desktop row uses.
+     
+     Below 900px the chips sit ON the portrait, and which chip you can read
+     depends on what is behind it. Measured off a 375px render: a chip over
+     the pale chair came to 7.6:1, the one beside it over the navy suit to
+     4.9:1 — both pass, but only one of them comfortably, and at 12.6px the
+     floor is 4.5:1, so that second chip had almost nothing in hand. The
+     held-back ink is there to stop four chips competing with the headline;
+     over the suit there is no headline nearby to compete with. */
+  .starter-chip {
+    color: var(--color);
   }
   /* A phone has no room to centre the bar, so it stays at the bottom and
      only the rows above it change. */

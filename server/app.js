@@ -17,6 +17,15 @@ const getEngine = require("./server/engine");
 const guard     = require("./server/guard");
 const { filterAsked } = require("./server/asked");
 const history = require("./server/history");
+
+/**
+ * "Write me a X" — a request to do work, not a question about William.
+ *
+ * The beneficiary is the whole test. Without "me"/"us" the same verbs are
+ * ordinary questions about how he works, and this corpus answers them.
+ */
+const TASK_REQUEST =
+  /\b(write|build|make|create|generate|code|program|script|draft|design|debug|fix|refactor)\s+(me|us)\b/i;
 const { actionsFor, warm: warmActions } = require("./server/actions");
 const buildStarters = require("./server/starters").build;
 const { logQuery } = require("./server/log");
@@ -168,6 +177,38 @@ const main = async () => {
         followUpQuestions: preloaded.followUpQuestions,
         actions: preloaded.actions,
       });
+    }
+
+    // ── "Write me a scraper" ───────────────────────────────────────────
+    //
+    // A request to BUILD something is not a question about William, and the
+    // page has nothing to say to it. Retrieval disagrees, because what it
+    // sees is the nouns: "Can you write me a LinkedIn scraper?" scored as
+    // SUPPORT, landed on logistics/contact_and_links and came back with "I'd
+    // rather you not use a scraper to get to me" — the page reading a
+    // request for code as a threat to its owner's privacy. Nobody asked
+    // that. "Write me a Python function to sort a list" declines cleanly
+    // only because no word in it is anywhere in the corpus.
+    //
+    // So this is decided on the shape of the sentence before any embedding
+    // is involved. Deliberately narrow: the verb must take a first-person
+    // beneficiary ("write ME", "build US"), which is what separates "can you
+    // build me a website" from "what would you build in your first 90 days"
+    // and "can you build a team from scratch" — both real questions this
+    // corpus answers, and neither of them flagged.
+    if (TASK_REQUEST.test(query)) {
+      const answer = [{ text:
+        "That's outside what this page is for — it answers questions about " +
+        "me and my work rather than taking on work. If it's something you'd " +
+        "want to talk through, book time with me and we can." }];
+
+      logQuery({
+        ms: Date.now() - started, query, intent: "task-request",
+        sources: ["none"], followUps: [], actions: ["calendly"],
+        turns: past.length,
+      }, CONFIG.QUERY_LOG);
+
+      return res.json({ answer, followUpQuestions: [], actions: ["calendly"] });
     }
 
     try {

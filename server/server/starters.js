@@ -94,6 +94,90 @@ const normalise = (q) => String(q || "")
   .trim();
 
 /**
+ * The first question in a string that may hold several.
+ *
+ * Headings here are often written as two phrasings of one thing — "Where
+ * can I find your resume? Can I download your CV?" — and the same section's
+ * generated questions include the short form on its own. Keyed by the whole
+ * string those are two different chips, and the page offered both at once:
+ *
+ *     · Where can I find your resume?
+ *     · Where can I find your resume? Can I download your CV?
+ *
+ * which is one suggestion wearing two coats and a wasted slot out of three.
+ */
+const topicOf = (q) => {
+  const text = normalise(q);
+  const first = text.split(/\?\s*/)[0];
+  return (first || text).trim();
+};
+
+/**
+ * Words that carry no subject, so two questions sharing only these share
+ * nothing. Everything a visitor's question is actually ABOUT survives.
+ */
+const EMPTY_WORDS = new Set([
+  "the", "a", "an", "and", "or", "but", "if", "of", "to", "in", "on", "at",
+  "for", "with", "about", "from", "by", "as", "is", "are", "was", "were",
+  "be", "been", "do", "did", "does", "can", "could", "would", "should",
+  "will", "have", "has", "had", "you", "your", "yours", "i", "me", "my",
+  "we", "us", "our", "it", "its", "that", "this", "there", "what", "whats",
+  "when", "where", "which", "who", "whom", "why", "how", "any", "some",
+  "tell", "say", "give", "like", "want", "need", "get", "got", "much",
+  "many", "ever", "also", "than", "then", "too", "very", "please",
+]);
+
+/** The words a question is about, deduplicated. */
+const contentWords = (q) => new Set(
+  normalise(q).replace(/[^a-z0-9\s]/g, " ").split(/\s+/)
+    .filter(w => w.length >= 3 && !EMPTY_WORDS.has(w)),
+);
+
+/**
+ * Is this question already covered by one that has been taken?
+ *
+ * Three tests, each catching a shape the one before it misses.
+ *
+ * 1. The same topic outright.
+ *
+ * 2. One topic a leading phrase of the other — "where can i find your
+ *    resume" against "where can i find your resume? can i download your
+ *    cv?". Corpus headings are often written as two phrasings of one thing,
+ *    and the same section's generated questions carry the short form alone,
+ *    so the page offered both at once.
+ *
+ * 3. One question's subject words contained in the other's, or two thirds
+ *    shared. "How do I book a call with you?" and "How do I book time with
+ *    you? Can we set up a call?" have no common prefix at all and are
+ *    plainly the same chip; {book, call} inside {book, time, set, call}
+ *    says so. The subset test needs two words on the smaller side, because
+ *    one word in common is a topic, not a duplicate — {book} would
+ *    otherwise collapse "Have you written a book?" into "What's your book
+ *    about?", which are different questions.
+ */
+const tooClose = (question, topics) => {
+  const topic = topicOf(question);
+  if (!topic) return false;
+  const words = contentWords(question);
+
+  for (const taken of topics) {
+    if (taken === topic) return true;
+
+    const [longer, shorter] = taken.length >= topic.length ? [taken, topic] : [topic, taken];
+    if (shorter.length >= 12 && longer.startsWith(`${shorter} `)) return true;
+
+    const other = contentWords(taken);
+    if (!other.size || !words.size) continue;
+
+    const shared = [...words].filter(w => other.has(w)).length;
+    const [big, small] = words.size >= other.size ? [words, other] : [other, words];
+    if (small.size >= 2 && shared === small.size) return true;
+    if (shared / (big.size + small.size - shared) >= 0.6) return true;
+  }
+  return false;
+};
+
+/**
  * `## heading` → body, in document order, with the offset each section
  * starts at.
  *
@@ -313,6 +397,8 @@ const expand = (graph, questions, depth) => {
  */
 const followUpsFrom = (documents, sources, alreadyAsked) => {
   const seen = new Set((alreadyAsked || []).map(normalise));
+  // Exact keys are not enough: see topicOf above.
+  const topics = new Set((alreadyAsked || []).map(topicOf).filter(Boolean));
 
   // Documents this answer actually drew on, most-quoted first, and which of
   // their sections it used.
@@ -356,9 +442,11 @@ const followUpsFrom = (documents, sources, alreadyAsked) => {
       const index = (from + i + sections.length) % sections.length;
       if (cited.has(index)) continue;
       if (SILENT.has(normalise(sections[index].heading))) continue;
-      const question = (sections[index].asked || []).find(q => !seen.has(normalise(q)));
+      const question = (sections[index].asked || [])
+        .find(q => !seen.has(normalise(q)) && !tooClose(q, topics));
       if (!question) continue;
       seen.add(normalise(question));
+      topics.add(topicOf(question));
       out.push(question);
       break;                                 // one per section
     }
@@ -381,7 +469,9 @@ const followUpsFrom = (documents, sources, alreadyAsked) => {
       if (cited.has(index)) continue;
       const key = normalise(sections[index].heading);
       if (seen.has(key) || SILENT.has(key)) continue;
+      if (tooClose(sections[index].heading, topics)) continue;
       seen.add(key);
+      topics.add(topicOf(sections[index].heading));
       out.push(sections[index].heading);
       if (out.length >= MAX_FOLLOW_UPS) return out;
     }

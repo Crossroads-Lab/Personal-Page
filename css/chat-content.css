@@ -71,6 +71,12 @@ main::after {
   font-weight: 500;
 }
 
+/* .greeting was an <h2> until it was pointed out that it sits ABOVE the
+   <h1> in the document, so anyone moving through the page by heading met a
+   level two before the level one. It is a greeting, not a section heading.
+   The selectors keep h2 alongside it so nothing breaks if the tag comes
+   back somewhere else. */
+#welcome .greeting,
 #welcome h2,
 #welcome h1 {
   font-weight: 400;
@@ -83,6 +89,7 @@ main::after {
   font-size: var(--h1-size);
 }
 
+#welcome .greeting,
 #welcome h2 {
   font-weight: 200;
   font-size: var(--h2-size);
