@@ -1,5 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 0 4 20.5z"/>
-  <path d="M4 17.5A1.5 1.5 0 0 1 5.5 16H19"/>
-  <path d="M8.5 7.5h6"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- A closed book: the spine down the left, the cover beside it, one line
+     where a title would be.
+
+     Solid, and sized to the same 18x21 of the 24 box as resume.svg, because
+     it stands in a row of four solid marks (css/chat-content.css: "solid
+     marks on pale glass"). It used to be a 1.8px outline drawn 15x17.5,
+     which at the 16px the row renders at made it both the smallest and the
+     palest thing in the line — it read as a different family. -->
+<path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM6.5 1.5V22.5H8V1.5H6.5ZM11.4 7.2C10.9582 7.2 10.6 7.55817 10.6 8C10.6 8.44183 10.9582 8.8 11.4 8.8H16.6C17.0418 8.8 17.4 8.44183 17.4 8C17.4 7.55817 17.0418 7.2 16.6 7.2H11.4Z"/>
 </svg>
