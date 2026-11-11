@@ -376,7 +376,40 @@ body:not([chat-started])::after {
    at the top, with the portrait between them — pushing it down there would
    stack the whole page into the bottom third. */
 @media only screen and (min-width: 901px) {
+  /* Centre the whole left column, not just the bar.
+   *
+   * <main> carries `flex: 1`, which is `flex: 1 1 0%` — a basis of ZERO. So
+   * main and the spacer below the bar grew from nothing by the same amount
+   * and ended up the same height, which centres the BAR and leaves the
+   * headline hanging above the middle with nothing to balance it. Measured
+   * on a 2000x1010 screen the block sat about 110px high.
+   *
+   * A basis of `auto` makes main start at the height of its content and
+   * grow from there, so main ends up taller than the spacer by exactly the
+   * headline block — which is what puts the group in the middle. The spacer
+   * still animates 1 to 0 when the conversation starts, so the glide down
+   * is untouched. */
+  body:not([chat-started]) main {
+    flex-basis: auto;
+    /* main's own top padding would otherwise land entirely above the
+       headline and push the group down by that much. */
+    padding-top: 0;
+  }
+
+  /* main centres its children with `margin: auto` on BOTH its pseudos
+     (chat-content.css). That re-centres the headline inside main, so main's
+     extra height lands half above and half below it and the group drifts
+     up. Releasing the trailing one leaves the leading auto margin to take
+     all the slack, which puts the headline at the bottom of main — directly
+     above the bar, where `justify-content: flex-end` always meant to put
+     it. */
+  body:not([chat-started]) main::after {
+    margin: 0;
+  }
+
   body:not([chat-started]) #welcome {
+    /* Content height, so main's `auto` basis means something. */
+    height: auto;
     justify-content: flex-end;
     /* Breathing room between the icon row and the bar. The headline block
        is bottom-aligned, so this is the only gap between the two — at 4px
