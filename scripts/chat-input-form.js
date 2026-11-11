@@ -524,6 +524,68 @@ const renderActions = (actions) => {
  * Render follow-up questions as clickable prompts. Clicking one asks it,
  * which is the cheapest way to show a visitor what else the corpus covers.
  */
+/**
+ * Shrink a wrapped chip to the width of its longest line.
+ *
+ * `width: fit-content` hugs a chip that fits on one line and gives up on
+ * one that does not: max-content is wider than the column, so the box falls
+ * back to the full column and a question that wraps after six words sits in
+ * a pill stretching the whole width with half its last line empty. CSS has
+ * no "as wide as the widest line it actually used" — the only thing that
+ * knows is layout, after the fact.
+ *
+ * So ask it. A Range over the chip's text returns one rect per line box;
+ * the widest of those plus the padding is the width the pill should have
+ * had. `text-wrap: balance` (css/chat-content.css) runs first and evens the
+ * lines out, so what this measures is already the tidy shape.
+ *
+ * Re-wrapping is the thing to watch: narrowing a box can push a word onto
+ * another line, which would make the measurement a lie. The new width is
+ * the widest line exactly, so the break points hold — but it is checked,
+ * and the chip goes back to the full column if the line count moves.
+ */
+const hug = (button) => {
+  const lines = () => {
+    const range = document.createRange();
+    range.selectNodeContents(button);
+    return [...range.getClientRects()].filter(r => r.width > 0);
+  };
+
+  const before = lines();
+  if (before.length < 2) return;        // one line: fit-content already hugs
+
+  const style = getComputedStyle(button);
+  const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+  const widest = Math.max(...before.map(r => r.width));
+
+  button.style.width = `${Math.ceil(widest + padding) + 1}px`;
+  if (lines().length !== before.length) button.style.width = "";
+};
+
+/**
+ * A measured width is only true for the column it was measured in, so every
+ * chip on screen is remeasured when that column changes.
+ *
+ * A ResizeObserver on the column rather than a window resize listener: the
+ * column also moves when the scrollbar appears, when the viewport is
+ * emulated, and when the keyboard opens on a phone — none of which reliably
+ * fire `resize`, and all of which leave a chip wearing a width that was
+ * right for a different layout.
+ *
+ * Width only. Setting a chip's width can change the column's height, and
+ * reacting to that would be a loop.
+ */
+let lastColumn = 0;
+new ResizeObserver((entries) => {
+  const width = Math.round(entries[0].contentRect.width);
+  if (width === lastColumn) return;
+  lastColumn = width;
+
+  const chips = content.querySelectorAll(".follow-up");
+  for (const chip of chips) chip.style.width = "";
+  for (const chip of chips) hug(chip);
+}).observe(content);
+
 const renderFollowUps = (questions) => {
   if (!questions?.length) return;
 
@@ -557,6 +619,9 @@ const renderFollowUps = (questions) => {
   }
 
   content.appendChild(list);
+
+  // After it is in the document: the measurement needs real line boxes.
+  for (const chip of list.children) hug(chip);
 };
 
 const resetForm = () => {
