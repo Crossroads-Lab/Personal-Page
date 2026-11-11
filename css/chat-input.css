@@ -617,16 +617,18 @@ body[chat-started] #starter-chips {
    visitor sight of the options it was opened from. 100% is the container's
    own height, which already grows with the chip row. */
 @media only screen and (min-width: 901px) {
+  /* Anchored to whatever opened it, not to the middle of the page. The
+     insets are set by scripts/starter-chips.js when the Contact chip is
+     pressed — it knows where that chip is and whether there is room below
+     it — and this is the resting position for anything that does not set
+     them. `transform-origin` is set alongside, so the panel grows out of
+     the control rather than out of a corner it has no relationship to. */
   body:not([chat-started]) #chat-menu {
     top: calc(100% + 10px);
     bottom: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    transform-origin: top center;
-  }
-
-  body:not([chat-started]) #chat-input-container:not([menu-visible]) #chat-menu {
-    transform: translateX(-50%) scale(0.8);
+    left: auto;
+    right: 0;
+    transform-origin: top right;
   }
 }
 

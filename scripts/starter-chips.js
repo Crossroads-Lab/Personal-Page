@@ -60,7 +60,8 @@ const chip = (label, onClick, isContact = false) => {
   if (isContact) b.dataset.contact = "";
   // textContent, not innerHTML — these come over the wire.
   b.textContent = label;
-  b.onclick = (event) => { event.stopPropagation(); onClick(); };
+  // The handler gets the button, so the contact chip can be anchored to.
+  b.onclick = (event) => { event.stopPropagation(); onClick(b); };
   return b;
 };
 
@@ -71,8 +72,65 @@ const ask = (question) => {
   form.dispatchEvent(new Event("submit"));
 };
 
+const menu = document.getElementById("chat-menu");
+
+/** Gap between the chip and the panel it opens. */
+const MENU_GAP = 10;
+
+/** Clearance the panel must keep from the far edge of the screen. Without
+ *  it "fits" includes landing flush against the bottom, which looks like
+ *  something that has been cut off rather than something that was placed. */
+const MENU_MARGIN = 12;
+
+/**
+ * Hang the menu off the chip that opened it.
+ *
+ * It used to sit centred under the input bar, which is a position with no
+ * relationship to the control that produced it — the eye leaves "Contact
+ * me" and has to find the panel somewhere else. Right edges aligned, and
+ * below unless below would run off the screen, in which case above.
+ *
+ * Measured at open rather than in CSS because both answers depend on where
+ * the chip landed, and the chip's position depends on how many chips the
+ * server sent and how wide their labels are. The panel is `visibility:
+ * hidden` when closed rather than `display: none`, so it already has a
+ * height to measure.
+ */
+const anchorMenuToChip = (chip) => {
+  if (!menu || !chatContainer) return;
+  const box = chatContainer.getBoundingClientRect();
+  const pin = chip.getBoundingClientRect();
+  const height = menu.offsetHeight;
+
+  // Right edges flush.
+  menu.style.left = "auto";
+  menu.style.right = `${Math.max(0, box.right - pin.right)}px`;
+
+  const roomBelow = window.innerHeight - pin.bottom - MENU_GAP - MENU_MARGIN;
+  if (roomBelow >= height) {
+    menu.style.top = `${pin.bottom - box.top + MENU_GAP}px`;
+    menu.style.bottom = "auto";
+    menu.style.transformOrigin = "top right";
+  } else {
+    menu.style.top = "auto";
+    menu.style.bottom = `${box.bottom - pin.top + MENU_GAP}px`;
+    menu.style.transformOrigin = "bottom right";
+  }
+};
+
+/** Hand the menu back to the stylesheet, for when the ⋮ opens it instead. */
+export const releaseMenuAnchor = () => {
+  if (!menu) return;
+  for (const prop of ["left", "right", "top", "bottom", "transformOrigin"]) {
+    menu.style[prop] = "";
+  }
+};
+
 /** The contact chip opens the same menu the ⋮ opens — one list, not two. */
-const openContactMenu = () => chatContainer.setAttribute("menu-visible", "");
+const openContactMenu = (chip) => {
+  anchorMenuToChip(chip);
+  chatContainer.setAttribute("menu-visible", "");
+};
 
 /**
  * Mark the row when it has more chips than fit, and say which way.
@@ -136,5 +194,12 @@ let resizeTimer;
 window.addEventListener("resize", () => {
   if (document.body.hasAttribute("chat-started")) return;
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(markOverflow, 150);
+  resizeTimer = setTimeout(() => {
+    markOverflow();
+    // A menu left open across a resize would otherwise keep the insets it
+    // was given for the old layout.
+    const open = chatContainer?.hasAttribute("menu-visible");
+    const pin = container?.querySelector("[data-contact]");
+    if (open && pin) anchorMenuToChip(pin);
+  }, 150);
 });
