@@ -56,9 +56,26 @@ const CONTINUATIONS = [
 
 /** Words that point at something outside the sentence. */
 const REFERENTIAL = new Set([
-  "it", "its", "that", "this", "those", "these", "they", "them", "their",
+  "it", "its", "that", "those", "they", "them", "their",
   "he", "him", "his", "she", "her", "there", "then", "one", "ones", "same",
 ]);
+
+/**
+ * "this" and "these", which point back only at the end of a question.
+ *
+ * On a web page "this" usually means the page, not the previous turn —
+ * "Did you build this page yourself?", "Is this a chatbot?", "How does this
+ * work?" are all self-contained questions about the artefact in front of
+ * the visitor. Treating them as follow-ups glued the question before onto
+ * the front of the query, retrieval came back with both subjects, and the
+ * answer dutifully covered both: "Yes to the page, and the disagreement was
+ * at Snap." Two questions answered, one of them already answered.
+ *
+ * Trailing, it does point back — "tell me about this", "what about this?" —
+ * because there is no noun after it to carry a subject of its own. That is
+ * the whole distinction, and it is cheap to test.
+ */
+const TRAILING_REFERENTIAL = new Set(["this", "these"]);
 
 const scrub = (s, max) => String(s)
   // Control characters would let a client break the block's own framing.
@@ -100,7 +117,11 @@ const isDependent = (query) => {
   // A referential word with no proper noun to anchor it. The original casing
   // matters here, so the test runs against the query as given.
   const hasAnchor = /\b[A-Z][a-z]{2,}/.test(query.replace(/^\W*\w+/, ""));
-  return !hasAnchor && words.some(w => REFERENTIAL.has(w.replace(/\W/g, "")));
+  if (hasAnchor) return false;
+
+  const bare = words.map(w => w.replace(/\W/g, ""));
+  const last = bare[bare.length - 1];
+  return bare.some(w => REFERENTIAL.has(w)) || TRAILING_REFERENTIAL.has(last);
 };
 
 /**

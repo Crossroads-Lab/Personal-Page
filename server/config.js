@@ -231,6 +231,29 @@ module.exports = Object.freeze({
           "how do you handle conflict on a team?",
           "how do you give feedback?",
           "what motivates you?",
+
+          // Added 2026-11-11. background/this_page.md — six sections on how
+          // this site works, and the thing a technical interviewer is most
+          // likely to ask about, since it is the one piece of his work they
+          // can see running. Not one anchor was near it.
+          //
+          // "Did you build this page yourself?" classified CONVERSATIONAL
+          // and was dropped before retrieval. So were "Did you build this
+          // site yourself?" and "Who built this?". "Is this a chatbot?"
+          // happened to clear the bar, which is why this looked like one
+          // stubborn phrasing rather than a hole: four ways of asking the
+          // same question, and only the one that named a technology worked.
+          //
+          // The anchors below are about the artefact rather than the career,
+          // which is the shape none of the others had.
+          "did you build this page yourself?",
+          "who built this site?",
+          "how does this chat work?",
+          "is this a chatbot?",
+          "what is this site built with?",
+          "are these your real answers or is the AI making them up?",
+          "how do you stop it hallucinating?",
+          "did you write all of this yourself?",
         ],
       },
       SUPPORT: {
