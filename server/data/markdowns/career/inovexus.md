@@ -1,8 +1,8 @@
 # Inovexus
 
-## What are you doing now besides Crossroads?
+## What else do you do besides your main role? Do you mentor?
 
-I've been a Mentor and Advisor at Inovexus since July 2023, alongside running Crossroads Venture Studio.
+I've been a Mentor and Advisor at Inovexus since July 2023, which I started while I was still running Crossroads Venture Studio.
 
 ## What does the mentoring involve?
 

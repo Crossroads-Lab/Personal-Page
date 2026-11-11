@@ -2,7 +2,7 @@
 
 ## Who are you and what's your background?
 
-I'm an engineering executive and two-time founder with 20+ years of experience. I've cut production downtime by 70%, raised $4M, and shipped AI systems used by a combined 480M+ daily active users across Snap, Amazon, and Google. I hold a PhD in AI and have authored 30+ patents and publications with 2,200+ citations.
+I'm an engineering executive and three-time founder with 20+ years of experience. I've cut production downtime by 70%, raised $4M, and shipped AI systems used by a combined 480M+ daily active users across Snap, Amazon, and Google. I hold a PhD in AI and have authored 30+ patents and publications with 2,200+ citations.
 
 ## What are you known for? What's your reputation?
 

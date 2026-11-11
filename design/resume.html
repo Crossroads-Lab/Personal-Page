@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>William Brendel, PhD — Resume</title>
+<!--
+  Source for assets/William Brendel Resume - 2026.pdf.
+
+  Regenerate:
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --no-pdf-header-footer \
+      --print-to-pdf="assets/William Brendel Resume - 2026.pdf" \
+      design/resume.html
+
+  Kept as HTML rather than only as a PDF so the next edit is a text edit.
+  Content is the August 2026 resume, corrected against LinkedIn:
+  the stealth startup added, Crossroads re-dated and closed, the headline
+  widened from "VP Engineering", and the book given a section.
+
+  Keep this in step with server/data/markdowns/ — a recruiter reads the PDF
+  and then asks the chat the same question, and a mismatch is what they
+  remember.
+-->
+<style>
+  @page { size: Letter; margin: 0.55in 0.6in; }
+
+  :root {
+    --ink: #111;
+    --muted: #444;
+    --rule: #bbb;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10.1pt;
+    line-height: 1.38;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+  }
+
+  header { text-align: center; margin-bottom: 14px; }
+
+  h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    margin: 0 0 3px;
+    letter-spacing: 0.1px;
+  }
+
+  .tagline {
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+
+  .contact { font-size: 9.4pt; color: var(--muted); margin: 0; }
+
+  h2 {
+    font-size: 9.4pt;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    margin: 14px 0 5px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .summary { margin: 0; text-align: justify; }
+
+  .skill { margin: 0 0 3px; }
+  .skill b { font-weight: 700; }
+
+  .role { margin-top: 10px; break-inside: avoid; }
+  .role:first-of-type { margin-top: 2px; }
+
+  .role-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .role-title { font-weight: 700; }
+  .role-dates { font-style: italic; white-space: nowrap; }
+  .role-blurb { font-style: italic; color: var(--muted); margin: 1px 0 3px; }
+
+  ul { margin: 0; padding-left: 15px; }
+  li { margin: 0 0 2px; }
+
+  a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>William Brendel, PhD</h1>
+  <p class="tagline">Engineering &amp; ML Executive &middot; AI/ML &middot; Regulated SaaS</p>
+  <p class="contact">Reno, NV &middot; brendel.william@gmail.com &middot; +1 (415) 539-5322 &middot; linkedin.com/in/william-brendel</p>
+</header>
+
+<h2>Summary</h2>
+<p class="summary">Engineering executive with 20+ years spanning AI R&amp;D and production platform leadership. Shipped AI systems serving 480M+ combined DAU across Snap, Amazon, and Google; cut production downtime by 70%; raised $4M in seed funding. Deep experience operating regulated, mission-critical SaaS platforms (SOC 2 Type II, HIPAA, NIST). Author of 30+ patents and publications with 2,200+ citations, and bestselling co-author of <i>The AI Transformation</i>.</p>
+
+<h2>Skills</h2>
+<p class="skill"><b>AI &amp; Machine Learning:</b> Generative AI, Large Language Models (LLMs), LLM Orchestration, AI Agents, Retrieval-Augmented Generation (RAG), NLP, Computer Vision, Recommendation Systems, ML Infrastructure &amp; Model Evaluation, Semi-Supervised Learning</p>
+<p class="skill"><b>Engineering &amp; Infrastructure:</b> Distributed Systems, Platform Architecture, AWS, Node.js, Express.js, .NET 8, CI/CD, GitHub Automations, APIs, Real-Time Processing</p>
+<p class="skill"><b>Leadership &amp; Strategy:</b> Engineering Management, Team Scaling &amp; Hiring, Roadmaps, OKRs, Budget Management &amp; P&amp;L, M&amp;A Technical Due Diligence, Product Strategy, Agile, Jira, Asana</p>
+<p class="skill"><b>Security &amp; Compliance:</b> SOC 2 Type II, HIPAA, NIST, Data Privacy, Penetration Testing, Incident Response, SLAs</p>
+
+<h2>Professional Experience</h2>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Co-Founder, Chief AI Officer &mdash; Stealth AI Startup</span>
+    <span class="role-dates">January 2026 &ndash; Present</span>
+  </div>
+  <p class="role-blurb">Founding a company at the crossroads of AI and water management. Reno, NV.</p>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Founder / General Partner &mdash; Crossroads Venture Studio, Inc.</span>
+    <span class="role-dates">May 2023 &ndash; July 2026</span>
+  </div>
+  <p class="role-blurb">Hands-on technical architect and operator across a portfolio of AI-driven ventures.</p>
+  <ul>
+    <li>Served as primary technical architect for portfolio companies, defining AI orchestration and infrastructure strategies.</li>
+    <li>Orchestrated technical validation and go-to-market execution for 20+ internal and external teams; 61.5% of portfolio ventures reached seed funding or first-customer bootstrapping.</li>
+    <li>Built a proprietary incubation framework that accelerates AI product delivery, reducing time-to-market for generative AI features through standardized architecture and automated CI/CD pipelines.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">VP, Engineering &mdash; iScribeHealth</span>
+    <span class="role-dates">January 2025 &ndash; August 2025</span>
+  </div>
+  <p class="role-blurb">Engineering executive for an AI-driven clinical documentation (ambient scribe) SaaS platform.</p>
+  <ul>
+    <li>Led a 10-person engineering organization with a $2M annual budget; partnered with the CEO and Product to align the technical roadmap and OKRs with a $100M ARR growth target.</li>
+    <li>Drove delivery of AI-driven Evaluation &amp; Management (E&amp;M) coding suggestions, improving provider billing outcomes by 10&ndash;20%; expanded integration with Athena's ambient scribe system to 200+ customers.</li>
+    <li>Guided the organization to SOC 2 Type II and HIPAA compliance; oversaw remediation of 100% of high-severity vulnerabilities from the company's first penetration test.</li>
+    <li>Drove platform migration from .NET 4 to .NET 8, reducing production downtime by 70%; oversaw authentication migration from Azure Entra ID to Auth0.</li>
+    <li>Owned engineering delivery, platform reliability, and production readiness across all customer-facing systems.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Co-Founder, Chief Science Officer &amp; Head of Product &mdash; Heali AI</span>
+    <span class="role-dates">May 2019 &ndash; March 2023</span>
+  </div>
+  <p class="role-blurb">Co-founded an AI-driven HealthTech startup for personalized nutrition in chronic disease management.</p>
+  <ul>
+    <li>Secured $4M in seed funding and reached an 8-digit valuation by establishing the core intellectual property and technical roadmap.</li>
+    <li>Architected a semi-supervised AI pipeline that aggregated and cleaned 2B+ nutrition data points into a proprietary engine supporting 200+ medical conditions.</li>
+    <li>Launched B2C applications on iOS and Android to 10K+ active users; bootstrapped a CDC-compliant Diabetes Prevention Program secured by two nationwide healthcare provider partnerships.</li>
+    <li>Recruited and directed a 12-person multidisciplinary organization of engineers, product designers, and UX researchers.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Technical Program Manager / Senior Research Scientist &mdash; Snap Inc.</span>
+    <span class="role-dates">May 2016 &ndash; May 2019</span>
+  </div>
+  <p class="role-blurb">Directed a 50+ person R&amp;D organization across 40+ concurrent projects, shipping research into global products for 188M+ DAU.</p>
+  <ul>
+    <li>Shipped privacy-preserving behavioral recommendation systems at 188M+ DAU scale: friend recommendations revived 14% of inactive users and lifted daily engagement 7%; Bitmoji chat recommendations lifted engagement 8%.</li>
+    <li>Delivered internal AI products, including sentiment-based support-ticket sorting that increased support-team productivity by 71%.</li>
+    <li>Expanded R&amp;D into 10+ domains (face analysis, NLP, scene understanding, AR, video analysis); aligned roadmaps across Business, Design, Data Science, Engineering, and Legal.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Machine Learning Researcher / Technical Product Manager &mdash; Amazon &middot; A9</span>
+    <span class="role-dates">November 2012 &ndash; May 2016</span>
+  </div>
+  <p class="role-blurb">Designed and delivered high-scale computer vision products for A9's visual search team, serving 200M+ DAU across the Amazon ecosystem.</p>
+  <ul>
+    <li>Core member of the Technical Acquisition Committee, performing M&amp;A technical due diligence; authored 8 patents and 7 publications during tenure.</li>
+    <li>Launched mobile brand-logo detection and recognition running in real time at 100fps on mobile hardware; granted 9 patents for visual search, object recognition, and ML infrastructure.</li>
+    <li>Blueprinted the global visual-search database and the proprietary annotation/evaluation platform managing a corpus of 12M+ images and labels; owned the product lifecycle from R&amp;D through production.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Machine Learning Engineer &mdash; Google &middot; YouTube</span>
+    <span class="role-dates">July 2011 &ndash; November 2012</span>
+  </div>
+  <ul>
+    <li>Initiated and led "Suggested Edits," a self-correcting video-quality detection and correction system scaled across the entire YouTube corpus (94M+ DAU); created 10+ creator-facing video effects and filters; granted 2 patents.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <span class="role-title">Application Engineer &mdash; Infineon Technologies</span>
+    <span class="role-dates">June 2003 &ndash; June 2004</span>
+  </div>
+  <ul>
+    <li>Engineered hardware test platforms and drivers in C and Assembly (30% faster validation cycles) and built TCL board-test automation (40% less manual testing effort).</li>
+  </ul>
+</div>
+
+<h2>Publications &amp; Research</h2>
+<ul>
+  <li>Co-author, <i>The AI Transformation: Thriving Within Civilization's Next Big Disruption</i> &mdash; chapter "AI: The Reality Beyond The Fantasy." Amazon bestseller.</li>
+  <li>30+ patents and publications, 2,200+ citations &mdash; scholar.google.com/citations?user=mR3fVeIAAAAJ</li>
+  <li>Publication Chair, IEEE/CVF CVPR 2017&ndash;2019 (2,000+ papers/edition) and IEEE WACV 2018&ndash;2019.</li>
+</ul>
+
+<h2>Education</h2>
+<ul>
+  <li>PhD, Computer Science &amp; Artificial Intelligence &mdash; Oregon State University, Corvallis, OR (June 2011)</li>
+  <li>MS, Electrical Engineering &amp; Computer Science &mdash; CPE Lyon, France (2005)</li>
+</ul>
+
+</body>
+</html>
