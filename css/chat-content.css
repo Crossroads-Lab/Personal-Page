@@ -1,6 +1,6 @@
 /* Import base styles and variables from common.css */
 @import "./common.css?v=148645e5";
-@import "./thinking-loader.css?v=2cd080f4";
+@import "./thinking-loader.css?v=b8e27d2d";
 
 /* 
  * =====================================================
@@ -418,7 +418,11 @@ body[chat-started] #quick-links-docked {
     display: block;
     position: absolute;
     top: -6px;
-    right: 0;
+    /* Not flush. #content scrolls, which makes it a clipping box on both
+       axes, and the button's drop shadow reaches about 7px past its own
+       edge — at right: 0 that half of the shadow was cut off in a straight
+       vertical line down the side of the button. */
+    right: 8px;
 
     font-family: inherit;
     font-size: 0.78em;
