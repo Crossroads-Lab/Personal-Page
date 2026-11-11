@@ -280,6 +280,18 @@ main::after {
   display: none;
 }
 
+/* Lighter glass than the bar or the chips. Those are surfaces you read
+   through; these are four small discs sitting in open space under the
+   headline, and at the shared weight they read as four buttons demanding
+   attention rather than as marks resting on the page. Less fill, a softer
+   inner glow, barely a rim. */
+.quick-link.liquid-glass {
+  background: rgb(from var(--liquid-glass-background) r g b / 0.03);
+  --shadow1: inset -6px -6px 16px rgb(from var(--liquid-glass-border-color) r g b / 0.16);
+  --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.07);
+  --shadow3: 0 1px 4px rgba(0, 0, 0, 0.035);
+}
+
 .quick-link {
   display: inline-flex;
   align-items: center;
@@ -301,7 +313,7 @@ main::after {
      under the headline, and at full strength four of them pull harder than
      the line of type they sit beneath. They come up to full on hover, so
      the one being pointed at is the darkest thing in the row. */
-  opacity: 0.6;
+  opacity: 0.72;
   transition: opacity 140ms ease;
 }
 
@@ -326,9 +338,11 @@ main::after {
   outline-offset: 2px;
 }
 
+/* A phone puts these over the portrait, so they need a little more body
+   than on a wide screen — but still well short of the bar's. */
 @media only screen and (max-width: 512px) {
   .quick-link.liquid-glass {
-    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
-    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+    background: rgb(from var(--liquid-glass-background) r g b / 0.26);
+    --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.22);
   }
 }
