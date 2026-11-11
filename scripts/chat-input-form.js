@@ -46,6 +46,8 @@ document.getElementById("stop").onclick = event => {
   stopDisplay = displayTextContent(
     "If there's anything else you want to know, ask away!",
     endDisplay,
+    // A plain span, not answerSlot(): this is a line of consolation after
+    // someone pressed stop, not an answer, and offering to copy it is daft.
     content.appendChild(document.createElement("span"))
   );
 }
@@ -227,9 +229,179 @@ form.addEventListener("submit", async event => {
       renderActions(actions);
       renderFollowUps(followUps);
     },
-    content.appendChild(document.createElement("span"))
+    answerSlot()
   );
 });
+
+/**
+ * Where an answer gets typed, plus the button to take it away with you.
+ *
+ * The answer is the thing a visitor came for, and on a long one — a story
+ * that runs four paragraphs — "select the text" is a worse experience on a
+ * trackpad than it sounds. A recruiter reading this is very often about to
+ * paste it somewhere.
+ *
+ * Desktop only, and only on hover: there is no hover on a phone, where the
+ * button would have to be permanently visible and would sit on top of the
+ * text it is covering. CSS decides that (`@media (hover: hover)`), not a
+ * user-agent string.
+ *
+ * @returns {HTMLElement} the node to type into.
+ */
+const answerSlot = () => {
+  const block = document.createElement("div");
+  block.className = "answer-block";
+
+  const sink = block.appendChild(document.createElement("span"));
+
+  const copy = block.appendChild(document.createElement("button"));
+  copy.type = "button";
+  copy.className = "copy-answer liquid-glass";
+  copy.title = "Copy this answer";
+  copy.setAttribute("aria-label", "Copy this answer");
+  copy.textContent = "Copy";
+  copy.onclick = async (event) => {
+    event.stopPropagation();
+    try {
+      // sink.textContent, not the block's — the button's own label is in
+      // there too, and copying "…whole night.Copy" is the kind of bug that
+      // only shows up in somebody else's document.
+      await navigator.clipboard.writeText(sink.textContent.trim());
+      copy.textContent = "Copied";
+      copy.setAttribute("copied", "");
+    } catch {
+      // Denied permission, or an insecure context (the Clipboard API needs
+      // https or localhost). Select the answer so the keyboard shortcut the
+      // button is now suggesting actually does something — telling someone
+      // to press ⌘C with nothing selected is worse than no button at all.
+      const range = document.createRange();
+      range.selectNodeContents(sink);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      copy.textContent = navigator.platform?.startsWith("Mac") ? "Press ⌘C" : "Press Ctrl+C";
+    }
+    setTimeout(() => {
+      copy.textContent = "Copy";
+      copy.removeAttribute("copied");
+    }, 1600);
+  };
+
+  return content.appendChild(block).firstChild;
+};
+
+/**
+ * Answers the page already holds, keyed by the question they answer.
+ *
+ * Filled from GET /starters, which ships not just the opening chips but the
+ * tree of follow-ups underneath them — four levels down. Every heading in
+ * the corpus is a question somebody wrote an answer to, and a section's
+ * follow-ups are the other sections of the same document, so the part of
+ * the corpus a visitor is likely to walk is a small graph that fits in a
+ * few KB. Sending it with the chips means a whole thread of question and
+ * answer costs exactly one request: the one the page made before anyone
+ * clicked anything.
+ *
+ * Past the edge of the tree, clicking a follow-up asks the API as it always
+ * did. Nothing here is required for the page to work.
+ */
+const precomputed = new Map();
+
+/** Must match normalise() in server/server/starters.js. */
+const asKey = (q) => String(q || "")
+  .toLowerCase()
+  .replace(/\s+/g, " ")
+  .replace(/[?.!\s]+$/, "")
+  .trim();
+
+export const registerAnswers = (sections, more) => {
+  for (const [key, node] of Object.entries(sections || {})) {
+    if (node && typeof node.a === "string" && node.a) {
+      precomputed.set(key, {
+        q: typeof node.q === "string" ? node.q : key,
+        a: node.a,
+        f: Array.isArray(node.f) ? node.f : [],
+      });
+    }
+  }
+  if (Array.isArray(more)) lastResort.push(...more.filter(q => typeof q === "string"));
+};
+
+/** The answer we hold for a question, or null. */
+const answerFor = (question) => precomputed.get(asKey(question)) || null;
+
+/**
+ * Questions already answered on screen.
+ *
+ * Not the same as the transcript. One answer can be several sections of a
+ * document joined together — the opening chip for a story folds in three or
+ * four — and every one of those headings is a question the tree will
+ * otherwise offer as a follow-up to itself. The transcript records the
+ * question that was asked; this records everything that got answered.
+ */
+const shown = new Set();
+
+/** Offered when a thread runs out of document. See `more` in /starters. */
+const lastResort = [];
+
+/**
+ * What to put under an answer: the follow-ups it came with, minus anything
+ * already on screen — and if that empties the list, other things worth
+ * asking, because an answer with no doors out of it is where a visit ends.
+ */
+const unasked = (questions) => {
+  const used = (q) => shown.has(asKey(q)) || history.some(t => asKey(t.q) === asKey(q));
+  const fresh = (questions || []).filter(q => !used(q));
+  return fresh.length ? fresh : lastResort.filter(q => !used(q)).slice(0, 3);
+};
+
+/**
+ * Show an answer the page already has, without asking for it.
+ *
+ * The opening chips carry their own answer — GET /starters ships the text
+ * with the question, because a starter is a question the corpus was written
+ * to answer and the answer does not change between visits. So pressing one
+ * is not a request at all: no fetch, no thinking dot, no second of waiting
+ * on the three questions a visitor is most likely to press first.
+ *
+ * Everything else is identical to a real answer on purpose — same typing
+ * animation, same follow-ups underneath, same entry in the transcript that
+ * travels with the next question. A visitor should not be able to tell
+ * which of their questions cost money.
+ *
+ * @returns {boolean} false if there was nothing preloaded, so the caller can
+ *   fall back to asking.
+ */
+export const showPreloaded = (question, text, followUps = [], actions = [], covers = []) => {
+  if (!question || !text) return false;
+
+  // Everything this answer puts on screen, so none of it comes back as a
+  // suggestion of what to read next.
+  shown.add(asKey(question));
+  for (const heading of covers) shown.add(asKey(heading));
+
+  // A chip pressed while an earlier question is still in flight: that
+  // request now owns nothing, and must not land on top of this.
+  inFlight?.abort();
+  inFlight = null;
+
+  document.body.setAttribute("chat-started", "");
+  resetForm();
+  stopThinking();                 // clears #welcome and any running typing
+
+  remember({ q: question, a: text });
+
+  stopDisplay = displayTextContent(
+    text,
+    () => {
+      endDisplay();
+      renderActions(actions);
+      renderFollowUps(unasked(followUps));
+    },
+    answerSlot(),
+  );
+  return true;
+};
 
 /**
  * The four places an answer can send someone, keyed exactly as the backend
@@ -319,6 +491,13 @@ const renderFollowUps = (questions) => {
     button.textContent = question;
     button.onclick = (event) => {
       event.stopPropagation();
+
+      // Already in hand: render it rather than buying it again. This is
+      // what makes the tree worth shipping — the second and third questions
+      // of a thread are as instant as the first.
+      const held = answerFor(question);
+      if (held && showPreloaded(held.q, held.a, held.f)) return;
+
       input.value = question;
       resize();
       form.dispatchEvent(new Event("submit"));

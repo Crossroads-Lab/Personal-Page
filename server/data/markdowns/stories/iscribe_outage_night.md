@@ -22,6 +22,6 @@ So before I optimise the fix, I make sure the people doing it can last the dista
 
 ## Did you fix it?
 
-We did, before the customers woke up. Nobody on their side ever experienced the outage.
+We fixed it before the customers woke up. Nobody on their side ever experienced the outage.
 
 That's the version of leading by example I care about. Not a speech about commitment — delivering dinner to someone's door at eight in the evening because they're about to give you their whole night.

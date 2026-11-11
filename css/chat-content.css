@@ -377,3 +377,75 @@ body[chat-started] #quick-links-docked {
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.22);
   }
 }
+
+/* ------------------------------------------------------------------------
+ * Copy the answer
+ *
+ * An answer here can run four paragraphs, and a visitor reading one is very
+ * often about to paste it somewhere. Dragging a selection across that on a
+ * trackpad is worse than it sounds.
+ *
+ * Desktop only, and only while the pointer is over the answer. The gate is
+ * `hover: hover and pointer: fine` rather than a width breakpoint or a
+ * user-agent string: the question is literally "can this input hover", and
+ * a touch device answers no. On a phone the button would have to be
+ * permanently visible, which means permanently sitting on top of the text
+ * it is covering — so there, it simply does not exist.
+ * --------------------------------------------------------------------- */
+
+.answer-block {
+  position: relative;
+  /* `main *` sets width: fit-content; opt out so the block spans the
+     column and the button can sit against its right edge. */
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.copy-answer { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .copy-answer {
+    display: block;
+    position: absolute;
+    top: -6px;
+    right: 0;
+
+    font-family: inherit;
+    font-size: 0.78em;
+    font-weight: 400;
+    color: var(--color);
+    letter-spacing: 0.2px;
+
+    padding: 5px 12px;
+    border: 0;
+    border-radius: var(--border-radius-round);
+    cursor: pointer;
+
+    /* Hidden, not absent: it fades in under the pointer rather than
+       appearing and shifting anything, because it is positioned out of
+       flow and the text beneath it never moves. */
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    pointer-events: none;
+  }
+
+  .answer-block:hover .copy-answer,
+  .copy-answer:focus-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Confirmation holds until the label resets, so a pointer that has
+     already moved away still shows it landed. */
+  .copy-answer[copied] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .copy-answer:focus-visible {
+    outline: 2px solid var(--accent-color, currentColor);
+    outline-offset: 2px;
+  }
+}

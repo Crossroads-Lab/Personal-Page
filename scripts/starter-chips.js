@@ -9,9 +9,21 @@
 // but the page never depends on it — if the API is slow, rate-limited or
 // down, the fallback below is what a visitor sees, and the only difference
 // is that the suggestions are the same every time.
+//
+// Each suggestion arrives with its answer attached. A starter is a question
+// the corpus was written to answer — the section that answers it is sitting
+// in a markdown file and has not changed since it was written — so there is
+// nothing to work out at the moment someone presses one. The backend ships
+// the text with the question (server/server/starters.js) and pressing a chip
+// renders it immediately: no request, no thinking dot, nothing to wait on,
+// on the three questions a visitor is most likely to press first.
+//
+// A chip with no answer attached — the fallback list below, or an older
+// backend — asks the normal way and nothing looks different.
 // --------------------------------------------------------------------------
 
 import { API_BASE } from "./api.js?v=b970cf23";
+import { showPreloaded, registerAnswers } from "./chat-input-form.js?v=2648d29b";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");
@@ -27,12 +39,21 @@ const FALLBACK = [
   { label: "Core values", q: "What are your core values?" },
 ];
 
-/* A chip shows a topic and asks a sentence. Anything that arrives as a bare
-   string — an older server, a cached response — becomes both, which is how
-   this behaved before the two were split. */
+/* A chip shows a topic, asks a sentence, and — where the backend sent one —
+   already holds the answer. Anything that arrives as a bare string (an older
+   server, a cached response) becomes label and question, which is how this
+   behaved before the two were split; it simply has no preloaded answer and
+   falls back to asking. */
 const normalise = (s) =>
   typeof s === "string" ? { label: s, q: s }
-  : (s && typeof s.q === "string") ? { label: s.label || s.q, q: s.q }
+  : (s && typeof s.q === "string") ? {
+      label: s.label || s.q,
+      q: s.q,
+      a: typeof s.a === "string" ? s.a : "",
+      followUps: Array.isArray(s.followUpQuestions) ? s.followUpQuestions : [],
+      actions: Array.isArray(s.actions) ? s.actions : [],
+      covers: Array.isArray(s.covers) ? s.covers : [],
+    }
   : null;
 
 /** Three suggestions: the corpus's if we can get them, ours if we cannot. */
@@ -43,7 +64,14 @@ const fetchStarters = async () => {
     const r = await fetch(`${API_BASE}/starters`, { signal: controller.signal });
     clearTimeout(timer);
     if (!r.ok) return FALLBACK;
-    const { starters } = await r.json();
+    const { starters, sections, more } = await r.json();
+
+    // The tree under the chips: every follow-up, and every follow-up of
+    // those, four levels down. Handed to the chat module so that clicking
+    // any of them is as instant as clicking the chip itself. Absent from an
+    // older backend, in which case follow-ups ask the API as they always did.
+    registerAnswers(sections, more);
+
     const clean = (Array.isArray(starters) ? starters : []).map(normalise).filter(Boolean);
     return clean.length ? clean.slice(0, 3) : FALLBACK;
   } catch {
@@ -67,6 +95,18 @@ const ask = (question) => {
   input.dispatchEvent(new Event("input"));     // let the form resize/enable
   form.dispatchEvent(new Event("submit"));
 };
+
+/**
+ * Press a chip: show what we already have, or ask for it.
+ *
+ * showPreloaded returns false when there is no answer attached, which is the
+ * fallback list and any response from a backend that predates this. Asking
+ * is then exactly what pressing a chip used to do — and the backend
+ * short-circuits a starter it recognises anyway, so the visitor still gets
+ * the same text, just one round trip later.
+ */
+const press = ({ q, a, followUps, actions, covers }) =>
+  showPreloaded(q, a, followUps, actions, covers) || ask(q);
 
 /**
  * Mark the row when it has more chips than fit, and say which way.
@@ -96,7 +136,7 @@ const render = (starters) => {
   // fetch lands — after a beat of empty space that reads as a glitch.
   container.setAttribute("entering", "");
   container.replaceChildren(
-    ...starters.map(({ label, q }) => chip(label, () => ask(q))),
+    ...starters.map((starter) => chip(starter.label, () => press(starter))),
   );
   markOverflow();
 

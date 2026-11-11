@@ -6,7 +6,7 @@ Early at Heali we overbuilt features before validating demand. We had a strong t
 
 ## What did that mistake cost you?
 
-Time and runway, on a startup where both were the scarce resource. Work that was genuinely good got built for a demand curve we hadn't confirmed existed.
+It cost us time and runway, on a startup where both were the scarce resource. Work that was genuinely good got built for a demand curve we hadn't confirmed existed.
 
 ## What did you learn from failing? What did you change?
 

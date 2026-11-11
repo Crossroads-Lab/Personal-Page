@@ -360,21 +360,122 @@ module.exports = Object.freeze({
     // one taken from a question the corpus is literally written to answer.
     // `npm --prefix server run check-starters` asks all of them and fails
     // on any that come back "I haven't written that up".
-    { label: "A time I failed",          q: "Tell me about a time you failed. What's your biggest mistake?" },
-    { label: "A time I disagreed",       q: "Tell me about a time you disagreed with someone." },
-    { label: "A call under pressure",    q: "Tell me about a critical decision you made under severe time pressure." },
-    { label: "My biggest obstacle",      q: "What's the biggest obstacle you've had to get past?" },
-    { label: "Letting someone go",       q: "Tell me about a time you had to manage a layoff or let someone go." },
-    { label: "What I'm proudest of",     q: "What's an achievement you're proud of?" },
-    { label: "My hardest technical call", q: "What's the hardest technical decision you've made?" },
-    { label: "Onboarding my own boss",   q: "Tell me about onboarding a senior or executive hire." },
-    { label: "What my critics say",      q: "How would your toughest critic describe you?" },
-    { label: "My leadership style",      q: "What's the most misunderstood aspect of your leadership style?" },
+    //
+    // `from` is what makes a chip free. It names the corpus sections that
+    // answer the question, and server/server/starters.js reads them at boot
+    // and serves them verbatim — no retrieval, no Claude, no latency. The
+    // page already knows the answer before the visitor presses anything.
+    // Those sections are therefore written as complete STAR answers on
+    // their own, because they are published exactly as they stand.
+    {
+      label: "A time I failed",
+      q: "Tell me about a time you failed. What's your biggest mistake?",
+      // Three sections, because the first one is the admission and the two
+      // after it are the cost and the change — which is the half of the
+      // answer a recruiter is actually listening for. They were written as
+      // the continuation, so no part of this is rewritten to fit the chip.
+      from: [
+        "stories/heali_overbuilt_before_validating.md#Tell me about a time you failed. What's your biggest mistake?",
+        "stories/heali_overbuilt_before_validating.md#What did that mistake cost you?",
+        "stories/heali_overbuilt_before_validating.md#What did you learn from failing? What did you change?",
+      ],
+    },
+    {
+      label: "A time I disagreed",
+      q: "Tell me about a time you disagreed with someone.",
+      // The opening section is only the setup — it ends on "the technology
+      // was already built and working", which is a situation, not a
+      // disagreement. What he objected to, what he did about it, and how it
+      // landed are the next three.
+      from: [
+        "stories/snap_beauty_score_filter.md#Tell me about a time you disagreed with someone",
+        "stories/snap_beauty_score_filter.md#Why did you object to that? What worried you?",
+        "stories/snap_beauty_score_filter.md#How do you handle disagreement with your team?",
+        "stories/snap_beauty_score_filter.md#How did the disagreement resolve?",
+      ],
+    },
+    {
+      label: "A call under pressure",
+      q: "Tell me about a critical decision you made under severe time pressure.",
+      // Skips "What's the principle you took from that?" on purpose: it is
+      // the generalisation rather than the story, and it makes a better
+      // follow-up than a paragraph in the middle of one.
+      from: [
+        "stories/iscribe_outage_night.md#Tell me about a critical decision you made under severe time pressure",
+        "stories/iscribe_outage_night.md#What did you do in the first hour?",
+        "stories/iscribe_outage_night.md#Did you fix it?",
+      ],
+    },
+    {
+      label: "My biggest obstacle",
+      q: "What's the biggest obstacle you've had to get past?",
+      from: ["stories/told_id_never_make_it.md#What's the biggest obstacle you've had to get past?"],
+    },
+    {
+      label: "Letting someone go",
+      q: "Tell me about a time you had to manage a layoff or let someone go.",
+      from: ["stories/heali_letting_someone_go.md#Tell me about a time you had to manage a layoff or let someone go"],
+    },
+    {
+      label: "What I'm proudest of",
+      q: "What's an achievement you're proud of?",
+      from: ["stories/iscribe_turnaround.md#What's an achievement you're proud of?"],
+    },
+    {
+      label: "My hardest technical call",
+      q: "What's the hardest technical decision you've made?",
+      from: ["stories/iscribe_azure_or_aws.md#What's the hardest technical decision you've made? What's the hardest technical call you've had to make?"],
+    },
+    {
+      label: "Onboarding my own boss",
+      q: "Tell me about onboarding a senior or executive hire.",
+      from: [
+        "stories/onboarding_my_own_director.md#Tell me about onboarding a senior or executive hire",
+        "stories/onboarding_my_own_director.md#What does onboarding someone more senior than you actually involve?",
+      ],
+    },
+    {
+      label: "What my critics say",
+      q: "How would your toughest critic describe you?",
+      from: ["perspective/how_i_see_myself.md#How would your toughest critic describe you?"],
+    },
+    {
+      label: "My leadership style",
+      q: "What's the most misunderstood aspect of your leadership style?",
+      from: ["perspective/how_i_see_myself.md#What's the most misunderstood aspect of your leadership style?"],
+    },
     // Not behavioural, because not every visitor is a recruiter.
-    { label: "The values I lead by",     q: "What are your core values?" },
-    { label: "What I want next",         q: "What are you looking for in a role?" },
-    { label: "What I'm building now",    q: "What are you doing now? What's your current role?" },
-    { label: "The book I wrote in",      q: "Have you written a book? What's your chapter about?" },
+    {
+      label: "The values I lead by",
+      q: "What are your core values?",
+      // Two sections: the list on its own is a list, and the one that
+      // follows is why it is that list and not a poster in a lobby.
+      from: [
+        "perspective/core_values.md#What are your core values? What do you stand for?",
+        "perspective/core_values.md#Which one matters most to you, and why that one?",
+      ],
+    },
+    {
+      label: "What I want next",
+      q: "What are you looking for in a role?",
+      from: [
+        "logistics/what_im_looking_for.md#What kind of role are you looking for?",
+        "logistics/what_im_looking_for.md#Why do you want to join our company? What kind of company suits you?",
+      ],
+    },
+    {
+      label: "What I'm building now",
+      q: "What are you doing now? What's your current role?",
+      from: ["career/what_im_doing_now.md#What are you doing now? What's your current role? What are you working on?"],
+    },
+    {
+      label: "The book I wrote in",
+      q: "Have you written a book? What's your chapter about?",
+      from: [
+        "background/book.md#Have you written a book? Are you a published author?",
+        "background/book.md#What's your chapter about? What did you contribute?",
+      ],
+    },
   ].map(Object.freeze)),
   STARTER_COUNT: 3,
 

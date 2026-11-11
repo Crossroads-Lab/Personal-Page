@@ -18,6 +18,7 @@ const guard     = require("./server/guard");
 const { filterAsked } = require("./server/asked");
 const history = require("./server/history");
 const { actionsFor, warm: warmActions } = require("./server/actions");
+const buildStarters = require("./server/starters").build;
 const { logQuery } = require("./server/log");
 
 const QUERY_KEYS = ["q", "question", "query", "message", "msg"];
@@ -34,28 +35,18 @@ const resolveQuery = (body) => {
   return null;
 };
 
-/**
- * A few opener suggestions ({ label, q }), sampled without replacement so one
- * response never shows the same question twice. Partial Fisher-Yates over a
- * copy — the pool is small and this runs once per greeting, so clarity beats
- * cleverness.
- */
-const pickStarters = () => {
-  const pool = [...(CONFIG.STARTERS || [])];
-  const n = Math.min(CONFIG.STARTER_COUNT ?? 3, pool.length);
-  for (let i = 0; i < n; ++i) {
-    const j = i + Math.floor(Math.random() * (pool.length - i));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  return pool.slice(0, n);
-};
-
 const main = async () => {
   // Build the engine BEFORE listening so the first visitor never pays boot
   // cost — and warm the action anchors in the same breath, for the same
   // reason: they are a fixed set, embedded once.
   const engine = await getEngine();
   await warmActions();
+
+  // Reads the corpus sections named by CONFIG.STARTERS[].from and keeps
+  // them in memory as finished answers. See server/starters.js: a chip is
+  // a question we wrote the corpus to answer, so answering it costs
+  // nothing and should not make anyone wait.
+  const starters = await buildStarters();
 
   const app = express();
   app.use(express.json({ limit: "16kb" }));
@@ -75,15 +66,24 @@ const main = async () => {
     ...guard.stats(),
   }));
 
-  // Opening suggestions for a visitor who has not asked anything yet.
+  // Opening suggestions for a visitor who has not asked anything yet —
+  // and the answer to each one, already written.
   //
   // Deliberately its own endpoint rather than a greeting through /query:
   // this touches neither Claude nor the embedding model, so it is free and
   // instant, and it is not worth spending a rate-limit slot on. The page
   // carries its own fallback list, so a failure here costs nothing.
+  //
+  // Shipping the answer with the chip is what makes pressing one feel like
+  // opening a page rather than asking a question: there is no second
+  // request, so there is nothing to wait for. And not just the chip: the
+  // tree of follow-ups under it comes too, four levels down, so a visitor
+  // can read a whole thread without the page asking for anything. Edges
+  // stay inside one document, so that subgraph is a few KB — smaller than
+  // one of the page's icons.
   app.get("/starters", (_req, res) => {
     res.set("Cache-Control", "public, max-age=300");
-    res.json({ starters: pickStarters() });
+    res.json(starters.pick(CONFIG.STARTER_COUNT ?? 3));
   });
 
   app.post("/query", async (req, res) => {
@@ -108,8 +108,32 @@ const main = async () => {
     // The page carries the transcript; there is no session store. Cleaned
     // and capped here, before anything downstream sees it.
     const past = history.clean(req.body?.history);
-
     const started = Date.now();
+
+    // Already written, so don't buy it again.
+    //
+    // Reached when a visitor types a starter out rather than pressing it, or
+    // when the page's /starters call failed and it fell back to its own list
+    // of questions — in which case the chips have no answer attached and ask
+    // the normal way. Same text either way; this one just costs nothing.
+    const preloaded = starters.answerFor(query);
+    if (preloaded) {
+      logQuery({
+        ms: Date.now() - started,
+        query,
+        intent: "starter",
+        sources: ["preloaded"],
+        followUps: preloaded.followUpQuestions,
+        actions: preloaded.actions,
+        turns: past.length,
+      }, CONFIG.QUERY_LOG);
+
+      return res.json({
+        answer: [{ text: preloaded.a }],
+        followUpQuestions: preloaded.followUpQuestions,
+        actions: preloaded.actions,
+      });
+    }
 
     try {
       const result = await engine.ask(query, { history: past });
@@ -133,7 +157,8 @@ const main = async () => {
       // label the answer screen has no use for, so only the question travels.
       if (!body.followUpQuestions.length) {
         body.followUpQuestions =
-          await filterAsked(pickStarters().map(s => s.q), asked);
+          await filterAsked(
+            starters.pick(CONFIG.STARTER_COUNT ?? 3).starters.map(s => s.q), asked);
       }
 
       // Buttons that go where the question asked to go — the resume, the
