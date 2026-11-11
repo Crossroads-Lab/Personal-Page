@@ -22,8 +22,8 @@
 // backend — asks the normal way and nothing looks different.
 // --------------------------------------------------------------------------
 
-import { API_BASE } from "./api.js?v=01b9ad0a";
-import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=c8829b6c";
+import { API_BASE } from "./api.js?v=091fa826";
+import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=d37a0078";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");

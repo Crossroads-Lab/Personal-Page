@@ -1,5 +1,7 @@
 "use strict"
 
+import { toFragment } from "./markdown.js?v=3ba58513";
+
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
 // --------------------------------------------------------------------------
@@ -66,20 +68,40 @@ export const onContentchange = () => {
 }
 
 // Progressive text display.
+//
+// The text arrives as Markdown — a book title in *italics*, a list of
+// awards, the Amazon link at the end of a book answer — so it is parsed and
+// sanitized into a detached fragment first (scripts/markdown.js), then that
+// fragment is revealed a character at a time.
+//
+// The tree is built into the live DOM lazily, in document order: an element
+// appears just before its own text starts typing, never earlier. Attaching
+// the whole skeleton up front would reserve the height of every empty
+// paragraph before a word of it existed, and the answer would type into a
+// block of pre-allocated whitespace instead of growing.
+//
+// `innerHTML` is still never handed the model's words. markdown.js rebuilds
+// every tag from an allowlist before anything reaches a template, and what
+// is appended here are nodes, not markup.
 export const displayTextContent = (text, done, container = content, delay) => {
-  let i = 0, l = text.length, timeoutId;
+  const fragment = toFragment(text);
   userScrolling = false, scrollTop = 0;
-  (delay === undefined || delay === null) && (
-    delay = Math.round(Math.max(200 - text.length, 0) * 0.15 + 5)
-  );
-  const breakTimeout = () => clearTimeout(timeoutId);
 
-  // Append into a text node rather than `container.innerHTML +=`.
-  // Two reasons: the text now comes from a language model, so treating it as
-  // markup would let a crafted corpus section or answer inject HTML; and
-  // innerHTML re-parses the entire container on every keystroke, which is
-  // O(n^2) in the length of the answer.
-  const sink = container.appendChild(document.createTextNode(""));
+  // Pacing is a property of how much there is to read, which is the words —
+  // not the markup that got wrapped around them.
+  const plain = fragment.textContent || "";
+  (delay === undefined || delay === null) && (
+    delay = Math.round(Math.max(200 - plain.length, 0) * 0.15 + 5)
+  );
+
+  // Every node of the parsed answer, in the order a reader meets them.
+  const steps = [];
+  const walker = document.createTreeWalker(fragment, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) steps.push(node);
+
+  // Source node -> the live node standing in for it. A text node's parent is
+  // looked up here; the fragment's own children answer to `container`.
+  const live = new Map();
 
   // The character loop is driven by setTimeout ALONE, and the layout/scroll
   // pass is coalesced to at most one per animation frame.
@@ -105,16 +127,56 @@ export const displayTextContent = (text, done, container = content, delay) => {
     });
   };
 
+  let index = 0, source = null, sink = null, cursor = 0, timeoutId, stopped = false;
+
+  const breakTimeout = () => (stopped = true, clearTimeout(timeoutId));
+
   const f = () => {
-    sink.data += text.charAt(i);
-    scheduleUpdate();
-    if (++i < l) {
-      timeoutId = setTimeout(f, delay);
-    } else {
+    if (stopped) return;
+
+    // Mid-word: keep typing into the text node already open.
+    if (sink) {
+      sink.data += source.data.charAt(cursor);
       scheduleUpdate();
-      typeof done === "function" && done();
+      if (++cursor < source.data.length) {
+        timeoutId = setTimeout(f, delay);
+        return;
+      }
+      sink = null;
     }
+
+    // Walk forward, materialising structure, until the next thing to type.
+    while (index < steps.length) {
+      const node = steps[index++];
+      const parent = live.get(node.parentNode) || container;
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        // Whitespace between blocks is layout, not reading. Typing it would
+        // spend the delay on characters nobody can see.
+        if (!node.data.trim()) {
+          parent.appendChild(document.createTextNode(node.data));
+          continue;
+        }
+        source = node;
+        cursor = 0;
+        sink = parent.appendChild(document.createTextNode(""));
+        timeoutId = setTimeout(f, delay);
+        return;
+      }
+
+      // cloneNode(false) rather than createElement: it carries the href,
+      // target and rel that markdown.js has already vetted, and appendChild
+      // adopts it out of the template's document.
+      const element = node.cloneNode(false);
+      parent.appendChild(element);
+      live.set(node, element);
+    }
+
+    scheduleUpdate();
+    stopped = true;
+    typeof done === "function" && done();
   };
+
   f();
   return breakTimeout;
 }

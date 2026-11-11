@@ -22,18 +22,33 @@ const FAILURE_TEXT =
   "I can't reach my brain right now — that's on me, not you. " +
   "Try again in a moment, or book time with me using the calendar icon on this page.";
 
+/** A chunk that ends a sentence is a paragraph; one that does not is a clause. */
+const FINISHED = /[.!?:\u2026]["'\u201d\u2019)\]]*$/;
+
 /**
- * Join answer chunks. The model emits them with inconsistent leading
- * whitespace, so naive concatenation produces "next hire.Another one:".
- * Insert a space only where neither side already has one.
+ * Join answer chunks into the answer.
+ *
+ * A chunk is one passage the backend grounded on its own — nearly always a
+ * paragraph of the source, and written to be read as one. Gluing them with
+ * a space, as this did until now, turned a four-paragraph story into a
+ * single block of three hundred words. Nobody reads that; a recruiter with
+ * eleven tabs open certainly does not.
+ *
+ * So the join is a blank line, which scripts/markdown.js renders as
+ * separate paragraphs — but only where the previous chunk actually finished
+ * its sentence. The model's chunking is not a promise, and a break dropped
+ * mid-clause is worse than no break at all. Everything else joins with a
+ * space, which is also what stops "next hire.Another one:".
  */
 export const joinChunks = (chunks) => (chunks || [])
   .map(c => (c && typeof c.text === "string") ? c.text : "")
-  .filter(Boolean)
-  .reduce((acc, next) =>
-    !acc ? next
-    : (/\s$/.test(acc) || /^\s/.test(next)) ? acc + next
-    : acc + " " + next, "")
+  .filter(c => c.trim())
+  .reduce((acc, next) => {
+    if (!acc) return next.trim();
+    const left = acc.replace(/\s+$/, "");
+    const right = next.replace(/^\s+/, "");
+    return FINISHED.test(left) ? `${left}\n\n${right}` : `${left} ${right}`;
+  }, "")
   .trim();
 
 /**

@@ -403,6 +403,11 @@ body[chat-started] #quick-links-docked {
 
 .copy-answer { display: none; }
 
+/* Not while the answer is still arriving. The button is positioned over the
+   text, so on a long answer the pointer is already sitting where it appears
+   — and what it would copy at that moment is a sentence cut mid-word. */
+.answer-block[typing] .copy-answer { display: none; }
+
 @media (hover: hover) and (pointer: fine) {
   .copy-answer {
     display: block;
@@ -533,4 +538,122 @@ body[file-over] #file-drop {
   line-height: 1.5;
   /* A question being answered goes here, and some of them are long. */
   overflow-wrap: anywhere;
+}
+
+/*
+ * =====================================================
+ * AN ANSWER'S MARKDOWN
+ * =====================================================
+ * The model writes Markdown whether or not it was asked to: a book title in
+ * *italics*, a list of awards, the Amazon link at the end of a book answer.
+ * Until the page learned to parse it (scripts/markdown.js) that reached the
+ * reader as literal asterisks and an address they had to retype.
+ *
+ * Scoped to #content rather than .answer-block so the one line that is not
+ * an answer — the consolation after someone presses stop — is formatted the
+ * same way instead of being the only place a stray asterisk can still land.
+ *
+ * `main * { width: fit-content }` shrinks every one of these to its own
+ * contents, which turns a paragraph into a column as narrow as its longest
+ * unbreakable word. Each opts out.
+ */
+
+#content p,
+#content ul,
+#content ol,
+#content li,
+#content blockquote,
+#content pre,
+#content h4 {
+  width: auto;
+  max-width: 100%;
+}
+
+/* Paragraphs carry the rhythm. The gap between two of them is the only
+   signal that an answer has moved on to its next point, and an answer that
+   runs four paragraphs is the one that most needs it. */
+#content p {
+  margin: 0 0 0.85em;
+}
+
+#content p:last-child,
+#content ul:last-child,
+#content ol:last-child {
+  margin-bottom: 0;
+}
+
+#content em { font-style: italic; }
+#content strong { font-weight: 600; }
+#content del { text-decoration: line-through; opacity: 0.7; }
+
+/* Lists sit in from the text rather than hanging off the left edge, so a
+   list of awards reads as one thing and not as four orphaned sentences. */
+#content ul,
+#content ol {
+  margin: 0 0 0.85em;
+  padding-left: 1.35em;
+}
+
+#content ul { list-style: disc; }
+#content ol { list-style: decimal; }
+
+#content li {
+  margin-bottom: 0.3em;
+  display: list-item;
+}
+
+#content li:last-child { margin-bottom: 0; }
+
+/* A link in an answer is nearly always the thing the answer was leading to
+   — the book, a piece of work. Underlined on the baseline rather than
+   recoloured: the page has one ink, and an answer that suddenly goes blue
+   reads as someone else's chrome. */
+#content a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(0 0 0 / 0.35);
+  transition: text-decoration-color 0.15s ease;
+}
+
+#content a:hover,
+#content a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+#content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 0.06);
+}
+
+#content pre {
+  margin: 0 0 0.85em;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 0.06);
+  overflow-x: auto;
+}
+
+#content pre code {
+  padding: 0;
+  background: none;
+}
+
+#content blockquote {
+  margin: 0 0 0.85em;
+  padding-left: 0.9em;
+  border-left: 2px solid rgb(0 0 0 / 0.18);
+  opacity: 0.85;
+}
+
+/* Every heading an answer can produce is an h4 (scripts/markdown.js): an
+   answer is a reply, not a document, and it has no outline to express. */
+#content h4 {
+  margin: 0 0 0.4em;
+  font-size: 1em;
+  font-weight: 600;
 }

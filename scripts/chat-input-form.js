@@ -1,8 +1,8 @@
 "use strict"
 
-import { content, displayTextContent } from "./content.js?v=9235ae41";
+import { content, displayTextContent } from "./content.js?v=e554789c";
 import { createThinkingNode } from "./createThinkingNode.js?v=287efe19";
-import { ask } from "./api.js?v=01b9ad0a";
+import { ask } from "./api.js?v=091fa826";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -46,9 +46,12 @@ document.getElementById("stop").onclick = event => {
   stopDisplay = displayTextContent(
     "If there's anything else you want to know, ask away!",
     endDisplay,
-    // A plain span, not answerSlot(): this is a line of consolation after
+    // A plain div, not answerSlot(): this is a line of consolation after
     // someone pressed stop, not an answer, and offering to copy it is daft.
-    content.appendChild(document.createElement("span"))
+    // A div rather than a span because what gets typed into it is a parsed
+    // answer now, and a <p> inside a <span> is not a tree the HTML parser
+    // would ever have produced.
+    content.appendChild(document.createElement("div"))
   );
 }
 
@@ -152,7 +155,22 @@ input.addEventListener("keydown", event => {
 // --------------------------------------------------------------------------
 // Form submission handler
 // --------------------------------------------------------------------------
-let stopDisplay, endDisplay = () => stopDisplay = null;
+let stopDisplay;
+
+/**
+ * The answer has finished typing.
+ *
+ * Clearing `typing` is what puts the copy button within reach. It is hidden
+ * until then on purpose: hovering a half-written answer used to summon a
+ * button that would copy a sentence stopping mid-word, which is a worse
+ * outcome than no button — you only find out after pasting it somewhere.
+ */
+let endDisplay = () => {
+  for (const block of content.querySelectorAll(".answer-block[typing]")) {
+    block.removeAttribute("typing");
+  }
+  stopDisplay = null;
+};
 
 /**
  * Set for exactly one submit, when the visitor pressed a question rather
@@ -266,13 +284,21 @@ form.addEventListener("submit", async event => {
  * text it is covering. CSS decides that (`@media (hover: hover)`), not a
  * user-agent string.
  *
+ * It stays out of reach until the answer has finished typing — the block
+ * carries `typing` until endDisplay() clears it — because copying half a
+ * sentence is a silent failure.
+ *
  * @returns {HTMLElement} the node to type into.
  */
 const answerSlot = () => {
   const block = document.createElement("div");
   block.className = "answer-block";
+  // Dropped by endDisplay once the last character lands. See css/chat-content.css.
+  block.setAttribute("typing", "");
 
-  const sink = block.appendChild(document.createElement("span"));
+  // A div for the same reason the consolation line is one: markdown.js
+  // returns blocks, and a <p> inside a <span> is invalid nesting.
+  const sink = block.appendChild(document.createElement("div"));
 
   const copy = block.appendChild(document.createElement("button"));
   copy.type = "button";
