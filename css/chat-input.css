@@ -626,12 +626,16 @@ body[chat-started] #starter-chips {
  * the fallback for labels long enough to beat even that — a second line is
  * worse than one line, and much better than a chip cut down the middle.
  *
- * Gated on the pointer, not a width: the question is whether this input can
- * hover and point precisely, which is the same thing as whether a scrollbar
- * and a cut edge are acceptable here. A narrow desktop window still gets
- * desktop behaviour, which is what someone resizing a window expects.
+ * Gated on WIDTH, not on the pointer.
+ *
+ * It was `(hover: hover) and (pointer: fine)` first, on the reasoning that
+ * the question is whether this input can point precisely. That was wrong:
+ * a desktop browser dragged down to 500px matches it, so a window narrower
+ * than the row got the desktop rule and wrapped to two lines — when what it
+ * wanted was exactly what a phone gets, a full-width row that scrolls.
+ * Scrolling and the full-bleed row belong to the SIZE, not to the device.
  * --------------------------------------------------------------------- */
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 768px) {
   /* `body:not([chat-started])` is carried for specificity, not for meaning:
      an earlier rule clamps this row to `max-width: 100%` through exactly
      that selector, and a bare #starter-chips loses to it however late it
