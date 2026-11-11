@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T18:53:36.694Z",
+  "generatedAt": "2026-11-11T20:03:15.773Z",
   "documents": {
     "background|book": "f453fd56852a020e3e6972c6f894fc7505caa85846ebf41acc2b8ff0658bb363",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
@@ -23,7 +23,7 @@
     "logistics|questions_i_ask": "5f0ee663afda2657f721634e89c88bd1b1a800f8d156d9b97f0f5961c39405f1",
     "logistics|what_im_looking_for": "00967ed76475b1f305de13ab3720cb2504dbeadd1987b396ebfbb25304457b0f",
     "logistics|why_i_left_iscribehealth": "b8e0066bb83c14091bae180bfe6a74b936f91618542a93ce1042869bc9a596e2",
-    "perspective|ai_adoption": "1d85cacd717a4b943845418497e1a17f97416c3924cc84efb97e60a76a625aed",
+    "perspective|ai_adoption": "837dd37d44b1e6e20bd8f232f20203bb5ea54512e8a05a896bbea31ebe035480",
     "perspective|ai_for_good": "d65ad36a888399aaba078c2ed704f0acf1d18235a1e3a4756d36a24ae1dd1b92",
     "perspective|core_values": "e62e6febb3c53044d34dbcb89d30127366d54534311e4598abdb28ad18f3e52c",
     "perspective|customer_centricity": "be8ab023fc13f0cf97be8e4a1e23bdfc60b2d20ec6036ffec87289a5f879393f",

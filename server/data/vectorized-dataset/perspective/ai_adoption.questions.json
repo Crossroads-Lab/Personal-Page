@@ -7,154 +7,153 @@
         169
       ],
       "questions": [
-        "How would you approach AI adoption at our company?",
-        "Why would you go incremental with AI instead of going all in?"
+        "How would you approach rolling out AI at our company?",
+        "Why start small with AI instead of going big?"
       ]
     },
     {
       "range": [
         172,
-        553
-      ],
-      "questions": [
-        "What kinds of AI projects do you think actually work?",
-        "How would you decide where to start with AI at our company?",
-        "Why do you favor unglamorous AI projects over flashy ones?",
-        "What did Walmart get out of its AI routing overhaul?",
-        "What did Klarna's AI assistant actually accomplish?"
-      ]
-    },
-    {
-      "range": [
-        556,
-        797
+        604
       ],
       "questions": [
         "How would you approach AI adoption at our company?",
-        "What does AI need in place before it actually works well?",
-        "When is a problem a good fit for AI?",
-        "Why are you cautious about putting AI on general infrastructure?"
+        "What kinds of AI projects actually work?",
+        "Why do you favor unglamorous AI projects over flashy ones?",
+        "What's the Walmart AI example you point to?",
+        "What happened with Klarna's AI assistant?"
       ]
     },
     {
       "range": [
-        856,
-        974
+        607,
+        848
       ],
       "questions": [
-        "A vendor tells you their tool makes people 40% more productive. What do you do with that?",
-        "At what point do you roll an AI tool out to the whole team?",
-        "What's your stance on vendors' productivity numbers?",
-        "Who should be trying out a new AI tool before you adopt it?"
+        "What does AI need in order to actually work well?",
+        "How would you decide what work to hand to AI here?",
+        "Why are you wary of putting AI on our core systems without close oversight?"
       ]
     },
     {
       "range": [
-        977,
-        1250
+        907,
+        1025
       ],
       "questions": [
-        "Why don't you take vendors' AI productivity numbers at face value?",
-        "How do you evaluate a vendor's AI productivity claims?",
-        "What did the 2023 MIT AI study find, and what did it leave out?",
-        "What did the 2025 follow-up find about experienced developers using AI?"
+        "When a vendor says their AI tool will boost productivity, how do you decide if it's true?",
+        "What does a proper test of an AI tool look like to you?",
+        "At what point do you roll an AI tool out across the whole team?"
       ]
     },
     {
       "range": [
-        1253,
-        1605
+        1028,
+        1325
       ],
       "questions": [
-        "What do you ask when a vendor tells you their AI will make your team more productive?",
-        "Why don't you take a fast AI demo at face value?",
-        "What does it look like when an AI tool just moves the work somewhere else?",
-        "Who actually pays when an AI tool looks fast but needs constant fixing?",
-        "When do you decide an AI tool has earned the right to scale?",
-        "What do you do when an AI rollout doesn't hold up in real use?"
+        "How do you evaluate an AI vendor's productivity claims?",
+        "What did that famous 2023 AI study leave out?",
+        "What did the 2025 follow-up find about experienced developers using AI?",
+        "Why don't you trust people when they say AI made them faster?"
       ]
     },
     {
       "range": [
-        1658,
-        1844
+        1328,
+        1680
+      ],
+      "questions": [
+        "What do you ask when a vendor claims their AI boosts productivity?",
+        "Why isn't a fast result enough to prove an AI tool actually works?",
+        "Who ends up carrying the work when an AI tool doesn't really save time?",
+        "When do you decide to scale an AI tool?",
+        "How do you handle it when an AI tool doesn't pan out?"
+      ]
+    },
+    {
+      "range": [
+        1733,
+        1919
       ],
       "questions": [
         "What's the first guardrail you'd put in place when adopting AI?",
-        "Why do data boundaries come before everything else for you?",
-        "What should people assume happens to something they paste into an AI tool?",
-        "How would you stop people from accidentally leaking sensitive information into AI tools?",
-        "When should people learn the rules for using AI tools: before or after they start?"
+        "Why do you put data boundaries ahead of everything else?",
+        "What should employees assume about anything they paste into an AI tool?",
+        "When do people need to be told the rules for using AI at work?"
       ]
     },
     {
       "range": [
-        1847,
-        2122
+        1922,
+        2269
       ],
       "questions": [
-        "What's the Samsung ChatGPT example you point to?",
-        "How much of what people paste into AI tools is actually confidential?",
-        "Do people actually know where their data goes when they use consumer AI tools?",
-        "Why do you take data exposure through AI tools so seriously?"
+        "Why is data leakage the first thing you'd guard against when adopting AI?",
+        "What did that analysis of a million workers find about what people paste into AI tools?",
+        "Do you blame employees when company code ends up in an AI tool?",
+        "Do you think people know where their data goes when they use AI tools?"
       ]
     },
     {
       "range": [
-        2125,
-        2308
+        2272,
+        2455
       ],
       "questions": [
-        "What's the first thing you'd lock down before rolling out AI at a company?",
+        "What guardrails would you put in place first when adopting AI?",
         "Why start with boundaries instead of getting everyone excited about AI?",
-        "Who's responsible when an AI tool gets something wrong?"
+        "What do you want settled about our data before we use AI tools?",
+        "Who should be accountable when AI gets something wrong?"
       ]
     },
     {
       "range": [
-        2311,
-        2551
+        2458,
+        2698
       ],
       "questions": [
-        "Do you trust code that Copilot writes?",
-        "How do you vet AI-written code before it ships?",
-        "How insecure is Copilot code, really?",
-        "Why not just ban AI coding tools if they're that risky?"
+        "Do you trust AI-generated code?",
+        "Why are you wary of AI-written code?",
+        "Is AI-generated code actually insecure, or is that overblown?",
+        "How do you review AI-written code?",
+        "Are you against using AI to write code?",
+        "Would you ever ship AI-written code without review?"
       ]
     },
     {
       "range": [
-        2603,
-        2778
+        2750,
+        2925
       ],
       "questions": [
-        "What's the cultural risk of adopting AI that nobody plans for?",
-        "How do you keep your team from blindly trusting what AI gives them?",
-        "How do you make it safe for people to push back and say they don't trust an AI answer?"
+        "What's the cultural risk of adopting AI that most companies miss?",
+        "How do you keep your team from blindly trusting what AI tells them?",
+        "How do you make it safe for people to push back on AI?"
       ]
     },
     {
       "range": [
-        2780,
-        3085
+        2927,
+        3232
       ],
       "questions": [
-        "What's the risk with adopting AI that you think companies never plan for?",
-        "Why do you think leaning too hard on AI is worse for a company than for one person?",
-        "How does over-relying on AI end up breaking a team's ability to catch its own mistakes?",
-        "When a decision built on bad AI output finally fails, can anyone figure out what went wrong?"
+        "Why do you think AI is riskier for a whole company than for one person?",
+        "What's the AI adoption risk you think most companies don't plan for?",
+        "Why would a team that leans heavily on AI lose the ability to catch its own errors?",
+        "What happens when a company makes a big call on AI-driven input nobody questioned?"
       ]
     },
     {
       "range": [
-        3088,
-        3419
+        3235,
+        3608
       ],
       "questions": [
-        "What AI costs do you think most companies overlook?",
-        "How do you think about the environmental impact of deploying AI at scale?",
-        "What figure do you cite for the carbon footprint of training GPT-3?",
-        "What statistic do you cite about AI's water usage?"
+        "What costs of adopting AI do you think companies leave out of the business case?",
+        "Why do you say deploying AI at scale is an environmental decision and not just a technical one?",
+        "How much carbon do you say it takes to train a frontier model?",
+        "How much water do you say data centres use because of AI?"
       ]
     }
   ]
