@@ -10,4 +10,4 @@ Bridging R&D innovation with high-security, mission-critical platforms. I've don
 
 ## How did your career progress? What path did you take?
 
-I started in systems programming at Infineon, did a PhD in computer vision and AI, then spent a decade in big-tech R&D at Google, Amazon, and Snap taking research into products at massive scale. Since 2019 I've been on the founder and executive side: co-founding Heali AI, running engineering at iScribeHealth, and now operating Crossroads Venture Studio.
+I started in systems programming at Infineon, did a PhD in computer vision and AI, then spent a decade in big-tech R&D at Google, Amazon, and Snap taking research into products at massive scale. Since 2019 I've been on the founder and executive side: co-founding Heali AI, running engineering at iScribeHealth, and running Crossroads Venture Studio. Since January 2026 I'm co-founder and Chief AI Officer of a stealth AI startup, at the crossroads of AI and water management.
