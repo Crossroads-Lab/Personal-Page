@@ -1,6 +1,6 @@
 # The beauty score filter at Snap
 
-## Tell me about a time you disagreed with someone
+## Tell me about a time you disagreed with someone. What's the hardest technical call you've made? What's the toughest decision you've had to make on a product?
 
 While I was a PM at Snap, one of my engineers wanted to ship a group AR filter built on a "beauty score." You'd take a selfie with friends and it would put a crown on whoever the model scored as most attractive. The technology was already built and working.
 

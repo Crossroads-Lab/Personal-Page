@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T23:50:22.941Z",
+  "generatedAt": "2026-11-11T04:07:46.402Z",
   "documents": {
     "background|book": "decb773a2a29182b2eadcb8b63f73fa38cf3cbbe095536dbddf517cb63f1485d",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
@@ -48,7 +48,7 @@
     "stories|kelley_building_and_jensen_huang": "63bbcdb428496d0fe19aa16a907e42dbdd0af7a6995e419d1b6289b5e3fadff7",
     "stories|leaving_big_tech_for_heali": "5417f390ee362d5f37ea25b1eff020bbb39208f22235eaae7c195911cf2402f0",
     "stories|onboarding_my_own_director": "bf23a5d7e6c46f21975e17ce2117d49d1703384def74b7de3045ab19a72433cb",
-    "stories|snap_beauty_score_filter": "be629c0475e42c2e5e2a92603fbd07e394b24cb50ccb5f8da72973bd12ba0e72",
+    "stories|snap_beauty_score_filter": "f6a2eafac73f483474e3facde215370d1dde985c226ec6550b2016e6a429ad60",
     "stories|told_id_never_make_it": "7f3f8ea13d2db8793d8e2f02ebf59eb0f3ac577db5f54b76efaf57e628f6aeab",
     "stories|youtube_shipping_past_politics": "81ad666623d03a0acfbcfad9c6159a0cbfab2a2a24759ae20dc822eda60fb372"
   }
