@@ -610,3 +610,45 @@ body[chat-started] #starter-chips {
     --stagger: 0ms;
   }
 }
+
+/* ------------------------------------------------------------------------
+ * Desktop: never cut the row
+ *
+ * The row is width: max-content clamped to --main-max-width, the input
+ * bar's width, and scrolls past it. On a phone that is right — there is no
+ * room for a scrollbar and the fade is the cue. On a desktop it meant the
+ * third chip was sliced in half with 400px of empty window either side of
+ * it, which reads as a rendering fault rather than as something to scroll.
+ *
+ * So raise the clamp to the window instead of the bar. The row is already
+ * pulled out of the 512px container (margin-left: 50% + translate), so it
+ * has the room; it was only ever the max-width holding it in. flex-wrap is
+ * the fallback for labels long enough to beat even that — a second line is
+ * worse than one line, and much better than a chip cut down the middle.
+ *
+ * Gated on the pointer, not a width: the question is whether this input can
+ * hover and point precisely, which is the same thing as whether a scrollbar
+ * and a cut edge are acceptable here. A narrow desktop window still gets
+ * desktop behaviour, which is what someone resizing a window expects.
+ * --------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  /* `body:not([chat-started])` is carried for specificity, not for meaning:
+     an earlier rule clamps this row to `max-width: 100%` through exactly
+     that selector, and a bare #starter-chips loses to it however late it
+     comes in the file. */
+  body:not([chat-started]) #starter-chips,
+  #starter-chips {
+    flex-wrap: wrap;
+    max-width: min(100vw - 48px, 1100px);
+    /* `safe center` exists for an overflowing row; wrapping rows do not
+       overflow, and plain centring keeps a short last line centred. */
+    justify-content: center;
+  }
+
+  /* The fade says "there is more this way". Nothing is hidden now, so it
+     would be pointing at nothing. Matched on the attribute so it beats the
+     three [overflowing] rules above on specificity rather than by order. */
+  #starter-chips[overflowing] {
+    mask-image: none;
+  }
+}
