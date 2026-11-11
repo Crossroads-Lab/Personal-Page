@@ -39,10 +39,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=5cc38673" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=7d9fb532" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=b2bf7aac" type="module" defer></script>
+    <script src="scripts/index.js?v=587668a5" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -92,7 +92,8 @@
           <h1>Where should we <span class="accent">start?</span></h1>
           <!--
             The four destinations, as icons. Filled by scripts/quick-links.js
-            from the ⋮ menu above, so the hrefs live in exactly one place.
+            from #destinations at the end of this file, so the hrefs live in
+            exactly one place.
             Inside #welcome on purpose: that block sits at the bottom of main
             on a wide screen (just above the input bar) and at the top of the
             page on a phone (with the headline), which is both placements
@@ -103,32 +104,24 @@
       </div>
     </main>
     <div id="chat-input-container">
-      <!-- Left chat menu -->
-      <div id="chat-menu" class="liquid-glass">
-        <a id="chat-menu-linkedin" class="button" title="Click to go to my LinkedIn page" href="https://www.linkedin.com/in/william-brendel" target="_blank">
-          View my LinkedIn
-          <img src="assets/icons/linkedin.svg"/>
-        </a>
-        <button id="chat-menu-share-profile" class="buttons">
-          Share my profile
-          <img src="assets/icons/share.svg"/>
-        </button>
-        <a id="chat-menu-book-call" class="button" title="Click to book a 30min call with me" href="https://calendly.com/william-brendel/30min" target="_blank">
-          Book 30min with me
-          <img src="assets/icons/call.svg"/>
-        </a>
-        <a id="chat-menu-download-resume" class="button" title="Click to download my resume" href="assets/William Brendel Resume - 2026.pdf" target="_blank">
-          Download my resume
-          <img src="assets/icons/resume.svg"/>
-        </a>
-      </div>
+      <!--
+        The icon row, again, for the conversation view. #welcome and the row
+        inside it are wiped by the first question (content.innerHTML = ""),
+        and these links have to outlive that — a page meant to be opened off
+        a business card cannot drop its links the moment someone asks it
+        something. Hidden until then by CSS, because before the first
+        question the copy under the headline is the one to look at.
+
+        Two containers, still one list: scripts/quick-links.js builds both
+        from #destinations below.
+      -->
+      <div id="quick-links-docked" aria-label="Links"></div>
       <!-- User input form -->
       <form id="chat-input-form" class="liquid-glass">
-        <!-- Left-side input actions (attachments, options) -->
-        <div id="chat-input-left-buttons">
-          <button id="chat-menu-button" type="button" title="Open/close menu">
-          </button>
-        </div>
+        <!-- Left-side input actions. Empty since the ⋮ menu was removed, and
+             kept only because chat-input-form.js measures its width when the
+             textarea goes multiline. CSS pins it to zero. -->
+        <div id="chat-input-left-buttons"></div>
 
         <!-- Main chat textarea -->
         <textarea
@@ -156,6 +149,35 @@
       -->
       <div id="starter-chips" aria-label="Suggested questions"></div>
     
+    </div>
+
+    <!--
+      THE one list of destinations. Never shown: it is the source every other
+      rendering is built from — the icon rows above (scripts/quick-links.js)
+      and the buttons under an answer (scripts/chat-input-form.js). Change a
+      URL here and it changes everywhere, which is the whole point of keeping
+      it after the ⋮ menu that used to display it was removed.
+
+      The words matter as much as the hrefs: they become the icons' tooltips
+      and accessible names, and the labels on the answer buttons.
+    -->
+    <div id="destinations" hidden>
+      <a id="dest-linkedin" class="button" title="Click to go to my LinkedIn page" href="https://www.linkedin.com/in/william-brendel" target="_blank">
+        View my LinkedIn
+        <img src="assets/icons/linkedin.svg"/>
+      </a>
+      <button id="dest-share-profile" class="buttons">
+        Share my profile
+        <img src="assets/icons/share.svg"/>
+      </button>
+      <a id="dest-book-call" class="button" title="Click to book a 30min call with me" href="https://calendly.com/william-brendel/30min" target="_blank">
+        Book 30min with me
+        <img src="assets/icons/call.svg"/>
+      </a>
+      <a id="dest-resume" class="button" title="Click to download my resume" href="assets/William Brendel Resume - 2026.pdf" target="_blank">
+        Download my resume
+        <img src="assets/icons/resume.svg"/>
+      </a>
     </div>
     <svg style="display: none;">
       <filter id="liquid-glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">

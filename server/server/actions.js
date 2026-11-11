@@ -3,9 +3,11 @@
 /**
  * Turn "can I see your CV?" into a button that downloads it.
  *
- * Until now an answer could only describe where a button is — "open the ⋮
+ * An answer used to be able only to describe where a button is — "open the
  * menu at the bottom left and choose Download my resume" — which is a page
- * telling someone where to look instead of handing them the thing.
+ * telling someone where to look instead of handing them the thing. (That
+ * menu is gone now; the links live in the icon row. The point stands: a
+ * button under the answer beats a direction to one.)
  *
  * ── Why the model does not decide this ──────────────────────────────────
  *
@@ -66,8 +68,8 @@ const ANCHORS = Object.freeze({
  *
  * Measured, not picked — server/scripts/measure-actions.js prints the table.
  * The cost of the two errors is lopsided: a missing button leaves the page
- * exactly as it was before this file (the answer still says where the menu
- * is), while a button nobody asked for is clutter on an answer they did ask
+ * exactly as it was before this file (the answer still says where the icons
+ * are), while a button nobody asked for is clutter on an answer they did ask
  * for, and on a page whose whole point is restraint. So this sits above the
  * highest scoring near-miss rather than below the lowest true match.
  */

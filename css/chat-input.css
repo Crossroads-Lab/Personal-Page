@@ -102,7 +102,6 @@ body:not([thinking]) #chat-input-form.multiline #chat-input {
 }
 
 #stop,
-#chat-menu-button,
 #send {
   display: flex;
   align-items: center;
@@ -112,26 +111,11 @@ body:not([thinking]) #chat-input-form.multiline #chat-input {
   border-radius: var(--border-radius-round);
 }
 
-#chat-menu-button {
-  font-size: 16px;
-  background: none;
-}
-
-#chat-menu-button::before {
-  content: "︙";
-  color: var(--color) !important;
-}
-
-#chat-input-container[menu-visible] #chat-menu-button::before {
-  transform: rotate(90deg);
-}
-
 body:not([thinking]) #stop {
   display: none;
 }
 
-body[thinking] #chat-input,
-body[thinking] #chat-menu-button {
+body[thinking] #chat-input {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -158,73 +142,6 @@ body[thinking] #send {
   opacity: 0.6;
 }
 
-#chat-menu {
-  position: absolute;
-  bottom: calc(var(--chat-form-height) + 8px);
-  left: calc(8px + 0.5 * (var(--chat-form-height) - 56px));
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  /* Above the bar's 999, and the number has to be said out loud. Without it
-     the menu opened UNDERNEATH the chips: it is positioned but carries no
-     z-index, while `#chat-input-form` asks for 999 and every chip builds its
-     own stacking context out of the `translate` that carries the wave. Both
-     therefore paint after it, and on a phone — where the menu hangs upwards
-     into exactly the space the chip row occupies — the result was a menu
-     with chips lying across its last item. */
-  z-index: 1000;
-}
-
-#chat-menu a {
-  width: 100%;
-}
-
-#chat-menu a,
-#chat-menu a:visited,
-#chat-menu a:active,
-#chat-menu a:link {
-  color: var(--color);
-}
-
-#chat-menu a,
-#chat-menu button {
-  justify-content: space-between;
-  padding: 10px 12px;
-  font-size: 12.5px;
-  font-weight: 400;
-  gap: 24px;
-}
-
-#chat-menu a > img,
-#chat-menu button  > img {
-  height: 16px;
-  aspect-ratio: 1 / 1;
-}
-
-#chat-menu > :not(:first-child) {
-  --border-top-color: #FFFFFF55;
-  border-top: 1px solid var(--border-top-color);
-}
-
-#chat-input-container:not([menu-visible]) #chat-menu {
-  pointer-events: none;
-  transform: scale(0.8);
-  transform-origin: left bottom;
-  visibility: hidden;
-  opacity: 0;
-}
-
-#chat-input-container:not([menu-visible]) #chat-menu * {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#chat-input-container:not([menu-visible]) #chat-input-form,
-body:has(#chat-input-container:not([menu-visible])) {
-  pointer-events: none;
-}
-
 /*
  * =====================================================
  * HOVER EFFECTS (DESKTOP ONLY)
@@ -232,43 +149,6 @@ body:has(#chat-input-container:not([menu-visible])) {
  * Interactive feedback for devices with hover capability
  */
 @media (hover: hover) and (pointer: fine), (-ms-high-contrast: active), (forced-colors: active) {
-  #chat-menu-button:hover {
-    opacity: 1;
-  }
-
-  #chat-menu > a,
-  #chat-menu > button {
-    opacity: 0.8;
-  }
-
-  #chat-menu > a:hover,
-  #chat-menu > button:hover {
-    opacity: 1;
-  }
-
-  /* The dots lift towards the menu they will open, so the nudge has to turn
-     over wherever the menu does — otherwise it points away from the thing it
-     is announcing. Up is the default, because the menu hangs ABOVE the bar
-     in every case but one. */
-  #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
-    margin-bottom: 4px;
-  }
-}
-
-/* The one exception: a WIDE screen before the first question. There the bar
-   floats mid-page and the menu drops below it, so the dots point down.
-   
-   This has to carry the same width condition as the rule that moves the menu
-   (min-width: 901px further down). Without it the dots pointed down on a
-   phone too, where the bar is at the bottom of the screen and the menu has
-   nowhere to go but up. */
-@media (hover: hover) and (pointer: fine) {
-  @media only screen and (min-width: 901px) {
-    body:not([chat-started]) #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
-      margin-bottom: -4px;
-      margin-top: 4px;
-    }
-  }
 }
 
 /* 
@@ -283,12 +163,6 @@ body:has(#chat-input-container:not([menu-visible])) {
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
   }
 
-  #chat-menu.liquid-glass {
-    background: rgb(from var(--liquid-glass-background) r g b / 0.5);
-  }
-  #chat-menu > :not(:first-child) {
-    --border-top-color: #FFFFFF33;
-  }
 }
 /*
  * =====================================================
@@ -296,9 +170,9 @@ body:has(#chat-input-container:not([menu-visible])) {
  * =====================================================
  * Before the first question the page is an invitation, not a transcript:
  * on desktop the bar sits in the middle under the headline with suggestion
- * chips beneath it, and the ⋮ is hidden because the chips already offer
- * what it holds. Asking the first question moves the bar to the bottom and
- * brings the ⋮ back. scripts/chat-input-form.js sets body[chat-started].
+ * chips beneath it. Asking the first question moves the bar to the bottom,
+ * retires the chips and brings up the docked icon row in their place.
+ * scripts/chat-input-form.js sets body[chat-started].
  *
  * The move is animated through flex-grow, which IS animatable -- so the bar
  * glides down rather than jumping, with no absolute positioning or magic
@@ -426,45 +300,20 @@ body:not([chat-started])::after {
   }
 }
 
-/* The ⋮ is redundant while the chips are up: the contact chip opens the
-   same menu. Collapsed rather than hidden, so the input does not shift
-   sideways when it returns. */
-body:not([chat-started]) #chat-input-left-buttons {
+/* The group is empty now that the ⋮ is gone, and it only still exists
+   because scripts/chat-input-form.js measures its width when the textarea
+   goes multiline. Pinned to nothing so it cannot inset the text. */
+#chat-input-left-buttons {
   width: 0;
   min-width: 0;
   overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
 }
 
-#chat-input-left-buttons {
-  transition: opacity 220ms ease, width 220ms ease;
-}
-
-/* With the ⋮ gone the text would start 16px from the rim — against it, by
-   the standards of a bar this wide. The inset grows to replace the button
-   and shrinks back as it returns, on the same curve. */
-body:not([chat-started]) #chat-input {
-  padding-left: 20px;
-}
-
+/* 8px of form padding would leave the text against the rim of a bar this
+   wide. This is the inset the opening state used to get only while the ⋮
+   was collapsed; with the button gone for good it is simply the inset. */
 #chat-input {
-  transition: padding-left 220ms ease;
-}
-
-/* Focusing the box brings the ⋮ back early, in the same beat as the chips
-   leaving. Without it the chips simply vanish and the options they stood for
-   look gone; with it the visitor watches them fold into the button, which is
-   where they have lived all along. The padding gives way as the button takes
-   the space, so the two move as one. */
-body:not([chat-started]) #chat-input-container[input-focused] #chat-input-left-buttons {
-  width: calc(var(--chat-form-height) - 16px);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
-  padding-left: 8px;
+  padding-left: 20px;
 }
 
 /* ── Suggestion chips ──────────────────────────────────────────────────── */
@@ -501,13 +350,14 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
      the rounded ends long before the row runs out of room. */
   padding: 2px 0;
 
-  /* Without this the row scrolls in code and not under a finger.
-     `body:has(#chat-input-container:not([menu-visible]))` sets
-     `pointer-events: none` on the whole body — that is how a click anywhere
-     closes the menu — and the reset in common.css hands it back to buttons
-     and links only. So a chip could be TAPPED while the scroller holding it
-     could not be hit at all, and a drag landed on nothing. The element that
-     does the scrolling has to be hit-testable itself. */
+  /* Kept deliberately, though the rule that made it necessary is gone. The
+     page used to set `pointer-events: none` on the whole body so that a
+     click anywhere would close the ⋮ menu, and the reset in common.css
+     handed it back to buttons and links ONLY — so a chip could be tapped
+     while the scroller holding it could not be hit at all, and a drag
+     landed on nothing. The menu and that rule have both been removed, but
+     an element that does its own scrolling should say it is hit-testable
+     rather than inherit the claim from whatever is above it. */
   pointer-events: auto;
   /* Say so explicitly: some mobile browsers will not start a pan on a
      container whose touch behaviour they have to infer. */
@@ -686,26 +536,7 @@ body[chat-started] #starter-chips {
   display: none;
 }
 
-/* The menu normally hangs above the bar, anchored to the ⋮ that opens it.
-   In the opening state there is no ⋮ and the bar is in the middle of the
-   page, so hanging upwards would cover the headline. It drops below instead
-   — below the WHOLE container, chips included, so opening it never costs the
-   visitor sight of the options it was opened from. 100% is the container's
-   own height, which already grows with the chip row. */
 @media only screen and (min-width: 901px) {
-  /* Anchored to whatever opened it, not to the middle of the page. The
-     insets are set by scripts/starter-chips.js when the Contact chip is
-     pressed — it knows where that chip is and whether there is room below
-     it — and this is the resting position for anything that does not set
-     them. `transform-origin` is set alongside, so the panel grows out of
-     the control rather than out of a corner it has no relationship to. */
-  body:not([chat-started]) #chat-menu {
-    top: calc(100% + 10px);
-    bottom: auto;
-    left: auto;
-    right: 0;
-    transform-origin: top right;
-  }
 }
 
 /* 900, and the number is the bar's. The side-by-side layout only works
@@ -753,25 +584,6 @@ body[chat-started] #starter-chips {
   #chat-input-container[input-focused] .starter-chip {
     translate: 0 12px;
   }
-
-  /* An open menu takes the chip row's space. On a wide screen the menu drops
-     BELOW the whole container instead (see the 901px block above), which is
-     how it keeps the chips in sight; a phone has nowhere to drop to, so the
-     row tucks behind the bar the way it does for the keyboard. Same fade,
-     same direction, same reason — the chips are not what the visitor is
-     looking at any more.
-
-     Raising the menu's z-index alone would have been enough to stop them
-     overlapping it, but chips stacked edge-on behind a panel still read as
-     breakage. They come back when the menu closes. */
-  #chat-input-container[menu-visible] #starter-chips {
-    pointer-events: none;
-  }
-
-  #chat-input-container[menu-visible] .starter-chip {
-    opacity: 0;
-    translate: 0 12px;
-  }
   #starter-chips[entering] .starter-chip {
     translate: 0 -10px;
   }
@@ -780,7 +592,7 @@ body[chat-started] #starter-chips {
     --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
   }
   /* A phone has no room to centre the bar, so it stays at the bottom and
-     only the chips and the ⋮ change. */
+     only the rows above it change. */
   body:not([chat-started])::after {
     flex-grow: 0;
   }

@@ -334,7 +334,7 @@ EXAMPLES
         User query: how can I get in touch about a role
         User intent: SUPPORT
         Results:[1]{score,documentId,range:[start,end],sectionText}:
-        - 0.703,logistics|contact_and_links,[22,148],Everything you need is behind the menu on this page: LinkedIn, a link to book time with me directly, and my resume.
+        - 0.703,logistics|contact_and_links,[22,148],Everything you need is on this page: LinkedIn, a link to book time with me directly, and my resume.
     output:
       $response: |
         {

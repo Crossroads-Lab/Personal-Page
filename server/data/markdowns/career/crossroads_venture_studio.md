@@ -12,7 +12,7 @@ Early-stage startup development: product-market-fit strategy, product design, an
 
 Yes. Since January 2026 I've been co-founder and Chief AI Officer of a stealth AI startup, founding a company at the crossroads of AI and water management. That's as far as I'll go on a public page.
 
-That's deliberate rather than an oversight. I'm happy to talk about it directly in a conversation where it's appropriate — book time with me through the ⋮ menu — but the details aren't something I'm going to publish here.
+That's deliberate rather than an oversight. I'm happy to talk about it directly in a conversation where it's appropriate — book time with me using the calendar link on this page — but the details aren't something I'm going to publish here.
 
 ## What results has the studio produced?
 

@@ -11,7 +11,7 @@
 // is that the suggestions are the same every time.
 // --------------------------------------------------------------------------
 
-import { API_BASE } from "./api.js?v=8ae72ab6";
+import { API_BASE } from "./api.js?v=b970cf23";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");

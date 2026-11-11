@@ -257,15 +257,22 @@ main::after {
  * QUICK LINKS
  * =====================================================
  * LinkedIn, share, calendar, resume — the four destinations, always on
- * screen rather than behind a chip. Built by scripts/quick-links.js from
- * the ⋮ menu, so the hrefs exist once.
+ * screen rather than behind a chip or a menu. Built by
+ * scripts/quick-links.js from the hidden #destinations list in index.html,
+ * so the hrefs exist once.
  *
- * It lives inside #welcome, which is why there is no second rule for the
- * phone: that block sits at the BOTTOM of main on a wide screen, putting
- * these just above the input bar, and at the TOP of the page on a narrow
- * one, putting them under the headline. One placement, both behaviours.
+ * #quick-links lives inside #welcome, which is why there is no second rule
+ * for the phone: that block sits at the BOTTOM of main on a wide screen,
+ * putting these just above the input bar, and at the TOP of the page on a
+ * narrow one, putting them under the headline. One placement, both
+ * behaviours.
+ *
+ * #quick-links-docked is the same row in the input container, for after the
+ * first question — when #welcome and everything in it has been wiped. Only
+ * one of the two is ever on screen.
  */
-#quick-links {
+#quick-links,
+#quick-links-docked {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -276,8 +283,32 @@ main::after {
   margin-inline: auto;
 }
 
-#quick-links:empty {
+#quick-links:empty,
+#quick-links-docked:empty {
   display: none;
+}
+
+/* The docked row belongs to the conversation, so it waits for one. Before
+   that the icons under the headline are the ones to look at, and two rows
+   of the same four links on one screen reads as a mistake.
+
+   `display: none` rather than a fade: it sits in the input container's
+   column, so anything that leaves it in flow reserves its height in the
+   opening state and pushes the bar off the centre it was placed on. */
+body:not([chat-started]) #quick-links-docked {
+  display: none;
+}
+
+/* Clear of the bar, and of the answer above it. Mirrors the gap the starter
+   chips leave on the other side of the first question — the two never share
+   the screen, so the spacing below the transcript does not change when one
+   replaces the other. */
+body[chat-started] #quick-links-docked {
+  margin-bottom: 14px;
+  /* Chips sit ABOVE the bar on a phone and below it on a wide screen; this
+     row is above it in both, because below it there is the edge of the
+     screen on a phone and nothing worth the trip on a desktop. */
+  order: -1;
 }
 
 /* Lighter glass than the bar or the chips. Those are surfaces you read

@@ -2,7 +2,7 @@
 
 import { content, displayTextContent } from "./content.js?v=9235ae41";
 import { createThinkingNode } from "./createThinkingNode.js?v=287efe19";
-import { ask } from "./api.js?v=8ae72ab6";
+import { ask } from "./api.js?v=b970cf23";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -10,14 +10,9 @@ import { ask } from "./api.js?v=8ae72ab6";
 
 const input = document.getElementById("chat-input");
 const form = document.getElementById("chat-input-form");
-const chatContainer = document.getElementById("chat-input-container");
-const menuButton = document.getElementById("chat-menu-button");
 const leftActions = document.getElementById("chat-input-left-buttons");
 const rightActions = document.getElementById("chat-input-right-buttons");
-const share = document.getElementById("chat-menu-share-profile");
-
-form.onclick =
-  event => event.stopPropagation();
+const share = document.getElementById("dest-share-profile");
 
 // In-flight request, so the stop button can actually cancel it rather than
 // just hiding a response that still arrives and costs money.
@@ -55,20 +50,9 @@ document.getElementById("stop").onclick = event => {
   );
 }
 
-// Options toggle.
-menuButton.onclick = event => {
-  event.stopPropagation();
-  chatContainer.hasAttribute("menu-visible", "") ?
-    chatContainer.removeAttribute("menu-visible")
-    : chatContainer.setAttribute("menu-visible", "");
-}
-
-document.body.onclick = 
-form.onclick = () => {
-  chatContainer.removeAttribute("menu-visible");
-}
-
-// Options buttons.
+// Share is the one destination that is behaviour rather than a URL. This is
+// the only implementation of it; the icon rows and the answer buttons both
+// forward their clicks to the hidden #dest-share-profile below.
 if (typeof navigator.share === "function") {
   share.onclick = event => {
     event.stopPropagation();
@@ -203,7 +187,7 @@ form.addEventListener("submit", async event => {
   if (!message) return;
 
   // First question ends the opening state: the bar glides from the middle of
-  // the page to the bottom, the ⋮ comes back, and the starter chips retire
+  // the page to the bottom, the icon row docks above it, and the chips retire
   // in favour of the follow-ups each answer brings. Set before the request,
   // not after it, so the page commits to the conversation while the answer
   // is still being written rather than sitting still and then jumping.
@@ -251,29 +235,30 @@ form.addEventListener("submit", async event => {
  * The four places an answer can send someone, keyed exactly as the backend
  * whitelists them (server/app.js ACTIONS).
  *
- * The destination is read off the ⋮ menu rather than written here, so there
- * is one list on the page and not two: change the Calendly link in
+ * The destination is read off #destinations rather than written here, so
+ * there is one list on the page and not four: change the Calendly link in
  * index.html and this follows. A key whose element is missing renders
  * nothing, which is the same outcome as the model inventing one.
  */
 const ACTION_TARGETS = {
-  resume:   { id: "chat-menu-download-resume", label: "Download my resume" },
-  linkedin: { id: "chat-menu-linkedin",        label: "View my LinkedIn" },
-  book:     { id: "chat-menu-book-call",       label: "Book 30min with me" },
-  share:    { id: "chat-menu-share-profile",   label: "Share my profile" },
+  resume:   { id: "dest-resume",        label: "Download my resume" },
+  linkedin: { id: "dest-linkedin",      label: "View my LinkedIn" },
+  book:     { id: "dest-book-call",     label: "Book 30min with me" },
+  share:    { id: "dest-share-profile", label: "Share my profile" },
 };
 
 /**
  * Render the answer's actions as buttons that actually go somewhere.
  *
- * Until now an answer could only describe the ⋮ menu — "open the menu at the
- * bottom left and choose Download my resume" — which is a page telling
- * someone where a button is instead of giving them one. These are the same
- * destinations, put under the answer that called for them.
+ * An answer used to be able only to describe where a link was — "open the
+ * menu at the bottom left and choose Download my resume" — which is a page
+ * telling someone where a button is instead of giving them one. That menu
+ * is gone; these are not. These are
+ * the same destinations, put under the answer that called for them.
  *
- * Each is a clone of the menu entry, so it carries that entry's href, target
- * and icon. Share has no href — it calls navigator.share — so that one
- * forwards the click to the menu button rather than duplicating the logic.
+ * Each is a clone of the #destinations entry, so it carries that entry's
+ * href, target and icon. Share has no href — it calls navigator.share — so
+ * that one forwards the click rather than duplicating the logic.
  */
 const renderActions = (actions) => {
   const wanted = (actions || [])

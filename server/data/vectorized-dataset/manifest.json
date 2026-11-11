@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T06:23:34.824Z",
+  "generatedAt": "2026-11-11T07:34:26.660Z",
   "documents": {
     "background|book": "decb773a2a29182b2eadcb8b63f73fa38cf3cbbe095536dbddf517cb63f1485d",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
@@ -8,7 +8,7 @@
     "background|skills": "854a6793d4bf88e45fddb6059f8ef9b741cd5195fa4de0dfeee6da09e642cc29",
     "background|summary": "484d38b7f99dc8d5b9febf3f97e4abb2b91de76010a2d42fea398ff4a6d68af3",
     "career|amazon_a9": "c06702e20e24ab39f2ed71ead1ef33502e68e5e86f5b72b963bf1011b9e5561e",
-    "career|crossroads_venture_studio": "8d8d9671ad14ee13e1f4965199c28e5d240982e58976b80841eb11fe6f8dfd77",
+    "career|crossroads_venture_studio": "208082f6188627841a575081f4b645d59a05ce5f90243112d62051c895652e99",
     "career|google_youtube": "5ebe626c7c197c822725ca57260c6bddf50b650861163a1c1fa42e538fb80493",
     "career|heali_ai": "68084544a55f3d02e163c057483b63ff283d7d67e245a0048ca182a31db5f2ba",
     "career|infineon": "d2a13bb92615dc289d8f027bc2ac4759292e4064d62ab9ee30c5c3e0490e2fd8",
@@ -18,7 +18,7 @@
     "career|snap": "3e8a10c5227cf81ed3652e60275378f0aaa04ac9b5609d5fe31025e20f4afb80",
     "career|viewplus_technologies": "7c8f3f376fe61fe240e84aacc5783cf379abf9151af4bdab8f0bee1107b73cbd",
     "career|what_im_doing_now": "906387c8517589c214e60f7ef5f9468761c7f0bb5f079086682ad64402199fad",
-    "logistics|contact_and_links": "d69ac20a600395e83bcd3767a38510a41988cdceb3bceca2014039c9d4610332",
+    "logistics|contact_and_links": "2d08c00f9471bd0a936c290a99875b1c0126bd24b292814b41365d9eadca13e9",
     "logistics|intro": "4d03cae08b3e53235b5aeb6505b68c1d8abee8571cb294adf3b27c9d412accaa",
     "logistics|questions_i_ask": "5f0ee663afda2657f721634e89c88bd1b1a800f8d156d9b97f0f5961c39405f1",
     "logistics|what_im_looking_for": "00967ed76475b1f305de13ab3720cb2504dbeadd1987b396ebfbb25304457b0f",
