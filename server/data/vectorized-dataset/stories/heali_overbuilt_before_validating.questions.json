@@ -1,0 +1,39 @@
+{
+  "documentId": "stories|heali_overbuilt_before_validating",
+  "sections": [
+    {
+      "range": [
+        109,
+        305
+      ],
+      "questions": [
+        "What was your biggest mistake early on at Heali?",
+        "Why did you keep building at Heali instead of testing it with users first?",
+        "How do you think about testing an idea before you build it out?"
+      ]
+    },
+    {
+      "range": [
+        344,
+        507
+      ],
+      "questions": [
+        "What did that mistake actually cost you at Heali?",
+        "Was the stuff you overbuilt at Heali bad work, or just aimed at the wrong thing?",
+        "Why did that mistake hurt so much at Heali?"
+      ]
+    },
+    {
+      "range": [
+        568,
+        899
+      ],
+      "questions": [
+        "What did you learn from the Heali failure?",
+        "How do you validate an idea before committing to build it out?",
+        "What's your take on long product roadmaps?",
+        "When do you think it's right to scale something you've built?"
+      ]
+    }
+  ]
+}

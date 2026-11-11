@@ -1,0 +1,177 @@
+{
+  "documentId": "stories|told_id_never_make_it",
+  "sections": [
+    {
+      "range": [
+        89,
+        275
+      ],
+      "questions": [
+        "What's the biggest obstacle you've had to get past?",
+        "Were you ever told you wouldn't make it as an engineer?",
+        "Were you ever told you wouldn't make it into management?",
+        "Where did you study engineering?",
+        "When were you told you'd never make it as an engineer?"
+      ]
+    },
+    {
+      "range": [
+        278,
+        415
+      ],
+      "questions": [
+        "Tell me about a time someone said you wouldn't make it",
+        "Who told you that you wouldn't make it?",
+        "Why did they think you wouldn't make it?",
+        "Were you a strong student?",
+        "How do you look back on the people who said you wouldn't make it?"
+      ]
+    },
+    {
+      "range": [
+        418,
+        641
+      ],
+      "questions": [
+        "Why do you think being told you won't make it tends to come true?",
+        "When people said you wouldn't make it, did you end up proving them right?",
+        "What do you understand now about being counted out that you didn't then?"
+      ]
+    },
+    {
+      "range": [
+        644,
+        777
+      ],
+      "questions": [
+        "What did you do when you were told you wouldn't make it?",
+        "Why did you leave instead of staying to prove them wrong?",
+        "Where did you go when you decided to leave?"
+      ]
+    },
+    {
+      "range": [
+        820,
+        836
+      ],
+      "questions": [
+        "How did you actually get to the US?",
+        "Did getting to the US go wrong more than once?"
+      ]
+    },
+    {
+      "range": [
+        839,
+        947
+      ],
+      "questions": [
+        "What happened when your grades weren't good enough?",
+        "Why weren't you offered a spot right away?",
+        "Did you make it the first year?"
+      ]
+    },
+    {
+      "range": [
+        950,
+        1248
+      ],
+      "questions": [
+        "What did you do at Infineon?",
+        "How long were you at Infineon?",
+        "Why did you go work at Infineon in Munich?",
+        "What was it like starting at Infineon without speaking German?",
+        "How do you decide to take on something you're not sure you can do?",
+        "When did you first learn to commit before you had it all figured out?"
+      ]
+    },
+    {
+      "range": [
+        1251,
+        1400
+      ],
+      "questions": [
+        "What happened the second time you tried to get in?",
+        "Who was actually standing between you and getting in?"
+      ]
+    },
+    {
+      "range": [
+        1403,
+        1490
+      ],
+      "questions": [
+        "How did you actually end up in the US?",
+        "Why were you the one who got to go?",
+        "When did your chance to go come up?",
+        "What did you do when a spot suddenly opened up for you?"
+      ]
+    },
+    {
+      "range": [
+        1523,
+        1628
+      ],
+      "questions": [
+        "Did you just get lucky, or did you earn your seat?",
+        "Why do you say it wasn't merit?",
+        "How do you answer when someone says you just got lucky?"
+      ]
+    },
+    {
+      "range": [
+        1631,
+        1893
+      ],
+      "questions": [
+        "Why did you spend a year in a country where you didn't speak the language?",
+        "Were you wait-listed before you finally got the call?",
+        "When the call finally came, how quickly were you ready to move?",
+        "Do you think you just got lucky?",
+        "How do you make sure you're ready when your lucky break shows up?"
+      ]
+    },
+    {
+      "range": [
+        1926,
+        2012
+      ],
+      "questions": [
+        "Do you feel like you proved the people who doubted you wrong?",
+        "How do you think about the people who said you wouldn't make it?"
+      ]
+    },
+    {
+      "range": [
+        2015,
+        2201
+      ],
+      "questions": [
+        "Did anyone ever tell you that you wouldn't make it, and what did you do about it?",
+        "Did you actually finish your PhD?",
+        "How many patents and publications do you have?",
+        "Where have you shipped things that people actually use?",
+        "How many people use what you've built?"
+      ]
+    },
+    {
+      "range": [
+        2204,
+        2318
+      ],
+      "questions": [
+        "Did anyone ever tell you that you wouldn't make it, and did you prove them wrong?",
+        "How big was the organisation you directed at Snap?"
+      ]
+    },
+    {
+      "range": [
+        2321,
+        2559
+      ],
+      "questions": [
+        "What did being told you wouldn't make it actually teach you?",
+        "Why are you careful about telling people on your team that they won't make it?"
+      ]
+    }
+  ]
+}

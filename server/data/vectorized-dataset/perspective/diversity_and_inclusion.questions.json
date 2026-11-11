@@ -1,0 +1,135 @@
+{
+  "documentId": "perspective|diversity_and_inclusion",
+  "sections": [
+    {
+      "range": [
+        58,
+        193
+      ],
+      "questions": [
+        "Where do you stand on diversity in a team?",
+        "Why does diversity matter to you?"
+      ]
+    },
+    {
+      "range": [
+        196,
+        511
+      ],
+      "questions": [
+        "Do you believe in building diverse teams?",
+        "Why do diverse teams hold up better than uniform ones?",
+        "How does a team full of similar people fail?",
+        "When does a team of like-minded people become a liability?",
+        "What do you mean when you say a team carries variation it isn't using?"
+      ]
+    },
+    {
+      "range": [
+        514,
+        746
+      ],
+      "questions": [
+        "Do you think a team where everyone has the same background can be strong?",
+        "Why don't you see a team of similar people as a strong one?",
+        "How do you size up whether a team is actually strong?"
+      ]
+    },
+    {
+      "range": [
+        808,
+        1093
+      ],
+      "questions": [
+        "Is your view of diversity just about diversity of thought?",
+        "Why are you wary of people leaning on diversity of thought?",
+        "Why does a person's background matter for what they pick up on?",
+        "What does someone who's the only one like them in the room notice that others don't?"
+      ]
+    },
+    {
+      "range": [
+        1096,
+        1394
+      ],
+      "questions": [
+        "What's your take on being the outsider in the room?",
+        "Why does diversity matter to you personally?",
+        "Where are you originally from?",
+        "Have you ever been the outsider on a team?",
+        "Did anyone ever tell you that you wouldn't make it as an engineer?"
+      ]
+    },
+    {
+      "range": [
+        1486,
+        1579
+      ],
+      "questions": [
+        "How do you approach diversity, equity, and inclusion in hiring and project assignment?",
+        "Is there anything about your diversity work that you haven't written up?"
+      ]
+    },
+    {
+      "range": [
+        1582,
+        2101
+      ],
+      "questions": [
+        "Did you ever get a hire wrong at Heali?",
+        "What did you change about interviewing after that Heali hire went wrong?",
+        "Why do you say gut-feel fit is where bias does its work?",
+        "How do you keep interviews from being biased?",
+        "What do you ask candidates to assess cultural add?",
+        "What's the difference between culture fit and cultural add the way you see it?"
+      ]
+    },
+    {
+      "range": [
+        2104,
+        2350
+      ],
+      "questions": [
+        "How do you decide who to put on a project?",
+        "Why do you put people from so many different disciplines on one team?",
+        "What roles were on your team at Heali?",
+        "What kinds of roles did you bring together on teams at Snap?"
+      ]
+    },
+    {
+      "range": [
+        2353,
+        2601
+      ],
+      "questions": [
+        "How can I get specifics on the DEI work you've actually done?",
+        "Have you actually run a formal DEI programme?",
+        "Why won't you just give me a straight DEI answer here?"
+      ]
+    },
+    {
+      "range": [
+        2651,
+        3001
+      ],
+      "questions": [
+        "Why do you build teams out of so many different disciplines?",
+        "How did you put together the team at Heali?",
+        "What was your team at Heali actually working on?",
+        "Who was on the team you directed at Heali?",
+        "Who did you coordinate with across the company at Snap?"
+      ]
+    },
+    {
+      "range": [
+        3004,
+        3169
+      ],
+      "questions": [
+        "Why does diversity matter to you?",
+        "Is cross-domain knowledge one of your core values?",
+        "Where do you think the best ideas for hard problems come from?"
+      ]
+    }
+  ]
+}

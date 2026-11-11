@@ -1,0 +1,77 @@
+{
+  "documentId": "stories|iscribe_azure_or_aws",
+  "sections": [
+    {
+      "range": [
+        146,
+        262
+      ],
+      "questions": [
+        "What's the hardest technical decision you've had to make?",
+        "Did you ever move iScribeHealth from Azure to AWS?"
+      ]
+    },
+    {
+      "range": [
+        265,
+        432
+      ],
+      "questions": [
+        "What's the hardest technical call you've had to make at iScribeHealth?",
+        "What was actually going wrong with Azure at iScribeHealth?",
+        "What did you want to do about Azure at iScribeHealth?",
+        "Why did you want to move iScribeHealth off Azure?"
+      ]
+    },
+    {
+      "range": [
+        435,
+        672
+      ],
+      "questions": [
+        "What was the hardest technical decision you made at iScribeHealth?",
+        "Why did you argue against moving iScribeHealth to AWS?",
+        "When the technical case and the business case disagree, which one wins for you?",
+        "Did you move iScribeHealth to AWS or stay on Azure?"
+      ]
+    },
+    {
+      "range": [
+        675,
+        1311
+      ],
+      "questions": [
+        "What was the hardest technical call you had to make at iScribeHealth?",
+        "What did you do with the .NET 4 platform at iScribeHealth?",
+        "How much did you cut production downtime at iScribeHealth?",
+        "What was really causing the stability problems at iScribeHealth?",
+        "Why wasn't the cloud the thing holding iScribeHealth back?",
+        "Do you think staying on Azure was the right call?",
+        "Was the time you spent not migrating at iScribeHealth wasted?"
+      ]
+    },
+    {
+      "range": [
+        1354,
+        1723
+      ],
+      "questions": [
+        "Would you still stay on Azure at iScribeHealth if you were deciding today?",
+        "What part of a cloud migration can an AI agent handle for you?",
+        "How would you de-risk a move from Azure to AWS today?",
+        "Why keep an Azure backend running alongside AWS?"
+      ]
+    },
+    {
+      "range": [
+        1726,
+        1909
+      ],
+      "questions": [
+        "At iScribeHealth, if the Azure migration wasn't the expensive part, what was?",
+        "Why wouldn't moving off Azure have solved your problem at iScribeHealth?",
+        "How old and how messy was the system you were maintaining at iScribeHealth?"
+      ]
+    }
+  ]
+}

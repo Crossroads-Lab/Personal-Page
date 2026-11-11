@@ -1,0 +1,26 @@
+{
+  "documentId": "logistics|questions_i_ask",
+  "sections": [
+    {
+      "range": [
+        66,
+        213
+      ],
+      "questions": [
+        "What do you ask a company about its engineering problems when they say 'any questions for me'?",
+        "What do you ask a company about how you'd contribute to its mission?"
+      ]
+    },
+    {
+      "range": [
+        252,
+        470
+      ],
+      "questions": [
+        "Why does your first interview question matter so much to you?",
+        "What does your first question tell you about how honest a company is?",
+        "Why do you care whether a company has thought about what it wants from the role?"
+      ]
+    }
+  ]
+}

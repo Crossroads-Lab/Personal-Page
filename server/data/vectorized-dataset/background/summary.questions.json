@@ -1,0 +1,53 @@
+{
+  "documentId": "background|summary",
+  "sections": [
+    {
+      "range": [
+        68,
+        386
+      ],
+      "questions": [
+        "Can you give me the quick pitch on who you are?",
+        "How much experience do you have?",
+        "Have you started your own companies?",
+        "How much did you reduce downtime by?",
+        "How much money have you raised?",
+        "How many users have your AI systems reached?",
+        "Where have you shipped AI systems?",
+        "Do you have a PhD?",
+        "Have you published research or filed patents?"
+      ]
+    },
+    {
+      "range": [
+        441,
+        730
+      ],
+      "questions": [
+        "What are you known for professionally?",
+        "What's your role with CVPR?",
+        "Do you hold any patents?",
+        "Have you taken a company through SOC 2 and HIPAA?"
+      ]
+    },
+    {
+      "range": [
+        791,
+        1265
+      ],
+      "questions": [
+        "What's your career path so far?",
+        "What did you do at Infineon?",
+        "What did you get your PhD in?",
+        "Which big tech companies have you worked at?",
+        "What kind of work did you do at Google, Amazon, and Snap?",
+        "How long were you in big tech?",
+        "What founder and executive roles have you held?",
+        "When did you move from big tech to founding and leading companies?",
+        "What are you working on right now?",
+        "When did you start as Chief AI Officer?",
+        "How did you go from researcher to running companies?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "documentId": "logistics|what_im_looking_for",
+  "sections": [
+    {
+      "range": [
+        97,
+        394
+      ],
+      "questions": [
+        "What kind of company are you looking for next?",
+        "What's the one thing that decides whether you'd join a company?",
+        "Would you work somewhere AI is just a feature?",
+        "Why are you focused on healthcare?",
+        "How long have you worked in healthcare?",
+        "Are you only open to healthcare companies?",
+        "Why would you want to join a company like ours?"
+      ]
+    },
+    {
+      "range": [
+        440,
+        652
+      ],
+      "questions": [
+        "What kind of role do you want next?",
+        "How big of a team have you led?",
+        "When are you most useful as a leader?"
+      ]
+    },
+    {
+      "range": [
+        713,
+        828
+      ],
+      "questions": [
+        "What would you do if you lost your job tomorrow?",
+        "What kind of consulting would you do on your own?",
+        "What kind of companies would you take on as clients?",
+        "How would you make money while building your next company?"
+      ]
+    }
+  ]
+}

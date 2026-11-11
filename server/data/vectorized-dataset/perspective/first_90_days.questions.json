@@ -1,0 +1,32 @@
+{
+  "documentId": "perspective|first_90_days",
+  "sections": [
+    {
+      "range": [
+        97,
+        355
+      ],
+      "questions": [
+        "What would you do in your first 90 days here?",
+        "What do you look at first when you join a new engineering team?",
+        "How would you decide what to fix first on a new team?",
+        "Why do you go for a quick win early in a new role?",
+        "How do you build trust and momentum with a team you've just joined?",
+        "When do you start changing things after you join, versus just assessing?"
+      ]
+    },
+    {
+      "range": [
+        407,
+        701
+      ],
+      "questions": [
+        "Why do you assess before you start fixing things in a new role?",
+        "Why is the quick win last in your 90 days if it matters so much?",
+        "Why does shipping something matter so much when you're new in a leadership role?",
+        "How do you earn room to do the bigger work as a new engineering leader?",
+        "What's the hardest part of starting as a new engineering leader?"
+      ]
+    }
+  ]
+}

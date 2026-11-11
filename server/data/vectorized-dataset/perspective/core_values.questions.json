@@ -1,0 +1,113 @@
+{
+  "documentId": "perspective|core_values",
+  "sections": [
+    {
+      "range": [
+        70,
+        346
+      ],
+      "questions": [
+        "What are the core values you stand for?",
+        "What qualities do you bring to a team?",
+        "Are you more of a generalist or a specialist?",
+        "Have your values changed over your career?",
+        "How do you lead people?"
+      ]
+    },
+    {
+      "range": [
+        349,
+        487
+      ],
+      "questions": [
+        "If you had to keep just one core value, which would it be?",
+        "Why is leading by example the one value you'd keep over the others?"
+      ]
+    },
+    {
+      "range": [
+        543,
+        742
+      ],
+      "questions": [
+        "What's the one value that matters most to you as a leader?",
+        "How do you actually lead by example?",
+        "What do you think of managers who tell people what to do without being able to do it themselves?"
+      ]
+    },
+    {
+      "range": [
+        745,
+        1047
+      ],
+      "questions": [
+        "Where did your approach to choosing the principle that matters most come from?",
+        "What were the Amazon leadership principles you had to work through?",
+        "How did you choose which Amazon principles you'd be measured against?",
+        "Why did Amazon's principles end up shaping how you talked about your work?",
+        "What was it like picking your leadership principles at Amazon?"
+      ]
+    },
+    {
+      "range": [
+        1050,
+        1154
+      ],
+      "questions": [
+        "Which of your values matters most to you?",
+        "Why did that one value outlast all the others for you?",
+        "How do you hold yourself accountable to your own standards?",
+        "Have your principles changed over the years?"
+      ]
+    },
+    {
+      "range": [
+        1219,
+        1482
+      ],
+      "questions": [
+        "What does 'fail fast' actually mean to you?",
+        "How do you decide what to build first when starting something new?",
+        "Why put something in front of people before it's finished?",
+        "What role does the user play in how you build?",
+        "How do you deal with being wrong about something you built?",
+        "Is this how you've always worked, or only since you started founding companies?"
+      ]
+    },
+    {
+      "range": [
+        1485,
+        1647
+      ],
+      "questions": [
+        "What does \"fail fast\" actually mean to you?",
+        "How do you actually practice failing fast?",
+        "When does failing fast actually count for you?"
+      ]
+    },
+    {
+      "range": [
+        1707,
+        1995
+      ],
+      "questions": [
+        "What do you expect from the people who work for you?",
+        "Do you hold yourself to the same standard you set for your team?",
+        "Why do you care so much about people flagging problems early?",
+        "How do you want people to bring you a problem?",
+        "When do you want to hear that a project is going off track?"
+      ]
+    },
+    {
+      "range": [
+        1998,
+        2124
+      ],
+      "questions": [
+        "Do you expect the people on your team to speak up and say what they really think?",
+        "Why do you push your team to have the awkward conversations instead of letting things slide?",
+        "How early do you want people to bring up a problem or concern with you?"
+      ]
+    }
+  ]
+}

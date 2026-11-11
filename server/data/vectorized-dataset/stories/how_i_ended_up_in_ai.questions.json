@@ -1,0 +1,289 @@
+{
+  "documentId": "stories|how_i_ended_up_in_ai",
+  "sections": [
+    {
+      "range": [
+        86,
+        166
+      ],
+      "questions": [
+        "How did you end up in AI?",
+        "Why did you choose AI?",
+        "Was AI your first choice, or more of a fallback?"
+      ]
+    },
+    {
+      "range": [
+        169,
+        366
+      ],
+      "questions": [
+        "Were you an exchange student at Oregon State?",
+        "When did you first come to Oregon State?",
+        "Why did you pick Oregon State?",
+        "How long did you end up staying at Oregon State?",
+        "What was your original plan when you came over?",
+        "Where did you first land when you came to America?"
+      ]
+    },
+    {
+      "range": [
+        369,
+        524
+      ],
+      "questions": [
+        "What did you actually want to do before you ended up in AI?",
+        "Was AI always the plan for you?"
+      ]
+    },
+    {
+      "range": [
+        595,
+        647
+      ],
+      "questions": [
+        "Were you actually rejected from AI before you got into it?",
+        "What's your favorite detail about how you got into AI?"
+      ]
+    },
+    {
+      "range": [
+        650,
+        905
+      ],
+      "questions": [
+        "What happened when you first interviewed with an AI professor?",
+        "Why did the professor reject you?",
+        "Did they reject you right after the interview, or get back to you later?",
+        "Why did you go interview with an AI professor if you weren't that interested in AI?",
+        "Were you interested in AI at the start, or did you not care about it at first?"
+      ]
+    },
+    {
+      "range": [
+        908,
+        1124
+      ],
+      "questions": [
+        "What were you working on before you got into AI?",
+        "What happened when your mentor didn't get tenure?",
+        "Who picked you up after you were left without an advisor?",
+        "Why did you end up in AI if you started in graphics?",
+        "What choice were you left with once you had no advisor?",
+        "Was AI something you chose, or something that happened to you?"
+      ]
+    },
+    {
+      "range": [
+        1127,
+        1472
+      ],
+      "questions": [
+        "Is it true you were told you weren't suited to AI?",
+        "How did you end up in AI after being told it wasn't for you?",
+        "Who did you work under for your PhD?",
+        "What did you actually research during your PhD?",
+        "Did you end up enjoying your PhD work?",
+        "How did your PhD work shape the rest of your career?"
+      ]
+    },
+    {
+      "range": [
+        1475,
+        1573
+      ],
+      "questions": [
+        "How do you approach telling someone they're not cut out for something?",
+        "Why do you hesitate to tell someone they're not cut out for something?"
+      ]
+    },
+    {
+      "range": [
+        1622,
+        1779
+      ],
+      "questions": [
+        "What did you originally want to do before AI?",
+        "Did you want to make movies yourself?",
+        "Why animation and special effects? What pulled you in?"
+      ]
+    },
+    {
+      "range": [
+        1782,
+        1919
+      ],
+      "questions": [
+        "What did you do at Laika?",
+        "Which studio did you intern at?",
+        "What were you planning to do before AI?",
+        "How close did you get to working in stop-motion?"
+      ]
+    },
+    {
+      "range": [
+        1984,
+        2137
+      ],
+      "questions": [
+        "Why did you stay at Oregon State after your exchange year?",
+        "Who or what convinced you to stay on for a master's?",
+        "What was the catch with staying for the master's?"
+      ]
+    },
+    {
+      "range": [
+        2140,
+        2287
+      ],
+      "questions": [
+        "How did you land an assistantship at Oregon State?",
+        "What did you need to get an assistantship at Oregon State?"
+      ]
+    },
+    {
+      "range": [
+        2290,
+        2605
+      ],
+      "questions": [
+        "How well did you actually do academically at Oregon State?",
+        "Are you part of any honor societies?",
+        "Why did you push so hard academically at Oregon State?",
+        "What mattered more to you back then, the assistantship or the honor?"
+      ]
+    },
+    {
+      "range": [
+        2652,
+        2712
+      ],
+      "questions": [
+        "Were you always planning on getting a PhD?",
+        "Why didn't you want to do a PhD?",
+        "Do you actually like writing?"
+      ]
+    },
+    {
+      "range": [
+        2715,
+        2946
+      ],
+      "questions": [
+        "Did you actually set out to get a PhD?",
+        "Who told you to go the PhD route?",
+        "Why did you enrol on the PhD track?",
+        "Do you think enrolling on the PhD track just to drop out later was a reasonable plan?",
+        "When were you planning to drop out?"
+      ]
+    },
+    {
+      "range": [
+        2949,
+        3106
+      ],
+      "questions": [
+        "How long did you end up staying in your PhD?",
+        "Why did you stay in the PhD instead of leaving?",
+        "What was your PhD experience actually like?"
+      ]
+    },
+    {
+      "range": [
+        3109,
+        3282
+      ],
+      "questions": [
+        "Did you always plan on doing a PhD?",
+        "What's something you swore you'd never do but ended up doing?",
+        "How did you react when a friend told you he wanted to do a PhD?"
+      ]
+    },
+    {
+      "range": [
+        3341,
+        3462
+      ],
+      "questions": [
+        "What did your family think about you staying in the US?",
+        "How often did your mum ask when you were coming back to France?",
+        "How did you answer your mum when she asked when you'd come back to France?"
+      ]
+    },
+    {
+      "range": [
+        3465,
+        3592
+      ],
+      "questions": [
+        "What did you tell your family when you realized you were staying in the US?",
+        "How long did you tell your family you'd be in the US?",
+        "How did you handle it when your family asked how much longer you'd be in the US?"
+      ]
+    },
+    {
+      "range": [
+        3595,
+        3621
+      ],
+      "questions": [
+        "How did your family react to you staying in the US?",
+        "Are you still in the US?"
+      ]
+    },
+    {
+      "range": [
+        3673,
+        3846
+      ],
+      "questions": [
+        "What was AI actually being used for when you got into it?",
+        "Why wasn't AI an obvious path back then?"
+      ]
+    },
+    {
+      "range": [
+        3849,
+        4055
+      ],
+      "questions": [
+        "What kept you going in AI back then?",
+        "Did you set out to build a career in AI?",
+        "Who were you around when you first got into AI?"
+      ]
+    },
+    {
+      "range": [
+        4058,
+        4189
+      ],
+      "questions": [
+        "Why do you say your AI career was timing and not foresight?",
+        "Did you see the AI boom coming?",
+        "Was your expertise already in place when the AI wave hit?"
+      ]
+    },
+    {
+      "range": [
+        4249,
+        4475
+      ],
+      "questions": [
+        "What should someone getting into AI focus on first?",
+        "Why shouldn't students just lean on AI to do the work for them?",
+        "How should a student use AI while they're still learning?",
+        "What mindset do you think people need to make it in this field?"
+      ]
+    },
+    {
+      "range": [
+        4478,
+        4590
+      ],
+      "questions": [
+        "Do you think calling yourself an \"AI company\" actually means anything?",
+        "Why do you compare AI to the internet?"
+      ]
+    }
+  ]
+}

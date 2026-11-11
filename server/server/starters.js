@@ -126,12 +126,12 @@ const parseSections = (markdown) => {
   }));
 };
 
-const walk = async (dir) => {
+const walk = async (dir, suffix = ".md") => {
   const out = [];
   for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...await walk(full));
-    else if (entry.isFile() && entry.name.endsWith(".md")) out.push(full);
+    if (entry.isDirectory()) out.push(...await walk(full, suffix));
+    else if (entry.isFile() && entry.name.endsWith(suffix)) out.push(full);
   }
   return out;
 };
@@ -145,14 +145,58 @@ const walk = async (dir) => {
  * A collision is logged rather than silently resolved, because the second
  * one would otherwise shadow the first and nobody would ever find out.
  */
-const buildGraph = async (root) => {
+/**
+ * The questions each section can be asked, written at ingest.
+ *
+ * `<stem>.questions.json` beside each `<stem>.bin` — see scripts/ingest.js
+ * and llms' `onRows`. These are the phrasings augmentation generated so
+ * retrieval could find a section from words it does not itself use, kept
+ * instead of embedded and dropped.
+ *
+ * Missing files are not an error. A corpus ingested before this existed has
+ * none, and the follow-up path falls back to document adjacency, which is
+ * what it did before. Nothing here may make the site refuse to boot.
+ */
+const loadQuestions = async (datasetRoot) => {
+  const byDocument = new Map();
+  let files = [];
+  try { files = await walk(datasetRoot, ".questions.json"); } catch { return byDocument; }
+
+  for (const file of files) {
+    try {
+      const parsed = JSON.parse(await fs.readFile(file, "utf8"));
+      if (parsed && parsed.documentId && Array.isArray(parsed.sections)) {
+        byDocument.set(parsed.documentId, parsed.sections);
+      }
+    } catch (err) {
+      console.error(`starters: ${path.basename(file)} unreadable — ${err.message}`);
+    }
+  }
+  return byDocument;
+};
+
+const buildGraph = async (root, datasetRoot = CONFIG.DATASET) => {
   const graph = new Map();
   const documents = new Map();     // documentId → sections, in order
+  const asked = await loadQuestions(datasetRoot);
 
   for (const file of await walk(root)) {
     const rel = path.relative(root, file);
     const sections = parseSections(await fs.readFile(file, "utf8"));
-    documents.set(deriveDocumentId(file), { file: rel, sections });
+    const documentId = deriveDocumentId(file);
+
+    // Attach what each section can be asked. The sidecar keys sections by
+    // the range the .bin indexes by — the body span — which sits inside the
+    // span measured here from the heading, so a start inside a section's
+    // bounds identifies it.
+    for (const entry of asked.get(documentId) || []) {
+      const start = Array.isArray(entry.range) ? entry.range[0] : null;
+      if (start === null) continue;
+      const section = sections.find(s => start >= s.start && start < s.end);
+      if (section) section.asked = entry.questions || [];
+    }
+
+    documents.set(documentId, { file: rel, sections });
 
     sections.forEach((section, index) => {
       const key = normalise(section.heading);
@@ -181,7 +225,7 @@ const buildGraph = async (root) => {
     });
   }
 
-  return { graph, documents };
+  return { graph, documents, asked };
 };
 
 /** "stories/x.md#Some heading" → { file, heading }. */
@@ -243,9 +287,17 @@ const expand = (graph, questions, depth) => {
  *
  * The answer cites its sources — documentId plus a byte range — so we know
  * which documents it was actually built from, and which sections of them.
- * The follow-ups are the OTHER sections of those documents: questions the
- * author wrote, next to the material just quoted, every one of which has an
- * answer by construction because it IS one.
+ * The follow-ups are drawn from the OTHER sections of those documents —
+ * and from each one, the questions augmentation generated for it rather
+ * than its heading. Those questions exist so retrieval can reach a section
+ * from words the section itself does not use, which is exactly what makes
+ * them the phrasings a reader turns up with. Every one has an answer by
+ * construction: it was written to point at a section that exists.
+ *
+ * A heading is the author's filing label ("Which one matters most to you,
+ * and why that one?") and often does not stand up away from the document.
+ * These do. Where a section has none — an older ingest, or augmentation
+ * that produced nothing — the heading is still the fallback.
  *
  * Free, deterministic, and it cannot promise something that is not there.
  *
@@ -253,12 +305,11 @@ const expand = (graph, questions, depth) => {
  * @param {string[]} asked - everything this visit has already been through
  * @returns {string[]} questions, at most MAX_FOLLOW_UPS
  */
-const followUpsFrom = (documents, sources, asked) => {
-  const seen = new Set((asked || []).map(normalise));
+const followUpsFrom = (documents, sources, alreadyAsked) => {
+  const seen = new Set((alreadyAsked || []).map(normalise));
 
-  // Documents this answer actually drew on, most-quoted first: if two
-  // documents fed the answer, the one it leaned on is the one worth
-  // offering more of.
+  // Documents this answer actually drew on, most-quoted first, and which of
+  // their sections it used.
   const weight = new Map();
   const citedAt = new Map();          // documentId → Set of section indexes
 
@@ -279,21 +330,52 @@ const followUpsFrom = (documents, sources, asked) => {
   const ranked = [...weight.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => id);
   const out = [];
 
+  // ── First choice: the questions those sections were written to answer ──
+  //
+  // Augmentation generated them so retrieval could reach a section from
+  // words the section does not use — which makes them the phrasings a
+  // reader actually arrives with, and makes every one of them a question
+  // this corpus answers by construction. Offering a heading instead means
+  // offering the author's filing label; offering these means offering the
+  // reader's own words. Both are safe; only one sounds like a person.
+  //
+  // One per section, so three chips are three different places to go rather
+  // than three angles on the same one.
   for (const id of ranked) {
     const { sections } = documents.get(id);
     const cited = citedAt.get(id) || new Set();
-
-    // Start after the last section the answer quoted and wrap around, so
-    // the first thing offered is what comes next in the document rather
-    // than whatever happens to be at the top of it.
     const from = cited.size ? Math.max(...cited) : -1;
+
     for (let i = 1; i <= sections.length; ++i) {
-      const section = sections[(from + i + sections.length) % sections.length];
-      if (cited.has(sections.indexOf(section))) continue;
-      const key = normalise(section.heading);
+      const index = (from + i + sections.length) % sections.length;
+      if (cited.has(index)) continue;
+      const question = (sections[index].asked || []).find(q => !seen.has(normalise(q)));
+      if (!question) continue;
+      seen.add(normalise(question));
+      out.push(question);
+      break;                                 // one per section
+    }
+    if (out.length >= MAX_FOLLOW_UPS) return out;
+  }
+
+  // ── Fallback: the sections' own headings ───────────────────────────────
+  //
+  // For a corpus ingested before the questions were persisted, and for a
+  // section whose augmentation produced none. The headings are written as
+  // questions here, so this degrades to the previous behaviour rather than
+  // to nothing.
+  for (const id of ranked) {
+    const { sections } = documents.get(id);
+    const cited = citedAt.get(id) || new Set();
+    const from = cited.size ? Math.max(...cited) : -1;
+
+    for (let i = 1; i <= sections.length; ++i) {
+      const index = (from + i + sections.length) % sections.length;
+      if (cited.has(index)) continue;
+      const key = normalise(sections[index].heading);
       if (seen.has(key)) continue;
       seen.add(key);
-      out.push(section.heading);
+      out.push(sections[index].heading);
       if (out.length >= MAX_FOLLOW_UPS) return out;
     }
   }
@@ -302,7 +384,23 @@ const followUpsFrom = (documents, sources, asked) => {
 };
 
 const build = async () => {
-  const { graph, documents } = await buildGraph(CONFIG.MARKDOWNS);
+  const { graph, documents, asked } = await buildGraph(CONFIG.MARKDOWNS);
+
+  // Every persisted question, pointing at the section it was written for.
+  //
+  // A chip now carries a reader's phrasing rather than the author's
+  // heading, so pressing one has to resolve by that phrasing. The section
+  // it points at is the one augmentation generated it from, which is the
+  // definition of the right answer for it.
+  const byAsked = new Map();
+  for (const { sections } of documents.values()) {
+    for (const section of sections) {
+      for (const question of section.asked || []) {
+        const key = normalise(question);
+        if (!byAsked.has(key)) byAsked.set(key, graph.get(normalise(section.heading)));
+      }
+    }
+  }
   const entries = [];
 
   for (const starter of CONFIG.STARTERS || []) {
@@ -374,6 +472,9 @@ const build = async () => {
   console.log(
     `Starters ready — ${ready}/${entries.length} answered from the corpus, ` +
     `${graph.size} sections indexed, ${DEPTH} levels deep.`);
+  console.log(asked.size
+    ? `Follow-ups from ${byAsked.size} persisted questions across ${asked.size} documents.`
+    : "Follow-ups from section headings — no persisted questions found (run npm run ingest).");
 
   return {
     /**
@@ -393,7 +494,8 @@ const build = async () => {
      * routes are deliberately different.
      */
     sectionFor: (question) => {
-      const node = graph.get(normalise(question));
+      const key = normalise(question);
+      const node = graph.get(key) || byAsked.get(key);
       return node && node.a ? node : null;
     },
 

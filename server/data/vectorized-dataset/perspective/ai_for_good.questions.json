@@ -1,0 +1,112 @@
+{
+  "documentId": "perspective|ai_for_good",
+  "sections": [
+    {
+      "range": [
+        62,
+        235
+      ],
+      "questions": [
+        "What do you think AI should actually be used for?",
+        "Who do you want AI to help?",
+        "Is AI for good something you picked up recently, or have you always felt this way?",
+        "How has your view of what AI is for shaped the work you've picked?"
+      ]
+    },
+    {
+      "range": [
+        238,
+        675
+      ],
+      "questions": [
+        "What did you build for blind readers back in 2006?",
+        "Why did you make the braille system run on a cheap webcam?",
+        "What does Heali do?",
+        "When did you start Heali?",
+        "Who is Heali for?",
+        "How many medical conditions does Heali cover?",
+        "Why did you co-found Heali?",
+        "What do you believe AI should be used for?"
+      ]
+    },
+    {
+      "range": [
+        678,
+        815
+      ],
+      "questions": [
+        "What do you think AI should actually be used for?",
+        "Who do you want the things you build to help?",
+        "How do you decide what to point your skills at?",
+        "Is there a common thread in the work you've done over the years?"
+      ]
+    },
+    {
+      "range": [
+        864,
+        932
+      ],
+      "questions": [
+        "Why does AI for good matter to you personally?",
+        "Do you think technology is neutral?"
+      ]
+    },
+    {
+      "range": [
+        935,
+        1228
+      ],
+      "questions": [
+        "Do you see a link between recommendation algorithms and healthcare AI?",
+        "Do you think AI models are neutral?",
+        "Where do you think the ethics of AI actually live?",
+        "Who's responsible for whether AI ends up doing good or harm?",
+        "Why does AI for good matter to you personally?"
+      ]
+    },
+    {
+      "range": [
+        1231,
+        1377
+      ],
+      "questions": [
+        "Why does AI for good matter so much to you personally?",
+        "What do you think is wrong with how AI talent is being used?",
+        "What did you do with recommendation systems?",
+        "How long did you work on recommendation systems?",
+        "What did years of building recommendation systems teach you?"
+      ]
+    },
+    {
+      "range": [
+        1421,
+        1543
+      ],
+      "questions": [
+        "Do you think \"AI for good\" is just marketing?",
+        "Why do so many AI for good efforts fall short of the pitch?"
+      ]
+    },
+    {
+      "range": [
+        1546,
+        1856
+      ],
+      "questions": [
+        "How do you tell if an AI for good company is the real thing or just marketing?",
+        "What usually happens when doing good and making money pull in different directions?",
+        "Can you give an example where helping users and growing the business were the same thing?"
+      ]
+    },
+    {
+      "range": [
+        1859,
+        1946
+      ],
+      "questions": [
+        "Do you think \"AI for good\" is just marketing?",
+        "How should I judge whether your work is actually for good?"
+      ]
+    }
+  ]
+}

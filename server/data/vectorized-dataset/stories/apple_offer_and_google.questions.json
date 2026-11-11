@@ -1,0 +1,93 @@
+{
+  "documentId": "stories|apple_offer_and_google",
+  "sections": [
+    {
+      "range": [
+        86,
+        111
+      ],
+      "questions": [
+        "Was Google actually the plan for you?",
+        "Which company did you really want to work at?"
+      ]
+    },
+    {
+      "range": [
+        114,
+        320
+      ],
+      "questions": [
+        "Why did you want to work at Apple?",
+        "Which company fit what you wanted to do?",
+        "What kind of work did you really want to do, was it CGI?",
+        "Do you have a creative or artistic side?"
+      ]
+    },
+    {
+      "range": [
+        323,
+        401
+      ],
+      "questions": [
+        "What happened with the Apple offer?",
+        "Why did Apple pull your offer?",
+        "Did you actually pass the Apple interview?"
+      ]
+    },
+    {
+      "range": [
+        450,
+        568
+      ],
+      "questions": [
+        "Did you get another offer after Apple pulled theirs?",
+        "How soon after Apple pulled the offer did Google's come in?",
+        "How did you feel about Google's offer arriving the same day Apple pulled theirs?"
+      ]
+    },
+    {
+      "range": [
+        571,
+        690
+      ],
+      "questions": [
+        "Where did you end up after the Apple offer got pulled?",
+        "How did you respond when the Apple offer was pulled?",
+        "Did your career end up going the way you'd pictured?"
+      ]
+    },
+    {
+      "range": [
+        738,
+        791
+      ],
+      "questions": [
+        "Do you regret not getting the Apple job?",
+        "Did you feel the same way about losing the Apple offer back then?"
+      ]
+    },
+    {
+      "range": [
+        794,
+        1131
+      ],
+      "questions": [
+        "Do you regret losing the Apple job?",
+        "What happened after you lost the Apple job you were going for?",
+        "What did you build at YouTube?",
+        "Where did you end up doing the creative, visual work you wanted?"
+      ]
+    },
+    {
+      "range": [
+        1134,
+        1269
+      ],
+      "questions": [
+        "How do you think about rejection when a job you wanted falls through?",
+        "Why don't you see losing the Apple offer as a sign you were headed the wrong way?",
+        "What's the story behind getting rejected from AI and then ending up in it anyway?"
+      ]
+    }
+  ]
+}

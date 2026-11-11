@@ -1,0 +1,82 @@
+{
+  "documentId": "career|iscribehealth",
+  "sections": [
+    {
+      "range": [
+        67,
+        207
+      ],
+      "questions": [
+        "What was your role at iScribeHealth?",
+        "How long were you at iScribeHealth?",
+        "How many engineers did you lead at iScribeHealth?",
+        "How much budget did you manage at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        280,
+        554
+      ],
+      "questions": [
+        "What were you responsible for at iScribeHealth?",
+        "Were you accountable for platform reliability at iScribeHealth?",
+        "Who did you work with on the roadmap at iScribeHealth?",
+        "How did you tie the technical roadmap to business goals at iScribeHealth?",
+        "What growth target were you working toward at iScribeHealth?",
+        "What kind of product were you building at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        625,
+        787
+      ],
+      "questions": [
+        "Tell me about the big platform migration you led at iScribeHealth.",
+        "How much did the .NET 8 migration cut production downtime?",
+        "What authentication migration did you manage at iScribeHealth?",
+        "Were you the one leading the migrations at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        844,
+        1023
+      ],
+      "questions": [
+        "Which compliance standards did you take iScribeHealth to?",
+        "What happened with the first pen test at iScribeHealth?",
+        "How did you get iScribeHealth through SOC 2 and HIPAA?",
+        "How did you handle the results of iScribeHealth's first pen test?",
+        "Were you the one who drove SOC 2 and HIPAA at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        1078,
+        1279
+      ],
+      "questions": [
+        "What AI stuff did you ship at iScribeHealth?",
+        "What were the AI coding suggestions you drove at iScribeHealth?",
+        "What kind of results did your AI coding suggestions get?",
+        "What did you do with the Athena ambient scribe integration?",
+        "How many customers did your Athena integration cover?",
+        "Tell me about an AI project you drove that had measurable impact."
+      ]
+    },
+    {
+      "range": [
+        1349,
+        1510
+      ],
+      "questions": [
+        "Who did you hire at iScribeHealth?",
+        "Why did you bring on a Lead Engineer and a Product Manager at iScribeHealth?",
+        "How did you build your team at iScribeHealth?",
+        "How did you get product, engineering, and customer success on the same page at iScribeHealth?"
+      ]
+    }
+  ]
+}

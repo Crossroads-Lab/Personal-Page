@@ -1,0 +1,97 @@
+{
+  "documentId": "perspective|distributed_teams",
+  "sections": [
+    {
+      "range": [
+        79,
+        324
+      ],
+      "questions": [
+        "Have you actually managed remote teams?",
+        "Which companies did you run remote teams at?",
+        "How spread out were the teams you ran?",
+        "Was managing remote teams just a pandemic thing for you?",
+        "Is remote management most of your experience or just a side note?"
+      ]
+    },
+    {
+      "range": [
+        392,
+        700
+      ],
+      "questions": [
+        "What do you think actually breaks when a team goes remote?",
+        "How do you keep people on track when you can't see them?",
+        "Why can't you just read the room with a remote team?"
+      ]
+    },
+    {
+      "range": [
+        703,
+        941
+      ],
+      "questions": [
+        "How do you keep people accountable on a remote team?",
+        "When do you spell out expectations with someone on your team?",
+        "Why do you define done up front instead of just trusting people to figure it out?"
+      ]
+    },
+    {
+      "range": [
+        944,
+        1107
+      ],
+      "questions": [
+        "What do you rely on to keep a remote team accountable?",
+        "Why not just schedule more check-ins to keep people on track?",
+        "When can you skip check-ins with your team?"
+      ]
+    },
+    {
+      "range": [
+        1180,
+        1523
+      ],
+      "questions": [
+        "What does leading by example look like when your team isn't in the same room?",
+        "Why does leading by example work differently once your team is remote?",
+        "How do you handle awkward timezones with a global team?",
+        "What's your habit around writing things down when you lead remote people?",
+        "Will you be reachable for your team outside your own working hours when things get hard?"
+      ]
+    },
+    {
+      "range": [
+        1526,
+        1837
+      ],
+      "questions": [
+        "What did you do the night iScribe's services went down?",
+        "How do you lead by example when your team isn't in the same room?",
+        "Why does leading by example look different when your team is remote?"
+      ]
+    },
+    {
+      "range": [
+        1869,
+        2102
+      ],
+      "questions": [
+        "What's the hardest part of managing a remote team?",
+        "Why is it so hard to tell when someone on a remote team is struggling?",
+        "When do you usually realize a remote teammate has been drifting?"
+      ]
+    },
+    {
+      "range": [
+        2105,
+        2241
+      ],
+      "questions": [
+        "What do you prioritize most when you're managing a remote team?",
+        "Why do you care more about how your people are doing than whether projects are on track?",
+        "Why is it harder to tell how a remote team is really doing than to see what they're producing?"
+      ]
+    }
+  ]
+}

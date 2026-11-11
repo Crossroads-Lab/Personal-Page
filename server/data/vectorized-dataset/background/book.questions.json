@@ -1,0 +1,421 @@
+{
+  "documentId": "background|book",
+  "sections": [
+    {
+      "range": [
+        69,
+        379
+      ],
+      "questions": [
+        "What's the book you co-authored called?",
+        "What is your book actually about?",
+        "Did you write the book on your own or with other authors?",
+        "Was your book a bestseller?",
+        "Where can I buy or find your book?"
+      ]
+    },
+    {
+      "range": [
+        438,
+        551
+      ],
+      "questions": [
+        "What's your book chapter called?",
+        "What's the main argument of your chapter?"
+      ]
+    },
+    {
+      "range": [
+        554,
+        957
+      ],
+      "questions": [
+        "What do you think is the real danger with AI?",
+        "Why do you think people get AI risk so wrong?",
+        "What does it look like when a team leans too hard on AI?",
+        "What's the risk when an AI sounds sure of itself?",
+        "What happens to a company that automates by cutting staff?",
+        "How long until cutting staff for AI comes back to bite a company?",
+        "Why does replacing people with AI backfire?"
+      ]
+    },
+    {
+      "range": [
+        960,
+        1282
+      ],
+      "questions": [
+        "What's your take on chasing efficiency?",
+        "When does efficiency stop being a good thing?",
+        "What's the Disney comparison you use?",
+        "Why was Disney's switch to CGI a cautionary tale?"
+      ]
+    },
+    {
+      "range": [
+        1285,
+        1518
+      ],
+      "questions": [
+        "How does your chapter in the book open?",
+        "What actually happens in the scene you open your chapter with?",
+        "Why open your chapter with an ordinary workday instead of a dramatic moment?"
+      ]
+    },
+    {
+      "range": [
+        1549,
+        1631
+      ],
+      "questions": [
+        "Is your book anti-AI?",
+        "Why do you push back on people calling the chapter anti-AI?",
+        "How long have you been building AI systems?"
+      ]
+    },
+    {
+      "range": [
+        1634,
+        2033
+      ],
+      "questions": [
+        "Is your book anti-AI?",
+        "Why are you skeptical of AI claims if you think the gains are real?",
+        "What kinds of problems does AI actually solve well?",
+        "Which companies do you point to as real AI successes?",
+        "What downsides of AI do you cover that vendors don't talk about?"
+      ]
+    },
+    {
+      "range": [
+        2036,
+        2157
+      ],
+      "questions": [
+        "What's the question you end the chapter on?",
+        "Which leaders are dodging the question you close the chapter with?",
+        "When do you think leaders should be asking what to preserve?"
+      ]
+    },
+    {
+      "range": [
+        2195,
+        2464
+      ],
+      "questions": [
+        "How much have you published?",
+        "Is your writing more academic or industry-focused?",
+        "Which companies have you filed patents at?",
+        "What was your PhD research on?",
+        "What was your role at CVPR?"
+      ]
+    },
+    {
+      "range": [
+        2540,
+        2701
+      ],
+      "questions": [
+        "How much research does your chapter actually cite?",
+        "Why does your chapter lean on so many numbers?",
+        "What is your chapter actually arguing?"
+      ]
+    },
+    {
+      "range": [
+        2704,
+        3178
+      ],
+      "questions": [
+        "What did the Noy and Zhang ChatGPT study actually find?",
+        "What's the catch with that 40% ChatGPT productivity stat?",
+        "Why do you say the famous AI productivity stat gets misused?",
+        "What did the 2025 MIT study find about experienced developers using AI?",
+        "Did the developers in that study think AI was helping them?"
+      ]
+    },
+    {
+      "range": [
+        3181,
+        3661
+      ],
+      "questions": [
+        "What did the Microsoft and Carnegie Mellon study you cite actually find?",
+        "How did Microsoft and Carnegie Mellon collect their data?",
+        "Does trusting the AI more mean people think less, according to your research?",
+        "What did the MIT Media Lab EEG study show?",
+        "How did MIT measure the effect on the brain?",
+        "In the MIT research, how did using an LLM compare to using a search engine or working alone?",
+        "Why do you believe AI has a cognitive cost?"
+      ]
+    },
+    {
+      "range": [
+        3664,
+        3943
+      ],
+      "questions": [
+        "What did Georgetown's CSET find about AI-generated code?",
+        "How much of Copilot's output had vulnerabilities in the research you cite?",
+        "Whose research are you relying on for the security claims in your chapter?",
+        "How recent is the research you cite on AI-generated code security?",
+        "Is the insecure code problem specific to one language or tool?"
+      ]
+    },
+    {
+      "range": [
+        3999,
+        4055
+      ],
+      "questions": [
+        "What's the main point of your chapter on privacy and AI?"
+      ]
+    },
+    {
+      "range": [
+        4058,
+        4464
+      ],
+      "questions": [
+        "What's the Samsung ChatGPT story you use in your chapter?",
+        "How did Samsung's engineers end up leaking code through ChatGPT?",
+        "Why do you call AI data leaks \"a Tuesday\" instead of an exotic failure?",
+        "What did Cyberhaven find about what employees paste into AI tools?",
+        "Why do employees keep handing company data to AI tools?"
+      ]
+    },
+    {
+      "range": [
+        4467,
+        4837
+      ],
+      "questions": [
+        "What's your rule for what you put into AI tools?",
+        "How do you set guardrails for AI use inside a company?",
+        "Who do you think is responsible when AI gets something wrong?",
+        "How do you build trust in AI systems?"
+      ]
+    },
+    {
+      "range": [
+        4892,
+        4968
+      ],
+      "questions": [
+        "Does your book cover AI's environmental cost?",
+        "Why did you include AI's environmental cost in your book?"
+      ]
+    },
+    {
+      "range": [
+        4971,
+        5234
+      ],
+      "questions": [
+        "How much CO2 did training GPT-3 emit?",
+        "Why isn't the training run the real environmental cost of AI?",
+        "What does every AI query actually consume after the model is trained?",
+        "How much water did Google's data centres use in 2023?",
+        "Why are Google's data centres using so much water?",
+        "Does your book cover AI's environmental impact?"
+      ]
+    },
+    {
+      "range": [
+        5237,
+        5426
+      ],
+      "questions": [
+        "Does your book talk about AI's environmental cost?",
+        "Are you telling people not to use AI because of its environmental cost?",
+        "What kind of decision is rolling out AI at scale, in your view?",
+        "Why bring up AI's environmental cost if you're not against using it?",
+        "Who is leaving the environmental cost out of the AI conversation?"
+      ]
+    },
+    {
+      "range": [
+        5480,
+        5603
+      ],
+      "questions": [
+        "When does AI actually work well?",
+        "What kind of problem is a good fit for AI?",
+        "Why is AI so fast at some things and useless at others?"
+      ]
+    },
+    {
+      "range": [
+        5606,
+        6023
+      ],
+      "questions": [
+        "Where do you think AI actually works today?",
+        "What did Walmart do with AI on truck routing?",
+        "How much did Walmart's AI routing actually save?",
+        "Why did the Walmart routing project work so well?",
+        "What was Klarna's AI assistant doing for customer support?",
+        "How much faster did Klarna's AI resolve support tickets?",
+        "What kinds of support tickets did Klarna's AI handle?"
+      ]
+    },
+    {
+      "range": [
+        6026,
+        6272
+      ],
+      "questions": [
+        "What happens in your book when you give AI your general infrastructure without good supervision?",
+        "Why do you say AI with poor supervision leaves you with something fragile?",
+        "What do you say about the claims people are making about agentic AI?",
+        "Why won't you make big calls on agentic AI yet?"
+      ]
+    },
+    {
+      "range": [
+        6355,
+        6403
+      ],
+      "questions": [
+        "Is your advice to leaders just to move faster?",
+        "How many things do you tell leaders to do in the book?"
+      ]
+    },
+    {
+      "range": [
+        6406,
+        7134
+      ],
+      "questions": [
+        "How do you tell whether an AI productivity claim is actually true?",
+        "What do you do when an AI rollout doesn't deliver the gains you expected?",
+        "What's your take on employees pasting company data into AI tools?",
+        "When should a company set its rules for AI use, before or after people start using it?",
+        "Why do you insist on keeping humans in the loop with AI?",
+        "How do you recommend a company get started with AI?",
+        "What kinds of work do you think AI should tackle first?",
+        "What should leaders protect while AI changes how their people work?"
+      ]
+    },
+    {
+      "range": [
+        7137,
+        7288
+      ],
+      "questions": [
+        "If you could keep only one line from your book, what would it be?",
+        "Do you think a small team beats a big department when AI is in the picture?",
+        "Why do you say a small focused team has an undeniable advantage over a large one?",
+        "How should a leader scale a team with AI?"
+      ]
+    },
+    {
+      "range": [
+        7350,
+        7423
+      ],
+      "questions": [
+        "Why did you write the chapter as a day in someone's life?",
+        "What do you mean by \"not as an event, as a Tuesday\"?"
+      ]
+    },
+    {
+      "range": [
+        7426,
+        7877
+      ],
+      "questions": [
+        "What does the day-in-the-life chapter in your book actually look like?",
+        "What time does the day in your chapter start and end?",
+        "How does the chapter open?",
+        "What's the scene about the report that looks right but is hollow?",
+        "What's the scene in your book about fixing AI-generated code?",
+        "What's the dinner table scene in your book about?"
+      ]
+    },
+    {
+      "range": [
+        7880,
+        8198
+      ],
+      "questions": [
+        "Why did you write that chapter as a day in someone's life instead of just making the case?",
+        "How do you get readers to actually do something after they finish your book?",
+        "Is the executive in your book a real person?",
+        "Who is the person in that chapter actually based on?",
+        "What are the leaders you talk to losing sleep over?"
+      ]
+    },
+    {
+      "range": [
+        8247,
+        8306
+      ],
+      "questions": [
+        "What's the hardest moment in the chapter of your book?"
+      ]
+    },
+    {
+      "range": [
+        8309,
+        8833
+      ],
+      "questions": [
+        "What's the hardest part of leading a team through this kind of change?",
+        "Why can't you just reassure your people that everything will be okay?",
+        "How do your people react when leadership talks about \"augmentation\" and \"evolution\"?",
+        "Who's pulling against you when you want to be straight with your team?",
+        "When does the pressure of leading through this hit you hardest?"
+      ]
+    },
+    {
+      "range": [
+        8836,
+        9089
+      ],
+      "questions": [
+        "What was the moment you realised the bad work was your fault, not your team's?",
+        "Why didn't you blame your team when their work came back bad?",
+        "What pressure was your team under when that weak work got produced?",
+        "When did it click that you were the one responsible?"
+      ]
+    },
+    {
+      "range": [
+        9131,
+        9453
+      ],
+      "questions": [
+        "Why don't movies about a dangerous AI future feel thrilling to you anymore?",
+        "What do you mean when you say the distance has closed?",
+        "What's the scene in your book where the executive is scrolling on the couch?",
+        "What are the movies the executive scrolls past in your book?"
+      ]
+    },
+    {
+      "range": [
+        9456,
+        9739
+      ],
+      "questions": [
+        "Would you take the red pill or the blue pill?",
+        "Why did you pick the red pill without hesitating?",
+        "Are you a naturally curious person?",
+        "How do you feel when things get uncomfortable?",
+        "What's the Matrix reference about?"
+      ]
+    },
+    {
+      "range": [
+        9742,
+        9986
+      ],
+      "questions": [
+        "Why did you put a Matrix reference in your book?",
+        "What's the real cost you're warning about in the Matrix chapter?",
+        "Why do you say overload kills our appetite for hard truths?",
+        "How do you think about the fear that machines will turn on us?"
+      ]
+    }
+  ]
+}

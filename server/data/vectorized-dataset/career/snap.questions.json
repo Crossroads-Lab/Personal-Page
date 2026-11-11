@@ -1,0 +1,66 @@
+{
+  "documentId": "career|snap",
+  "sections": [
+    {
+      "range": [
+        54,
+        151
+      ],
+      "questions": [
+        "What titles did you hold at Snap?",
+        "How long were you at Snap?"
+      ]
+    },
+    {
+      "range": [
+        210,
+        491
+      ],
+      "questions": [
+        "How many people did you lead at Snap?",
+        "How many projects was your team running at once at Snap?",
+        "How many users did your work reach at Snap?",
+        "Did your team's research actually ship into products at Snap?",
+        "What areas did your research group cover at Snap?",
+        "What did you do to broaden what your group worked on at Snap?"
+      ]
+    },
+    {
+      "range": [
+        555,
+        871
+      ],
+      "questions": [
+        "What was the biggest impact you had at Snap?",
+        "What results did your friend recommendations work at Snap get?",
+        "How did you win back inactive users at Snap?",
+        "What impact did your Bitmoji work have at Snap?",
+        "How did your Bitmoji recommendations work in the chat interface?",
+        "How much did you improve support productivity at Snap?",
+        "How did you use NLP to sort support tickets at Snap?"
+      ]
+    },
+    {
+      "range": [
+        923,
+        1093
+      ],
+      "questions": [
+        "What cross-functional work did you do at Snap?",
+        "Who did you work with across teams at Snap?",
+        "Why did you coordinate across departments at Snap?"
+      ]
+    },
+    {
+      "range": [
+        1154,
+        1322
+      ],
+      "questions": [
+        "What was your role on the Technical Acquisition Committee at Snap?",
+        "How many patents did you author at Snap?",
+        "How many publications did you author at Snap?"
+      ]
+    }
+  ]
+}

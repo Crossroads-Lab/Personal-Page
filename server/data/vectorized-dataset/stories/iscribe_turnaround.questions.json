@@ -1,0 +1,46 @@
+{
+  "documentId": "stories|iscribe_turnaround",
+  "sections": [
+    {
+      "range": [
+        75,
+        324
+      ],
+      "questions": [
+        "What's the achievement you're proudest of at iScribeHealth?",
+        "How much technical debt did you clear at iScribeHealth?",
+        "What did you re-architect at iScribeHealth?",
+        "Why did you re-architect the system at iScribeHealth?",
+        "What did you do for SOC 2 and HIPAA at iScribeHealth?",
+        "How did you get iScribeHealth ready for SOC 2 and HIPAA?",
+        "What was the penetration test you led at iScribeHealth?",
+        "What EHR integrations did you ship at iScribeHealth?",
+        "Did you keep advancing the AI work while fixing everything else at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        393,
+        481
+      ],
+      "questions": [
+        "What did people say about your work at iScribeHealth?",
+        "Who at iScribeHealth vouched for your work?",
+        "How fast did you make an impact at iScribeHealth?",
+        "How did your output at iScribe compare to what the company had done before you?"
+      ]
+    },
+    {
+      "range": [
+        538,
+        771
+      ],
+      "questions": [
+        "What makes the iScribeHealth turnaround the thing you're proudest of?",
+        "What was the actually hard part of the iScribeHealth turnaround?",
+        "In your experience, does compliance work slow down product?",
+        "What do you mean by getting work to compound instead of compete?"
+      ]
+    }
+  ]
+}

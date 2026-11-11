@@ -1,0 +1,68 @@
+{
+  "documentId": "background|skills",
+  "sections": [
+    {
+      "range": [
+        83,
+        188
+      ],
+      "questions": [
+        "What areas of AI and machine learning do you work in?",
+        "Do you have experience with agentic AI and LLM orchestration?",
+        "Do you have computer vision experience?",
+        "Do you have NLP experience?",
+        "Do you know how to build recommendation systems?",
+        "Do you know semi-supervised learning?"
+      ]
+    },
+    {
+      "range": [
+        251,
+        394
+      ],
+      "questions": [
+        "What backend languages and frameworks do you work in?",
+        "Do you have AWS and CI/CD experience?",
+        "What kind of systems architecture have you worked on?"
+      ]
+    },
+    {
+      "range": [
+        446,
+        483
+      ],
+      "questions": [
+        "What programming languages do you know best?",
+        "Are you an expert in JavaScript?",
+        "Do you know C or C++ well?"
+      ]
+    },
+    {
+      "range": [
+        544,
+        630
+      ],
+      "questions": [
+        "Which compliance frameworks have you worked with?",
+        "Do you have SOC 2 Type II experience?",
+        "Do you have HIPAA experience?",
+        "Do you have experience with penetration testing?",
+        "Do you have experience fixing security vulnerabilities?",
+        "Do you have data privacy experience?"
+      ]
+    },
+    {
+      "range": [
+        707,
+        831
+      ],
+      "questions": [
+        "How big have the teams you've led gotten?",
+        "Have you done technical due diligence on acquisitions?",
+        "What experience do you have with product-market fit?",
+        "How large a budget have you managed?",
+        "What does your leadership experience actually cover?"
+      ]
+    }
+  ]
+}

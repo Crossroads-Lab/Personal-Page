@@ -1,0 +1,87 @@
+{
+  "documentId": "stories|heali_nutrition_engine",
+  "sections": [
+    {
+      "range": [
+        109,
+        278
+      ],
+      "questions": [
+        "What's a project you're proud of?",
+        "What did you build at Heali?",
+        "How much data did your nutrition engine process?",
+        "What does your nutrition engine actually do?",
+        "Who was the nutrition engine built for?"
+      ]
+    },
+    {
+      "range": [
+        335,
+        545
+      ],
+      "questions": [
+        "Why was Heali's nutrition engine a data problem more than a modeling problem?",
+        "What was wrong with the nutrition data you had to work with at Heali?",
+        "How did you approach building Heali's nutrition engine for patients with chronic conditions?"
+      ]
+    },
+    {
+      "range": [
+        629,
+        757
+      ],
+      "questions": [
+        "What was the hard part of the nutrition engine at Heali?",
+        "Why couldn't you just buy a solution at Heali?",
+        "What stage was Heali at when you worked on the nutrition engine?"
+      ]
+    },
+    {
+      "range": [
+        760,
+        1085
+      ],
+      "questions": [
+        "What was the hardest problem you had to solve with almost no resources at Heali?",
+        "What was wrong with the nutrition data you started with at Heali?",
+        "Why did precision matter so much when you built the nutrition engine?",
+        "Why couldn't you just license a dataset or hand-label everything at Heali?"
+      ]
+    },
+    {
+      "range": [
+        1088,
+        1407
+      ],
+      "questions": [
+        "What did you do at Heali when you didn't have much reliable data to work with?",
+        "Why did you start with the data instead of the model at Heali?",
+        "What did the Heali nutrition engine end up covering?",
+        "How did your semi-supervised approach at Heali actually work?"
+      ]
+    },
+    {
+      "range": [
+        1410,
+        1631
+      ],
+      "questions": [
+        "What lesson did you take from building the nutrition engine at Heali with so little data?",
+        "Why isn't a fancier model the answer when you don't have much data?",
+        "How do you get reliable results when only a little of your data is trustworthy?"
+      ]
+    },
+    {
+      "range": [
+        1679,
+        1815
+      ],
+      "questions": [
+        "Did the Heali nutrition engine ever make it to market?",
+        "How many people actually used what you built at Heali?",
+        "What kind of partnerships did you land at Heali?",
+        "Who were your partners at Heali?"
+      ]
+    }
+  ]
+}

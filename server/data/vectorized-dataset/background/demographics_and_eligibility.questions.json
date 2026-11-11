@@ -1,0 +1,95 @@
+{
+  "documentId": "background|demographics_and_eligibility",
+  "sections": [
+    {
+      "range": [
+        77,
+        95
+      ],
+      "questions": [
+        "When were you born?"
+      ]
+    },
+    {
+      "range": [
+        170,
+        284
+      ],
+      "questions": [
+        "Do you need visa sponsorship to work in the US?",
+        "Where did you come to the US from?",
+        "What year did you move to the US?",
+        "Why did you come to the US in the first place?",
+        "How did you become a US citizen?"
+      ]
+    },
+    {
+      "range": [
+        353,
+        472
+      ],
+      "questions": [
+        "Would you take a role in Europe, or only in the US?",
+        "Do you need visa sponsorship to work for us?",
+        "Why are you able to work in Europe without sponsorship?",
+        "What's your nationality?"
+      ]
+    },
+    {
+      "range": [
+        475,
+        807
+      ],
+      "questions": [
+        "Do you need visa sponsorship to work in the US?",
+        "Can you work in Europe as well as the US?",
+        "Why do you see being able to work in both the US and Europe as a real advantage?",
+        "Who does your US-and-Europe background help most?"
+      ]
+    },
+    {
+      "range": [
+        870,
+        1034
+      ],
+      "questions": [
+        "Where are you based?",
+        "Do you want to work remote, hybrid, or in an office?",
+        "Have you managed remote teams before?",
+        "Where in the world have you led teams?",
+        "Why would remote work be an easy transition for you?"
+      ]
+    },
+    {
+      "range": [
+        1037,
+        1131
+      ],
+      "questions": [
+        "Are you open to remote, hybrid, or on-site work?",
+        "How do you approach relocating for a job?",
+        "When would you commit to relocating?"
+      ]
+    },
+    {
+      "range": [
+        1167,
+        1198
+      ],
+      "questions": [
+        "Are you a protected veteran?"
+      ]
+    },
+    {
+      "range": [
+        1256,
+        1294
+      ],
+      "questions": [
+        "What's your gender?",
+        "What's your race or ethnicity?",
+        "Where are you originally from, ethnically?"
+      ]
+    }
+  ]
+}

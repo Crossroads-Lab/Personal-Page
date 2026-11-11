@@ -1,0 +1,76 @@
+{
+  "documentId": "career|laika_studios",
+  "sections": [
+    {
+      "range": [
+        71,
+        278
+      ],
+      "questions": [
+        "What did you do at Laika?",
+        "When did you work at Laika?",
+        "Where was your Laika internship?",
+        "What kind of company is Laika?",
+        "Was your Laika internship during your PhD?",
+        "Why did the Laika internship matter to you?"
+      ]
+    },
+    {
+      "range": [
+        323,
+        389
+      ],
+      "questions": [
+        "What did you actually build at Laika?",
+        "Did you work on anything that showed up on screen at Laika?"
+      ]
+    },
+    {
+      "range": [
+        392,
+        712
+      ],
+      "questions": [
+        "What was the main thing you built at Laika?",
+        "What did you code in at Laika?",
+        "Why did directors need the tool you built at Laika?",
+        "How did you extend Maya at Laika?",
+        "Who was the tool you built at Laika for?"
+      ]
+    },
+    {
+      "range": [
+        715,
+        907
+      ],
+      "questions": [
+        "What kind of thing did you actually build at Laika?",
+        "What was the core problem behind your work at Laika?",
+        "Why build a stand-in instead of just showing the finished thing?",
+        "How do you decide how close a rough version needs to be to the real one?"
+      ]
+    },
+    {
+      "range": [
+        960,
+        1139
+      ],
+      "questions": [
+        "Why does your Laika Studios internship still matter to you?",
+        "Did you actually work in CGI, or just admire it from the outside?",
+        "Was the Laika Studios work the kind of technology you wanted to build?"
+      ]
+    },
+    {
+      "range": [
+        1142,
+        1357
+      ],
+      "questions": [
+        "Why does your Laika Studios internship still matter to you?",
+        "What did Laika teach you that you still use today?",
+        "How do you build things so people who aren't engineers can act on them?"
+      ]
+    }
+  ]
+}

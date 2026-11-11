@@ -1,0 +1,40 @@
+{
+  "documentId": "perspective|firing_and_accountability",
+  "sections": [
+    {
+      "range": [
+        76,
+        216
+      ],
+      "questions": [
+        "How do you feel about having to fire someone?",
+        "How do you handle firing someone when it has to happen?"
+      ]
+    },
+    {
+      "range": [
+        289,
+        588
+      ],
+      "questions": [
+        "When someone on your team isn't performing, who do you hold accountable first?",
+        "How do you decide whether someone really can't do the job?",
+        "Why do you say a failed employee often means failed leadership?",
+        "What do you think a manager owes someone before calling them a poor performer?",
+        "At what point is someone's underperformance actually on you?"
+      ]
+    },
+    {
+      "range": [
+        642,
+        792
+      ],
+      "questions": [
+        "Why does leadership matter when someone on your team fails?",
+        "What do you do when someone fails because they were set up badly?",
+        "What happens if you fire someone who was set up to fail?",
+        "When do you fix the setup instead of firing the person?"
+      ]
+    }
+  ]
+}

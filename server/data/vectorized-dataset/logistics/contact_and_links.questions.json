@@ -1,0 +1,63 @@
+{
+  "documentId": "logistics|contact_and_links",
+  "sections": [
+    {
+      "range": [
+        75,
+        355
+      ],
+      "questions": [
+        "What's your email address?",
+        "How do I get in touch with you?",
+        "How do I book time with you?",
+        "Where can I find your LinkedIn and resume?",
+        "Why don't you just list your email?"
+      ]
+    },
+    {
+      "range": [
+        413,
+        588
+      ],
+      "questions": [
+        "How do I book a call with you?",
+        "How long is a call with you?",
+        "Where do I find the link to book time with you?"
+      ]
+    },
+    {
+      "range": [
+        648,
+        811
+      ],
+      "questions": [
+        "Where can I find your LinkedIn profile?",
+        "How do I get to your LinkedIn from this page?",
+        "Where can I see your research and citations?"
+      ]
+    },
+    {
+      "range": [
+        872,
+        978
+      ],
+      "questions": [
+        "Where can I find your resume?",
+        "How do I download your CV?",
+        "Is there another place on the site to grab your resume?"
+      ]
+    },
+    {
+      "range": [
+        1011,
+        1195
+      ],
+      "questions": [
+        "Can I get your phone number?",
+        "How do I set up a call with you?",
+        "Where can I find you on LinkedIn?",
+        "Where do I book a time to talk to you?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "documentId": "stories|iscribe_outage_night",
+  "sections": [
+    {
+      "range": [
+        110,
+        314
+      ],
+      "questions": [
+        "What happened when your services went down at iScribeHealth?",
+        "When did the iScribeHealth outage hit, and how long did you have before customers found out?"
+      ]
+    },
+    {
+      "range": [
+        317,
+        411
+      ],
+      "questions": [
+        "What was the first decision you made when the services went down?",
+        "In a crisis, do you deal with the technical problem first or the people?"
+      ]
+    },
+    {
+      "range": [
+        453,
+        610
+      ],
+      "questions": [
+        "What was the first thing you did when everything went down?",
+        "Who did you pull in when the services went dark?",
+        "How did you get your people mobilized in the middle of the emergency?",
+        "Why did you have food delivered to your engineers' homes?",
+        "Did you stay up all night with your team when things broke?",
+        "How do you take care of your team when everyone's under pressure?",
+        "How many engineers did you pull in that night?"
+      ]
+    },
+    {
+      "range": [
+        613,
+        913
+      ],
+      "questions": [
+        "What was the first thing you did when the services went dark?",
+        "Why did you feed the team instead of going straight to diagnosis?",
+        "What do you think actually limits a team during an incident?",
+        "How do you decide what's the highest-leverage move in the moment?",
+        "How much time and pressure did you have that night?"
+      ]
+    },
+    {
+      "range": [
+        916,
+        1020
+      ],
+      "questions": [
+        "Did you stay up with your people the night the services went dark?",
+        "Why did you stay up with them instead of going to bed?"
+      ]
+    },
+    {
+      "range": [
+        1068,
+        1308
+      ],
+      "questions": [
+        "What principle did you take away from the night the services went dark?",
+        "When do you think you should put a human in the loop?",
+        "Why do you want a human in the loop when the pressure is highest?",
+        "What do leaders get wrong when the clock is ticking?",
+        "What breaks first when a team is under serious stress?"
+      ]
+    },
+    {
+      "range": [
+        1311,
+        1536
+      ],
+      "questions": [
+        "What did that outage teach you about leading people?",
+        "How do you keep your team going through a long, high-pressure incident?",
+        "Who do you put on the problem when everything's broken?",
+        "When something breaks, do you fix first or look after the team first?",
+        "Why do you care whether your team has eaten or rested during an incident?",
+        "What do you tell your team about deadlines when everything's urgent?",
+        "How involved do you get when your team is in the thick of a crisis?"
+      ]
+    },
+    {
+      "range": [
+        1559,
+        1649
+      ],
+      "questions": [
+        "Did you manage to fix the outage?",
+        "When did you get everything back up and running?",
+        "Were your customers affected by the outage?"
+      ]
+    },
+    {
+      "range": [
+        1652,
+        1850
+      ],
+      "questions": [
+        "What does leading by example mean to you?",
+        "Why do you show up for people instead of just giving a pep talk?",
+        "What's the most hands-on thing you've done to support someone who was giving up their night for you?"
+      ]
+    }
+  ]
+}

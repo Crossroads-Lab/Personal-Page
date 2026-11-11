@@ -1,0 +1,127 @@
+{
+  "documentId": "background|personal_background",
+  "sections": [
+    {
+      "range": [
+        77,
+        277
+      ],
+      "questions": [
+        "Are you French?",
+        "Where were you born?",
+        "Where did you grow up?",
+        "What brought you to the US?",
+        "Are you a US citizen?"
+      ]
+    },
+    {
+      "range": [
+        324,
+        346
+      ],
+      "questions": [
+        "Where do you live?"
+      ]
+    },
+    {
+      "range": [
+        394,
+        593
+      ],
+      "questions": [
+        "How did you end up in the US?",
+        "When did you move to the US?",
+        "Where did you study when you first got to the US?",
+        "When did you finish your PhD?",
+        "What's your PhD in?",
+        "What was the original plan when you came over?",
+        "How did a one-year exchange turn into seven years?",
+        "Are you based in the US?"
+      ]
+    },
+    {
+      "range": [
+        596,
+        742
+      ],
+      "questions": [
+        "Which university did you end up choosing?",
+        "Why did you pick Oregon State?",
+        "How did you decide where to go to school?"
+      ]
+    },
+    {
+      "range": [
+        804,
+        894
+      ],
+      "questions": [
+        "What do you like to do when you're not working?",
+        "Do you like to cook?",
+        "Do you make time for your family?",
+        "Why are cooking and family the things you hold onto outside of work?"
+      ]
+    },
+    {
+      "range": [
+        897,
+        1209
+      ],
+      "questions": [
+        "What do you do for fun outside of work?",
+        "Have you actually worked as a DJ?",
+        "Why did you end up in Oregon?",
+        "Where do you ski living in Reno?",
+        "Do you run or swim to stay in shape?",
+        "Are you a big movie person?"
+      ]
+    },
+    {
+      "range": [
+        1252,
+        1434
+      ],
+      "questions": [
+        "What do you do to unwind outside of work?",
+        "Why is cooking the thing that lets you switch off?"
+      ]
+    },
+    {
+      "range": [
+        1437,
+        1725
+      ],
+      "questions": [
+        "How do you protect your family time?",
+        "What does recharging actually mean to you?",
+        "Do you make people put their phones away at dinner?",
+        "Why do you keep asking people to put their phones away when it feels unreasonable?",
+        "Has your approach to family time changed over the years?",
+        "Did you write a book chapter about how you disconnect?"
+      ]
+    },
+    {
+      "range": [
+        1728,
+        1872
+      ],
+      "questions": [
+        "What physical activities do you do to recharge?",
+        "Why do you recharge with things like surfing and skiing?"
+      ]
+    },
+    {
+      "range": [
+        1909,
+        2034
+      ],
+      "questions": [
+        "What languages do you speak?",
+        "Where did you grow up?",
+        "When did you move to the US?",
+        "How did you end up in the US?",
+        "Was the PhD always the plan?"
+      ]
+    }
+  ]
+}

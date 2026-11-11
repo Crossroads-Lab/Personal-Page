@@ -1,0 +1,122 @@
+{
+  "documentId": "stories|youtube_shipping_past_politics",
+  "sections": [
+    {
+      "range": [
+        96,
+        327
+      ],
+      "questions": [
+        "What happened to your video quality idea at YouTube?",
+        "Why did your YouTube idea get killed? Was it a technical problem?",
+        "What was the idea at YouTube that became Suggested Edits?"
+      ]
+    },
+    {
+      "range": [
+        393,
+        651
+      ],
+      "questions": [
+        "How did you get past the internal politics at YouTube to ship your idea?",
+        "How did you get the YouTube project built, did you hack on it at night?",
+        "Why did you build a working demo instead of just arguing your case?",
+        "How many people use what you shipped at YouTube?",
+        "How widely did your YouTube project roll out, everything or just a slice?"
+      ]
+    },
+    {
+      "range": [
+        723,
+        870
+      ],
+      "questions": [
+        "What happened when leadership at YouTube had already written off your idea?",
+        "How senior were you when you pushed back on leadership at YouTube?"
+      ]
+    },
+    {
+      "range": [
+        873,
+        1134
+      ],
+      "questions": [
+        "How did you handle it when you disagreed with your manager or a senior leader?",
+        "Did you go over your boss's head when you lost the argument?",
+        "Why didn't you keep pushing your case in meetings after you'd lost the argument?",
+        "How do you push back on a decision when you think leadership is wrong?",
+        "Was that something you built on your own time, or as part of your normal job?"
+      ]
+    },
+    {
+      "range": [
+        1137,
+        1394
+      ],
+      "questions": [
+        "How do you push back when you disagree with your manager or a senior leader?",
+        "Why do you bring evidence instead of just arguing your case?",
+        "Why would you rather be wrong privately than debate it with the team?",
+        "When do you skip the debate and just go prove it yourself?"
+      ]
+    },
+    {
+      "range": [
+        1451,
+        1529
+      ],
+      "questions": [
+        "What did you learn at YouTube about pushing an idea through?",
+        "Why build a demo instead of writing a doc to win people over?",
+        "How do you get an idea through when people disagree about it?"
+      ]
+    },
+    {
+      "range": [
+        1532,
+        1830
+      ],
+      "questions": [
+        "What's the catch with pushing an idea through at YouTube?",
+        "What does it cost you personally to push an idea through on your own?",
+        "How often is it okay to push an idea through on your own?",
+        "Why is pushing ideas through yourself a bad way to work all the time?"
+      ]
+    },
+    {
+      "range": [
+        1880,
+        2034
+      ],
+      "questions": [
+        "Why did you leave YouTube after the project shipped?",
+        "After you shipped at YouTube, what did you learn about where your ideas would get heard?",
+        "Did you leave YouTube on bad terms?",
+        "Where did you go after YouTube?",
+        "How soon did you move to Amazon after leaving YouTube?"
+      ]
+    },
+    {
+      "range": [
+        2037,
+        2272
+      ],
+      "questions": [
+        "After you got it built at YouTube, did the politics actually change?",
+        "How do you read it when you keep having to work around the same obstacle?",
+        "Why wasn't winning the argument at YouTube enough to fix the bigger problem?"
+      ]
+    },
+    {
+      "range": [
+        2330,
+        2581
+      ],
+      "questions": [
+        "What would you do differently about how you shipped past the politics at YouTube?",
+        "Why do you say you were lucky that building it in the dark at YouTube worked out?",
+        "How do you decide whether an idea you feel sure about is worth spending your nights on?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "documentId": "perspective|future_of_healthcare_ai",
+  "sections": [
+    {
+      "range": [
+        85,
+        264
+      ],
+      "questions": [
+        "What do you think healthcare looks like in five years?",
+        "How much of healthcare work do you think AI agents will take over?",
+        "What do you think happens to the EHR?",
+        "Why are you bullish on AI in healthcare?"
+      ]
+    },
+    {
+      "range": [
+        318,
+        616
+      ],
+      "questions": [
+        "What would you want to build if you joined us?",
+        "What would a patient's experience look like with the system you want to build?",
+        "Why is trust the key to what you want to build?",
+        "Who would your healthcare agents be for?",
+        "When would a patient actually get reimbursed in your vision?"
+      ]
+    },
+    {
+      "range": [
+        665,
+        860
+      ],
+      "questions": [
+        "Why is clinician paperwork the problem you want to solve?",
+        "Why do you think fixing this one pays off more than other AI problems?",
+        "What does cutting paperwork actually give back to clinicians?"
+      ]
+    }
+  ]
+}

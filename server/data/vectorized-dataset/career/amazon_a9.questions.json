@@ -1,0 +1,51 @@
+{
+  "documentId": "career|amazon_a9",
+  "sections": [
+    {
+      "range": [
+        56,
+        300
+      ],
+      "questions": [
+        "What was your role at Amazon?",
+        "When did you work at Amazon?",
+        "What team were you on at Amazon?",
+        "What did you build at Amazon and how many people used it?"
+      ]
+    },
+    {
+      "range": [
+        340,
+        483
+      ],
+      "questions": [
+        "What did you build at Amazon A9?",
+        "How fast was the logo detection you launched at A9?"
+      ]
+    },
+    {
+      "range": [
+        535,
+        682
+      ],
+      "questions": [
+        "What did you actually build at Amazon A9?",
+        "What was the visual search database you designed at Amazon?",
+        "What was the annotation and evaluation platform you built at A9?",
+        "How much data were you managing at Amazon A9?"
+      ]
+    },
+    {
+      "range": [
+        731,
+        987
+      ],
+      "questions": [
+        "How many patents do you have?",
+        "What are your patents actually for?",
+        "How did you take products from research all the way to production at A9?",
+        "How do you make sure what's technically feasible matches what customers actually need?"
+      ]
+    }
+  ]
+}

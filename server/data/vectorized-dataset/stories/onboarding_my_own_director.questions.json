@@ -1,0 +1,99 @@
+{
+  "documentId": "stories|onboarding_my_own_director",
+  "sections": [
+    {
+      "range": [
+        86,
+        216
+      ],
+      "questions": [
+        "What's the most notable senior hire you've onboarded?",
+        "Who was the director you onboarded at Snap?",
+        "When did your second director join you at Snap?",
+        "What was your second director hired to do at Snap?"
+      ]
+    },
+    {
+      "range": [
+        219,
+        441
+      ],
+      "questions": [
+        "What was it like onboarding your own director?",
+        "What's different about onboarding someone who's above you instead of on your team?"
+      ]
+    },
+    {
+      "range": [
+        516,
+        965
+      ],
+      "questions": [
+        "How did you onboard your own director?",
+        "What did you actually tell a director who had already run a lab?",
+        "How do you think about onboarding someone more senior than you?",
+        "Why not just walk a senior person through how things work?",
+        "Who was the director you onboarded?",
+        "How long had your director been a professor?"
+      ]
+    },
+    {
+      "range": [
+        968,
+        1236
+      ],
+      "questions": [
+        "What's the thing nobody writes down that a senior hire still needs from you?",
+        "How did you onboard your own director when he was more senior than you?",
+        "What did you tell your new director, including the stuff that didn't make you look good?",
+        "Why didn't you just tell your new director what you thought?",
+        "How quickly do you try to get a new senior hire up to speed?"
+      ]
+    },
+    {
+      "range": [
+        1239,
+        1475
+      ],
+      "questions": [
+        "How did you handle having your own opinions about the research org's direction when you were onboarding your new director?",
+        "How do you share your own views with a more senior leader without pushing them forever?"
+      ]
+    },
+    {
+      "range": [
+        1526,
+        1668
+      ],
+      "questions": [
+        "What did your director work on before Microsoft and Adobe?",
+        "Where did your director work early in his career?",
+        "When did your director work at Lucasfilm and Pixar?",
+        "Was onboarding your own director personal for you?"
+      ]
+    },
+    {
+      "range": [
+        1671,
+        2003
+      ],
+      "questions": [
+        "What did you originally want to do with your career?",
+        "Where did you intern?",
+        "Why did you get into graphics in the first place?",
+        "How did you end up in AI?",
+        "Was there anything personal about onboarding your director?"
+      ]
+    },
+    {
+      "range": [
+        2006,
+        2101
+      ],
+      "questions": [
+        "How did you keep things from getting awkward when you onboarded your own director?",
+        "Did onboarding your own director feel personal to you?"
+      ]
+    }
+  ]
+}

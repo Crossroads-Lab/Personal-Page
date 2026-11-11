@@ -1,0 +1,40 @@
+{
+  "documentId": "perspective|influences",
+  "sections": [
+    {
+      "range": [
+        57,
+        301
+      ],
+      "questions": [
+        "What's your favorite book?",
+        "What did The Lean Startup teach you?",
+        "Why do you care so much about learning faster than everyone else?",
+        "Where have you applied the Lean Startup approach?",
+        "What's your favorite line from The Lean Startup?"
+      ]
+    },
+    {
+      "range": [
+        335,
+        522
+      ],
+      "questions": [
+        "What's your favorite movie?",
+        "Why is Moneyball your favorite movie?",
+        "How does Moneyball connect to the way you work?"
+      ]
+    },
+    {
+      "range": [
+        581,
+        751
+      ],
+      "questions": [
+        "What's your stance on doing things the way everyone else in the industry does?",
+        "What's the common thread in the things that influenced you?",
+        "Why does engineering leadership appeal to you?"
+      ]
+    }
+  ]
+}

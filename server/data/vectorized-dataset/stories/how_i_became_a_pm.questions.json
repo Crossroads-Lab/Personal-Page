@@ -1,0 +1,162 @@
+{
+  "documentId": "stories|how_i_became_a_pm",
+  "sections": [
+    {
+      "range": [
+        86,
+        155
+      ],
+      "questions": [
+        "How did you actually end up as a product manager?",
+        "Why did you create the PM job yourself instead of waiting for someone to give it to you?",
+        "Did you formally switch from engineering to product?",
+        "Who gave you your first PM role?"
+      ]
+    },
+    {
+      "range": [
+        158,
+        455
+      ],
+      "questions": [
+        "What was holding you back when you were a researcher at Amazon A9?",
+        "How did you cope at A9 when the infrastructure you needed didn't exist?",
+        "What was your role at Amazon A9?",
+        "What exactly was missing at A9 that you needed?",
+        "Why did you need new infrastructure at A9?",
+        "What was the starting point of your move from engineering into product?"
+      ]
+    },
+    {
+      "range": [
+        458,
+        614
+      ],
+      "questions": [
+        "What did the product team and the engineering team each tell you?",
+        "Why were you stuck if both teams had a fair answer?",
+        "How did you go about getting it picked up?",
+        "What got you stuck before you moved from engineering into product?"
+      ]
+    },
+    {
+      "range": [
+        617,
+        775
+      ],
+      "questions": [
+        "What did you put together yourself when there was no PM?",
+        "Why did you write the whole proposal yourself?",
+        "How did you end up doing a PM's job as an engineer?",
+        "Did you have a PM on that, or was it all you?"
+      ]
+    },
+    {
+      "range": [
+        832,
+        919
+      ],
+      "questions": [
+        "How did you get the product team on board with your proposal?",
+        "What did the product team say when they read your proposal?",
+        "How do you make sure an idea holds up before you push it forward?"
+      ]
+    },
+    {
+      "range": [
+        922,
+        1189
+      ],
+      "questions": [
+        "How did you get engineering to say yes?",
+        "What did you tell engineering when you brought it to them?",
+        "Did you correct people about where the proposal came from?",
+        "How did engineering respond to it?",
+        "Who signed off on the proposal?",
+        "Did you go to product or engineering first?"
+      ]
+    },
+    {
+      "range": [
+        1192,
+        1427
+      ],
+      "questions": [
+        "Was the sign-off on that proposal real, or did you spin how it got approved?",
+        "How did you get that proposal in front of people who mattered?",
+        "Did your proposal succeed because it was good, or because of how you got it in front of people?",
+        "How do you think about owning the uncomfortable parts of how something happened?"
+      ]
+    },
+    {
+      "range": [
+        1430,
+        1612
+      ],
+      "questions": [
+        "What happened when you took that proposal around?",
+        "What did you build once you became the lead?",
+        "How big was the dataset behind that platform?"
+      ]
+    },
+    {
+      "range": [
+        1657,
+        1733
+      ],
+      "questions": [
+        "What happened when the product team called you in?",
+        "How long before the product team got in touch with you?",
+        "What did you think when the product team summoned you?"
+      ]
+    },
+    {
+      "range": [
+        1736,
+        1908
+      ],
+      "questions": [
+        "How did you get the technical PM role?",
+        "What was your job before you became a technical PM?",
+        "Why were you offered the technical PM role?",
+        "Do you plan your career or let things happen?",
+        "How did people react when you moved into PM?"
+      ]
+    },
+    {
+      "range": [
+        1965,
+        1996
+      ],
+      "questions": [
+        "Did you ever try going back to engineering after you became a PM?",
+        "How long did you last when you went back to engineering?"
+      ]
+    },
+    {
+      "range": [
+        1999,
+        2300
+      ],
+      "questions": [
+        "What happened when your boss pulled you into product just days after you joined Snap?",
+        "Did you ever try to go back to engineering after moving into product?",
+        "What's your actual title at Snap?",
+        "Why do you have two titles at Snap?",
+        "What were you hired to do at Snap?",
+        "How soon after joining Snap did they move you into product?",
+        "Why did you end up doing product at Snap if you interviewed for research?"
+      ]
+    },
+    {
+      "range": [
+        2303,
+        2339
+      ],
+      "questions": [
+        "Do you think you can ever really escape your career path?",
+        "Did you ever try to go back to engineering after becoming a PM?"
+      ]
+    }
+  ]
+}

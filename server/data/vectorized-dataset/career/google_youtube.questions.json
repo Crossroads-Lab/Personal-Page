@@ -1,0 +1,40 @@
+{
+  "documentId": "career|google_youtube",
+  "sections": [
+    {
+      "range": [
+        77,
+        165
+      ],
+      "questions": [
+        "What was your role at Google?",
+        "When were you at Google and YouTube?",
+        "Which team at Google were you on?"
+      ]
+    },
+    {
+      "range": [
+        203,
+        495
+      ],
+      "questions": [
+        "What is the Suggested Edits project you built at YouTube?",
+        "What project did you start and lead at YouTube?",
+        "How many people use what you built at YouTube?",
+        "How did you scale Suggested Edits across all of YouTube?",
+        "What did Suggested Edits actually improve for viewers?"
+      ]
+    },
+    {
+      "range": [
+        549,
+        751
+      ],
+      "questions": [
+        "What did you actually build for creators at YouTube?",
+        "How did you bring computer vision into YouTube's creator tools?",
+        "Do you hold any patents?"
+      ]
+    }
+  ]
+}

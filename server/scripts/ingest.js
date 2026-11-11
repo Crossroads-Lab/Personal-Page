@@ -73,6 +73,20 @@ const main = async () => {
   // while silently producing breadcrumb-only bins.
   const softErrors = {};
 
+  // The questions each section can be asked, kept rather than discarded.
+  //
+  // Augmentation generates them so retrieval can find a section from words
+  // the section does not itself use, then embeds them and throws the text
+  // away — the .bin stores Float32 vectors and nothing else. So the corpus
+  // knows what lands on a section and cannot say it.
+  //
+  // Keeping them is what makes a follow-up chip safe. The questions
+  // belonging to the sections retrieval just ranked are, by construction,
+  // questions this corpus answers; offering those costs no model call and
+  // cannot promise something that is not there. Free here — the rows are
+  // already parsed and in hand when augmentation finishes.
+  const questionRows = {};
+
   const inputs = await Promise.all(files.map(async (file) => ({
     file,
     markdown:   await fs.readFile(file, "utf8"),
@@ -85,6 +99,9 @@ const main = async () => {
       llmConfig: CONFIG.SONNET55,
       limit,
     } : {}),
+    onRows: augmentPrompt
+      ? (rows) => { questionRows[file] = rows; }
+      : undefined,
     onError: ({ stage, sectionIndex, cause }) => {
       // documentId matters more than sectionIndex here: without it a failure
       // report can't be turned into a targeted re-run.
@@ -114,6 +131,18 @@ const main = async () => {
     const binPath = path.join(CONFIG.DATASET, rel);
     await fs.mkdir(path.dirname(binPath), { recursive: true });
     await fs.writeFile(binPath, r.value);
+
+    // Beside the .bin, same stem, so deriveDocumentId still works on either
+    // and a stale pair is obvious. Ranges are the section ranges the .bin
+    // indexes by, which is how a retrieved hit finds its questions.
+    const rows = questionRows[input.file];
+    if (rows) {
+      const asked = rows
+        .filter(s => s.questions.length)
+        .map(s => ({ range: s.range, questions: s.questions }));
+      await fs.writeFile(binPath.replace(/\.bin$/, ".questions.json"),
+        JSON.stringify({ documentId: input.documentId, sections: asked }, null, 2) + "\n");
+    }
 
     ok++;
     console.log(`  ✓ ${input.documentId.padEnd(42)} ${(r.value.length / 1024).toFixed(1)} KB`);

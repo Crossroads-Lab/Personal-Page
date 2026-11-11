@@ -1,0 +1,73 @@
+{
+  "documentId": "career|crossroads_venture_studio",
+  "sections": [
+    {
+      "range": [
+        82,
+        279
+      ],
+      "questions": [
+        "What was your title at Crossroads Venture Studio?",
+        "What did you actually do at Crossroads?",
+        "Were you the one making the technical architecture calls at Crossroads?",
+        "Did you own product-market-fit strategy at Crossroads?",
+        "What kind of ventures did Crossroads Venture Studio work on?",
+        "How long were you at Crossroads Venture Studio?"
+      ]
+    },
+    {
+      "range": [
+        365,
+        762
+      ],
+      "questions": [
+        "What kind of work did you do at Crossroads Venture Studio?",
+        "How many teams did you incubate and bring together at Crossroads?",
+        "Which of your Crossroads projects actually succeeded?",
+        "What was your technical role with the Crossroads portfolio companies?",
+        "Who owned the architecture decisions for Crossroads portfolio companies?",
+        "Where can I see the Crossroads Venture Studio portfolio?"
+      ]
+    },
+    {
+      "range": [
+        832,
+        1029
+      ],
+      "questions": [
+        "What are you building right now?",
+        "What's your title at the stealth startup?",
+        "When did you start your current startup?",
+        "What industry is your startup in?",
+        "Can you tell me more about the stealth startup?"
+      ]
+    },
+    {
+      "range": [
+        1032,
+        1270
+      ],
+      "questions": [
+        "Is there something you're working on that you're keeping quiet?",
+        "Why aren't you sharing what you're working on here?",
+        "How can I find out more about what you're working on?",
+        "When would you be willing to share the details?",
+        "Is there anywhere I can read about what you're working on?"
+      ]
+    },
+    {
+      "range": [
+        1315,
+        1580
+      ],
+      "questions": [
+        "What results did the Crossroads studio get while you were there?",
+        "What is the incubation framework you built at Crossroads?",
+        "Why did you build a framework at Crossroads in the first place?",
+        "What impact did your work have on how fast Crossroads teams shipped generative AI features?",
+        "What did you do about CI/CD across the Crossroads companies?",
+        "Tell me about a time you built something that sped up multiple teams at once."
+      ]
+    }
+  ]
+}

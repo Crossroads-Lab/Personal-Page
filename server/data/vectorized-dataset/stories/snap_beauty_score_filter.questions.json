@@ -1,0 +1,68 @@
+{
+  "documentId": "stories|snap_beauty_score_filter",
+  "sections": [
+    {
+      "range": [
+        87,
+        343
+      ],
+      "questions": [
+        "What's a time you disagreed with an engineer at Snap?",
+        "What was the beauty score filter at Snap?",
+        "Who wanted to ship the beauty score filter?",
+        "What was your role at Snap?",
+        "Was the beauty score filter already built when your engineer wanted to ship it?"
+      ]
+    },
+    {
+      "range": [
+        396,
+        618
+      ],
+      "questions": [
+        "Why did you object to the beauty score filter at Snap?",
+        "What worried you about a feature that ranks teens by looks?",
+        "Was that feature a risk to Snap as a company, or just an ethical problem?",
+        "Why did it matter to you that Snap's users skew young?"
+      ]
+    },
+    {
+      "range": [
+        672,
+        934
+      ],
+      "questions": [
+        "What did you do when you had concerns about the beauty score filter at Snap?",
+        "How did you turn your objection to the beauty score filter into product input instead of a veto?",
+        "Why didn't you just kill the beauty score filter at Snap?"
+      ]
+    },
+    {
+      "range": [
+        975,
+        1240
+      ],
+      "questions": [
+        "How did the beauty score filter disagreement at Snap end up getting resolved?",
+        "What did you do with the underlying technology after the beauty score filter was dropped?",
+        "Why did you redirect the model toward ad targeting instead of scrapping it?",
+        "How do you handle it when a technology is valuable but aimed at the wrong audience?",
+        "What was the final outcome of the beauty score filter situation at Snap?",
+        "What happened to the engineer involved in the beauty score filter at Snap?",
+        "Did the design team agree with you on the beauty score filter at Snap?"
+      ]
+    },
+    {
+      "range": [
+        1299,
+        1576
+      ],
+      "questions": [
+        "What's the clearest example of you having doubts about shipping something that technically worked?",
+        "When you have a concern about a product, who do you want making the final call?",
+        "If something shouldn't go out as-is, what do you do instead of killing it?",
+        "Why don't you just say no when you think something is a mistake?"
+      ]
+    }
+  ]
+}

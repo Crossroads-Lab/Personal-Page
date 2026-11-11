@@ -1,0 +1,31 @@
+{
+  "documentId": "career|infineon",
+  "sections": [
+    {
+      "range": [
+        70,
+        358
+      ],
+      "questions": [
+        "What was your role at Infineon?",
+        "How long were you at Infineon?",
+        "Where were you based when you worked at Infineon?",
+        "Why did you spend a year in Germany?",
+        "Did you speak German when you moved to Munich?"
+      ]
+    },
+    {
+      "range": [
+        397,
+        613
+      ],
+      "questions": [
+        "What test platforms did you build at Infineon?",
+        "Have you worked in C and Assembly?",
+        "How did you cut validation time at Infineon?",
+        "What did you automate with TCL at Infineon?",
+        "How did you cut manual testing effort at Infineon?"
+      ]
+    }
+  ]
+}

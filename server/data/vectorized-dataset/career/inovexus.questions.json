@@ -1,0 +1,65 @@
+{
+  "documentId": "career|inovexus",
+  "sections": [
+    {
+      "range": [
+        75,
+        202
+      ],
+      "questions": [
+        "What do you do at Inovexus?",
+        "How long have you been mentoring at Inovexus?",
+        "Were you still running Crossroads when you started at Inovexus?"
+      ]
+    },
+    {
+      "range": [
+        242,
+        455
+      ],
+      "questions": [
+        "What do you actually help founders with when you mentor them?",
+        "Why do you mentor entrepreneurs?",
+        "Who do you mentor at Inovexus?",
+        "What did you struggle with when you were a founder yourself?"
+      ]
+    },
+    {
+      "range": [
+        458,
+        595
+      ],
+      "questions": [
+        "Which startups are you mentoring at Inovexus right now?",
+        "Has any company you've mentored actually raised money?",
+        "How long did it take that startup to raise its seed after joining your mentoring?"
+      ]
+    },
+    {
+      "range": [
+        638,
+        863
+      ],
+      "questions": [
+        "Why do you spend time mentoring at Inovexus?",
+        "What was the gap that nearly cost you at Heali?",
+        "What do you help people with when you mentor at Inovexus?",
+        "Did you have anyone guiding you at Heali?"
+      ]
+    },
+    {
+      "range": [
+        866,
+        1165
+      ],
+      "questions": [
+        "Why do you spend time mentoring?",
+        "What do technical founders actually need from a mentor?",
+        "How do you help technical founders when you mentor them?",
+        "When did you start Crossroads Venture Studio?",
+        "Who do you usually mentor?",
+        "What's the difference between your mentoring and Crossroads?"
+      ]
+    }
+  ]
+}

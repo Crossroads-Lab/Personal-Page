@@ -1,7 +1,7 @@
 {
   "name": "personal-page-server",
   "version": "1.0.0",
-  "description": "RAG backend for william-brendel.com \u2014 ask-nereus retrieval engine, personal corpus",
+  "description": "RAG backend for william-brendel.com — ask-nereus retrieval engine, personal corpus",
   "type": "commonjs",
   "main": "./app.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "dictionary-en": "^4.0.0",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "llms": "github:williambrendel/llms#v1.10.0",
+    "llms": "github:williambrendel/llms#v1.11.0-followups.1",
     "nspell": "^2.1.5"
   }
 }

@@ -1,0 +1,81 @@
+{
+  "documentId": "career|heali_ai",
+  "sections": [
+    {
+      "range": [
+        54,
+        262
+      ],
+      "questions": [
+        "What was your role at Heali AI?",
+        "How long were you at Heali?",
+        "What does Heali actually do?"
+      ]
+    },
+    {
+      "range": [
+        298,
+        519
+      ],
+      "questions": [
+        "What was your role on the product at Heali AI?",
+        "Have you launched iOS and Android apps for consumers?",
+        "Did you set up the prioritization framework at Heali AI?",
+        "Did you run discovery at Heali AI?",
+        "How did you turn complex nutritional science into a product?",
+        "Was Heali AI B2B or B2C?"
+      ]
+    },
+    {
+      "range": [
+        581,
+        731
+      ],
+      "questions": [
+        "How much did you raise at Heali?",
+        "What valuation did Heali reach?",
+        "What did you do to get Heali funded?",
+        "What did you set up technically at Heali?"
+      ]
+    },
+    {
+      "range": [
+        797,
+        981
+      ],
+      "questions": [
+        "What did you actually build at Heali?",
+        "How does the AI pipeline you built at Heali work?",
+        "How much nutrition data did you process at Heali?",
+        "How many medical conditions does the engine you built at Heali support?",
+        "Were you the one who designed the AI pipeline at Heali?"
+      ]
+    },
+    {
+      "range": [
+        1039,
+        1206
+      ],
+      "questions": [
+        "How many people were actually using Heali's apps?",
+        "What was the Diabetes Prevention Program product you built at Heali?",
+        "How did you bootstrap the diabetes prevention product at Heali?",
+        "What partnerships did you land at Heali?"
+      ]
+    },
+    {
+      "range": [
+        1268,
+        1495
+      ],
+      "questions": [
+        "How big was your team at Heali?",
+        "Who was on your team at Heali?",
+        "How did you put together the team at Heali?",
+        "Do you have any patents from your time at Heali?",
+        "Have you published any research from your work at Heali?",
+        "Was your patent and paper tied to what Heali actually built?"
+      ]
+    }
+  ]
+}

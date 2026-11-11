@@ -1,0 +1,34 @@
+{
+  "documentId": "logistics|intro",
+  "sections": [
+    {
+      "range": [
+        84,
+        354
+      ],
+      "questions": [
+        "Can you give me the one-minute version of who you are?",
+        "What's your background in AI?",
+        "How many years of experience do you have?",
+        "Which big companies have you shipped AI at?",
+        "Do you have a PhD?",
+        "Have you started your own companies?",
+        "What does your current startup do?",
+        "What's your title at your current company?"
+      ]
+    },
+    {
+      "range": [
+        415,
+        651
+      ],
+      "questions": [
+        "What are you optimizing for in your career?",
+        "Why did you leave big tech?",
+        "What have you been building for the last six years?",
+        "How long have you been working in healthcare?",
+        "What do you want to work on next?"
+      ]
+    }
+  ]
+}

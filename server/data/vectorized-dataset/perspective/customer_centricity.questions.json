@@ -1,0 +1,126 @@
+{
+  "documentId": "perspective|customer_centricity",
+  "sections": [
+    {
+      "range": [
+        79,
+        195
+      ],
+      "questions": [
+        "What does being customer-centric actually mean to you?",
+        "What do you think builds trust with customers?",
+        "What do you think customers are really paying for?",
+        "Why do predictability and reliability matter so much to you?"
+      ]
+    },
+    {
+      "range": [
+        198,
+        592
+      ],
+      "questions": [
+        "What does being customer-centric actually mean to you?",
+        "Do you think the best product is the most innovative one?",
+        "Why do engineers and founders get so drawn to novelty?",
+        "What makes a product something people can actually depend on?",
+        "When does a cool new approach lose to a boring one?"
+      ]
+    },
+    {
+      "range": [
+        664,
+        847
+      ],
+      "questions": [
+        "What's an example of you choosing the unglamorous work over the exciting stuff at iScribeHealth?",
+        "Why did you spend your time on compliance when it isn't the exciting part of a roadmap?",
+        "What did you actually do at iScribeHealth?",
+        "Did you personally lead the SOC 2 and HIPAA work at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        850,
+        1197
+      ],
+      "questions": [
+        "What's an example of you putting stability ahead of shiny new work?",
+        "How did you actually reduce downtime on the core system?",
+        "What was the measurable result of your reliability work?",
+        "How did you set up incident response from detection through communication?",
+        "What did you do on the .NET 4 to .NET 8 upgrade?",
+        "What happened when you ran your company's first penetration test?",
+        "Why would you choose reliability over building something new?"
+      ]
+    },
+    {
+      "range": [
+        1200,
+        1342
+      ],
+      "questions": [
+        "Can you give me an example of choosing reliability over something new and exciting?",
+        "Why would you put reliability ahead of building something flashy?",
+        "When does reliability matter more than shipping something new?",
+        "Who are you really building for when you choose reliability?"
+      ]
+    },
+    {
+      "range": [
+        1390,
+        1466
+      ],
+      "questions": [
+        "Why does being customer-centric matter more in healthcare than in other industries?",
+        "What does it actually cost when a healthcare product is unpredictable?"
+      ]
+    },
+    {
+      "range": [
+        1469,
+        1749
+      ],
+      "questions": [
+        "Why is reliability a bigger deal in healthcare than in other software?",
+        "What do providers actually do when your documentation tool breaks on them?",
+        "Why do you say you only get one chance with providers?",
+        "How do you decide between shipping something new and keeping things stable?",
+        "What does it mean to be the thing providers stop worrying about?"
+      ]
+    },
+    {
+      "range": [
+        1752,
+        1922
+      ],
+      "questions": [
+        "Would you rather ship something smaller that works or something bigger that mostly works?",
+        "Why would you cut scope before risking customer trust?",
+        "How do you make tradeoffs when you can't deliver everything?"
+      ]
+    },
+    {
+      "range": [
+        1960,
+        2019
+      ],
+      "questions": [
+        "Is being customer-centric just risk aversion to you?",
+        "How does sequencing fit into the way you think about customer focus?"
+      ]
+    },
+    {
+      "range": [
+        2022,
+        2320
+      ],
+      "questions": [
+        "Isn't being customer-focused just a polite way of being risk averse?",
+        "Why do the boring foundational work before going after the big ambitious projects?",
+        "How do you balance keeping the basics solid with going after bold ideas?",
+        "When is the right time to take a big swing?",
+        "Who pays the price when a team skips the groundwork?"
+      ]
+    }
+  ]
+}

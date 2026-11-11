@@ -1,0 +1,32 @@
+{
+  "documentId": "career|what_im_doing_now",
+  "sections": [
+    {
+      "range": [
+        101,
+        274
+      ],
+      "questions": [
+        "What are you working on right now?",
+        "What's your current role?",
+        "What does your startup actually do?",
+        "When did you start your current company?",
+        "Where are you based?"
+      ]
+    },
+    {
+      "range": [
+        317,
+        514
+      ],
+      "questions": [
+        "What was your role at Crossroads Venture Studio?",
+        "When were you at Crossroads Venture Studio, and how long did you run it?",
+        "Did you found Crossroads Venture Studio, or were you brought in to run it?",
+        "What did you own on the technical side at Crossroads?",
+        "What was your part in product-market fit at Crossroads?",
+        "What kinds of companies were you working with at Crossroads?"
+      ]
+    }
+  ]
+}

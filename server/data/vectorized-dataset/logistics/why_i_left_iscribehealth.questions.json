@@ -1,0 +1,40 @@
+{
+  "documentId": "logistics|why_i_left_iscribehealth",
+  "sections": [
+    {
+      "range": [
+        57,
+        193
+      ],
+      "questions": [
+        "What does iScribeHealth actually build?",
+        "What problem is iScribeHealth trying to solve?",
+        "Who are iScribeHealth's tools built for?"
+      ]
+    },
+    {
+      "range": [
+        266,
+        476
+      ],
+      "questions": [
+        "Why did you leave iScribeHealth?",
+        "What were you in the middle of when you left iScribeHealth?",
+        "How much did you cut downtime at iScribeHealth?",
+        "What did you actually build at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        479,
+        668
+      ],
+      "questions": [
+        "What are you looking for in your next role?",
+        "Why did you leave iScribeHealth?",
+        "What kind of impact do you want your work to have?",
+        "Will you walk me through your exit from iScribeHealth?"
+      ]
+    }
+  ]
+}

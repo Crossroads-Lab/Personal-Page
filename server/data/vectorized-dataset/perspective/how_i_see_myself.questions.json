@@ -1,0 +1,251 @@
+{
+  "documentId": "perspective|how_i_see_myself",
+  "sections": [
+    {
+      "range": [
+        79,
+        185
+      ],
+      "questions": [
+        "What's the thing that worries you most about running a company?",
+        "Have you published or written anything?",
+        "What's your chapter in The AI Transformation about?"
+      ]
+    },
+    {
+      "range": [
+        188,
+        776
+      ],
+      "questions": [
+        "What's the AI risk you actually worry about as a leader?",
+        "Why aren't you worried about the killer AI scenario?",
+        "How does over-reliance on AI actually damage a team?",
+        "What does a bad AI-driven decision look like in practice?",
+        "Why is cutting headcount to automate risky?",
+        "When do the costs of automating too aggressively show up?"
+      ]
+    },
+    {
+      "range": [
+        829,
+        1061
+      ],
+      "questions": [
+        "What do you mean by work that's correct but hollow?",
+        "Why isn't correct, well-organised work good enough for you?",
+        "How do you tell real work from hollow work?",
+        "What role do having a voice and taking risks play in how you work?",
+        "What makes you pick one framing over another?"
+      ]
+    },
+    {
+      "range": [
+        1064,
+        1317
+      ],
+      "questions": [
+        "What's really being exchanged when someone hands over their work?",
+        "Why don't you get angry at people who hand in work with no real human behind it?",
+        "Who put the tool in these people's hands in the first place?"
+      ]
+    },
+    {
+      "range": [
+        1320,
+        1805
+      ],
+      "questions": [
+        "What worries you most about how people use AI at work?",
+        "What turned you from annoyed to actually worried about AI?",
+        "What did the Microsoft and Carnegie Mellon study you cite actually find?",
+        "What did that 2025 MIT study find about developers using AI?",
+        "Why do you say confidence outpacing reality is the whole problem with AI?"
+      ]
+    },
+    {
+      "range": [
+        1840,
+        1953
+      ],
+      "questions": [
+        "What does keeping humans in the loop actually mean to you?",
+        "Why do you insist on keeping humans in the loop?"
+      ]
+    },
+    {
+      "range": [
+        1956,
+        2373
+      ],
+      "questions": [
+        "What do you actually want AI to do for people?",
+        "Why not just point generative AI at everything?",
+        "How do you decide which problems are worth solving with AI?",
+        "What kinds of problems do you think AI is actually good for?"
+      ]
+    },
+    {
+      "range": [
+        2376,
+        2533
+      ],
+      "questions": [
+        "What worries you most about AI?",
+        "Why aren't you nervous about the technology itself?",
+        "Are you an AI optimist or a pessimist?",
+        "How long have you been working on AI systems?"
+      ]
+    },
+    {
+      "range": [
+        2585,
+        2598
+      ],
+      "questions": [
+        "What would your toughest critic say about you?"
+      ]
+    },
+    {
+      "range": [
+        2601,
+        2948
+      ],
+      "questions": [
+        "What's your biggest weakness?",
+        "Why do you keep pointing out problems when everyone else is excited?",
+        "How have you adjusted the way you deliver bad news?",
+        "When does your candor land badly with a team?",
+        "What's the upside of being the person who spots what could go wrong?"
+      ]
+    },
+    {
+      "range": [
+        3018,
+        3165
+      ],
+      "questions": [
+        "What do people get wrong about how you lead?",
+        "Why do people think you don't trust your team?",
+        "When does your involvement start looking like micromanaging?",
+        "How hands-on are you with your team?"
+      ]
+    },
+    {
+      "range": [
+        3168,
+        3397
+      ],
+      "questions": [
+        "What does leading by example mean to you?",
+        "Why is leading by example about empowering people rather than supervising them?",
+        "How do you actually lead by example?",
+        "When do you step back from the people you're mentoring?",
+        "What kind of knowledge do you pass on when you mentor someone?"
+      ]
+    },
+    {
+      "range": [
+        3400,
+        3690
+      ],
+      "questions": [
+        "What do people get wrong about how you lead?",
+        "What's the difference between micromanaging and leading by example?",
+        "How do you stay involved with your team without hovering over them?",
+        "Why does it matter to you that your team doesn't need you?",
+        "How long does it take for people to see you're not micromanaging?"
+      ]
+    },
+    {
+      "range": [
+        3771,
+        3843
+      ],
+      "questions": [
+        "How do you judge your own performance when the metrics are subjective?",
+        "Why do you redefine subjective metrics instead of just living with them?"
+      ]
+    },
+    {
+      "range": [
+        3846,
+        4220
+      ],
+      "questions": [
+        "How do you judge your own performance when there's no hard number to point to?",
+        "What do you actually track when success can't be measured directly?",
+        "Why do you treat a fuzzy measure of success as a problem with the goal, not the measurement?",
+        "Why do you lock in how you'll be measured before you have any results?",
+        "When do you decide how you'll judge whether something worked?"
+      ]
+    },
+    {
+      "range": [
+        4223,
+        4371
+      ],
+      "questions": [
+        "Do you think performance reviews actually measure performance?",
+        "Why would you rather be judged by something that can tell you you're wrong?",
+        "How do you evaluate your own performance when there's no clear metric?"
+      ]
+    },
+    {
+      "range": [
+        4427,
+        4584
+      ],
+      "questions": [
+        "What do you look for to know a team's culture is healthy?",
+        "Do you use surveys to measure culture, or do you do something else?"
+      ]
+    },
+    {
+      "range": [
+        4587,
+        4829
+      ],
+      "questions": [
+        "What do you look at to tell if a company's culture is actually healthy?",
+        "Why don't you trust what a company says about its values?",
+        "How do you actually assess culture in practice?",
+        "How long does it take you to know whether a culture is healthy?"
+      ]
+    },
+    {
+      "range": [
+        4901,
+        4930
+      ],
+      "questions": [
+        "What's the toughest decision you've had to make recently?",
+        "Are you committed to staying an entrepreneur?"
+      ]
+    },
+    {
+      "range": [
+        4933,
+        5251
+      ],
+      "questions": [
+        "What's the toughest decision you've had to make in the last six months?",
+        "How do you keep choosing the less secure path when you know what it costs?",
+        "Why is choosing the less secure path harder than the calls you've made inside a company?",
+        "What does the safe path look like for you, and are you tempted by it?",
+        "Is choosing the less secure path a one-time call for you or something you keep facing?"
+      ]
+    },
+    {
+      "range": [
+        5254,
+        5479
+      ],
+      "questions": [
+        "What's the toughest decision you've made in the last six months?",
+        "How do you look back on what you've built, the wins and the stuff that didn't work?",
+        "Would you ever take a safe job instead of building your own things?"
+      ]
+    }
+  ]
+}

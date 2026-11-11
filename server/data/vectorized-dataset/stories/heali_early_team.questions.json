@@ -1,0 +1,43 @@
+{
+  "documentId": "stories|heali_early_team",
+  "sections": [
+    {
+      "range": [
+        118,
+        370
+      ],
+      "questions": [
+        "What was it like building the early team at Heali?",
+        "How big was the team you led at Heali?",
+        "Who did you hire at Heali?",
+        "Why does every hire matter so much on a small team?",
+        "What happens when you make a bad hire at a tiny startup?",
+        "What is Heali, the company you co-founded?"
+      ]
+    },
+    {
+      "range": [
+        423,
+        560
+      ],
+      "questions": [
+        "What did your early team at Heali accomplish?",
+        "What kind of AI pipeline did you build at Heali?",
+        "What did you launch at Heali, and how big did it get?",
+        "How much funding did you help raise at Heali?"
+      ]
+    },
+    {
+      "range": [
+        606,
+        825
+      ],
+      "questions": [
+        "What values did your early team at Heali run on?",
+        "How did you decide on your team's values at Heali?",
+        "Why did you name the values after the fact instead of upfront?",
+        "When did your team's real values actually take shape at Heali?"
+      ]
+    }
+  ]
+}

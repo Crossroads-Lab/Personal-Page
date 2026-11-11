@@ -1,0 +1,38 @@
+{
+  "documentId": "perspective|work_hours",
+  "sections": [
+    {
+      "range": [
+        87,
+        230
+      ],
+      "questions": [
+        "Are you okay with working 80-hour weeks?",
+        "When do you think it's actually worth working weekends?",
+        "Have you ever actually worked 80-hour weeks?",
+        "Would you work weekends if the job needed it?"
+      ]
+    },
+    {
+      "range": [
+        300,
+        558
+      ],
+      "questions": [
+        "How do you feel about 80-hour weeks?",
+        "Why do you push back on 80-hour weeks at AI companies?"
+      ]
+    },
+    {
+      "range": [
+        619,
+        781
+      ],
+      "questions": [
+        "What does it tell you when a team is always working overtime?",
+        "Why don't you treat long hours as something to be proud of?",
+        "What do you do when your team is constantly working crazy hours?"
+      ]
+    }
+  ]
+}

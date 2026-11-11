@@ -1,0 +1,54 @@
+{
+  "documentId": "perspective|how_i_run_teams",
+  "sections": [
+    {
+      "range": [
+        75,
+        284
+      ],
+      "questions": [
+        "How would you describe your management style?",
+        "What do you care about most in how your team operates?",
+        "How do you make sure everyone on your team knows what they own?",
+        "How do you coordinate work across your team?",
+        "How do you measure how your team is doing?",
+        "Is there an analogy you use to describe how you run teams?"
+      ]
+    },
+    {
+      "range": [
+        334,
+        595
+      ],
+      "questions": [
+        "What do you put first when you're running a team?",
+        "Why do most teams struggle, in your experience?",
+        "Why not just hold people accountable from day one?",
+        "How do you get a team to move faster?",
+        "How do you fix a team that isn't performing?"
+      ]
+    },
+    {
+      "range": [
+        642,
+        716
+      ],
+      "questions": [
+        "What's your biggest strength as a leader?"
+      ]
+    },
+    {
+      "range": [
+        719,
+        904
+      ],
+      "questions": [
+        "What's your biggest weakness?",
+        "Are you any good at sales?",
+        "How do you feel about office politics?",
+        "How would you describe your communication style?",
+        "When does being so direct work against you?"
+      ]
+    }
+  ]
+}

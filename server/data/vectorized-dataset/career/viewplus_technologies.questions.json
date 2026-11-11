@@ -1,0 +1,86 @@
+{
+  "documentId": "career|viewplus_technologies",
+  "sections": [
+    {
+      "range": [
+        74,
+        264
+      ],
+      "questions": [
+        "What did you build for blind users at ViewPlus?",
+        "What was your job title at ViewPlus?",
+        "When did you work at ViewPlus?",
+        "Where were you based when you worked at ViewPlus?",
+        "Was your ViewPlus work through a university or a company?"
+      ]
+    },
+    {
+      "range": [
+        303,
+        521
+      ],
+      "questions": [
+        "What did you actually build at ViewPlus?",
+        "Why did you build a system to track a reader's finger on a braille page?",
+        "How did your system know which part of a braille document a blind reader was touching?"
+      ]
+    },
+    {
+      "range": [
+        524,
+        761
+      ],
+      "questions": [
+        "What hardware did your ViewPlus product need to run?",
+        "Why did you build the ViewPlus product to work on an ordinary webcam instead of specialised hardware?",
+        "What are you proudest of from your time at ViewPlus?"
+      ]
+    },
+    {
+      "range": [
+        801,
+        1126
+      ],
+      "questions": [
+        "What did you learn from your work at ViewPlus?",
+        "Why do you say deployment is harder than the algorithm?",
+        "What's the difference between useful and just publishable work?",
+        "What made the finger tracking at ViewPlus hard?"
+      ]
+    },
+    {
+      "range": [
+        1129,
+        1202
+      ],
+      "questions": [
+        "What did your ViewPlus project teach you that still shapes how you build?",
+        "Did your time at ViewPlus change how you approach building products?"
+      ]
+    },
+    {
+      "range": [
+        1266,
+        1474
+      ],
+      "questions": [
+        "Is there a through-line from your ViewPlus work to what you did later?",
+        "Why did founding Heali feel like such a natural move for you?"
+      ]
+    },
+    {
+      "range": [
+        1477,
+        1754
+      ],
+      "questions": [
+        "What do you mean when you say AI for good?",
+        "Is AI for good a real conviction or something you added to your bio later?",
+        "What's the common thread between your ViewPlus work and what you did later?",
+        "What did you work on for people with chronic conditions?",
+        "What did you do for blind readers at ViewPlus?",
+        "How far apart were your ViewPlus work and your later work?"
+      ]
+    }
+  ]
+}

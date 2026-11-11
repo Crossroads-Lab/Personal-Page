@@ -1,0 +1,95 @@
+{
+  "documentId": "stories|kelley_building_and_jensen_huang",
+  "sections": [
+    {
+      "range": [
+        76,
+        273
+      ],
+      "questions": [
+        "What was it like being picked to attend the Kelley Engineering Center opening at Oregon State?",
+        "Why were you chosen to attend the Kelley Engineering Center inauguration?",
+        "What happened at the Kelley Engineering Center inauguration you attended?"
+      ]
+    },
+    {
+      "range": [
+        276,
+        575
+      ],
+      "questions": [
+        "What's the moment from the Kelley building opening that you've never forgotten?",
+        "What did Jensen Huang do at the Kelley building opening?",
+        "Who was the big name at the Kelley building opening?",
+        "How did Jensen Huang make his donation at the Kelley building opening?"
+      ]
+    },
+    {
+      "range": [
+        578,
+        705
+      ],
+      "questions": [
+        "What happened at the Kelley building opening that stuck with you?",
+        "Were you still in school when the Kelley building opened?"
+      ]
+    },
+    {
+      "range": [
+        744,
+        1048
+      ],
+      "questions": [
+        "Did you ever meet Jensen Huang?",
+        "What happened when Jensen Huang stopped by your lab?",
+        "Why was Jensen Huang coming through your lab?",
+        "Who paid for the Nvidia lab?",
+        "What is the Nvidia Graphics and Image Technologies Laboratory?",
+        "Which lab were you in at Kelley?"
+      ]
+    },
+    {
+      "range": [
+        1051,
+        1224
+      ],
+      "questions": [
+        "What did Jensen Huang study in college?",
+        "Where did Jensen Huang go to college?",
+        "What year did Jensen Huang graduate?",
+        "Where did Jensen Huang meet his wife?",
+        "Does Jensen Huang still give back to Oregon State?"
+      ]
+    },
+    {
+      "range": [
+        1256,
+        1304
+      ],
+      "questions": [
+        "What did you take away from the Kelley building opening?"
+      ]
+    },
+    {
+      "range": [
+        1307,
+        1482
+      ],
+      "questions": [
+        "What did the Kelley building opening teach you about research and funding?",
+        "What did you mean by \"someone decided that room should exist\"?"
+      ]
+    },
+    {
+      "range": [
+        1485,
+        1685
+      ],
+      "questions": [
+        "What did the Kelley opening teach you about the kind of person behind it?",
+        "How do you feel knowing he came from the same programme as you?",
+        "Who was the person you're talking about from the Kelley opening?"
+      ]
+    }
+  ]
+}

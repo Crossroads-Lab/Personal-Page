@@ -1,0 +1,98 @@
+{
+  "documentId": "background|education_and_research",
+  "sections": [
+    {
+      "range": [
+        77,
+        326
+      ],
+      "questions": [
+        "What degrees do you have?",
+        "What's your PhD in?",
+        "Where did you do your PhD?",
+        "When did you finish your PhD?",
+        "What's your master's degree in?",
+        "Where did you do your master's?",
+        "When did you finish your master's?"
+      ]
+    },
+    {
+      "range": [
+        378,
+        717
+      ],
+      "questions": [
+        "What's your PhD in?",
+        "What did you research during your PhD?",
+        "Who was your PhD advisor?",
+        "When did you finish your PhD?",
+        "Where did you do your PhD?",
+        "Is your current work connected to your PhD research?"
+      ]
+    },
+    {
+      "range": [
+        767,
+        803
+      ],
+      "questions": [
+        "How many honours or awards have you received?"
+      ]
+    },
+    {
+      "range": [
+        805,
+        1316
+      ],
+      "questions": [
+        "What awards and honors have you won?",
+        "What is the Phi Kappa Phi honor you received at Oregon State?",
+        "Why did you get Phi Kappa Phi recognition?",
+        "What was the CVPR Doctoral Consortium Award you won?",
+        "Where did you receive the CVPR Doctoral Consortium Award?",
+        "What was your teaching and research assistantship at Oregon State?",
+        "How did you pay tuition at Oregon State?",
+        "Which of your awards mattered most to you at the time?",
+        "What was the Study Abroad Scholarship you received from Région Rhône-Alpes?",
+        "How did you end up in the United States?"
+      ]
+    },
+    {
+      "range": [
+        1319,
+        1456
+      ],
+      "questions": [
+        "Which of your honours or funding awards mattered most to you?",
+        "Why do you put the funding above the honours?",
+        "How do you feel about the honours you've received?"
+      ]
+    },
+    {
+      "range": [
+        1510,
+        1714
+      ],
+      "questions": [
+        "How many patents and publications have you authored?",
+        "How many citations do you have on Google Scholar?",
+        "What areas do your patents cover?"
+      ]
+    },
+    {
+      "range": [
+        1776,
+        1961
+      ],
+      "questions": [
+        "What did you do as Publication Chair for CVPR?",
+        "When were you Publication Chair for CVPR?",
+        "How many papers did you handle at CVPR?",
+        "What did you do at WACV?",
+        "When were you Publication Chair for WACV?",
+        "How many papers did you handle at WACV?",
+        "What have you done for the research community beyond your own work?"
+      ]
+    }
+  ]
+}

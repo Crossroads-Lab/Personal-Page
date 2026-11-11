@@ -1,0 +1,90 @@
+{
+  "documentId": "stories|iscribe_tech_debt_tradeoff",
+  "sections": [
+    {
+      "range": [
+        114,
+        339
+      ],
+      "questions": [
+        "What hard tradeoff did you have to make at iScribeHealth?",
+        "Why was balancing cleanup against new work so hard at iScribeHealth?",
+        "How do you frame the tradeoff between tech debt and shipping features?",
+        "Why does tech debt cleanup always get deferred?"
+      ]
+    },
+    {
+      "range": [
+        410,
+        611
+      ],
+      "questions": [
+        "What did you do about technical debt at iScribeHealth?",
+        "Do you fit refactoring around feature work or make it a priority of its own?",
+        "What does it cost to prioritize re-architecture over shipping?",
+        "How do you hold the line when a re-architecture slows down visible progress?",
+        "When is the right time to do a re-architecture, early or later?"
+      ]
+    },
+    {
+      "range": [
+        694,
+        806
+      ],
+      "questions": [
+        "How do you balance tech debt against shipping at iScribeHealth?",
+        "What's your rule of thumb for deciding what can wait?",
+        "Why don't you see tech debt and shipping as a trade-off?"
+      ]
+    },
+    {
+      "range": [
+        809,
+        1206
+      ],
+      "questions": [
+        "At iScribeHealth, did you rebuild the platform or keep shipping features?",
+        "Why did you rebuild the platform first instead of shipping what customers were waiting for?",
+        "How do you decide between the daily fires and the long-term fix?",
+        "When do you stop shipping and fix the foundation?",
+        "When would putting off the iScribeHealth rebuild have caught up with you?",
+        "What compliance standards did iScribeHealth have to meet?",
+        "What was the pressure like at iScribeHealth?"
+      ]
+    },
+    {
+      "range": [
+        1209,
+        1472
+      ],
+      "questions": [
+        "How do you decide between fixing the underlying problem and just putting out the fire in front of you?",
+        "Why not just fix whatever's on fire and move on?",
+        "What's your take on strategy versus firefighting?",
+        "What happens to a team that only ever fights the fire in front of it?"
+      ]
+    },
+    {
+      "range": [
+        1475,
+        1628
+      ],
+      "questions": [
+        "How do you get tech debt work to survive politically when you're also fighting fires at iScribeHealth?",
+        "Why do you pair visible work with tech debt work instead of just fixing the debt?"
+      ]
+    },
+    {
+      "range": [
+        1682,
+        2004
+      ],
+      "questions": [
+        "Why did you prioritize the re-architecture over new work at iScribeHealth?",
+        "Do you think fixing tech debt before shipping was the right call at iScribeHealth?",
+        "What did the re-architecture actually make possible at iScribeHealth?",
+        "Could you have put off the re-architecture at iScribeHealth until later?"
+      ]
+    }
+  ]
+}
