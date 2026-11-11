@@ -47,8 +47,54 @@ const build = async () => {
   return { generatedAt: new Date().toISOString(), documents };
 };
 
-const write = async () => {
-  const manifest = await build();
+/**
+ * Write the manifest.
+ *
+ * `built` is `{documentId: markdownText}` for the documents this run
+ * actually built, and passing it is what makes the guard honest.
+ *
+ * Without it, write() re-reads every file from disk at the moment it is
+ * called — which is the END of an ingest, long after the text each .bin was
+ * built from was read at the START. Edit a markdown file while a long
+ * ingest is running and the manifest records the new hash against a .bin
+ * built from the old text: the two disagree, and verify says OK. That is
+ * precisely the drift this file exists to catch, and it had a hole in it
+ * exactly the width of one ingest. Observed, not theorised — a 52-document
+ * run, one file edited part-way through, and a clean bill of health.
+ *
+ * So the caller hands over the text it built from. Documents this run did
+ * not touch keep whatever the previous manifest said about them, because
+ * their .bin is likewise untouched; re-reading those from disk would
+ * reintroduce the same lie for any file edited since.
+ */
+const write = async (built = null) => {
+  if (!built) {
+    const manifest = await build();
+    await fs.writeFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n");
+    return manifest;
+  }
+
+  let previous = {};
+  try {
+    previous = JSON.parse(await fs.readFile(MANIFEST_PATH, "utf8")).documents || {};
+  } catch { /* no manifest yet: this run is all there is */ }
+
+  const documents = { ...previous };
+  for (const [documentId, markdown] of Object.entries(built)) {
+    documents[documentId] = sha256(markdown);
+  }
+
+  // A document whose markdown is gone should not linger in the manifest as
+  // a hash nothing can match; verify() reports those as `missing`, and the
+  // noise would outlive the file by every future ingest.
+  // `.map(deriveDocumentId)` would hand it the array index as a second
+  // argument, which it reads as a theme override and rejects.
+  const onDisk = new Set((await walk(CONFIG.MARKDOWNS)).map(f => deriveDocumentId(f)));
+  for (const documentId of Object.keys(documents)) {
+    if (!onDisk.has(documentId)) delete documents[documentId];
+  }
+
+  const manifest = { generatedAt: new Date().toISOString(), documents };
   await fs.writeFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n");
   return manifest;
 };

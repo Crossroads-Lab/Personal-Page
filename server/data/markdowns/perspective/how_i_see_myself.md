@@ -1,27 +1,5 @@
 # How I see myself
 
-## What keeps you awake at night running an organization?
-
-AI slop. It's what my chapter of *The AI Transformation* — "AI: The Reality Beyond The Fantasy" — is about.
-
-Not the Hollywood failure mode. The red targeting eye, the machine turning on us: those are cautionary tales we've all been conditioned by, and they're the wrong thing to watch for. The real failure mode is slower and organisational. A team so dependent on model outputs that nobody retains the habit of questioning them. A product decision that went badly because a system gave a confident answer and nobody pushed back. A company that automates through a workforce reduction and discovers two years later that the institutional memory needed to course-correct walked out of the building.
-
-## What does that actually look like day to day?
-
-Work that is correct, organised, grammatically sound — and completely hollow. No moment where a person chose one framing over another because they found it more true, or more surprising, or more worth saying. No voice. No risk taken.
-
-What's being exchanged in that transaction is the proof that a person was present. And the hard part is that you can't be angry at the people producing it. They felt the pressure to ship faster, the tool was there, and often leadership handed it to them.
-
-The research I cite in the chapter is what moved me from irritation to worry. Microsoft and Carnegie Mellon surveyed knowledge workers and found that on 40% of tasks they applied no critical thinking at all to AI output — and that higher confidence in the tool correlated with *less* thinking. A 2025 MIT study found experienced developers using AI took 19% longer overall while believing they'd been at least 20% faster. Confidence outpacing reality is the whole problem in one number.
-
-## So what do you do about it?
-
-Keep humans in the loop, and mean it. A workforce that stops questioning outputs eventually stops noticing errors.
-
-I'd rather build pipelines that take the drudge work so people can do the inspired work — that's genuinely my philosophy, and it's the opposite of pointing a generator at everything and hoping. Narrow problems, clean data, measurable return: route the trucks, classify the tickets, reconcile the invoices. Hand it your general infrastructure with poor supervision and you end up with a house held together by termites.
-
-I spent twenty years building these systems. I'm not nervous about the technology. I'm nervous about the volume of plausible things nobody is accountable for.
-
 ## How would your toughest critic describe you?
 
 Too realistic.
@@ -30,7 +8,7 @@ I'd rather own that than dress it up. The same instinct that makes me useful whe
 
 ## What's the most misunderstood aspect of your leadership style?
 
-That when I'm doing the work alongside my team, I'm doing their job for them. People read it as not trusting them, or as a manager who can't let go.
+The thing people most often misread is that when I'm doing the work alongside my team, I'm doing their job for them. People read it as not trusting them, or as a manager who can't let go.
 
 It's the opposite. Leading by example is teaching — mentoring, passing down the unspoken knowledge that never makes it into documentation, and then getting out of the way. It is how you empower someone, not how you supervise them.
 
@@ -52,8 +30,10 @@ Culture isn't what a company says it values. It's what happens when someone make
 
 ## What's the toughest decision you've made in the last six months?
 
-To keep being an entrepreneur.
+The biggest one in the last six months hasn't been technical at all. It's been which vehicle to build in — my own company, or one already in motion — and it's a decision I make repeatedly, not once.
 
-That's a real decision and I have to make it repeatedly, not once. There's always a version of the next year that's more secure, more legible, and easier to explain at a dinner party. Choosing the other thing — again, with full knowledge of what it costs — is harder than any individual call I've made inside a company.
+(If you're after the hardest *technical* call, that's a different question and I have a longer answer to it: staying on Azure at iScribeHealth.)
 
-I'm not romantic about it. Some of what I've built worked and some of it didn't, and I've been clear-eyed about both. But the decision to keep making things rather than go somewhere safe is the one I actually have to sit with.
+What settles it isn't security. It's alignment: whether the mission is one I believe is worth the next few years, whether the culture is one I'd want to be measured by, what the company is actually trying to change, and whether the role is one where I can move the needle rather than describe it. When those line up, I take the opportunity, and I take it with gratitude — that isn't the consolation prize, it's the better vehicle for the same goal.
+
+Changing something at scale has many paths and founding a company is only one of them. I've done the founder version and the inside-a-company version, and the work I'm proudest of has come from both — the turnaround at iScribeHealth as much as anything I started myself. What I won't do is choose the safe thing because it's safe, or the hard thing because it's hard.

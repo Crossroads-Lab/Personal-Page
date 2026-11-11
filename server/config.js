@@ -442,7 +442,16 @@ module.exports = Object.freeze({
     {
       label: "My leadership style",
       q: "What's the most misunderstood aspect of your leadership style?",
-      from: ["perspective/how_i_see_myself.md#What's the most misunderstood aspect of your leadership style?"],
+      // How he runs teams first, then what people misread about it. The
+      // chip says "My leadership style", and the answer that belongs under
+      // that is the Formula One pit stop — passion, speed and precision —
+      // not the narrower question of what gets misunderstood about it. On
+      // its own the second section reads as a correction to something the
+      // visitor was never told.
+      from: [
+        "perspective/how_i_run_teams.md#What's your management style? How do you run teams?",
+        "perspective/how_i_see_myself.md#What's the most misunderstood aspect of your leadership style?",
+      ],
     },
     // Not behavioural, because not every visitor is a recruiter.
     {
@@ -478,6 +487,30 @@ module.exports = Object.freeze({
     },
   ].map(Object.freeze)),
   STARTER_COUNT: 3,
+
+  /**
+   * Sections that answer when asked, and are never suggested.
+   *
+   * Not every answer should be advertised. Some exist because a visitor
+   * deserves a straight reply if they raise it themselves — and offering
+   * the same thing unprompted, as a button, turns a fair answer into a
+   * subject he brought up about himself.
+   *
+   * Why he left iScribeHealth is the clear case: there is a straight,
+   * accurate answer in the corpus on purpose, and a chip reading "Why did
+   * you leave your last role?" under an unrelated answer is the page
+   * volunteering it. The bio discrepancy is the same shape — worth having
+   * an answer to, not worth raising.
+   *
+   * Listed by heading. Everything the section carries is suppressed with
+   * it: the heading itself, and the phrasings augmentation generated for
+   * it, which would otherwise come back as follow-ups by another route.
+   * Retrieval is untouched — ask directly and you get the answer.
+   */
+  NEVER_SUGGEST: Object.freeze([
+    "Why did you leave your last role? What happened at iScribeHealth?",
+    "Your book says two-time founder and the page says three — which is it?",
+  ]),
 
   /**
    * Where one line per question is appended, or null for stdout only.

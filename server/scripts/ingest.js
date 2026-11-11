@@ -151,7 +151,14 @@ const main = async () => {
   // Record what the bins were built from, so a later markdown edit is
   // detectable instead of silently corrupting section ranges.
   if (ok) {
-    const m = await manifest.write();
+    // The text each .bin was actually built from, not whatever is on disk
+    // now — see manifest.write(). An ingest of this corpus takes minutes;
+    // anything edited inside that window would otherwise be recorded as
+    // matching a .bin built before the edit.
+    const m = await manifest.write(Object.fromEntries(
+      inputs
+        .filter((_, i) => results[i].status === "fulfilled")
+        .map(input => [input.documentId, input.markdown])));
     console.log(`\nManifest written — ${Object.keys(m.documents).length} documents.`);
   }
 

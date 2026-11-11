@@ -83,6 +83,10 @@ const MAX_FOLLOW_UPS = 3;
  * near-miss should fall through to real retrieval rather than be
  * force-fitted to a canned answer.
  */
+/** Headings whose section is answerable but never advertised. */
+const SILENT = new Set((CONFIG.NEVER_SUGGEST || []).map(h => String(h)
+  .toLowerCase().replace(/\s+/g, " ").replace(/[?.!\s]+$/, "").trim()));
+
 const normalise = (q) => String(q || "")
   .toLowerCase()
   .replace(/\s+/g, " ")
@@ -254,7 +258,9 @@ const expand = (graph, questions, depth) => {
       const node = graph.get(key);
       if (!node) continue;
 
-      const followUps = node.siblings.slice(0, MAX_FOLLOW_UPS);
+      const followUps = node.siblings
+        .filter(h => !SILENT.has(normalise(h)))
+        .slice(0, MAX_FOLLOW_UPS);
       out[key] = { q: node.q, a: node.a, f: followUps };
       next.push(...followUps.map(normalise));
     }
@@ -349,6 +355,7 @@ const followUpsFrom = (documents, sources, alreadyAsked) => {
     for (let i = 1; i <= sections.length; ++i) {
       const index = (from + i + sections.length) % sections.length;
       if (cited.has(index)) continue;
+      if (SILENT.has(normalise(sections[index].heading))) continue;
       const question = (sections[index].asked || []).find(q => !seen.has(normalise(q)));
       if (!question) continue;
       seen.add(normalise(question));
@@ -373,7 +380,7 @@ const followUpsFrom = (documents, sources, alreadyAsked) => {
       const index = (from + i + sections.length) % sections.length;
       if (cited.has(index)) continue;
       const key = normalise(sections[index].heading);
-      if (seen.has(key)) continue;
+      if (seen.has(key) || SILENT.has(key)) continue;
       seen.add(key);
       out.push(sections[index].heading);
       if (out.length >= MAX_FOLLOW_UPS) return out;
@@ -431,7 +438,7 @@ const build = async () => {
     }
 
     const followUpQuestions = siblings
-      .filter(h => !used.has(normalise(h)))
+      .filter(h => !used.has(normalise(h)) && !SILENT.has(normalise(h)))
       .filter((h, i, all) => all.indexOf(h) === i)
       .slice(0, MAX_FOLLOW_UPS);
 

@@ -1,0 +1,203 @@
+{
+  "documentId": "background|this_page",
+  "sections": [
+    {
+      "range": [
+        71,
+        186
+      ],
+      "questions": [
+        "Did you build this yourself or did someone else?",
+        "What parts of this did you actually build?",
+        "Is this an off-the-shelf chatbot or something you made?"
+      ]
+    },
+    {
+      "range": [
+        189,
+        582
+      ],
+      "questions": [
+        "Is this a chatbot, or what is it exactly?",
+        "How does this chat actually work?",
+        "Who actually wrote the answers I'm reading?",
+        "Why does it matter that this only answers from what you wrote?",
+        "What happens if I ask about something you never wrote down?",
+        "Where is this getting its information about you?"
+      ]
+    },
+    {
+      "range": [
+        647,
+        729
+      ],
+      "questions": [
+        "Are these really your answers, or is an AI making them up?",
+        "How are the answers on this page put together?"
+      ]
+    },
+    {
+      "range": [
+        732,
+        1082
+      ],
+      "questions": [
+        "What are your answers here actually based on?",
+        "How does this chat turn my question into an answer?",
+        "Are the answers written in your own voice?",
+        "Why does this give me an answer instead of just showing me a page?"
+      ]
+    },
+    {
+      "range": [
+        1085,
+        1416
+      ],
+      "questions": [
+        "What does the chat say when it doesn't have an answer to my question?",
+        "Why would you rather the page say no than give me a decent guess?",
+        "What's the downside of building the chat to refuse instead of improvise?"
+      ]
+    },
+    {
+      "range": [
+        1457,
+        1524
+      ],
+      "questions": [
+        "How do you stop this chatbot from making things up about you?"
+      ]
+    },
+    {
+      "range": [
+        1527,
+        1969
+      ],
+      "questions": [
+        "How do you stop this chat from making things up about you?",
+        "What happens when I ask you something this page has no answer for?",
+        "How are the suggested questions on this page picked?",
+        "Why do you only suggest questions the chat can actually answer?"
+      ]
+    },
+    {
+      "range": [
+        1972,
+        2301
+      ],
+      "questions": [
+        "What does your server do when the chat's data is out of date?",
+        "What do the section ranges in your chat actually point to?",
+        "Why would this chat ever give a confidently wrong answer?",
+        "When does the chat start pointing at the wrong text?",
+        "Why would you rather the site refuse to start than serve a wrong answer?"
+      ]
+    },
+    {
+      "range": [
+        2350,
+        2426
+      ],
+      "questions": [
+        "What's actually running behind this chat box?",
+        "How did you build this page?",
+        "Why did you keep this so minimal instead of using a standard AI stack?"
+      ]
+    },
+    {
+      "range": [
+        2429,
+        2825
+      ],
+      "questions": [
+        "What's the architecture behind this chat box?",
+        "How do you turn your writing into something the chat can search?",
+        "How does the chat find the right part of your site to answer from?",
+        "What do you use for embeddings?",
+        "Why run embeddings locally instead of paying for an API?",
+        "What does it actually cost you to run this chat?"
+      ]
+    },
+    {
+      "range": [
+        2828,
+        2999
+      ],
+      "questions": [
+        "What's the tech stack behind this site?",
+        "Is there a database or file upload behind this chat?",
+        "Where do the chat's answers come from?",
+        "Why did you keep this site's architecture so minimal?",
+        "Is this chat box secure?"
+      ]
+    },
+    {
+      "range": [
+        3052,
+        3139
+      ],
+      "questions": [
+        "Isn't it expensive for you to run an AI chat like this?",
+        "Why doesn't this page cost you much to run?",
+        "Does every interaction here actually hit an AI model?"
+      ]
+    },
+    {
+      "range": [
+        3142,
+        3498
+      ],
+      "questions": [
+        "What happens when I click one of your suggested questions?",
+        "How do the follow-up questions work without hitting the AI every time?",
+        "Why can you offer these answers for free?"
+      ]
+    },
+    {
+      "range": [
+        3501,
+        3743
+      ],
+      "questions": [
+        "When does this chat actually call an AI model?",
+        "Why only use AI when I ask something you didn't expect?",
+        "Why isn't this chat expensive to run?",
+        "Why does this chat respond so fast?"
+      ]
+    },
+    {
+      "range": [
+        3802,
+        3865
+      ],
+      "questions": [
+        "Why did you build a chat box instead of just posting a resume?",
+        "What do you think a resume leaves out?"
+      ]
+    },
+    {
+      "range": [
+        3868,
+        4118
+      ],
+      "questions": [
+        "Why did you build a chat box instead of just posting a resume?",
+        "What do recruiters actually want to know beyond where you worked?",
+        "How does asking you questions here beat just reading a static page?",
+        "What kind of follow-up questions are worth asking you here?"
+      ]
+    },
+    {
+      "range": [
+        4121,
+        4408
+      ],
+      "questions": [
+        "Why build a chat box instead of just posting a resume?",
+        "What's your philosophy on building AI systems?",
+        "What happens when I ask you something you haven't covered?",
+        "What have you built that shows how you actually work?"
+      ]
+    }
+  ]
+}

@@ -12,7 +12,9 @@ Hollywood conditioned us to expect the machine turning on us. The real failure m
 
 The comparison I use is Disney's pivot away from hand-drawn animation in the early 2000s. They chased the efficiency of CGI and nearly extinguished the hand-crafted warmth that made people care about Disney in the first place. Optimising so hard for efficiency that you lose track of what the efficiency was meant to serve.
 
-It opens as a day in the life of an executive — the notification that lands before the alarm, the hollow report at 10:17, the afternoon spent fixing what was generated in minutes — because that's how this actually arrives. Not as an event. As a Tuesday.
+It opens as a day in the life of a fictional executive — the notification that lands before the alarm, the hollow report at 10:17, the afternoon spent fixing what was generated in minutes — because that's how this actually arrives. Not as an event. As a Tuesday.
+
+To be clear about whose day that is: it's invented, written in second person, and it isn't mine. It's a composite of the leaders I keep having this conversation with.
 
 The whole chapter is in *The AI Transformation*, on Amazon at amazon.com/dp/1968318747.
 
@@ -72,22 +74,30 @@ The chapter gives each of those its own section and the reasoning behind it. The
 
 Because that's how this actually arrives. Not as an event — as a Tuesday.
 
-It runs from a notification that reaches you before your alarm does, through a report at 10:17 that is correct, organised, grammatically sound and completely hollow, to a dinner table where four people are in the same room and three are somewhere else. Then to the next morning, which is the only part that's different.
+It follows an invented executive, written as "you", from a notification that reaches them before their alarm does, through a report at 10:17 that is correct, organised, grammatically sound and completely hollow, to a dinner table where four people are in the same room and three are somewhere else. Then to the next morning, which is the only part that's different.
 
-An argument made in statistics lets a reader agree and change nothing. A day they recognise is harder to put down. The executive in it isn't a case study — it's the composite of conversations I keep having with leaders who are lying awake with some version of this and none of whom mention it in the morning.
+An argument made in statistics lets a reader agree and change nothing. A day they recognise is harder to put down. That executive is not me and not a case study — it's a composite of the conversations I keep having with leaders who are lying awake with some version of this and none of whom mention it in the morning.
 
 ## What's the hardest moment in the chapter?
 
-Walking the floor in the morning.
+The one where the executive walks the floor in the morning — and it's worth saying again that this is a character, not a diary entry.
 
-Your people have read the same articles you woke up to, and what's in their eyes is neither panic nor ease. They've sat through the meetings where leadership said "augmentation" and "evolution" with the careful diction of people coached by HR, and they're smart enough to hear what isn't being said. You want to reassure them, and you can't make the promise that reassurance requires.
+The team have read the same articles he woke up to, and what's in their eyes is neither panic nor ease. They've sat through the meetings where leadership said "augmentation" and "evolution" with the careful diction of people coached by HR, and they're smart enough to hear what isn't being said. He wants to reassure them and can't make the promise that reassurance requires.
 
-There's a second one later, with a red pen over that hollow report, where the realisation is that you aren't angry at the people who produced it — and that anger would have been easier. How that lands is the part I'd rather you read than have summarised.
+There's a second one later, with a red pen over that hollow report, where he realises he isn't angry at the people who produced it — and that anger would have been easier. How that lands is the part I'd rather you read than have summarised.
 
 ## Is there a Matrix reference in it?
 
 There is, late at night, and it's doing more work than a reference usually does.
 
-Red pill, blue pill. When you first saw that image you knew instantly which one you'd take — of course the red pill, of course you want to see how deep it goes. You were the kind of person who found discomfort energising rather than depleting.
+Red pill, blue pill. The character remembers knowing instantly which one he'd have taken — of course the red pill, of course you want to see how deep it goes. He was the kind of person who found discomfort energising rather than depleting.
 
 The chapter puts it there for the doubt that comes next. That's the cost it's actually about: not the machine turning on you, but the appetite for hard truths going quietly first. amazon.com/dp/1968318747.
+
+## Your book says two-time founder and the page says three — which is it?
+
+Three, and the book isn't wrong — it's just older than the third one.
+
+*The AI Transformation* went to press before I announced the venture I'm on now, so the author bio there reflects where I was when I wrote it. The citation count has moved the same way for the same reason: it was a little over 2,100 then and it's past 2,200 now, which is what happens to a citation count while a book goes through publishing.
+
+Where the two disagree, this page is the current one.

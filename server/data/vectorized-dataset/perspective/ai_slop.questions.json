@@ -1,0 +1,103 @@
+{
+  "documentId": "perspective|ai_slop",
+  "sections": [
+    {
+      "range": [
+        95,
+        166
+      ],
+      "questions": [
+        "What keeps you up at night as a leader?",
+        "Have you written anything about AI slop?",
+        "Why did you write a book chapter about AI slop?"
+      ]
+    },
+    {
+      "range": [
+        169,
+        757
+      ],
+      "questions": [
+        "What about AI actually keeps you up at night?",
+        "Why aren't you worried about AI turning on us like in the movies?",
+        "How does leaning too hard on AI hurt a team over time?",
+        "What does a bad AI-driven product call look like in practice?",
+        "What's the risk of replacing people with AI?",
+        "How long before cutting staff for AI comes back to bite a company?"
+      ]
+    },
+    {
+      "range": [
+        822,
+        1057
+      ],
+      "questions": [
+        "What do you mean by AI slop in a company's work?",
+        "Why isn't well-written, accurate AI work good enough for you?",
+        "How can you tell when a team's work is AI slop?",
+        "What does a company's work need that AI slop never has?"
+      ]
+    },
+    {
+      "range": [
+        1060,
+        1329
+      ],
+      "questions": [
+        "What do you think is actually being exchanged when someone hands over their work?",
+        "How do you treat the people on your team who turn in AI slop?",
+        "Why do people end up producing AI slop in the first place?",
+        "Who is actually responsible for AI slop in a company?"
+      ]
+    },
+    {
+      "range": [
+        1332,
+        1681
+      ],
+      "questions": [
+        "What made you go from being annoyed by AI slop to actually worried about it?",
+        "How did you check whether your gut feeling about AI slop was actually right?",
+        "What does the research say about how much people actually check AI output?",
+        "Are people actually faster with AI, or just sure that they are?",
+        "What do you think is the core problem with AI slop?",
+        "Where do you go deeper on the research behind your AI slop concerns?"
+      ]
+    },
+    {
+      "range": [
+        1716,
+        1829
+      ],
+      "questions": [
+        "So what do you actually do about AI slop?",
+        "Why do you insist on keeping humans in the loop with AI?"
+      ]
+    },
+    {
+      "range": [
+        1832,
+        2249
+      ],
+      "questions": [
+        "What's your actual philosophy on using AI?",
+        "Why not just use generative AI on everything?",
+        "Why do you want AI taking over the boring work?",
+        "How do you decide which problems are actually worth solving with AI?",
+        "What are some examples of work you'd hand to AI?",
+        "When does using AI go wrong?"
+      ]
+    },
+    {
+      "range": [
+        2252,
+        2409
+      ],
+      "questions": [
+        "What worries you about AI?",
+        "Does the technology itself make you nervous?",
+        "How long have you been building AI systems?"
+      ]
+    }
+  ]
+}
