@@ -95,10 +95,17 @@ body:before {
  */
 @media only screen and (max-width: 900px) {
   body:before {
-    /* A phone is tall and narrow, so the vh term already governs and the
-       formula needs no help — only the anchor changes, because there is no
-       column of text beside him to leave room for. */
-    background-position: center bottom;
+    /* A band, not a size. Bounded by the headline above and the input
+       furniture below, so he cannot land on either — and `contain` inside
+       it shrinks him on BOTH axes, which is the behaviour that kept going
+       missing: narrow the window and he narrows with it. */
+    top: var(--portrait-top);
+    bottom: var(--portrait-floor);
+    height: auto;
+    /* Bottom right at every width. Centring him on a narrow screen was my
+       own invention and it broke the one constant of the design. */
+    background-position: right bottom;
+    background-size: contain;
   }
 }
 

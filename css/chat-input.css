@@ -646,8 +646,10 @@ body[chat-started] #starter-chips {
      backstop for a short window where the band would be taller than main
      has to give. */
   body:not([chat-started]) #welcome {
+    /* The headline owns the band above him, and he starts where it ends —
+       one variable, so they cannot drift into each other. */
     justify-content: center;
-    height: calc(100dvh - var(--portrait-subject));
+    height: var(--portrait-top);
     max-height: 100%;
   }
 

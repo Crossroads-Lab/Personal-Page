@@ -66,6 +66,20 @@
      0.6945 as wide as it is tall (1389/2000) — so 0.529 of its height. */
   --portrait-width: calc(0.529 * var(--portrait-crop));
 
+  /* The band he gets on a narrow screen, as insets rather than a size.
+   *
+   * Sizing him and hoping was the mistake: anchored to the bottom of the
+   * viewport he shares that edge with the input bar and the chips, so every
+   * number only chose how much of him they covered. Given a band bounded by
+   * the headline above and the furniture below, `contain` cannot overlap
+   * either one, at any width, without a single measurement.
+   *
+   * --portrait-floor is the bar plus the chip row plus their gaps.
+   * --portrait-top is the headline's share, and `clamp` keeps it sane
+   * between a short phone and a tall one. */
+  --portrait-floor: calc(var(--chat-form-height) + 68px);
+  --portrait-top: clamp(96px, 19dvh, 176px);
+
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
   /* --blur-filter: blur(10px) url(#liquid-glass-distortion); */
