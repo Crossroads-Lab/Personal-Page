@@ -1,0 +1,93 @@
+CONTEXT
+  product: A knowledge base that answers questions in the voice of whoever
+           wrote it. After a reader finishes one section, the product offers
+           a few questions to ask next. Those offers are written here, once,
+           at ingest — not improvised while someone is waiting.
+  stakes:  Every question you write may be shown to a reader as a button.
+           A button is a promise that an answer exists. A question nobody
+           can answer is worse than no button, because the product talked
+           the reader into asking it.
+
+INPUT
+  $payload:
+    description: |
+      {
+        "section": { "title": string, "text": string },
+        "count": number
+      }
+      One section of the corpus, and how many questions to write.
+    format: JSON
+
+OUTPUT
+  $questions:
+    description: JSON array of strings. No markdown, no preamble, no keys.
+    format: JSON
+    schema: ["string"]
+
+GOAL
+  description:
+    Write the questions a reader would actually ask after reading this
+    section — the ones the section raises and does not finish answering.
+
+  REASONING:
+
+    # Read for what it opens, not what it says
+
+    A section that is worth reading leaves something hanging: a decision
+    whose outcome is not given, a claim without its consequence, a person or
+    project named in passing, a principle stated without the case that
+    produced it. Those openings are the questions. Write from them.
+
+    # The test every question must pass
+
+    Ask it of the section itself. If the section already answers it, delete
+    it — you have written a rephrasing, and a reader pressing it will feel
+    the product repeat itself. The question must point OUTWARD, at material
+    that would be somewhere else in the corpus.
+
+    # Phrase it as a reader, not as a heading
+
+    Headings are written by authors and are often not self-contained:
+    "Which one matters most?" means nothing on a button. A reader types
+    whole questions. Write what they would type, carrying enough of the
+    subject that the question stands up alone, away from this section.
+
+      bad:  "And after that?"
+      bad:  "Which one?"
+      bad:  "How did that night turn out in the end?"   <- "that night" is
+            only meaningful to someone who just read this section. Away from
+            it the question is about nothing, and nothing can be retrieved
+            for it.
+      good: "How did the cloud migration actually turn out?"
+      good: "What changed in the hiring process afterwards?"
+
+    The rule is mechanical: no word in the question may point at something
+    only $payload.section supplies. "that night", "it", "there", "the
+    decision", "this approach" — every one of them has to be replaced by the
+    thing itself. Read your question as if you had never seen the section.
+    If you cannot tell what it is about, it is not a question, it is a
+    pronoun.
+
+    # Stay inside what you were given
+
+    Only use what is in $payload.section. Never add outside knowledge, even
+    where it seems obviously true. A question containing an invented fact is
+    indistinguishable from a hallucination at review time, and this corpus
+    speaks in somebody's name.
+
+    If the section is thin — a date, a list, a single claim — write fewer
+    questions. Returning two good ones is correct. Padding to $count with
+    questions nobody would ask is the failure mode to avoid.
+
+    # Spread them
+
+    Do not write $count variations of one question. Each should reach for
+    different material: what happened next, why it was done that way, what
+    it cost, who else was involved, what the author would do differently.
+
+  CONSTRAINTS:
+    - At most $payload.count questions. Fewer is fine. Zero is fine.
+    - Each a single question, under 90 characters where the subject allows.
+    - No question answerable from $payload.section alone.
+    - No invented names, numbers, dates, companies or outcomes.
+    - Output the JSON array and nothing else.

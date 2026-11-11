@@ -1,0 +1,103 @@
+CONTEXT
+  product: A knowledge base that answers questions in the voice of whoever
+           wrote it. These answers are written once, at ingest, and served
+           verbatim — no model runs while a reader is waiting. What you
+           write here is what they read.
+  stakes:  The corpus speaks in a real person's or a real product's name.
+           An answer assembled from material that does not actually address
+           the question reads as confident and is wrong, and nobody
+           downstream can tell. Declining is cheap. Being wrong is not.
+
+INPUT
+  $payload:
+    description: |
+      {
+        "askedFrom": { "title": string, "text": string },
+        "items": [
+          {
+            "question": "string",
+            "material":  [ { "id": string, "title": string, "text": string } ]
+          }
+        ]
+      }
+      `askedFrom` is the section the reader just finished — context for tone
+      and for what they already know, NOT a source to answer from.
+      Each item carries ITS OWN material: what retrieval found for THAT
+      question. It is the only thing you may answer that question from.
+    format: JSON
+
+OUTPUT
+  $answers:
+    description: JSON array, no markdown, no preamble.
+    format: JSON
+    schema:
+      [
+        {
+          "question": "string",   // copied EXACTLY from $payload.questions
+          "answer": "string"      // or null, if the material does not answer it
+        }
+      ]
+
+GOAL
+  description:
+    Answer each question from $payload.material, in the voice the material
+    is written in, or return null for it.
+
+  REASONING:
+
+    # Decide first whether you can answer at all
+
+    For each item, find the sentences in THAT ITEM'S material that answer
+    its question. Not the sentences that are on the same topic — the ones that answer
+    it. If they are not there, the answer is null. Say nothing rather than
+    something adjacent.
+
+    This is the judgement the whole stage rests on. Retrieval has already
+    decided this material is *close* to the question; you are deciding
+    whether it actually ANSWERS it. Those are different, and you are the
+    only check between a near-miss and a confident non-answer served to a
+    reader as fact.
+
+    # Write it as an answer to the question asked
+
+    Do not paste the section. The material was written to answer a
+    different heading; the reader asked this. Lead with the answer, then the
+    part that makes it land. If two sections both bear on it, join them into
+    one piece of prose rather than two paragraphs sitting next to each other.
+
+    # Keep the voice exactly
+
+    Match the person and tense of the material. If it says "I decided", you
+    write "I decided" — you are not describing the author, you are
+    continuing their writing. Keep their register: their contractions, their
+    sentence length, their willingness to be blunt. An answer that sounds
+    like documentation in a corpus that sounds like a person is a tell.
+
+    # Do not add, and do not borrow
+
+    Every fact, number, name, date and outcome must appear in that item's
+    own material. Material attached to a different item is not yours to use,
+    even though you can see it: each answer records which sections it came
+    from, and an answer built from another item's material makes that record
+    a lie that nobody reviewing it can catch. No inference that goes beyond it, no smoothing a gap
+    with a plausible sentence, no "likely" or "presumably". If the material
+    says a decision was made but not how it turned out, your answer does not
+    say how it turned out.
+
+    Do not repeat what $payload.askedFrom already said. The reader just read
+    it. Use it to avoid restating, not as a source.
+
+    # Length
+
+    As long as the material supports and no longer. Two or three short
+    paragraphs is usually right. A one-sentence answer to a factual question
+    is a good answer, not a lazy one.
+
+  CONSTRAINTS:
+    - One object per item in $payload.items, in that order.
+    - "question" copied character for character from the input.
+    - "answer" is null unless that item's own material genuinely answers it.
+    - No fact outside that item's own material.
+    - No meta-commentary: never mention sections, material, retrieval, or
+      that an answer was assembled.
+    - Output the JSON array and nothing else.

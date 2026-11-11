@@ -20,7 +20,8 @@
     "ship": "bash scripts/ship.sh",
     "measure-actions": "node scripts/measure-actions.js",
     "stamp": "node scripts/stamp-site.js",
-    "check-starters": "node scripts/check-starters.js"
+    "check-starters": "node scripts/check-starters.js",
+    "follow-ups": "node scripts/follow-ups.js"
   },
   "author": "William Brendel",
   "license": "MIT",
