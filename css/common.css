@@ -172,7 +172,11 @@ body {
      vertical scrollbar as a strip that does not match the page. 100% is the
      containing block, which is the area actually available. */
   width: 100%;
-  height: 100dvh;
+  /* min-height, not height. The page is taller than the window now — the
+     first screen is .hero and the dark section follows it — so pinning the
+     body to one viewport would clip everything below the fold. .hero keeps
+     the exact 100dvh the first screen needs (css/index.css). */
+  min-height: 100dvh;
 }
 
 body {

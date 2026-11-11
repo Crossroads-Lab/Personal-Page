@@ -43,7 +43,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=dd8eedeb" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=878e45c4" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=4bbeedc3" type="module" defer></script>
@@ -98,6 +98,21 @@
     </script>
   </head>
   <body loading>
+    <!--
+      THE FIRST SCREEN, unchanged in everything but its wrapper.
+
+      It used to BE the page: body was height: 100dvh, carried the portrait
+      on its ::before and the growing spacer on its ::after, and nothing
+      could follow it. v2 puts a second section underneath, so the page has
+      to be taller than the window — which means the first screen needs a
+      box of its own to be exactly one window tall inside.
+
+      So .hero takes over the three jobs body was doing (the flex column,
+      the portrait, the spacer) and body goes back to being a page. Nothing
+      inside here moved: the portrait tokens, the spacers, the headline, the
+      chat and its layout are the same rules pointed one level down.
+    -->
+    <div class="hero" id="top">
     <!-- Main content area where chat messages will be displayed -->
     <main id="content">
       <div id="welcome">
@@ -174,6 +189,8 @@
       <div id="starter-chips" aria-label="Suggested questions"></div>
     
     </div>
+
+    </div><!-- /.hero -->
 
     <!--
       THE one list of destinations. Never shown: it is the source every other

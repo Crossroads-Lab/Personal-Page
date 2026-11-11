@@ -1,7 +1,7 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=148645e5";
-@import "./chat-input.css?v=56520e36";
-@import "./chat-content.css?v=9b472afe";
+@import "./common.css?v=d4ae5ce0";
+@import "./chat-input.css?v=3d031426";
+@import "./chat-content.css?v=a4362494";
 
 /* 
  * =====================================================
@@ -9,18 +9,38 @@
  * =====================================================
  * Establishes the main flexbox layout for content
  */
-body {
+/* The first screen. Exactly one window tall, whatever follows it.
+ *
+ * Everything in this rule was on `body` until the dark section arrived. It
+ * had to move because body now has to be taller than the window, and the
+ * first screen still has to be exactly the window — otherwise the cut and
+ * the dark area show before anyone scrolls, which section 12 of the spec
+ * disallows at every width.
+ *
+ * position: relative so the portrait below anchors to the first screen
+ * rather than to a page that keeps going. */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
   align-items: center;
-  
+
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
   padding-bottom: var(--safearea-padding-bottom);
+
+  /* The portrait hangs below the first screen so the cut can hide its
+     bottom edge; clipping sideways keeps the phone layout's overhang from
+     creating a horizontal scrollbar. overflow-x: clip rather than hidden
+     because hidden on one axis makes the other a scroll container. */
+  overflow-x: clip;
 }
 
-body:before {
+.hero:before {
   content: "";
   position: absolute;
   top: 0;
@@ -94,7 +114,7 @@ body:before {
  * them would give a band of widths with half of it applied.
  */
 @media only screen and (max-width: 900px) {
-  body:before {
+  .hero:before {
     /* Bottom right of the SCREEN. The band I had here before — inset above
        the input furniture — stopped the overlap by lifting him off the
        bottom edge, which is not where he belongs.
