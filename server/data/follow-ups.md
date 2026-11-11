@@ -19,9 +19,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you write about in your chapter of The AI Transformation?
+      closest now: *What does that actually look like day to day?* (0.59)
 - [ ] Who are the other co-authors of The AI Transformation?
+      closest now: *What keeps you awake at night running an organization?* (0.62)
 - [ ] What can people actually do to thrive as AI reshapes their work?
+      closest now: *Is the chapter anti-AI?* (0.60)
 - [ ] Why did you decide to contribute to The AI Transformation?
+      closest now: *What does that actually look like day to day?* (0.60)
 
 ---
 
@@ -40,9 +44,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How can a team keep the habit of questioning AI model outputs?
+      closest now: *What do you believe AI should be used for?* (0.61)
 - [ ] What should a company protect before automating through workforce reductions?
+      closest now: *What keeps you awake at night running an organization?* (0.56)
 - [ ] How did Disney's move away from hand-drawn animation actually turn out?
 - [ ] How can a company tell when optimising for efficiency has lost sight of its purpose?
+      closest now: *Why do you ask those questions?* (0.59)
 
 ---
 
@@ -59,8 +66,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What made Walmart's AI-based routing work as well as it did?
+      closest now: *How would you approach AI adoption at our company?* (0.59)
 - [ ] How did Klarna's AI ticket handling actually perform?
+      closest now: *How would you approach AI adoption at our company?* (0.60)
 - [ ] What does the research say about the cognitive cost of relying on AI?
+      closest now: *What's the cultural risk nobody budgets for?* (0.61)
 - [ ] In times of change, what should leaders be trying to preserve?
 
 ---
@@ -74,9 +84,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your PhD research on video segmentation and event recognition about?
+      closest now: *What was your PhD in? What did you research?* (0.62)
 - [ ] What did your patents at Google, Amazon, and Snap cover?
+      closest now: *Who are you and what's your background?* (0.62)
 - [ ] What did being publication chair for CVPR involve?
+      closest now: *What service have you done for the research community?* (0.59)
 - [ ] Which of your publications has been cited the most?
+      closest now: *How many patents and publications do you have?* (0.60)
 
 ---
 
@@ -89,7 +103,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where were you born and where did you grow up?
+      closest now: *Where are you from? What's your background personally?* (0.58)
 - [ ] What was your childhood like?
+      closest now: *Where are you from? What's your background personally?* (0.58)
 
 ---
 
@@ -102,9 +118,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you study in graduate school after moving from France?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.57)
 - [ ] Why did you choose to leave France for graduate school in the US?
+      closest now: *Where are you from? What's your background personally?* (0.60)
 - [ ] What was the process of becoming a US citizen like for you?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.63)
 - [ ] What did you do professionally after finishing graduate school?
+      closest now: *Why did you leave big tech? What made you go found a company?* (0.58)
 
 ---
 
@@ -119,9 +139,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What kind of systems have you operated at American scale?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.59)
 - [ ] How did you come to be authorized to work in the US without sponsorship?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.58)
 - [ ] Which European countries would you consider working in?
+      closest now: *What was your role at Infineon and when?* (0.59)
 - [ ] What has your experience been working with European engineering teams?
+      closest now: *What was your role at Infineon and when?* (0.55)
 
 ---
 
@@ -136,9 +160,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you run a management team spread across four continents day to day?
+      closest now: *What's the most misunderstood aspect of your leadership style?* (0.61)
 - [ ] What was the hardest part of managing distributed teams across different continents?
+      closest now: *How do you handle accountability when nobody is in the room?* (0.63)
 - [ ] What would you need to know about a job before agreeing to relocate from Reno?
 - [ ] What does your management career look like, and where have your teams been based?
+      closest now: *What was your role at Google and YouTube and when?* (0.62)
 
 ---
 
@@ -151,7 +178,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where did you grow up, and what was your connection to France?
+      closest now: *Where are you from? What's your background personally?* (0.61)
 - [ ] Does being French by origin influence how you approach your work?
+      closest now: *How did you end up in the United States?* (0.58)
 
 ---
 
@@ -164,9 +193,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your PhD research at Oregon State University about?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.60)
 - [ ] Why did you choose Oregon State University for your PhD?
+      closest now: *How did you get into AI? What made you choose this field?* (0.63)
 - [ ] What did you do after finishing your PhD in June 2011?
+      closest now: *Is it true you never meant to do a PhD?* (0.60)
 - [ ] What did you work on between your CPE Lyon Master's and your PhD?
+      closest now: *Where else have you published?* (0.58)
 
 ---
 
@@ -179,9 +212,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did your computer vision research lead to the rest of your career?
+      closest now: *How did your career progress? What path did you take?* (0.60)
 - [ ] What was it like being Sinisa Todorovic's first doctoral student at Oregon State?
+      closest now: *What degrees do you have? Where did you study?* (0.51)
 - [ ] Why did you choose computer vision for your PhD research?
+      closest now: *How did your career progress? What path did you take?* (0.62)
 - [ ] What did your research on spatiotemporal video segmentation involve?
+      closest now: *Where else have you published?* (0.65)
 
 ---
 
@@ -201,9 +238,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your PhD research at Oregon State University about?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.60)
 - [ ] How did the Région Rhône-Alpes scholarship lead to you studying in the United States?
 - [ ] What did your research and teaching assistantship at Oregon State University involve?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.58)
 - [ ] What did you do after finishing at Oregon State University in 2011?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.55)
 
 ---
 
@@ -216,9 +256,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which of your publications has been cited the most, and why?
+      closest now: *Where else have you published?* (0.60)
 - [ ] What did your nutrition AI patents actually cover?
+      closest now: *How many patents do you have from Amazon?* (0.59)
 - [ ] What problems were you solving in your visual search and object recognition work?
+      closest now: *What did you take from big tech into founding?* (0.58)
 - [ ] What did you work on in machine learning infrastructure that led to patents?
+      closest now: *What was your role at Google and YouTube and when?* (0.61)
 
 ---
 
@@ -231,9 +275,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What does a Publication Chair actually do for a conference like CVPR?
+      closest now: *Where else have you published?* (0.58)
 - [ ] How did you get asked to become Publication Chair for CVPR?
+      closest now: *Where else have you published?* (0.56)
 - [ ] What was the hardest part of being Publication Chair for CVPR and WACV?
+      closest now: *Where else have you published?* (0.55)
 - [ ] How did being Publication Chair for WACV differ from doing it for CVPR?
+      closest now: *Where else have you published?* (0.59)
 
 ---
 
@@ -246,9 +294,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you study in graduate school in the United States?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.61)
 - [ ] Why did you decide to stay in the United States after graduate school?
+      closest now: *What did your family make of you staying in the US?* (0.61)
 - [ ] What was it like growing up in Troyes, in the Champagne region?
 - [ ] What was the process of becoming a US citizen like for you?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.63)
 
 ---
 
@@ -261,7 +312,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How long have you lived in Reno, Nevada?
+      closest now: *What are you doing now? What's your current role? What are you working on?* (0.53)
 - [ ] What is it like living in Reno, Nevada?
+      closest now: *What do you do outside of work? What are your hobbies?* (0.52)
 
 ---
 
@@ -276,9 +329,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you stay in the US after your one-year exchange at Oregon State?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.61)
 - [ ] What was your computer science PhD at Oregon State about?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.57)
 - [ ] What did you do after finishing your PhD in 2011?
+      closest now: *Is it true you never meant to do a PhD?* (0.59)
 - [ ] Did you ever get to surf much while studying at Oregon State?
+      closest now: *How did you get into AI? What made you choose this field?* (0.60)
 
 ---
 
@@ -294,8 +351,11 @@ cheaper than making it in front of a reader.
 
 - [ ] How did you get into DJing and promoting events?
 - [ ] What brought you from Oregon to Reno?
+      closest now: *How did you get into AI? What made you choose this field?* (0.54)
 - [ ] What do you like to cook for your family?
+      closest now: *How do you disconnect and recharge?* (0.58)
 - [ ] What kinds of movies are you most obsessed with?
+      closest now: *What's your favorite movie?* (0.68)
 
 ---
 
@@ -315,6 +375,7 @@ cheaper than making it in front of a reader.
 - [ ] Why did you start protecting family time more deliberately than before?
 - [ ] What do you like to cook when you want to switch off from work?
 - [ ] How do you handle work problems you can't think your way out of?
+      closest now: *Do you regret not getting the Apple job?* (0.59)
 
 ---
 
@@ -327,9 +388,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did coming to the US as an exchange student turn into a PhD?
+      closest now: *Is it true you never meant to do a PhD?* (0.59)
 - [ ] What was your original plan when you left France for the US in 2004?
+      closest now: *What did your family make of you staying in the US?* (0.62)
 - [ ] Why did you choose to go to the US as an exchange student?
+      closest now: *Where are you from? What's your background personally?* (0.61)
 - [ ] What was it like growing up in France?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.55)
 
 ---
 
@@ -342,9 +407,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What projects have you built using agentic AI?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.59)
 - [ ] How do you approach LLM orchestration in production systems?
 - [ ] What recommendation systems have you worked on, and how did they perform?
+      closest now: *What research did you ship at Snap? What was the impact?* (0.57)
 - [ ] Where have you applied semi-supervised learning, and why was it the right choice?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.63)
 
 ---
 
@@ -357,9 +425,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you build that needed real-time processing at 100fps?
+      closest now: *What did you build at Amazon A9?* (0.56)
 - [ ] What distributed systems have you designed, and what were the hardest parts?
+      closest now: *Have you managed remote or distributed teams?* (0.59)
 - [ ] When do you choose .NET 8 over Node.js for a backend service?
+      closest now: *Can you give an example of choosing reliability over innovation?* (0.57)
 - [ ] What do your CI/CD pipelines look like, and what do they deploy to on AWS?
+      closest now: *What results has the studio produced?* (0.57)
 
 ---
 
@@ -386,9 +458,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your hands-on role in SOC 2 Type II compliance work?
+      closest now: *What's an achievement you're proud of?* (0.61)
 - [ ] What did your HIPAA compliance work actually involve?
+      closest now: *What's an achievement you're proud of?* (0.59)
 - [ ] How do you approach vulnerability remediation in practice?
 - [ ] How have you handled data privacy in your work?
+      closest now: *What guardrails would you put in place first?* (0.62)
 
 ---
 
@@ -401,9 +476,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was hardest about scaling a team from 2 to 50+ people?
+      closest now: *What kind of role are you looking for?* (0.60)
 - [ ] What do you look for in technical due diligence on an M&A deal?
+      closest now: *How do you measure whether a culture is healthy?* (0.58)
 - [ ] What does your product-market-fit strategy look like in practice?
+      closest now: *What was your role at Crossroads Venture Studio?* (0.60)
 - [ ] How have you managed budgets above $2M?
+      closest now: *What was your role at iScribeHealth and when?* (0.58)
 
 ---
 
@@ -416,9 +495,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you cut production downtime by 70%?
+      closest now: *Can you give an example of choosing reliability over innovation?* (0.60)
 - [ ] What were the three companies you founded, and how did each one turn out?
+      closest now: *Did it change anything for you afterwards?* (0.61)
 - [ ] What AI systems did you ship at Snap, Amazon, and Google?
+      closest now: *Introduce yourself. Tell me about yourself in one minute.* (0.60)
 - [ ] What was your PhD in AI focused on?
+      closest now: *Introduce yourself. Tell me about yourself in one minute.* (0.61)
 
 ---
 
@@ -431,9 +514,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you patent at Google, Amazon, and Snap?
+      closest now: *Where else have you published?* (0.62)
 - [ ] What does a CVPR publication chair actually do?
+      closest now: *Where else have you published?* (0.60)
 - [ ] What was hardest about getting an organization through SOC 2 Type II and HIPAA?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.62)
 - [ ] What did your first penetration test turn up?
+      closest now: *What's an achievement you're proud of?* (0.60)
 
 ---
 
@@ -446,9 +533,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you move from big-tech R&D into founding and executive roles in 2019?
+      closest now: *What did you take from big tech into founding?* (0.60)
 - [ ] What did you work on in your PhD in computer vision and AI?
+      closest now: *What was your PhD in? What did you research?* (0.62)
 - [ ] What happened with Heali AI after you co-founded it?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.55)
 - [ ] What does your stealth AI startup do at the crossroads of AI and water management?
+      closest now: *Are you working on anything you're not talking about publicly?* (0.56)
 
 ---
 
@@ -461,8 +552,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What computer vision products did you build on Amazon's A9 visual search team?
+      closest now: *What infrastructure did you build at Amazon?* (0.59)
 - [ ] What did you do after leaving Amazon's A9 team in May 2016?
+      closest now: *How did you move from engineering into product?* (0.56)
 - [ ] How did you split your time between ML research and product management at A9?
+      closest now: *So how did the title actually change?* (0.60)
 - [ ] What was hardest about serving computer vision to 200M+ daily users at Amazon?
 
 ---
@@ -477,7 +571,9 @@ cheaper than making it in front of a reader.
 
 - [ ] How did you get brand logo detection running at 100 frames per second on mobile hardware?
 - [ ] What was the mobile brand logo recognition project at Amazon A9 used for?
+      closest now: *What was your role at Amazon and when?* (0.58)
 - [ ] What was the hardest part of building brand logo detection at Amazon A9?
+      closest now: *Why did you leave big tech? What made you go found a company?* (0.59)
 
 ---
 
@@ -490,9 +586,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did Amazon need a proprietary annotation and evaluation platform?
+      closest now: *What happened when you took that proposal around?* (0.58)
 - [ ] How was the 12M+ image and label corpus at Amazon collected and kept up to date?
+      closest now: *What happened when you took that proposal around?* (0.59)
 - [ ] What was the hardest part of blueprinting the global visual search database?
+      closest now: *What happened when you took that proposal around?* (0.63)
 - [ ] What would you do differently on the annotation and evaluation platform you built at Amazon?
+      closest now: *What happened when you took that proposal around?* (0.58)
 
 ---
 
@@ -505,9 +605,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What visual search products at Amazon came out of your patented work?
+      closest now: *What was your role at Amazon and when?* (0.59)
 - [ ] What machine learning infrastructure did you build at Amazon?
+      closest now: *What was your role at Amazon and when?* (0.58)
 - [ ] How did you take object recognition research into production at Amazon?
+      closest now: *What was your role at Amazon and when?* (0.59)
 - [ ] How did you weigh technical feasibility against consumer needs in visual search?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.58)
 
 ---
 
@@ -520,9 +624,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What led you to found Crossroads Venture Studio in 2023?
+      closest now: *Why do you spend time on mentoring?* (0.58)
 - [ ] Which AI-driven ventures were in the Crossroads Venture Studio portfolio?
+      closest now: *What was Crossroads Venture Studio?* (0.59)
 - [ ] How did you approach product-market-fit strategy at Crossroads Venture Studio?
+      closest now: *Why do you spend time on mentoring?* (0.54)
 - [ ] What technical architecture choices did you make across Crossroads Venture Studio's ventures?
+      closest now: *Why do you spend time on mentoring?* (0.56)
 
 ---
 
@@ -535,9 +643,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did Crossroads Venture Studio build gococo.ai?
+      closest now: *What was your role at Crossroads Venture Studio?* (0.59)
 - [ ] What AI orchestration and infrastructure strategy did you define for portfolio companies?
+      closest now: *What was your role at Crossroads Venture Studio?* (0.59)
 - [ ] Which Crossroads Venture Studio projects didn't succeed, and what did you learn?
+      closest now: *Why do you spend time on mentoring?* (0.58)
 - [ ] How did you integrate external teams into Crossroads Venture Studio projects?
+      closest now: *Why do you spend time on mentoring?* (0.57)
 
 ---
 
@@ -552,9 +664,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What led you to co-found a company working on AI and water management?
+      closest now: *How did your career progress? What path did you take?* (0.58)
 - [ ] What were you working on before you co-founded a startup in January 2026?
+      closest now: *What do you believe AI should be used for?* (0.60)
 - [ ] Where do you see AI being most useful in water management?
+      closest now: *How would you approach AI adoption at our company?* (0.56)
 - [ ] What does being Chief AI Officer at an early-stage startup involve day to day?
+      closest now: *How did your career progress? What path did you take?* (0.57)
 
 ---
 
@@ -568,8 +684,10 @@ cheaper than making it in front of a reader.
 
 - [ ] What does the proprietary incubation framework for AI product delivery include?
 - [ ] How much faster did the incubation framework make generative AI feature launches?
+      closest now: *How do you evaluate a vendor's productivity claims?* (0.61)
 - [ ] What happened to the portfolio ventures that didn't reach seed funding or first customers?
 - [ ] How were CI/CD pipelines standardized across the portfolio ventures?
+      closest now: *What infrastructure and backend experience do you have?* (0.62)
 
 ---
 
@@ -582,9 +700,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you work on as a machine learning engineer at YouTube?
+      closest now: *What did you build at YouTube?* (0.59)
 - [ ] How did you end up joining Google and YouTube in August 2011?
+      closest now: *Did it change anything for you afterwards?* (0.60)
 - [ ] Why did you leave Google in November 2012?
+      closest now: *Did it change anything for you afterwards?* (0.64)
 - [ ] What did you do after leaving YouTube and Google?
+      closest now: *Did it change anything for you afterwards?* (0.61)
 
 ---
 
@@ -597,8 +719,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the Suggested Edits project at YouTube get started?
+      closest now: *Tell me about a time you faced organizational politics* (0.59)
 - [ ] How does Suggested Edits detect and correct video quality problems at YouTube?
+      closest now: *Tell me about a time you faced organizational politics* (0.58)
 - [ ] What were the hardest challenges in scaling Suggested Edits across all YouTube videos?
+      closest now: *Tell me about a time you faced organizational politics* (0.58)
 - [ ] How did you measure the playback quality improvement from Suggested Edits?
 
 ---
@@ -613,8 +738,11 @@ cheaper than making it in front of a reader.
 
 - [ ] What are your two video processing patents from YouTube actually about?
 - [ ] Which computer vision algorithms did you use in YouTube's creator effects?
+      closest now: *Do you regret not getting the Apple job?* (0.61)
 - [ ] What was the hardest video effect or filter you built at YouTube?
+      closest now: *Do you regret not getting the Apple job?* (0.57)
 - [ ] How did creators respond to the video effects and filters you built at YouTube?
+      closest now: *Do you regret not getting the Apple job?* (0.59)
 
 ---
 
@@ -627,9 +755,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you co-found Heali AI?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.57)
 - [ ] How did Heali AI use AI to personalize nutrition for chronic disease management?
+      closest now: *What's a project you're proud of? What's your favorite thing you built?* (0.55)
 - [ ] Which chronic diseases was Heali AI built to help with?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.53)
 - [ ] Who were your co-founders at Heali AI?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.57)
 
 ---
 
@@ -642,9 +774,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the product vision for Heali AI?
+      closest now: *So the objection was about measurement as much as ethics?* (0.53)
 - [ ] What prioritization framework did you set up at Heali AI?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.55)
 - [ ] What did you learn from discovery work at Heali AI?
+      closest now: *What was your role at Heali and when?* (0.54)
 - [ ] How did the Heali AI iOS and Android apps do after launch?
+      closest now: *How did your career progress? What path did you take?* (0.54)
 
 ---
 
@@ -657,9 +793,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the core intellectual property you established at Heali?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.57)
 - [ ] What did Heali's technical roadmap look like?
+      closest now: *So the objection was about measurement as much as ethics?* (0.55)
 - [ ] How did you go about raising the $4M seed round for Heali?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.56)
 - [ ] What happened to Heali after the seed round?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.57)
 
 ---
 
@@ -672,9 +812,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where did the nutrition data behind Heali's AI pipeline come from?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 - [ ] How did the semi-supervised pipeline at Heali clean billions of nutrition data points?
+      closest now: *Tell me about solving a complex problem with very limited data or resources.* (0.57)
 - [ ] How did Heali's nutrition engine handle 200+ different medical conditions?
+      closest now: *What have your teams actually looked like?* (0.57)
 - [ ] What would you do differently if you rebuilt the Heali AI pipeline today?
+      closest now: *What did you learn from failing? What did you change?* (0.56)
 
 ---
 
@@ -687,9 +831,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did Heali's consumer apps reach more than 10,000 active users?
+      closest now: *What did your early team at Heali accomplish?* (0.56)
 - [ ] How did you bootstrap Heali's Diabetes Prevention Program product?
+      closest now: *How much did you raise at Heali? What was the outcome?* (0.56)
 - [ ] Which healthcare organizations did Heali partner with nationwide?
+      closest now: *How did your career progress? What path did you take?* (0.55)
 - [ ] What did CDC compliance require when building Heali's Diabetes Prevention Program?
+      closest now: *What do you believe AI should be used for?* (0.55)
 
 ---
 
@@ -702,9 +850,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the patent you authored at Heali about?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.54)
 - [ ] What did your peer-reviewed publication from Heali cover?
+      closest now: *How much did you raise at Heali? What was the outcome?* (0.54)
 - [ ] What were the core AI innovations behind the Heali platform?
+      closest now: *Why does that matter to you specifically?* (0.58)
 - [ ] How did you recruit the team of engineers, designers, and researchers at Heali?
+      closest now: *What have your teams actually looked like?* (0.56)
 
 ---
 
@@ -717,9 +869,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did your day-to-day QA Application Engineer work at Infineon involve?
+      closest now: *How did you actually get to the US?* (0.56)
 - [ ] How did you cope without speaking German when you started in Munich?
+      closest now: *How did you actually get to the US?* (0.58)
 - [ ] What was the place in the US you missed the cut for on your first attempt?
+      closest now: *How did you actually get to the US?* (0.57)
 - [ ] What did you take away from your year at Infineon in Munich?
+      closest now: *What did you build at Infineon?* (0.51)
 
 ---
 
@@ -732,9 +888,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you cut validation cycle time by 30% at Infineon?
+      closest now: *What was your role at Infineon and when?* (0.58)
 - [ ] Why did you write the Infineon hardware drivers in C and Assembly?
+      closest now: *How did you actually get to the US?* (0.56)
 - [ ] How did the TCL scripts for electronic board test automation at Infineon work?
+      closest now: *How did you actually get to the US?* (0.59)
 - [ ] What was the hardest problem you hit building test platforms at Infineon?
+      closest now: *What was your role at Infineon and when?* (0.54)
 
 ---
 
@@ -747,9 +907,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What does your work as a Mentor and Advisor at Inovexus involve?
+      closest now: *Why do you spend time on mentoring?* (0.58)
 - [ ] What is Crossroads Venture Studio, and what did you do running it?
+      closest now: *What did Crossroads Venture Studio do? What does Crossroads Venture Studio do?* (0.63)
 - [ ] What drew you to become a Mentor and Advisor at Inovexus?
+      closest now: *Why do you spend time on mentoring?* (0.56)
 - [ ] What happened to Crossroads Venture Studio after you joined Inovexus?
+      closest now: *What was your role at Crossroads Venture Studio?* (0.54)
 
 ---
 
@@ -765,7 +929,9 @@ cheaper than making it in front of a reader.
 
 - [ ] Which of invyo.io and quideos.com raised the $2M seed round?
 - [ ] What does invyo.io do, and how do you help its founders?
+      closest now: *What did you take from big tech into founding?* (0.55)
 - [ ] What does quideos.com do, and what do you work on with its founders?
+      closest now: *What does "fail and learn fast" mean in practice for you?* (0.56)
 - [ ] What went wrong when you tried to hold the technical and product-executive roles at once?
 
 ---
@@ -781,9 +947,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What nearly went wrong at Heali because of the gaps in your commercial instinct?
+      closest now: *Whose fault was it?* (0.57)
 - [ ] How did you learn the operational side of running Heali without a mentor?
+      closest now: *What have your teams actually looked like?* (0.54)
 - [ ] What expensive mistakes do technical founders most often make?
+      closest now: *What did that mistake cost you?* (0.54)
 - [ ] What does Crossroads Venture Studio do for the founders it works with?
+      closest now: *What did you take from big tech into founding?* (0.58)
 
 ---
 
@@ -796,9 +966,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you leave your VP of Engineering role at iScribeHealth in July 2025?
+      closest now: *Why did you leave your last role? What happened at iScribeHealth?* (0.59)
 - [ ] How did you decide where to spend the $2M engineering budget at iScribeHealth?
+      closest now: *What did you own at iScribeHealth? What were you responsible for?* (0.59)
 - [ ] How was the 10-person engineering team at iScribeHealth structured?
+      closest now: *Who did you hire at iScribeHealth? How did you build the team?* (0.59)
 - [ ] What would you do differently as VP of Engineering at iScribeHealth?
+      closest now: *What did you own at iScribeHealth? What were you responsible for?* (0.58)
 
 ---
 
@@ -811,9 +985,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you define production readiness for iScribeHealth's customer-facing systems?
+      closest now: *Who did you hire at iScribeHealth? How did you build the team?* (0.58)
 - [ ] What OKRs did you set at iScribeHealth to support the $100M ARR target?
+      closest now: *How did your work at iScribeHealth land? What did people say?* (0.58)
 - [ ] How did you work with the CEO at iScribeHealth to shape the technical roadmap?
+      closest now: *What does iScribeHealth do?* (0.59)
 - [ ] How did you approach platform reliability for AI clinical documentation at iScribeHealth?
+      closest now: *What will the industry look like in five years?* (0.59)
 
 ---
 
@@ -826,9 +1004,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did iScribeHealth move authentication from Azure Entra ID to Auth0?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.60)
 - [ ] How was the iScribeHealth migration from .NET 4 to .NET 8 carried out?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.60)
 - [ ] What was causing production downtime at iScribeHealth before the .NET 8 move?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.60)
 - [ ] How did the Auth0 migration at iScribeHealth turn out?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.60)
 
 ---
 
@@ -841,9 +1023,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did iScribeHealth's first-ever penetration test find?
+      closest now: *What's an achievement you're proud of?* (0.59)
 - [ ] How long did it take iScribeHealth to reach SOC 2 and HIPAA compliance?
+      closest now: *What's an achievement you're proud of?* (0.64)
 - [ ] How did you handle fixing the high-severity findings from the iScribeHealth pen test?
+      closest now: *What's an achievement you're proud of?* (0.58)
 - [ ] What was hardest about getting iScribeHealth through SOC 2 and HIPAA?
+      closest now: *What's an achievement you're proud of?* (0.62)
 
 ---
 
@@ -856,9 +1042,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How were the AI-driven E&M coding suggestions at iScribeHealth built?
+      closest now: *What does iScribeHealth do?* (0.59)
 - [ ] How did you measure the 10 to 20% billing improvement from E&M coding suggestions?
 - [ ] What was involved in expanding iScribeHealth's integration with Athena's ambient scribe?
+      closest now: *What does iScribeHealth do?* (0.59)
 - [ ] What would you do differently on the AI E&M coding suggestions at iScribeHealth?
+      closest now: *What does iScribeHealth do?* (0.57)
 
 ---
 
@@ -871,9 +1060,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did iScribeHealth need stronger cross-functional execution?
+      closest now: *How did your career progress? What path did you take?* (0.59)
 - [ ] What did you look for when hiring a Lead Engineer and Product Manager at iScribeHealth?
+      closest now: *What does iScribeHealth do?* (0.56)
 - [ ] How did you get product, engineering, and customer success aligned at iScribeHealth?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.62)
 - [ ] What would you do differently in building the iScribeHealth team?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.59)
 
 ---
 
@@ -886,9 +1079,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you actually work on as a Technical Director Intern at Laika?
+      closest now: *What did you actually want to do instead?* (0.52)
 - [ ] How did you land the Technical Director internship at Laika in 2007?
+      closest now: *Why does that internship still matter to you?* (0.53)
 - [ ] Why did animation and visual effects never become your full-time career?
 - [ ] What was your PhD research about?
+      closest now: *What was your PhD in? What did you research?* (0.64)
 
 ---
 
@@ -907,6 +1103,7 @@ cheaper than making it in front of a reader.
 - [ ] How did you decide what to leave out of the real-time preview renderer at Laika?
 - [ ] Which Laika films did your Maya preview rendering system get used on?
 - [ ] How did directors at Laika respond to the real-time preview tool in practice?
+      closest now: *Did you ever work in animation or visual effects?* (0.54)
 - [ ] Why was Perl the scripting language inside the Laika production pipeline?
 
 ---
@@ -922,8 +1119,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you actually work on during your CGI internship?
+      closest now: *Did you ever work in animation or visual effects?* (0.56)
 - [ ] What first drew you to wanting to build CGI technology?
+      closest now: *What did you actually want to do instead?* (0.57)
 - [ ] What did you do after your CGI internship ended?
+      closest now: *Why did you leave big tech? What made you go found a company?* (0.55)
 - [ ] Which of your later projects involved approximating something expensive in real time?
 
 ---
@@ -937,9 +1137,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What research did you do as a Senior Research Scientist at Snap?
+      closest now: *How big was your team at Snap? What did you manage?* (0.58)
 - [ ] Which programs did you manage as a Technical Program Manager at Snap?
+      closest now: *Did you try to go back to engineering afterwards?* (0.56)
 - [ ] How did you end up joining Snap in May 2016?
+      closest now: *Was there a specific moment you decided?* (0.58)
 - [ ] Why did you leave Snap in May 2019, and what did you do next?
+      closest now: *What are you optimizing for? Why do you do this work?* (0.60)
 
 ---
 
@@ -952,9 +1156,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you prioritize among 40+ concurrent research projects at Snap?
+      closest now: *How did you work cross-functionally at Snap?* (0.57)
 - [ ] How did research actually get shipped into Snap's global products?
+      closest now: *Did you prove them wrong?* (0.62)
 - [ ] Why did you expand Snap's R&D group into so many research domains?
+      closest now: *Did you prove them wrong?* (0.58)
 - [ ] What was the hardest part of leading a 50+ person R&D team at Snap?
+      closest now: *How did you work cross-functionally at Snap?* (0.56)
 
 ---
 
@@ -967,9 +1175,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the privacy-preserving friend recommendations at Snap actually work?
+      closest now: *Why did you object to that? What worried you?* (0.58)
 - [ ] How were the Bitmoji chat recommendations at Snap triggered in the interface?
 - [ ] What NLP approach did you use to sort Snap support tickets by sentiment?
+      closest now: *How big was your team at Snap? What did you manage?* (0.59)
 - [ ] How did you measure the impact of your research projects at Snap?
+      closest now: *How many patents and publications do you have?* (0.62)
 
 ---
 
@@ -982,9 +1193,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you align R&D roadmaps with global product strategy at Snap?
+      closest now: *How did the disagreement resolve?* (0.58)
 - [ ] What was the hardest part of coordinating five departments at Snap?
+      closest now: *What have your teams actually looked like?* (0.54)
 - [ ] How did legal input shape the R&D roadmaps at Snap?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.59)
 - [ ] What would you do differently managing stakeholders across departments at Snap?
+      closest now: *Tell me about a time you disagreed with someone* (0.56)
 
 ---
 
@@ -997,9 +1212,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the Technical Acquisition Committee decide which technologies to acquire?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.56)
 - [ ] Which acquisitions came out of the Technical Acquisition Committee's evaluations?
+      closest now: *What leadership experience do you have? How big have your teams been?* (0.55)
 - [ ] What are the 8 patents you authored about?
+      closest now: *Where else have you published?* (0.58)
 - [ ] What are the 7 publications you authored about?
+      closest now: *How many patents and publications do you have?* (0.55)
 
 ---
 
@@ -1012,9 +1231,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you actually build for blind users at ViewPlus Technologies?
+      closest now: *What did you build at ViewPlus?* (0.62)
 - [ ] What did you learn about designing for blind users during your accessibility research?
+      closest now: *What did you build at ViewPlus?* (0.60)
 - [ ] What did you do after your computer vision research at Oregon State University ended?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.58)
 - [ ] Why did you take a computer vision research role in assistive technology?
+      closest now: *How did your career progress? What path did you take?* (0.61)
 
 ---
 
@@ -1029,9 +1252,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the braille finger tracking at ViewPlus work on a low-resolution webcam?
+      closest now: *What do you believe AI should be used for?* (0.64)
 - [ ] What was the hardest part of registering braille documents in real time at ViewPlus?
+      closest now: *What do you believe AI should be used for?* (0.60)
 - [ ] What happened to the ViewPlus braille finger tracking system after you built it?
+      closest now: *What do you believe AI should be used for?* (0.66)
 - [ ] What would you do differently on the ViewPlus braille finger tracking project?
+      closest now: *What do you believe AI should be used for?* (0.66)
 
 ---
 
@@ -1046,9 +1273,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the finger-tracking project, and what was it built to do?
+      closest now: *What did you build at ViewPlus?* (0.63)
 - [ ] How did you get finger tracking to run in real time on cheap cameras?
+      closest now: *What did you build at ViewPlus?* (0.63)
 - [ ] Which projects since then have you built around the hardware people already own?
+      closest now: *What was your role at Crossroads Venture Studio?* (0.57)
 - [ ] What's an example of computer vision work that was publishable but not useful?
+      closest now: *What was your PhD in? What did you research?* (0.58)
 
 ---
 
@@ -1063,9 +1294,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did the ViewPlus project actually involve?
+      closest now: *What did you build at ViewPlus?* (0.57)
 - [ ] What did you work on in the thirteen years between ViewPlus and Heali?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.55)
 - [ ] How did Heali get started?
+      closest now: *What do you believe AI should be used for?* (0.57)
 - [ ] What does AI for good look like in practice at Heali?
+      closest now: *Why does that matter to you specifically?* (0.54)
 
 ---
 
@@ -1078,9 +1313,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you decide to build a company at the crossroads of AI and water management?
+      closest now: *Are you working on anything you're not talking about publicly?* (0.59)
 - [ ] What did you do before co-founding your AI and water management startup?
+      closest now: *How did your career progress? What path did you take?* (0.56)
 - [ ] What water management problems do you want to tackle with AI?
+      closest now: *What do you believe AI should be used for?* (0.59)
 - [ ] Who are your co-founders in your AI and water management startup?
+      closest now: *How did your career progress? What path did you take?* (0.59)
 
 ---
 
@@ -1093,9 +1332,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which companies were in the Crossroads Venture Studio portfolio?
+      closest now: *How did your career progress? What path did you take?* (0.59)
 - [ ] Why did you found Crossroads Venture Studio in May 2023?
+      closest now: *What did Crossroads Venture Studio do? What does Crossroads Venture Studio do?* (0.59)
 - [ ] How did you approach product-market fit for AI-driven companies at Crossroads Venture Studio?
+      closest now: *What results has the studio produced?* (0.57)
 - [ ] What led to the end of your time at Crossroads Venture Studio in July 2026?
+      closest now: *Why do you spend time on mentoring?* (0.56)
 
 ---
 
@@ -1108,7 +1351,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What is your professional background?
+      closest now: *Who are you and what's your background?* (0.59)
 - [ ] What kind of work are you doing at the moment?
+      closest now: *How did your career progress? What path did you take?* (0.62)
 
 ---
 
@@ -1121,6 +1366,7 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What other ways can I reach you besides booking a 30-minute call?
+      closest now: *What's your phone number?* (0.63)
 
 ---
 
@@ -1133,7 +1379,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What is your research about?
+      closest now: *What was your PhD in? What did you research?* (0.59)
 - [ ] What does your professional background look like?
+      closest now: *Who are you and what's your background?* (0.56)
 
 ---
 
@@ -1146,7 +1394,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What is your professional background and work experience?
+      closest now: *Who are you and what's your background?* (0.56)
 - [ ] What are your main skills?
+      closest now: *Why do you spend time on mentoring?* (0.52)
 
 ---
 
@@ -1159,9 +1409,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What AI systems did you ship at Google, Amazon, and Snap?
+      closest now: *Did you prove them wrong?* (0.60)
 - [ ] What were the three startups you founded, and how did each one turn out?
+      closest now: *Did it change anything for you afterwards?* (0.61)
 - [ ] Why did you decide to apply AI to water management?
+      closest now: *How would you approach AI adoption at our company?* (0.59)
 - [ ] What was your PhD in AI about?
+      closest now: *How did you get into AI? What made you choose this field?* (0.60)
 
 ---
 
@@ -1174,9 +1428,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What made you decide to leave big tech?
+      closest now: *Why did you leave big tech? What made you go found a company?* (0.61)
 - [ ] What healthcare systems have you built over the last six years?
+      closest now: *What will the industry look like in five years?* (0.57)
 - [ ] How do you balance speed, precision, and scale when building healthcare systems?
+      closest now: *Tell me about solving a complex problem with very limited data or resources.* (0.60)
 - [ ] What do you want to build next in healthcare with AI?
+      closest now: *What would you like to build if you joined us?* (0.60)
 
 ---
 
@@ -1189,8 +1447,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why ask an interviewer about the company's biggest engineering challenge?
+      closest now: *Why do you ask those questions?* (0.58)
 - [ ] What other questions are worth asking at the end of a job interview?
+      closest now: *What did you change afterwards?* (0.60)
 - [ ] How should I prepare to explain how I'd move a company's mission forward in a year?
+      closest now: *So the objection was about measurement as much as ethics?* (0.56)
 
 ---
 
@@ -1203,9 +1464,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What questions do you ask a company when deciding whether to take a role?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 - [ ] What do you do when a company isn't honest about its hardest problem?
+      closest now: *How do you measure whether a culture is healthy?* (0.56)
 - [ ] What do you want from a role yourself?
+      closest now: *How did you move from engineering into product?* (0.57)
 - [ ] What kinds of hard problems do you think you'd be good at?
+      closest now: *Why does that internship still matter to you?* (0.57)
 
 ---
 
@@ -1218,9 +1483,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What have you worked on in healthcare?
+      closest now: *What are you optimizing for? Why do you do this work?* (0.59)
 - [ ] Why do you think healthcare is where AI has the most leverage?
+      closest now: *What will the industry look like in five years?* (0.62)
 - [ ] Which uses of AI besides healthcare do you consider among the most important?
+      closest now: *What will the industry look like in five years?* (0.61)
 - [ ] What does it look like when AI is the core of a product rather than a feature?
+      closest now: *Why does that matter to you specifically?* (0.60)
 
 ---
 
@@ -1233,9 +1502,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you grow an engineering organization from a handful of people to 50+?
+      closest now: *Did you prove them wrong?* (0.53)
 - [ ] Can you give an example of technical ambiguity you resolved as an engineering leader?
+      closest now: *Tell me about a time you had to make a hard tradeoff* (0.54)
 - [ ] What kinds of teams and companies have you led engineering for before?
+      closest now: *How big was your team at Snap? What did you manage?* (0.56)
 - [ ] What do you do differently when you need to scale an engineering team quickly?
+      closest now: *What are the first things you would do if you got hired?* (0.58)
 
 ---
 
@@ -1248,8 +1521,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What kind of venture would you build next?
+      closest now: *What would you like to build if you joined us?* (0.58)
 - [ ] Why would you choose AI architecture and compliance as your consulting focus?
+      closest now: *How would you approach AI adoption at our company?* (0.59)
 - [ ] What background do you have in AI architecture and compliance?
+      closest now: *Is the chapter anti-AI?* (0.57)
 
 ---
 
@@ -1262,9 +1538,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How does iScribeHealth's AI scribing tool actually work?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.60)
 - [ ] How do iScribeHealth's pre-authorization tools work?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.60)
 - [ ] How much time do clinicians actually save with iScribeHealth?
+      closest now: *What platform and reliability work did you do at iScribeHealth?* (0.57)
 - [ ] Why did iScribeHealth focus on reducing clinicians' administrative burden?
+      closest now: *Can you give an example of choosing reliability over innovation?* (0.57)
 
 ---
 
@@ -1279,9 +1559,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did the iScribeHealth re-architecture involve, and how did it cut downtime by 70%?
+      closest now: *What's an achievement you're proud of?* (0.59)
 - [ ] What compliance work did you do at iScribeHealth?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.61)
 - [ ] Which integrations did you build at iScribeHealth?
+      closest now: *What's an achievement you're proud of?* (0.60)
 - [ ] How did you plan to reorganise the engineering team at iScribeHealth?
+      closest now: *Who did you hire at iScribeHealth? How did you build the team?* (0.60)
 
 ---
 
@@ -1300,7 +1584,9 @@ cheaper than making it in front of a reader.
 - [ ] How did Walmart's AI routing overhaul work in practice?
 - [ ] How was Klarna's AI support assistant rolled out?
 - [ ] How do you tell whether company data is clean enough for an AI project?
+      closest now: *How do you evaluate a vendor's productivity claims?* (0.58)
 - [ ] After a small AI pilot proves its value, how do you choose the next project?
+      closest now: *So what do you do about it?* (0.60)
 
 ---
 
@@ -1318,6 +1604,7 @@ cheaper than making it in front of a reader.
 
 - [ ] How do you design a pilot that tests a vendor's productivity claims under real conditions?
 - [ ] Why do experienced developers feel faster when measurements show they are slower?
+      closest now: *What does that actually look like day to day?* (0.58)
 - [ ] How do you find the downstream work that a vendor's productivity demo doesn't count?
 - [ ] What does adjusting without embarrassment look like when a vendor's productivity gains don't hold up?
 
@@ -1340,7 +1627,9 @@ cheaper than making it in front of a reader.
 - [ ] What guardrails would you add after setting data boundaries for AI tools?
 - [ ] How did Samsung respond after engineers pasted source code into ChatGPT?
 - [ ] Who should be accountable for the output when AI tools are used at work?
+      closest now: *Why does that matter to you specifically?* (0.60)
 - [ ] How should teams review AI-generated code before it ships?
+      closest now: *What do you tell students going into this field now?* (0.56)
 
 ---
 
@@ -1357,9 +1646,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you make it safe for staff to say they don't believe an AI output?
+      closest now: *What guardrails would you put in place first?* (0.59)
 - [ ] What does verifying AI outputs and assumptions look like in day-to-day practice?
+      closest now: *How do you evaluate a vendor's productivity claims?* (0.59)
 - [ ] How should the environmental cost of deploying AI at scale enter a business case?
+      closest now: *What keeps you awake at night running an organization?* (0.62)
 - [ ] What does a decision failing because of hollow AI input look like in a real organisation?
+      closest now: *What's your chapter about? What did you contribute?* (0.62)
 
 ---
 
@@ -1376,9 +1669,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the braille registration and finger tracking system work on a cheap webcam?
+      closest now: *What did you build at ViewPlus?* (0.66)
 - [ ] What happened to the real-time braille reading project after it was built?
+      closest now: *What did you build at ViewPlus?* (0.61)
 - [ ] How does Heali work out what someone with a chronic condition should eat?
+      closest now: *What did you change afterwards?* (0.52)
 - [ ] What results did Heali's users see in their symptoms?
+      closest now: *Is "AI for good" not just marketing?* (0.58)
 
 ---
 
@@ -1395,9 +1692,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which problems do you think machine learning should be pointed at instead?
+      closest now: *What do you believe AI should be used for?* (0.60)
 - [ ] Was there a specific project that changed how you saw recommendation systems work?
+      closest now: *What AI and machine learning skills do you have?* (0.54)
 - [ ] Who actually decides which problems get machine learning attention and funding?
+      closest now: *So what do you do about it?* (0.58)
 - [ ] Looking back, what would you do differently in your years on recommendation systems?
+      closest now: *What did you learn from failing? What did you change?* (0.57)
 
 ---
 
@@ -1414,9 +1715,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did Heali do, and what problem was it trying to solve?
+      closest now: *What did you take from big tech into founding?* (0.59)
 - [ ] Have you seen a case where an AI-for-good mission and the business pulled apart?
+      closest now: *How would you approach AI adoption at our company?* (0.58)
 - [ ] What problems have you chosen to work on in AI, and why those?
+      closest now: *What's your chapter about? What did you contribute?* (0.59)
 - [ ] How did Heali track whether users' symptoms were actually improving?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.57)
 
 ---
 
@@ -1431,9 +1736,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Can you give an example of a time you led by example?
+      closest now: *Why do you spend time on mentoring?* (0.59)
 - [ ] What's a time you failed, and what did you learn from it quickly?
+      closest now: *Why do you spend time on mentoring?* (0.65)
 - [ ] Which domains have you worked across rather than going deep in just one?
 - [ ] When have you been outspoken at work, and what happened?
+      closest now: *What do you expect from the people who work for you?* (0.62)
 
 ---
 
@@ -1450,9 +1758,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which parts of the Amazon leadership principles framework did you leave behind, and why?
+      closest now: *What was your role at Amazon and when?* (0.54)
 - [ ] Can you give an example of leading by example, where you did the work yourself?
+      closest now: *Doesn't leading by example fall apart when you're not co-located?* (0.55)
 - [ ] Which other Amazon leadership principles did you pick to be measured against at review time?
 - [ ] How else did working at Amazon shape the way you lead your team?
+      closest now: *What does that actually look like day to day?* (0.59)
 
 ---
 
@@ -1467,9 +1778,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Can you give an example of an MVP you shipped that turned out to be wrong?
+      closest now: *What did you take from big tech into founding?* (0.54)
 - [ ] How did failing and iterating quickly play out when you moved from research into founding?
 - [ ] How do you stay close to the user while you're building a product?
+      closest now: *Why did you leave big tech? What made you go found a company?* (0.57)
 - [ ] Was there a time you were slow to admit something you built wasn't working?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.57)
 
 ---
 
@@ -1484,8 +1798,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What other values are on your list besides being outspoken?
+      closest now: *What are your core values? What do you stand for?* (0.55)
 - [ ] What do you do when someone on your team hides a problem instead of raising it?
+      closest now: *What's your management style? How do you run teams?* (0.61)
 - [ ] How do you make it safe for people to bring you bad news early?
+      closest now: *What does onboarding someone more senior than you actually involve?* (0.57)
 - [ ] How do you actually go about having an uncomfortable conversation with someone you work with?
 
 ---
@@ -1501,9 +1818,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What experience taught you that reliability matters more than innovation?
+      closest now: *Can you give an example of choosing reliability over innovation?* (0.58)
 - [ ] How do you keep engineers motivated to build boring, dependable products?
 - [ ] When is it worth risking predictability to ship something genuinely new?
+      closest now: *Why does that matter more in healthcare?* (0.55)
 - [ ] How do you tell whether customers actually trust your product?
+      closest now: *Why does that matter more in healthcare?* (0.54)
 
 ---
 
@@ -1520,9 +1840,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did iScribeHealth's first-ever penetration test uncover?
+      closest now: *What's an achievement you're proud of?* (0.59)
 - [ ] How did the migration from .NET 4 to .NET 8 at iScribeHealth go?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.61)
 - [ ] What architecture changes cut iScribeHealth's production downtime by 70%?
+      closest now: *Why did you leave your last role? What happened at iScribeHealth?* (0.58)
 - [ ] What was hardest about taking iScribeHealth through SOC 2 and HIPAA compliance?
+      closest now: *What's an achievement you're proud of?* (0.63)
 
 ---
 
@@ -1539,6 +1863,7 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What does reliability mean in practice for a healthcare documentation system?
+      closest now: *Why is that the right problem to work on?* (0.60)
 - [ ] How do you decide what to cut when scoping a healthcare software product?
 - [ ] Did a documentation product ever lose providers' trust, and how did it happen?
 - [ ] Can trust be rebuilt with providers after a documentation system fails them?
@@ -1571,9 +1896,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you handle time zones when running teams across four continents?
+      closest now: *Doesn't leading by example fall apart when you're not co-located?* (0.60)
 - [ ] What did the teams you ran at Heali actually work on?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.58)
 - [ ] What was the hardest part of managing distributed teams at iScribeHealth?
+      closest now: *Who did you hire at iScribeHealth? How did you build the team?* (0.58)
 - [ ] What would you do differently when managing a distributed team?
+      closest now: *How do you handle accountability when nobody is in the room?* (0.64)
 
 ---
 
@@ -1590,8 +1919,10 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you make the state of work visible to everyone on a distributed team?
+      closest now: *Have you managed remote or distributed teams?* (0.63)
 - [ ] What does a good definition of done look like for a distributed team?
 - [ ] Can you give an example of ambiguity costing a distributed team a whole day?
+      closest now: *How do you evaluate a vendor's productivity claims?* (0.59)
 - [ ] When, if ever, are check-ins worth having on a team across eight time zones?
 
 ---
@@ -1607,9 +1938,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What caused iScribe's services to go dark?
+      closest now: *What did you do in the first hour?* (0.59)
 - [ ] What changed at iScribe after the services went dark?
+      closest now: *Tell me about a critical decision you made under severe time pressure* (0.63)
 - [ ] How do you decide who takes the awkward timezone on a distributed team?
+      closest now: *How do you handle accountability when nobody is in the room?* (0.61)
 - [ ] Why does being the one who writes things down count as leading by example?
+      closest now: *What's the principle you took from that?* (0.59)
 
 ---
 
@@ -1624,9 +1959,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you check whether people working remotely are actually alright?
+      closest now: *Is "AI for good" not just marketing?* (0.59)
 - [ ] Have you seen someone on a remote team drift without anyone noticing?
+      closest now: *How do you handle accountability when nobody is in the room?* (0.56)
 - [ ] What do you do when you realise a remote colleague has become isolated?
 - [ ] How much time do you spend on people's wellbeing versus their work when managing remotely?
+      closest now: *Where are you willing to work? Remote, hybrid, on-site?* (0.60)
 
 ---
 
@@ -1643,9 +1981,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Have you seen a team fail because everyone trained and worked the same way?
+      closest now: *Tell me about a time you had to manage a layoff or let someone go* (0.65)
 - [ ] What does team diversity cost in speed or coordination, in your experience?
+      closest now: *What have your teams actually looked like?* (0.60)
 - [ ] How do you hire for diversity without hurting how well a team works together?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.60)
 - [ ] Which kinds of diversity matter most on a team: background, skills, or ways of thinking?
+      closest now: *What have your teams actually looked like?* (0.62)
 
 ---
 
@@ -1660,9 +2002,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What does the case for diversity cover beyond cognitive diversity?
+      closest now: *What have your teams actually looked like?* (0.58)
 - [ ] Can you give an example of something you noticed as the only outsider in a room?
 - [ ] What happened after you arrived in the US as a French exchange student?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.56)
 - [ ] Who told you at home that you wouldn't amount to an engineer, and why?
+      closest now: *What's the biggest obstacle you've had to get past?* (0.59)
 
 ---
 
@@ -1681,9 +2026,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did the Heali hire who was let go for a fit problem not work out?
+      closest now: *Whose fault was it?* (0.58)
 - [ ] How has cultural-add interviewing worked out in practice at Heali?
+      closest now: *What did you change afterwards?* (0.56)
 - [ ] How did Snap's multidisciplinary teams actually work together day to day?
+      closest now: *How did you work cross-functionally at Snap?* (0.60)
 - [ ] How do you decide which disciplines a new project team needs?
+      closest now: *What do you believe AI should be used for?* (0.59)
 
 ---
 
@@ -1698,7 +2047,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you recruit the Heali team of engineers, designers and UX researchers?
+      closest now: *Tell me about an early team you built. What was it like with under 10 people?* (0.55)
 - [ ] What did you work on at Snap that needed business, design, data science, engineering and legal?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.56)
 - [ ] Can you give an example of an insight that came from outside the discipline owning the problem?
 - [ ] What other values are on your list besides cross-domain knowledge and diversity?
 
@@ -1713,8 +2064,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you decide when firing someone is necessary?
+      closest now: *Tell me about a time you had to manage a layoff or let someone go* (0.60)
 - [ ] What does handling a firing with compassion look like in practice?
+      closest now: *How did you handle the human side of it?* (0.54)
 - [ ] Can you describe a time you had to let someone go?
+      closest now: *How did you handle the human side of it?* (0.65)
 
 ---
 
@@ -1727,9 +2081,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What if someone still fails despite clear expectations, honest feedback and support?
+      closest now: *How do you evaluate your own performance when the metrics are subjective?* (0.59)
 - [ ] How do you give honest feedback early enough for an underperformer to act on?
+      closest now: *How do you evaluate your own performance when the metrics are subjective?* (0.58)
 - [ ] How do you define a role clearly enough that someone can succeed in it?
+      closest now: *Why do you ask those questions?* (0.55)
 - [ ] Can you share a time an employee's failure turned out to be your leadership failure?
+      closest now: *Tell me about disagreeing with your manager or senior leadership* (0.60)
 
 ---
 
@@ -1742,9 +2100,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you tell whether someone failed because they were set up badly?
+      closest now: *Whose fault was it?* (0.61)
 - [ ] What does setting a new hire up well look like?
+      closest now: *Tell me about a time you had to manage a layoff or let someone go* (0.58)
 - [ ] When is firing someone the right response to failure?
+      closest now: *How did you handle the human side of it?* (0.57)
 - [ ] What does fixing a hiring problem upstream look like in practice?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.59)
 
 ---
 
@@ -1757,9 +2119,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you decide which engineering bottlenecks to fix first?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.58)
 - [ ] What kind of quick win would you ship to build momentum and trust with a new team?
+      closest now: *Why would you do those things in that order?* (0.57)
 - [ ] How do you assess a new team's strengths and existing practices?
+      closest now: *What are your strengths and weaknesses?* (0.58)
 - [ ] How have you aligned with leadership on engineering priorities in the past?
+      closest now: *Why are you proud of the iScribeHealth turnaround?* (0.59)
 
 ---
 
@@ -1772,9 +2138,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What should a new engineering leader's initial assessment actually cover?
+      closest now: *What are you known for? What's your reputation?* (0.58)
 - [ ] What makes a good quick win for a new engineering leader?
+      closest now: *What shaped how you work? What are your influences?* (0.57)
 - [ ] What steps come between the assessment and the quick win for a new engineering leader?
+      closest now: *What are the first things you would do if you got hired?* (0.59)
 - [ ] What bigger work does a quick win give a new engineering leader room to do?
+      closest now: *What shaped how you work? What are your influences?* (0.58)
 
 ---
 
@@ -1788,8 +2158,11 @@ cheaper than making it in front of a reader.
 
 - [ ] Why are EHR systems an archaic middleman in healthcare?
 - [ ] What will human clinicians do once AI agents handle most clinical workflows?
+      closest now: *What would you like to build if you joined us?* (0.61)
 - [ ] How would AI agents make healthcare cheaper and more accessible to more people?
+      closest now: *Why does that matter to you specifically?* (0.62)
 - [ ] What has to happen for AI agents to take over most healthcare workflows within five years?
+      closest now: *Why does that matter to you specifically?* (0.63)
 
 ---
 
@@ -1802,8 +2175,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you build enough trust in AI agents for instant insurance reimbursement?
+      closest now: *What guardrails would you put in place first?* (0.57)
 - [ ] What makes an AI agent for healthcare robust enough to be trusted?
+      closest now: *Why does that matter to you specifically?* (0.59)
 - [ ] Where would you start building AI agents that connect patients, providers, and insurers?
+      closest now: *What are you optimizing for? Why do you do this work?* (0.59)
 - [ ] What stands in the way of instant health insurance reimbursement today?
 
 ---
@@ -1831,9 +2207,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you measure the performance of a team you manage?
+      closest now: *How do you evaluate your own performance when the metrics are subjective?* (0.63)
 - [ ] What do you do when someone on your team drops the ball on their job?
+      closest now: *How do you handle disagreement with your team?* (0.60)
 - [ ] Can you give an example of a team you ran like a Formula One pit crew?
 - [ ] What are the downsides of managing a team like a Formula One pit crew?
+      closest now: *What's your view on diversity in a team?* (0.56)
 
 ---
 
@@ -1846,9 +2225,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How do you make sure everyone on a team is clear about what they own?
+      closest now: *What's your management style? How do you run teams?* (0.60)
 - [ ] What does accountability look like in practice once ownership is clear?
+      closest now: *So the objection was about measurement as much as ethics?* (0.63)
 - [ ] Can you give an example of a team that struggled because ownership was unclear?
+      closest now: *How do you think about accountability when someone underperforms?* (0.57)
 - [ ] How do you get a team to move faster without simply asking for speed?
+      closest now: *What's your management style? How do you run teams?* (0.56)
 
 ---
 
@@ -1880,7 +2263,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How can a team keep the habit of questioning AI model outputs?
+      closest now: *What do you believe AI should be used for?* (0.61)
 - [ ] How should a company automate without losing its institutional memory?
+      closest now: *What's your chapter about? What did you contribute?* (0.59)
 - [ ] How can a leader spot AI slop taking hold in an organisation early?
 - [ ] What else does the chapter "AI: The Reality Beyond The Fantasy" cover?
 
@@ -1899,8 +2284,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How can you tell when AI-assisted work is hollow rather than genuinely good?
+      closest now: *What's your chapter about? What did you contribute?* (0.60)
 - [ ] What should leaders do differently when they hand AI tools to their teams?
+      closest now: *What's the cultural risk nobody budgets for?* (0.58)
 - [ ] How can knowledge workers keep thinking critically when they use AI tools?
+      closest now: *What's the cultural risk nobody budgets for?* (0.61)
 - [ ] What does AI-assisted work look like when a person's voice is still in it?
 
 ---
@@ -1919,8 +2307,11 @@ cheaper than making it in front of a reader.
 
 - [ ] What does keeping humans in the loop look like when you actually mean it?
 - [ ] What kinds of systems did you spend twenty years building?
+      closest now: *Why does that matter to you specifically?* (0.58)
 - [ ] Who should be accountable for the volume of plausible machine-generated output?
+      closest now: *What guardrails would you put in place first?* (0.61)
 - [ ] How do you decide a problem is narrow enough to automate?
+      closest now: *How would you approach AI adoption at our company?* (0.62)
 
 ---
 
@@ -1935,9 +2326,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How have you learned to time your realism better in team discussions?
+      closest now: *What's the principle you took from that?* (0.59)
 - [ ] Can you give an example of a plan where your realism proved useful?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.54)
 - [ ] Has anyone pushed back on you for puncturing the optimism in a meeting?
+      closest now: *What do you expect from the people who work for you?* (0.56)
 - [ ] Have you seen a problem cost more because it was found late instead of raised early?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.57)
 
 ---
 
@@ -1954,9 +2349,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What unspoken knowledge do you pass down to your team that never makes it into documentation?
+      closest now: *What does onboarding someone more senior than you actually involve?* (0.60)
 - [ ] How do you decide when it's time to step back and leave a team member to the work?
+      closest now: *Did it change anything for you afterwards?* (0.64)
 - [ ] How have you handled a team member who read your hands-on approach as a lack of trust?
+      closest now: *How do you feel about firing people?* (0.62)
 - [ ] Can you share an example of mentoring someone by working alongside them?
+      closest now: *What do you believe AI should be used for?* (0.55)
 
 ---
 
@@ -1973,8 +2372,10 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Can you give an example of a subjective metric you redefined into something observable?
+      closest now: *Was there a specific moment you decided?* (0.54)
 - [ ] How do you choose which proxy to commit to before the results are in?
 - [ ] When has a metric you committed to told you that you were doing worse than you thought?
+      closest now: *Whose fault was it?* (0.58)
 - [ ] How do you judge work that has no observable proxy at all?
 
 ---
@@ -1991,8 +2392,11 @@ cheaper than making it in front of a reader.
 
 - [ ] Why is watching better than surveying for judging a company's culture?
 - [ ] How should a leader respond when someone on the team makes a mistake?
+      closest now: *What's your management style? How do you run teams?* (0.60)
 - [ ] What can you do once you find a company's culture is unhealthy?
+      closest now: *Do you believe in working long hours? Work hard or work smart?* (0.54)
 - [ ] How do you make sure people are truly empowered, not just told they are?
+      closest now: *Was there a specific moment you decided?* (0.63)
 
 ---
 
@@ -2009,9 +2413,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which of the things you've built as an entrepreneur worked, and which didn't?
+      closest now: *What's a project you're proud of? What's your favorite thing you built?* (0.56)
 - [ ] What has being an entrepreneur actually cost you?
 - [ ] What were the hardest calls you made when you worked inside a company?
+      closest now: *What did you do in the first hour?* (0.56)
 - [ ] Have you ever seriously considered taking a safer job instead of building your own things?
+      closest now: *What did you learn about pushing an idea through?* (0.60)
 
 ---
 
@@ -2024,8 +2431,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How have you used build, measure, learn at a big tech company?
+      closest now: *So the objection was about measurement as much as ethics?* (0.56)
 - [ ] What did applying fast feedback loops look like at your startups?
+      closest now: *How do you think about accountability when someone underperforms?* (0.58)
 - [ ] How do you actually learn faster than your competitors day to day?
+      closest now: *What are your core values? What do you stand for?* (0.56)
 - [ ] What other books besides The Lean Startup have shaped how you work?
 
 ---
@@ -2039,8 +2449,10 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where have you used technology to challenge an old way of doing things?
+      closest now: *How many patents do you have from Amazon?* (0.57)
 - [ ] What overlooked value have you found by using data in your work?
 - [ ] How do people react when you challenge old ways of working with technology?
+      closest now: *Is there a line from that project to what you did later?* (0.58)
 
 ---
 
@@ -2053,8 +2465,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What received wisdom in engineering leadership have you refused to accept?
+      closest now: *Tell me about a time you had to make a hard tradeoff* (0.54)
 - [ ] What happened when you went against what everyone else in engineering does?
+      closest now: *How did you move from engineering into product?* (0.54)
 - [ ] Besides questioning received wisdom, what interests you about engineering leadership?
+      closest now: *What are your core values? What do you stand for?* (0.57)
 
 ---
 
@@ -2067,8 +2482,10 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] When does a moment genuinely call for an 80-hour work week?
+      closest now: *Do you believe in working long hours? Work hard or work smart?* (0.57)
 - [ ] Which all-hands, weekends-included weeks have you worked, and what prompted them?
 - [ ] What have 80-hour work weeks cost you?
+      closest now: *Do you believe in working long hours? Work hard or work smart?* (0.56)
 
 ---
 
@@ -2081,9 +2498,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] When is an 80-hour work week actually justified, if ever?
+      closest now: *How do you think about sustainable pace and overwork?* (0.57)
 - [ ] What does working smart instead of working long look like in a typical week?
+      closest now: *What do you think about an 80 hour work week?* (0.62)
 - [ ] Have you ever worked 80-hour weeks yourself, and what did it teach you?
+      closest now: *What do you think about an 80 hour work week?* (0.62)
 - [ ] How do your AI products give people back their time?
+      closest now: *Is the chapter anti-AI?* (0.58)
 
 ---
 
@@ -2098,7 +2519,9 @@ cheaper than making it in front of a reader.
 - [ ] How do you tell when unclear priorities are what's driving overwork?
 - [ ] How do you recognize an architecture that makes everything expensive?
 - [ ] When have you fixed the cause of overwork instead of just pushing through it?
+      closest now: *Do you believe in working long hours? Work hard or work smart?* (0.57)
 - [ ] Is there ever a time when working extra hours is the right call?
+      closest now: *What do you think about an 80 hour work week?* (0.63)
 
 ---
 
@@ -2115,9 +2538,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you end up at Google after Apple retracted your offer?
+      closest now: *What happened after the offer was pulled?* (0.62)
 - [ ] Did you ever get to work in CGI or graphics?
+      closest now: *Why does that internship still matter to you?* (0.57)
 - [ ] What was the interview process at Apple like?
+      closest now: *Do you regret not getting the Apple job?* (0.57)
 - [ ] How did you react when Apple retracted your offer because of the hiring freeze?
+      closest now: *Do you regret not getting the Apple job?* (0.57)
 
 ---
 
@@ -2132,9 +2559,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the job offer that fell through just before Google's offer arrived?
+      closest now: *How did you end up at Google? Was that the plan?* (0.63)
 - [ ] What did you expect your career to look like before you went to Google on YouTube?
+      closest now: *Did it change anything for you afterwards?* (0.55)
 - [ ] What was your work at Google on YouTube actually like?
+      closest now: *What did you build at YouTube?* (0.59)
 - [ ] Where did your career go from Google on YouTube?
+      closest now: *What was your role at Google and YouTube and when?* (0.55)
 
 ---
 
@@ -2151,9 +2582,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you end up working in AI after being rejected from it?
+      closest now: *How did you get into AI? What made you choose this field?* (0.62)
 - [ ] How did you feel at the time about not getting the Apple job?
+      closest now: *How did you end up at Google? Was that the plan?* (0.58)
 - [ ] How did you end up working at YouTube?
+      closest now: *What happened after the offer was pulled?* (0.57)
 - [ ] What video effects and filters did you build at YouTube using computer vision?
+      closest now: *What was your PhD in? What did you research?* (0.56)
 
 ---
 
@@ -2166,9 +2601,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What led you to co-found Heali?
+      closest now: *Is there a line from that project to what you did later?* (0.58)
 - [ ] How did you decide who to hire first at Heali?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.56)
 - [ ] Did you ever make a hire at Heali that turned out to be a bad fit?
+      closest now: *What have your teams actually looked like?* (0.55)
 - [ ] How did engineers, designers and UX researchers work together at Heali?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.55)
 
 ---
 
@@ -2181,9 +2620,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How was Heali's AI pipeline designed to be accurate and robust?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.57)
 - [ ] How did Heali's B2C app grow to over 10K users so fast?
+      closest now: *What came of the Heali nutrition engine?* (0.57)
 - [ ] How did Heali go about raising its $4M in funding?
+      closest now: *How much did you raise at Heali? What was the outcome?* (0.54)
 - [ ] What were the hardest challenges for Heali's early team?
+      closest now: *What have your teams actually looked like?* (0.56)
 
 ---
 
@@ -2196,9 +2639,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What pressure showed your team its real values were speed and customer satisfaction?
+      closest now: *How do you evaluate a vendor's productivity claims?* (0.58)
 - [ ] When speed and customer satisfaction conflicted, which did your team choose?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 - [ ] How did you name your team's values after the fact so that they stuck?
+      closest now: *What was your role at Amazon and when?* (0.59)
 - [ ] How do you pass speed and customer satisfaction on to new team members?
+      closest now: *Why would you do those things in that order?* (0.56)
 
 ---
 
@@ -2213,8 +2660,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you tell the senior leader at Heali that you were letting them go?
+      closest now: *How did you handle the human side of it?* (0.55)
 - [ ] How did you change Heali's hiring after letting a senior leader go?
+      closest now: *What did you change afterwards?* (0.58)
 - [ ] How did the rest of the Heali team react when a senior leader was let go?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.55)
 - [ ] How do you test whether a senior candidate is scrappy enough for a seed-stage startup?
 
 ---
@@ -2234,6 +2684,7 @@ cheaper than making it in front of a reader.
 - [ ] What did waiting until mid-January cost the business?
 - [ ] How did the search you ran in the new year turn out?
 - [ ] What would you do differently when judging whether someone is the right fit?
+      closest now: *Why do you ask those questions?* (0.58)
 
 ---
 
@@ -2249,8 +2700,11 @@ cheaper than making it in front of a reader.
 
 - [ ] How do you test whether a candidate's way of working fits what a company needs?
 - [ ] What happened with the hire who looked strong on paper but didn't fit how you worked?
+      closest now: *How do you think about accountability when someone underperforms?* (0.57)
 - [ ] What did you change in your interview process after a hire went wrong?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.60)
 - [ ] What other times have you seen a failed employee come with failed leadership?
+      closest now: *How do you think about accountability when someone underperforms?* (0.61)
 
 ---
 
@@ -2265,9 +2719,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What went wrong in hiring that made you rebuild the interview process?
+      closest now: *Tell me about a time you had to manage a layoff or let someone go* (0.61)
 - [ ] What does cultural add mean to you, and how is it different from cultural fit?
+      closest now: *Whose fault was it?* (0.57)
 - [ ] What questions do you ask candidates about working with no process or support?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.59)
 - [ ] Did building cultural-add evaluation into interviews actually reduce bad hires?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.53)
 
 ---
 
@@ -2280,9 +2738,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why was building the AI nutrition engine at Heali one of your favorite projects?
+      closest now: *What did your early team at Heali accomplish?* (0.55)
 - [ ] How did Heali's nutrition engine process over 2 billion data points?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 - [ ] What results did chronic disease patients see from Heali's personalized diets?
+      closest now: *So the objection was about measurement as much as ethics?* (0.53)
 - [ ] What would you do differently if you rebuilt Heali's AI nutrition engine?
+      closest now: *What did your early team at Heali accomplish?* (0.55)
 
 ---
 
@@ -2295,9 +2757,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where does the Heali nutrition engine get its data from?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 - [ ] How did Heali resolve contradictions between nutrition data sources?
+      closest now: *Tell me about solving a complex problem with very limited data or resources.* (0.56)
 - [ ] What role does modeling play in the Heali nutrition engine?
+      closest now: *Tell me about solving a complex problem with very limited data or resources.* (0.56)
 - [ ] Which chronic conditions is the Heali nutrition engine designed for?
+      closest now: *Tell me about an early team you built. What was it like with under 10 people?* (0.53)
 
 ---
 
@@ -2316,9 +2782,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where did Heali's small set of trustworthy nutrition data come from?
+      closest now: *So the objection was about measurement as much as ethics?* (0.56)
 - [ ] How did Heali verify its nutrition data was accurate enough for patients with chronic conditions?
+      closest now: *So the objection was about measurement as much as ethics?* (0.54)
 - [ ] What would you do differently in building Heali's semi-supervised data pipeline?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.59)
 - [ ] Have you used the same approach of propagating reliable signal on data problems outside Heali?
+      closest now: *What did you do at Heali AI?* (0.55)
 
 ---
 
@@ -2331,9 +2801,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the Heali app grow to more than 10,000 users?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.56)
 - [ ] How did Heali's partnership with Blue Cross Blue Shield come about?
+      closest now: *What do you believe AI should be used for?* (0.52)
 - [ ] Which other national partners did Heali work with besides Blue Cross Blue Shield?
+      closest now: *How did your career progress? What path did you take?* (0.55)
 - [ ] How does the Heali nutrition engine work?
+      closest now: *So the objection was about measurement as much as ethics?* (0.57)
 
 ---
 
@@ -2346,9 +2820,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was Heali's technical thesis in the early days?
+      closest now: *What was your role at Heali and when?* (0.54)
 - [ ] Which features did Heali build before validating demand?
+      closest now: *So the objection was about measurement as much as ethics?* (0.58)
 - [ ] What did overbuilding features early on cost Heali?
+      closest now: *Tell me about an early team you built. What was it like with under 10 people?* (0.55)
 - [ ] What would you do differently at Heali to test demand sooner?
+      closest now: *What did you learn from failing? What did you change?* (0.57)
 
 ---
 
@@ -2361,9 +2839,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you build for demand you hadn't yet confirmed existed?
+      closest now: *How did you handle the human side of it?* (0.59)
 - [ ] How did you realize the demand you were building for was unconfirmed?
+      closest now: *How do you handle ethical concerns about a product?* (0.56)
 - [ ] What happened to the good work that was built for unconfirmed demand?
 - [ ] How would you confirm demand before building next time?
+      closest now: *What would you do differently? What do you regret?* (0.58)
 
 ---
 
@@ -2376,9 +2857,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What failure taught you to prioritize fast iteration and user feedback?
+      closest now: *What are your core values? What do you stand for?* (0.59)
 - [ ] What does the smallest thing that produces a real signal look like in practice?
 - [ ] How do you decide when a solution has enough feedback to scale?
+      closest now: *So the objection was about measurement as much as ethics?* (0.61)
 - [ ] What does a feedback checkpoint in a product roadmap look like?
+      closest now: *Can you give an example of choosing reliability over innovation?* (0.58)
 
 ---
 
@@ -2397,7 +2881,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Did the retraining infrastructure you proposed at Amazon A9 ever get built?
+      closest now: *What infrastructure did you build at Amazon?* (0.59)
 - [ ] How did the A9 product and engineering teams respond to your written proposal?
+      closest now: *What happened when you took that proposal around?* (0.56)
 - [ ] What did you learn from writing a product case and architecture as a researcher?
 - [ ] What would you do differently if missing infrastructure blocked your research again?
 
@@ -2418,8 +2904,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Where did the proposal behind the global visual search database originally come from?
+      closest now: *What infrastructure did you build at Amazon?* (0.64)
 - [ ] What was the approach and timeline in the visual search proposal engineering approved?
+      closest now: *How did you move from engineering into product?* (0.59)
 - [ ] How did the global visual search database project go once you became its lead?
+      closest now: *What infrastructure did you build at Amazon?* (0.60)
 - [ ] Would you handle the origins of the visual search proposal differently now?
 
 ---
@@ -2435,9 +2924,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What work did you do as a researcher that made the product team want you?
+      closest now: *Where else have you published?* (0.57)
 - [ ] What was your first project after becoming a technical product manager?
+      closest now: *How did you move from engineering into product?* (0.59)
 - [ ] How is being a technical product manager different from being a researcher?
+      closest now: *What was your role at Amazon and when?* (0.55)
 - [ ] What would you do differently about moving from researcher to product manager?
+      closest now: *Did you try to go back to engineering afterwards?* (0.62)
 
 ---
 
@@ -2454,9 +2947,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did Snap move you back to product just three days after you joined?
+      closest now: *Was there a specific moment you decided?* (0.61)
 - [ ] What did you actually do day to day as a Technical Program Manager at Snap?
+      closest now: *What was your role at Snap and when?* (0.54)
 - [ ] Why did you want to go back to engineering in the first place?
+      closest now: *How did you move from engineering into product?* (0.58)
 - [ ] What was the product work you did before joining Snap?
+      closest now: *What was your role at Snap and when?* (0.56)
 
 ---
 
@@ -2473,9 +2970,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why didn't you end up building computer graphics technology for animation studios?
+      closest now: *What did you actually want to do instead?* (0.58)
 - [ ] What kept you at Oregon State for seven years when you planned to stay one?
+      closest now: *How did you end up in the United States?* (0.60)
 - [ ] Did you get to surf much while you were studying at Oregon State?
+      closest now: *How did you end up in the United States?* (0.62)
 - [ ] What did you do after leaving Oregon State?
+      closest now: *What honours and awards have you received?* (0.57)
 
 ---
 
@@ -2496,8 +2997,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your PhD research in graphics before you switched to AI?
+      closest now: *What degrees do you have? Where did you study?* (0.60)
 - [ ] What was it like being Sinisa Todorovic's first doctoral student?
+      closest now: *What was your PhD in? What did you research?* (0.53)
 - [ ] What did your work on spatiotemporal video segmentation and event recognition involve?
+      closest now: *Where else have you published?* (0.62)
 - [ ] How did your early work in 3D reconstruction shape the rest of your career?
 
 ---
@@ -2513,9 +3017,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you work on during your internship at Laika?
+      closest now: *Did you ever work in animation or visual effects?* (0.56)
 - [ ] Why didn't you end up building technology for animation studios?
+      closest now: *How did you get into AI? What made you choose this field?* (0.55)
 - [ ] What did you do after your Laika internship ended?
+      closest now: *Did you ever work in animation or visual effects?* (0.54)
 - [ ] What was it about Pixar that made you want to work in animation technology?
+      closest now: *Was there anything personal about that one?* (0.56)
 
 ---
 
@@ -2532,9 +3040,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you go to Oregon State as an exchange student in the first place?
+      closest now: *What do you do outside of work? What are your hobbies?* (0.59)
 - [ ] What did the Dean of Engineering say at Oregon State that made you want to stay?
+      closest now: *How did you get into AI? What made you choose this field?* (0.56)
 - [ ] Which professor at Oregon State took you on as an assistant, and what did you work on?
+      closest now: *Why does that internship still matter to you?* (0.58)
 - [ ] What did you do after leaving Oregon State?
+      closest now: *What honours and awards have you received?* (0.57)
 
 ---
 
@@ -2553,9 +3065,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the research that made the PhD interesting enough for you to stay?
+      closest now: *What was your PhD in? What did you research?* (0.63)
 - [ ] How did you handle all the writing a PhD involves, given that you hated writing?
 - [ ] Did your friend in France ever end up doing a PhD?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.56)
 - [ ] What did you do after finishing your PhD?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.61)
 
 ---
 
@@ -2572,9 +3087,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What made you stay in the US instead of going back to France?
+      closest now: *Where are you from? What's your background personally?* (0.61)
 - [ ] How did your mum's feelings about you living in the US change over time?
+      closest now: *What's the biggest obstacle you've had to get past?* (0.56)
 - [ ] How do you stay close to your family in France while living in the US?
+      closest now: *Are you authorized to work in the US? Do you need visa sponsorship?* (0.54)
 - [ ] Do you think you'll ever move back to France?
+      closest now: *Where are you from? What's your background personally?* (0.58)
 
 ---
 
@@ -2592,7 +3111,9 @@ cheaper than making it in front of a reader.
 
 - [ ] What was the first thing you saw a machine do that felt like science fiction?
 - [ ] Who were the people you worked alongside on AI in the mid-2000s?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.57)
 - [ ] What changed for your career when demand for AI expertise suddenly took off?
+      closest now: *What does that actually look like day to day?* (0.61)
 - [ ] What would you tell someone choosing a field today that has no industry behind it?
 
 ---
@@ -2608,9 +3129,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which foundations should students learn properly before relying on AI?
+      closest now: *What guardrails would you put in place first?* (0.56)
 - [ ] What is an example of AI getting something wrong that only someone with real understanding would catch?
+      closest now: *What's your chapter about? What did you contribute?* (0.59)
 - [ ] Why is resilience one of the qualities students need as AI spreads?
+      closest now: *What does that actually look like day to day?* (0.57)
 - [ ] What happens to companies once having an "AI company" sounds as redundant as an "internet company"?
+      closest now: *How would you approach AI adoption at our company?* (0.58)
 
 ---
 
@@ -2629,9 +3154,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Who else weighed in on keeping iScribeHealth on Azure instead of moving to AWS?
+      closest now: *Would you make the same call today?* (0.60)
 - [ ] How did the iScribeHealth refactor from .NET 4 to .NET 8 get planned and carried out?
+      closest now: *Would you make the same call today?* (0.61)
 - [ ] How do you weigh what's best for the company against the technical case?
 - [ ] What would you do differently about the Azure versus AWS decision at iScribeHealth?
+      closest now: *Would you make the same call today?* (0.62)
 
 ---
 
@@ -2646,9 +3174,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did you originally decide to do the cloud migration?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.62)
 - [ ] How did the cloud migration actually turn out?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.64)
 - [ ] What did the cloud migration originally cost in time and effort?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.61)
 - [ ] Why is maintaining a ten-year-old backend system so expensive?
+      closest now: *What did that mistake cost you?* (0.56)
 
 ---
 
@@ -2663,9 +3195,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What caused the iScribeHealth services to go dark?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.60)
 - [ ] What was the first decision you made about people during the iScribeHealth outage?
+      closest now: *Would you make the same call today?* (0.59)
 - [ ] What technical decision did you make to get iScribeHealth's services back up?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.62)
 - [ ] Were iScribeHealth's services restored before customers woke up?
+      closest now: *What did you own at iScribeHealth? What were you responsible for?* (0.61)
 
 ---
 
@@ -2682,9 +3218,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the fixed deadline you only had one shot at meeting?
+      closest now: *Tell me about a critical decision you made under severe time pressure* (0.57)
 - [ ] How did the overnight work with your two strongest engineers turn out?
 - [ ] What were you and your two engineers trying to diagnose through the night?
 - [ ] What did you do after the first hour, once your engineers were fed and working?
+      closest now: *How did your career progress? What path did you take?* (0.59)
 
 ---
 
@@ -2699,9 +3237,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What experience taught you to look after the people first under time pressure?
+      closest now: *Doesn't leading by example fall apart when you're not co-located?* (0.52)
 - [ ] How do you work out who is sharpest on a fix when time is short?
 - [ ] How do you find out what the real deadline is during a high-pressure fix?
 - [ ] What does working alongside the team look like during a high-pressure fix?
+      closest now: *What did you do in the first hour?* (0.58)
 
 ---
 
@@ -2716,9 +3256,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What caused the outage that was fixed before customers woke up?
+      closest now: *What did you do in the first hour?* (0.59)
 - [ ] Who worked through the night to fix the outage before customers noticed?
+      closest now: *What did you do in the first hour?* (0.59)
 - [ ] What changed afterwards to keep a similar overnight outage from happening again?
 - [ ] Why does delivering dinner to someone's door count as leading by example?
+      closest now: *Do you believe in working long hours? Work hard or work smart?* (0.55)
 
 ---
 
@@ -2731,9 +3274,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What technical debt was piling up at iScribeHealth?
+      closest now: *What's an achievement you're proud of?* (0.61)
 - [ ] How did you decide between cleaning up debt and shipping features at iScribeHealth?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.61)
 - [ ] How did you handle the pressure to defer technical debt cleanup at iScribeHealth?
+      closest now: *What's an achievement you're proud of?* (0.60)
 - [ ] What would you do differently about technical debt tradeoffs at iScribeHealth?
+      closest now: *What's an achievement you're proud of?* (0.61)
 
 ---
 
@@ -2746,9 +3293,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you choose to re-architect first, and why before shipping features?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.58)
 - [ ] How did you hold the line when feature delivery slowed during re-architecture?
+      closest now: *What results has the studio produced?* (0.60)
 - [ ] Did putting re-architecture ahead of features pay off in the end?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.59)
 - [ ] What would you do differently when prioritizing technical debt against features?
+      closest now: *Why did prioritizing re-architecture work out?* (0.59)
 
 ---
 
@@ -2767,9 +3318,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the iScribeHealth platform re-architecture actually turn out?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.61)
 - [ ] What visible progress did you ship alongside the iScribeHealth re-architecture?
+      closest now: *What's the hardest technical decision you've made? What's the hardest technical call you've had to make?* (0.61)
 - [ ] How did iScribeHealth's SOC 2 and HIPAA compliance work go?
+      closest now: *What's an achievement you're proud of?* (0.64)
 - [ ] How did iScribeHealth customers react while the platform was being re-architected?
+      closest now: *Would you make the same call today?* (0.59)
 
 ---
 
@@ -2782,9 +3337,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did the platform re-architecture actually involve?
+      closest now: *What AI did you build at Heali? How did the pipeline work?* (0.55)
 - [ ] How did the SOC 2 and HIPAA work go once the platform was re-architected?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.63)
 - [ ] What innovation did the platform re-architecture make possible?
+      closest now: *How do you balance long-term strategic goals with short-term fire-fighting?* (0.56)
 - [ ] Is there anything you would do differently about the platform re-architecture?
+      closest now: *How do you prioritize technical debt against shipping features?* (0.57)
 
 ---
 
@@ -2797,8 +3356,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Why did the system need to be re-architected for scale?
+      closest now: *Why did prioritizing re-architecture work out?* (0.60)
 - [ ] What did the first penetration test uncover?
+      closest now: *What are you known for? What's your reputation?* (0.58)
 - [ ] What AI work was being advanced alongside the compliance and architecture projects?
+      closest now: *If you were fired tomorrow, how would you make money?* (0.62)
 - [ ] Which EHR integrations were shipped?
 
 ---
@@ -2812,9 +3374,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did Will actually accomplish at iScribeHealth that impressed the security team?
+      closest now: *What does iScribeHealth do?* (0.60)
 - [ ] How did Will approach his work at iScribeHealth?
+      closest now: *How did you get iScribeHealth to SOC 2 and HIPAA?* (0.58)
 - [ ] What did people at iScribeHealth other than the security team say about Will's work?
+      closest now: *What's an achievement you're proud of?* (0.59)
 - [ ] What would Will do differently if he did his iScribeHealth work again?
+      closest now: *Why did prioritizing re-architecture work out?* (0.56)
 
 ---
 
@@ -2827,9 +3393,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did the iScribeHealth turnaround actually involve?
+      closest now: *How did your work at iScribeHealth land? What did people say?* (0.61)
 - [ ] How did you make compliance, product and re-architecture work compound at iScribeHealth?
+      closest now: *Why did you leave your last role? What happened at iScribeHealth?* (0.62)
 - [ ] What state was iScribeHealth in before the turnaround began?
+      closest now: *What does iScribeHealth do?* (0.60)
 - [ ] What would you do differently in the iScribeHealth turnaround?
+      closest now: *How did your work at iScribeHealth land? What did people say?* (0.60)
 
 ---
 
@@ -2846,8 +3416,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What research did you do as a grad student at Oregon State?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.61)
 - [ ] How did watching Jensen Huang donate to the Kelley Engineering Center change how you think about money?
+      closest now: *Did you ever meet Jensen Huang?* (0.59)
 - [ ] What did you do after finishing grad school at Oregon State?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.56)
 - [ ] What was the dinner before the Kelley Engineering Center opening like?
 
 ---
@@ -2863,7 +3436,9 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you work on in the Nvidia Graphics and Image Technologies Laboratory?
+      closest now: *What was your PhD in? What did you research?* (0.56)
 - [ ] What else has Jensen Huang given to Oregon State University?
+      closest now: *What's your best story from grad school?* (0.55)
 - [ ] What Nvidia goodies did Jensen Huang hand out when he visited the graphics lab?
 
 ---
@@ -2881,9 +3456,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What does Heali actually do?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.55)
 - [ ] Who did you co-found Heali with?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.58)
 - [ ] What did you work on at A9 at Amazon?
+      closest now: *How did you move from engineering into product?* (0.59)
 - [ ] How different was building Heali from working at Google, A9 and Snap?
+      closest now: *How much did you raise at Heali? What was the outcome?* (0.54)
 
 ---
 
@@ -2908,7 +3487,9 @@ cheaper than making it in front of a reader.
 - [ ] What did you work on after deciding to point your skills away from social media?
 - [ ] What evidence made you doubt that social media brings joy rather than engagement?
 - [ ] How do you tell whether your work is succeeding when the goal can't be measured?
+      closest now: *Is "AI for good" not just marketing?* (0.61)
 - [ ] What were you building at Snap during your three years there?
+      closest now: *How big was your team at Snap? What did you manage?* (0.56)
 
 ---
 
@@ -2926,8 +3507,11 @@ cheaper than making it in front of a reader.
 
 - [ ] What was the ethical objection that turned out to be about measurement too?
 - [ ] How does Heali measure whether someone's symptoms have improved?
+      closest now: *What did you learn from failing? What did you change?* (0.55)
 - [ ] What happens at Heali when symptoms don't improve?
+      closest now: *How did Heali grow? What partnerships did you get?* (0.55)
 - [ ] Why work on goals that can show you're wrong instead of goals like "we bring joy"?
+      closest now: *Was there a specific moment you decided?* (0.59)
 
 ---
 
@@ -2942,9 +3526,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What made you decide to leave Snap for a seed-stage company?
+      closest now: *Was there a specific moment you decided?* (0.58)
 - [ ] What did your work on machine learning for augmented reality at Snap involve?
+      closest now: *How did you get into AI? What made you choose this field?* (0.58)
 - [ ] How did you build friend recommendations at Snap for hundreds of millions of people?
+      closest now: *Why did you object to that? What worried you?* (0.59)
 - [ ] What does the seed-stage company you joined after Snap actually do?
+      closest now: *Did you try to go back to engineering afterwards?* (0.57)
 
 ---
 
@@ -2959,9 +3547,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What operational insight does Crossroads Venture Studio give technical founders?
+      closest now: *Why do you spend time on mentoring?* (0.55)
 - [ ] What operational lessons from starting Heali do you wish you'd known earlier?
+      closest now: *How big was the team at Heali? What IP came out of it?* (0.56)
 - [ ] What does a serious engineering review process look like in practice?
+      closest now: *What happened when you took that proposal around?* (0.57)
 - [ ] What is Heali and how did it get started?
+      closest now: *Are you working on anything you're not talking about publicly?* (0.58)
 
 ---
 
@@ -2976,9 +3568,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What did you do to onboard David Salesin when he joined Snap Research in 2017?
+      closest now: *What research did you ship at Snap? What was the impact?* (0.56)
 - [ ] How did onboarding David Salesin differ from onboarding someone onto your own team?
+      closest now: *Was there anything personal about that one?* (0.62)
 - [ ] How did David Salesin's first months leading Snap Research turn out?
+      closest now: *What research did you ship at Snap? What was the impact?* (0.58)
 - [ ] What would you do differently when onboarding a leader who will run your organisation?
+      closest now: *What does onboarding someone more senior than you actually involve?* (0.59)
 
 ---
 
@@ -2995,8 +3591,10 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Which projects in the research organisation had history a new senior hire needed to know about?
+      closest now: *Tell me about onboarding a senior or executive hire* (0.53)
 - [ ] What had the research organisation already tried and quietly abandoned?
 - [ ] Where did you think the research organisation should go?
+      closest now: *What's your LinkedIn? Where can I find your profile?* (0.56)
 - [ ] How did working with a senior hire who founded Adobe's Creative Technologies Lab turn out?
 
 ---
@@ -3014,9 +3612,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you end up in AI after starting out in graphics?
+      closest now: *How did you get into AI? What made you choose this field?* (0.63)
 - [ ] What was your internship at Laika like?
+      closest now: *Why does that internship still matter to you?* (0.57)
 - [ ] What was it like working for a director who'd been at Lucasfilm and Pixar?
+      closest now: *What did you actually build at Laika?* (0.53)
 - [ ] Do you still want to build technology for animation studios?
+      closest now: *What did you actually want to do instead?* (0.59)
 
 ---
 
@@ -3029,9 +3631,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Did the beauty score AR filter at Snap ever ship?
+      closest now: *Why did you object to that? What worried you?* (0.56)
 - [ ] Why did you push back on the Snap group AR filter that crowned the most attractive person?
+      closest now: *How did the disagreement resolve?* (0.56)
 - [ ] How did the beauty score filter disagreement affect your working relationship with the engineer?
+      closest now: *How do you handle disagreement with your team?* (0.58)
 - [ ] How do you decide to hold back a feature at Snap when the technology already works?
+      closest now: *How did you work cross-functionally at Snap?* (0.57)
 
 ---
 
@@ -3044,9 +3650,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Did Snap's friend-group attractiveness ranking feature for teenagers ever ship?
+      closest now: *What research did you ship at Snap? What was the impact?* (0.56)
 - [ ] How did people at Snap react when you objected to ranking teens by attractiveness?
+      closest now: *Tell me about a time you disagreed with someone* (0.58)
 - [ ] Who first proposed a Snap feature that ranks teenagers by attractiveness?
+      closest now: *How did the disagreement resolve?* (0.57)
 - [ ] How do you judge whether a product feature will harm young users?
+      closest now: *How did the disagreement resolve?* (0.50)
 
 ---
 
@@ -3059,8 +3669,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was your concern about the filter the engineer had finished building?
+      closest now: *How did the disagreement resolve?* (0.54)
 - [ ] What feedback did design give on the filter?
+      closest now: *How did the disagreement resolve?* (0.55)
 - [ ] Was the filter eventually shipped, changed or dropped?
+      closest now: *How did the disagreement resolve?* (0.54)
 - [ ] Have you ever killed a team member's finished work outright?
 
 ---
@@ -3089,9 +3702,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Can you give an example of an ethical concern you handled on a product?
+      closest now: *How did the disagreement resolve?* (0.56)
 - [ ] Who do you bring ethical decisions about a product to, and why them?
+      closest now: *So the objection was about measurement as much as ethics?* (0.62)
 - [ ] How do you find a version of a product that survives an ethical concern?
 - [ ] What do you do when no version of the product is safe to ship?
+      closest now: *How did the disagreement resolve?* (0.62)
 
 ---
 
@@ -3110,9 +3726,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was it like starting over in the United States after leaving France?
+      closest now: *How did you actually get to the US?* (0.61)
 - [ ] Did you end up working as an engineer despite being told you never would?
+      closest now: *Isn't that just an argument about cognitive diversity?* (0.61)
 - [ ] Did you ever make it into management, after being told you wouldn't?
+      closest now: *Did you prove them wrong?* (0.63)
 - [ ] What advice would you give someone who is being told they will never make it?
+      closest now: *Is it true you were rejected from AI before you ended up in it?* (0.58)
 
 ---
 
@@ -3133,9 +3753,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did you manage at Infineon in Munich without speaking any German?
+      closest now: *What was your role at Infineon and when?* (0.57)
 - [ ] Who told you that you wouldn't make it to the US, and why?
+      closest now: *What's the biggest obstacle you've had to get past?* (0.63)
 - [ ] When else have you committed first and figured it out afterwards?
+      closest now: *What happened after the offer was pulled?* (0.62)
 - [ ] What happened once you finally got to the US?
+      closest now: *How did you end up in the United States?* (0.58)
 
 ---
 
@@ -3150,9 +3774,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was it like spending a year abroad without speaking the local language?
+      closest now: *What was your role at Infineon and when?* (0.59)
 - [ ] How did you cope with being on the wait list twice before getting a seat?
+      closest now: *How did you actually get to the US?* (0.60)
 - [ ] What happened in the week you got the call and had to move?
+      closest now: *What did that mistake cost you?* (0.57)
 - [ ] What happened after you took the seat that opened up when somebody got sick?
+      closest now: *How did you handle the human side of it?* (0.59)
 
 ---
 
@@ -3171,9 +3799,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Who told you that you wouldn't make a good engineer, and how did you take it?
+      closest now: *What's the biggest obstacle you've had to get past?* (0.57)
 - [ ] Which systems did you ship at Google, Amazon and Snap that reached hundreds of millions of people?
+      closest now: *Who are you and what's your background?* (0.59)
 - [ ] How did you run an R&D organisation of 50+ people across 40+ projects at Snap?
+      closest now: *How big was your team at Snap? What did you manage?* (0.56)
 - [ ] How do you talk to your team about their potential without discouraging them?
+      closest now: *What do you expect from the people who work for you?* (0.58)
 
 ---
 
@@ -3186,9 +3818,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did the video quality idea at YouTube become Suggested Edits?
+      closest now: *What did you build at YouTube?* (0.62)
 - [ ] Who opposed the video quality detection idea at YouTube, and why?
+      closest now: *Tell me about disagreeing with your manager or senior leadership* (0.59)
 - [ ] What would you do differently when pitching an idea inside a large company like YouTube?
+      closest now: *What did you learn about pushing an idea through?* (0.55)
 - [ ] What did the Suggested Edits experience teach you about organizational politics?
+      closest now: *What did you build at YouTube?* (0.55)
 
 ---
 
@@ -3201,9 +3837,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the hard part you cracked while building the YouTube project at night?
+      closest now: *Do you regret not getting the Apple job?* (0.57)
 - [ ] What were people arguing about before you demoed the project that shipped across YouTube?
+      closest now: *Did it change anything for you afterwards?* (0.55)
 - [ ] How did the rollout across the entire YouTube video corpus go?
+      closest now: *What did you build at YouTube?* (0.62)
 - [ ] Have you built a working demo before debating on other decisions since YouTube?
+      closest now: *What did you learn about pushing an idea through?* (0.60)
 
 ---
 
@@ -3220,9 +3860,13 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] How did leadership react when you came back with your rejected idea working?
+      closest now: *How do you promote diversity, equity and inclusion in hiring and project assignment?* (0.57)
 - [ ] Have you ever built something on your own time that turned out to be wrong?
+      closest now: *Why did you stay at Oregon State after the exchange year?* (0.60)
 - [ ] When would you escalate a disagreement with senior leadership instead?
+      closest now: *Isn't that just risk aversion?* (0.53)
 - [ ] How do you push back when leadership's objection to your idea is technical?
+      closest now: *How do you handle ethical concerns about a product?* (0.60)
 
 ---
 
@@ -3237,9 +3881,12 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] Can you give an example of a demo that settled an argument for you?
+      closest now: *Did it change anything for you afterwards?* (0.55)
 - [ ] What happened when you built a demo on your own time and turned out to be wrong?
+      closest now: *What did you change afterwards?* (0.58)
 - [ ] When did you realise that personally funded bets were a bad way to work all the time?
 - [ ] How do you push an idea through when you can't fund a demo yourself?
+      closest now: *Is it true you never meant to do a PhD?* (0.58)
 
 ---
 
@@ -3254,8 +3901,11 @@ cheaper than making it in front of a reader.
 **They would ask next:**
 
 - [ ] What was the project you got built by winning the argument with a demo?
+      closest now: *What AI products did you ship at iScribeHealth?* (0.53)
 - [ ] What had made it hard to get your ideas heard at the company you left for Amazon?
+      closest now: *How many patents do you have from Amazon?* (0.58)
 - [ ] How did Amazon compare when it came to getting your ideas heard?
+      closest now: *Which one matters most to you, and why that one?* (0.57)
 
 ---
 
@@ -3269,7 +3919,9 @@ cheaper than making it in front of a reader.
 
 - [ ] Which project did you build on conviction before validating the market?
 - [ ] How do you test whether users need something before you start building it?
+      closest now: *Tell me about a time you failed. What's your biggest mistake?* (0.59)
 - [ ] What did building without market validation cost you in time and energy?
+      closest now: *Tell me about a time you failed. What's your biggest mistake?* (0.54)
 
 ---
 

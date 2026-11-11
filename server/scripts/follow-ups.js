@@ -5,6 +5,7 @@
  *
  *   npm run follow-ups -- --limit 5        pilot: five sections, print, write nothing
  *   npm run follow-ups -- --questions-only a writing queue → data/follow-ups.md
+ *   npm run follow-ups -- --questions-only --reuse   re-annotate it, free
  *   npm run follow-ups                     the whole corpus → data/follow-ups.json
  *   npm run follow-ups -- --floor 0.45     override the grounding threshold
  *
@@ -40,6 +41,10 @@ const flag  = (name, fallback) => {
 };
 const LIMIT = Number(flag("limit", 0));
 const QUESTIONS_ONLY = args.includes("--questions-only");
+// Annotate a queue already generated, instead of generating it again. The
+// questions cost a model call each; the closest-match probe costs nothing,
+// so re-running the cheap half should never re-run the expensive one.
+const REUSE = args.includes("--reuse");
 const FLOOR = Number(flag("floor", 0.55));
 const OUT   = path.join(CONFIG.DATASET, "..", flag("out", "follow-ups.json"));
 
@@ -186,19 +191,36 @@ const main = async () => {
   // follow-up in; what is worth knowing is which questions nobody has
   // written an answer to yet.
   if (QUESTIONS_ONLY) {
-    const { askNext, writingQueue } = rag.buildFollowUps;
-    const { questions, notes } = await askNext({
-      sections: chosen,
-      runLLM: claudeRun,
-      prompt: prompts.questions,
-      config: CONFIG.SONNET55,
-      limit: makeLimit(4),
-      onNote: (note) => console.error(`  note  ${note.id} [${note.stage}] ${note.what}`),
+    const { askNext, writingQueue, nearestSections } = rag.buildFollowUps;
+    const saved = path.join(CONFIG.DATASET, "..", "follow-ups.questions.json");
+
+    let questions, notes = [];
+    if (REUSE) {
+      questions = JSON.parse(await fs.readFile(saved, "utf8"));
+      console.log(`Reusing ${Object.values(questions).flat().length} questions from ${saved}`);
+    } else {
+      ({ questions, notes } = await askNext({
+        sections: chosen,
+        runLLM: claudeRun,
+        prompt: prompts.questions,
+        config: CONFIG.SONNET55,
+        limit: makeLimit(4),
+        onNote: (note) => console.error(`  note  ${note.id} [${note.stage}] ${note.what}`),
+      }));
+      await fs.writeFile(saved, JSON.stringify(questions, null, 2) + "\n");
+    }
+
+    // What already sits closest to each one. Free, and not a verdict — see
+    // nearestSections: the scores here are too flat to draw a line through,
+    // so the queue shows the match and lets a person decide.
+    const nearest = await nearestSections({
+      questions, search, sections: chosen, limit: makeLimit(8),
     });
 
     const out = path.join(CONFIG.DATASET, "..", "follow-ups.md");
     await fs.writeFile(out, writingQueue(chosen, questions, {
       title: "What to write next",
+      nearest,
       // Where to go and write it: the markdown file and the heading above
       // the one being extended.
       where: (section) => {

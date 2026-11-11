@@ -1,0 +1,1162 @@
+{
+  "background|book#Have you written a book? Are you a published author?": [
+    "What did you write about in your chapter of The AI Transformation?",
+    "Who are the other co-authors of The AI Transformation?",
+    "What can people actually do to thrive as AI reshapes their work?",
+    "Why did you decide to contribute to The AI Transformation?"
+  ],
+  "background|book#What's your chapter about? What did you contribute?": [
+    "How can a team keep the habit of questioning AI model outputs?",
+    "What should a company protect before automating through workforce reductions?",
+    "How did Disney's move away from hand-drawn animation actually turn out?",
+    "How can a company tell when optimising for efficiency has lost sight of its purpose?"
+  ],
+  "background|book#Is the chapter anti-AI?": [
+    "What made Walmart's AI-based routing work as well as it did?",
+    "How did Klarna's AI ticket handling actually perform?",
+    "What does the research say about the cognitive cost of relying on AI?",
+    "In times of change, what should leaders be trying to preserve?"
+  ],
+  "background|book#Where else have you published?": [
+    "What was your PhD research on video segmentation and event recognition about?",
+    "What did your patents at Google, Amazon, and Snap cover?",
+    "What did being publication chair for CVPR involve?",
+    "Which of your publications has been cited the most?"
+  ],
+  "background|demographics_and_eligibility#How old are you? When were you born?": [
+    "Where were you born and where did you grow up?",
+    "What was your childhood like?"
+  ],
+  "background|demographics_and_eligibility#Are you authorized to work in the US? Do you need visa sponsorship?": [
+    "What did you study in graduate school after moving from France?",
+    "Why did you choose to leave France for graduate school in the US?",
+    "What was the process of becoming a US citizen like for you?",
+    "What did you do professionally after finishing graduate school?"
+  ],
+  "background|demographics_and_eligibility#Can you work in Europe? Are you open to roles outside the US?": [
+    "What kind of systems have you operated at American scale?",
+    "How did you come to be authorized to work in the US without sponsorship?",
+    "Which European countries would you consider working in?",
+    "What has your experience been working with European engineering teams?"
+  ],
+  "background|demographics_and_eligibility#Where are you willing to work? Remote, hybrid, on-site?": [
+    "How do you run a management team spread across four continents day to day?",
+    "What was the hardest part of managing distributed teams across different continents?",
+    "What would you need to know about a job before agreeing to relocate from Reno?",
+    "What does your management career look like, and where have your teams been based?"
+  ],
+  "background|demographics_and_eligibility#What's your gender? What's your race or ethnicity?": [
+    "Where did you grow up, and what was your connection to France?",
+    "Does being French by origin influence how you approach your work?"
+  ],
+  "background|education_and_research#What degrees do you have? Where did you study?": [
+    "What was your PhD research at Oregon State University about?",
+    "Why did you choose Oregon State University for your PhD?",
+    "What did you do after finishing your PhD in June 2011?",
+    "What did you work on between your CPE Lyon Master's and your PhD?"
+  ],
+  "background|education_and_research#What was your PhD in? What did you research?": [
+    "How did your computer vision research lead to the rest of your career?",
+    "What was it like being Sinisa Todorovic's first doctoral student at Oregon State?",
+    "Why did you choose computer vision for your PhD research?",
+    "What did your research on spatiotemporal video segmentation involve?"
+  ],
+  "background|education_and_research#What honours and awards have you received?": [
+    "What was your PhD research at Oregon State University about?",
+    "How did the R\u00e9gion Rh\u00f4ne-Alpes scholarship lead to you studying in the United States?",
+    "What did your research and teaching assistantship at Oregon State University involve?",
+    "What did you do after finishing at Oregon State University in 2011?"
+  ],
+  "background|education_and_research#How many patents and publications do you have?": [
+    "Which of your publications has been cited the most, and why?",
+    "What did your nutrition AI patents actually cover?",
+    "What problems were you solving in your visual search and object recognition work?",
+    "What did you work on in machine learning infrastructure that led to patents?"
+  ],
+  "background|education_and_research#What service have you done for the research community?": [
+    "What does a Publication Chair actually do for a conference like CVPR?",
+    "How did you get asked to become Publication Chair for CVPR?",
+    "What was the hardest part of being Publication Chair for CVPR and WACV?",
+    "How did being Publication Chair for WACV differ from doing it for CVPR?"
+  ],
+  "background|personal_background#Where are you from? What's your background personally?": [
+    "What did you study in graduate school in the United States?",
+    "Why did you decide to stay in the United States after graduate school?",
+    "What was it like growing up in Troyes, in the Champagne region?",
+    "What was the process of becoming a US citizen like for you?"
+  ],
+  "background|personal_background#Where do you live? Where are you based?": [
+    "How long have you lived in Reno, Nevada?",
+    "What is it like living in Reno, Nevada?"
+  ],
+  "background|personal_background#How did you end up in the United States?": [
+    "Why did you stay in the US after your one-year exchange at Oregon State?",
+    "What was your computer science PhD at Oregon State about?",
+    "What did you do after finishing your PhD in 2011?",
+    "Did you ever get to surf much while studying at Oregon State?"
+  ],
+  "background|personal_background#What do you do outside of work? What are your hobbies?": [
+    "How did you get into DJing and promoting events?",
+    "What brought you from Oregon to Reno?",
+    "What do you like to cook for your family?",
+    "What kinds of movies are you most obsessed with?"
+  ],
+  "background|personal_background#How do you disconnect and recharge?": [
+    "What did you write in your book chapter about phones at family dinners?",
+    "Why did you start protecting family time more deliberately than before?",
+    "What do you like to cook when you want to switch off from work?",
+    "How do you handle work problems you can't think your way out of?"
+  ],
+  "background|personal_background#Do you speak other languages?": [
+    "How did coming to the US as an exchange student turn into a PhD?",
+    "What was your original plan when you left France for the US in 2004?",
+    "Why did you choose to go to the US as an exchange student?",
+    "What was it like growing up in France?"
+  ],
+  "background|skills#What AI and machine learning skills do you have?": [
+    "What projects have you built using agentic AI?",
+    "How do you approach LLM orchestration in production systems?",
+    "What recommendation systems have you worked on, and how did they perform?",
+    "Where have you applied semi-supervised learning, and why was it the right choice?"
+  ],
+  "background|skills#What infrastructure and backend experience do you have?": [
+    "What did you build that needed real-time processing at 100fps?",
+    "What distributed systems have you designed, and what were the hardest parts?",
+    "When do you choose .NET 8 over Node.js for a backend service?",
+    "What do your CI/CD pipelines look like, and what do they deploy to on AWS?"
+  ],
+  "background|skills#What programming languages do you know best?": [
+    "What projects have you built with JavaScript and C/C++?",
+    "How did you first learn JavaScript and C/C++?",
+    "Which other programming languages have you worked with besides JavaScript and C/C++?"
+  ],
+  "background|skills#What compliance experience do you have? SOC 2, HIPAA?": [
+    "What was your hands-on role in SOC 2 Type II compliance work?",
+    "What did your HIPAA compliance work actually involve?",
+    "How do you approach vulnerability remediation in practice?",
+    "How have you handled data privacy in your work?"
+  ],
+  "background|skills#What leadership experience do you have? How big have your teams been?": [
+    "What was hardest about scaling a team from 2 to 50+ people?",
+    "What do you look for in technical due diligence on an M&A deal?",
+    "What does your product-market-fit strategy look like in practice?",
+    "How have you managed budgets above $2M?"
+  ],
+  "background|summary#Who are you and what's your background?": [
+    "How did you cut production downtime by 70%?",
+    "What were the three companies you founded, and how did each one turn out?",
+    "What AI systems did you ship at Snap, Amazon, and Google?",
+    "What was your PhD in AI focused on?"
+  ],
+  "background|summary#What are you known for? What's your reputation?": [
+    "What did you patent at Google, Amazon, and Snap?",
+    "What does a CVPR publication chair actually do?",
+    "What was hardest about getting an organization through SOC 2 Type II and HIPAA?",
+    "What did your first penetration test turn up?"
+  ],
+  "background|summary#How did your career progress? What path did you take?": [
+    "Why did you move from big-tech R&D into founding and executive roles in 2019?",
+    "What did you work on in your PhD in computer vision and AI?",
+    "What happened with Heali AI after you co-founded it?",
+    "What does your stealth AI startup do at the crossroads of AI and water management?"
+  ],
+  "career|amazon_a9#What was your role at Amazon and when?": [
+    "What computer vision products did you build on Amazon's A9 visual search team?",
+    "What did you do after leaving Amazon's A9 team in May 2016?",
+    "How did you split your time between ML research and product management at A9?",
+    "What was hardest about serving computer vision to 200M+ daily users at Amazon?"
+  ],
+  "career|amazon_a9#What did you build at Amazon A9?": [
+    "How did you get brand logo detection running at 100 frames per second on mobile hardware?",
+    "What was the mobile brand logo recognition project at Amazon A9 used for?",
+    "What was the hardest part of building brand logo detection at Amazon A9?"
+  ],
+  "career|amazon_a9#What infrastructure did you build at Amazon?": [
+    "Why did Amazon need a proprietary annotation and evaluation platform?",
+    "How was the 12M+ image and label corpus at Amazon collected and kept up to date?",
+    "What was the hardest part of blueprinting the global visual search database?",
+    "What would you do differently on the annotation and evaluation platform you built at Amazon?"
+  ],
+  "career|amazon_a9#How many patents do you have from Amazon?": [
+    "What visual search products at Amazon came out of your patented work?",
+    "What machine learning infrastructure did you build at Amazon?",
+    "How did you take object recognition research into production at Amazon?",
+    "How did you weigh technical feasibility against consumer needs in visual search?"
+  ],
+  "career|crossroads_venture_studio#What was your role at Crossroads Venture Studio?": [
+    "What led you to found Crossroads Venture Studio in 2023?",
+    "Which AI-driven ventures were in the Crossroads Venture Studio portfolio?",
+    "How did you approach product-market-fit strategy at Crossroads Venture Studio?",
+    "What technical architecture choices did you make across Crossroads Venture Studio's ventures?"
+  ],
+  "career|crossroads_venture_studio#What did Crossroads Venture Studio do? What does Crossroads Venture Studio do?": [
+    "How did Crossroads Venture Studio build gococo.ai?",
+    "What AI orchestration and infrastructure strategy did you define for portfolio companies?",
+    "Which Crossroads Venture Studio projects didn't succeed, and what did you learn?",
+    "How did you integrate external teams into Crossroads Venture Studio projects?"
+  ],
+  "career|crossroads_venture_studio#Are you working on anything you're not talking about publicly?": [
+    "What led you to co-found a company working on AI and water management?",
+    "What were you working on before you co-founded a startup in January 2026?",
+    "Where do you see AI being most useful in water management?",
+    "What does being Chief AI Officer at an early-stage startup involve day to day?"
+  ],
+  "career|crossroads_venture_studio#What results has the studio produced?": [
+    "What does the proprietary incubation framework for AI product delivery include?",
+    "How much faster did the incubation framework make generative AI feature launches?",
+    "What happened to the portfolio ventures that didn't reach seed funding or first customers?",
+    "How were CI/CD pipelines standardized across the portfolio ventures?"
+  ],
+  "career|google_youtube#What was your role at Google and YouTube and when?": [
+    "What did you work on as a machine learning engineer at YouTube?",
+    "How did you end up joining Google and YouTube in August 2011?",
+    "Why did you leave Google in November 2012?",
+    "What did you do after leaving YouTube and Google?"
+  ],
+  "career|google_youtube#What did you build at YouTube?": [
+    "How did the Suggested Edits project at YouTube get started?",
+    "How does Suggested Edits detect and correct video quality problems at YouTube?",
+    "What were the hardest challenges in scaling Suggested Edits across all YouTube videos?",
+    "How did you measure the playback quality improvement from Suggested Edits?"
+  ],
+  "career|google_youtube#What creator tools did you work on at YouTube?": [
+    "What are your two video processing patents from YouTube actually about?",
+    "Which computer vision algorithms did you use in YouTube's creator effects?",
+    "What was the hardest video effect or filter you built at YouTube?",
+    "How did creators respond to the video effects and filters you built at YouTube?"
+  ],
+  "career|heali_ai#What was your role at Heali and when?": [
+    "Why did you co-found Heali AI?",
+    "How did Heali AI use AI to personalize nutrition for chronic disease management?",
+    "Which chronic diseases was Heali AI built to help with?",
+    "Who were your co-founders at Heali AI?"
+  ],
+  "career|heali_ai#What did you do at Heali AI?": [
+    "What was the product vision for Heali AI?",
+    "What prioritization framework did you set up at Heali AI?",
+    "What did you learn from discovery work at Heali AI?",
+    "How did the Heali AI iOS and Android apps do after launch?"
+  ],
+  "career|heali_ai#How much did you raise at Heali? What was the outcome?": [
+    "What was the core intellectual property you established at Heali?",
+    "What did Heali's technical roadmap look like?",
+    "How did you go about raising the $4M seed round for Heali?",
+    "What happened to Heali after the seed round?"
+  ],
+  "career|heali_ai#What AI did you build at Heali? How did the pipeline work?": [
+    "Where did the nutrition data behind Heali's AI pipeline come from?",
+    "How did the semi-supervised pipeline at Heali clean billions of nutrition data points?",
+    "How did Heali's nutrition engine handle 200+ different medical conditions?",
+    "What would you do differently if you rebuilt the Heali AI pipeline today?"
+  ],
+  "career|heali_ai#How did Heali grow? What partnerships did you get?": [
+    "How did Heali's consumer apps reach more than 10,000 active users?",
+    "How did you bootstrap Heali's Diabetes Prevention Program product?",
+    "Which healthcare organizations did Heali partner with nationwide?",
+    "What did CDC compliance require when building Heali's Diabetes Prevention Program?"
+  ],
+  "career|heali_ai#How big was the team at Heali? What IP came out of it?": [
+    "What was the patent you authored at Heali about?",
+    "What did your peer-reviewed publication from Heali cover?",
+    "What were the core AI innovations behind the Heali platform?",
+    "How did you recruit the team of engineers, designers, and researchers at Heali?"
+  ],
+  "career|infineon#What was your role at Infineon and when?": [
+    "What did your day-to-day QA Application Engineer work at Infineon involve?",
+    "How did you cope without speaking German when you started in Munich?",
+    "What was the place in the US you missed the cut for on your first attempt?",
+    "What did you take away from your year at Infineon in Munich?"
+  ],
+  "career|infineon#What did you build at Infineon?": [
+    "How did you cut validation cycle time by 30% at Infineon?",
+    "Why did you write the Infineon hardware drivers in C and Assembly?",
+    "How did the TCL scripts for electronic board test automation at Infineon work?",
+    "What was the hardest problem you hit building test platforms at Infineon?"
+  ],
+  "career|inovexus#What else do you do besides your main role? Do you mentor?": [
+    "What does your work as a Mentor and Advisor at Inovexus involve?",
+    "What is Crossroads Venture Studio, and what did you do running it?",
+    "What drew you to become a Mentor and Advisor at Inovexus?",
+    "What happened to Crossroads Venture Studio after you joined Inovexus?"
+  ],
+  "career|inovexus#What does the mentoring involve?": [
+    "Which of invyo.io and quideos.com raised the $2M seed round?",
+    "What does invyo.io do, and how do you help its founders?",
+    "What does quideos.com do, and what do you work on with its founders?",
+    "What went wrong when you tried to hold the technical and product-executive roles at once?"
+  ],
+  "career|inovexus#Why do you spend time on mentoring?": [
+    "What nearly went wrong at Heali because of the gaps in your commercial instinct?",
+    "How did you learn the operational side of running Heali without a mentor?",
+    "What expensive mistakes do technical founders most often make?",
+    "What does Crossroads Venture Studio do for the founders it works with?"
+  ],
+  "career|iscribehealth#What was your role at iScribeHealth and when?": [
+    "Why did you leave your VP of Engineering role at iScribeHealth in July 2025?",
+    "How did you decide where to spend the $2M engineering budget at iScribeHealth?",
+    "How was the 10-person engineering team at iScribeHealth structured?",
+    "What would you do differently as VP of Engineering at iScribeHealth?"
+  ],
+  "career|iscribehealth#What did you own at iScribeHealth? What were you responsible for?": [
+    "How did you define production readiness for iScribeHealth's customer-facing systems?",
+    "What OKRs did you set at iScribeHealth to support the $100M ARR target?",
+    "How did you work with the CEO at iScribeHealth to shape the technical roadmap?",
+    "How did you approach platform reliability for AI clinical documentation at iScribeHealth?"
+  ],
+  "career|iscribehealth#What platform and reliability work did you do at iScribeHealth?": [
+    "Why did iScribeHealth move authentication from Azure Entra ID to Auth0?",
+    "How was the iScribeHealth migration from .NET 4 to .NET 8 carried out?",
+    "What was causing production downtime at iScribeHealth before the .NET 8 move?",
+    "How did the Auth0 migration at iScribeHealth turn out?"
+  ],
+  "career|iscribehealth#How did you get iScribeHealth to SOC 2 and HIPAA?": [
+    "What did iScribeHealth's first-ever penetration test find?",
+    "How long did it take iScribeHealth to reach SOC 2 and HIPAA compliance?",
+    "How did you handle fixing the high-severity findings from the iScribeHealth pen test?",
+    "What was hardest about getting iScribeHealth through SOC 2 and HIPAA?"
+  ],
+  "career|iscribehealth#What AI products did you ship at iScribeHealth?": [
+    "How were the AI-driven E&M coding suggestions at iScribeHealth built?",
+    "How did you measure the 10 to 20% billing improvement from E&M coding suggestions?",
+    "What was involved in expanding iScribeHealth's integration with Athena's ambient scribe?",
+    "What would you do differently on the AI E&M coding suggestions at iScribeHealth?"
+  ],
+  "career|iscribehealth#Who did you hire at iScribeHealth? How did you build the team?": [
+    "Why did iScribeHealth need stronger cross-functional execution?",
+    "What did you look for when hiring a Lead Engineer and Product Manager at iScribeHealth?",
+    "How did you get product, engineering, and customer success aligned at iScribeHealth?",
+    "What would you do differently in building the iScribeHealth team?"
+  ],
+  "career|laika_studios#Did you ever work in animation or visual effects?": [
+    "What did you actually work on as a Technical Director Intern at Laika?",
+    "How did you land the Technical Director internship at Laika in 2007?",
+    "Why did animation and visual effects never become your full-time career?",
+    "What was your PhD research about?"
+  ],
+  "career|laika_studios#What did you actually build at Laika?": [
+    "How did you decide what to leave out of the real-time preview renderer at Laika?",
+    "Which Laika films did your Maya preview rendering system get used on?",
+    "How did directors at Laika respond to the real-time preview tool in practice?",
+    "Why was Perl the scripting language inside the Laika production pipeline?"
+  ],
+  "career|laika_studios#Why does that internship still matter to you?": [
+    "What did you actually work on during your CGI internship?",
+    "What first drew you to wanting to build CGI technology?",
+    "What did you do after your CGI internship ended?",
+    "Which of your later projects involved approximating something expensive in real time?"
+  ],
+  "career|snap#What was your role at Snap and when?": [
+    "What research did you do as a Senior Research Scientist at Snap?",
+    "Which programs did you manage as a Technical Program Manager at Snap?",
+    "How did you end up joining Snap in May 2016?",
+    "Why did you leave Snap in May 2019, and what did you do next?"
+  ],
+  "career|snap#How big was your team at Snap? What did you manage?": [
+    "How did you prioritize among 40+ concurrent research projects at Snap?",
+    "How did research actually get shipped into Snap's global products?",
+    "Why did you expand Snap's R&D group into so many research domains?",
+    "What was the hardest part of leading a 50+ person R&D team at Snap?"
+  ],
+  "career|snap#What research did you ship at Snap? What was the impact?": [
+    "How did the privacy-preserving friend recommendations at Snap actually work?",
+    "How were the Bitmoji chat recommendations at Snap triggered in the interface?",
+    "What NLP approach did you use to sort Snap support tickets by sentiment?",
+    "How did you measure the impact of your research projects at Snap?"
+  ],
+  "career|snap#How did you work cross-functionally at Snap?": [
+    "How did you align R&D roadmaps with global product strategy at Snap?",
+    "What was the hardest part of coordinating five departments at Snap?",
+    "How did legal input shape the R&D roadmaps at Snap?",
+    "What would you do differently managing stakeholders across departments at Snap?"
+  ],
+  "career|snap#What M&A work did you do? How many patents from Snap?": [
+    "How did the Technical Acquisition Committee decide which technologies to acquire?",
+    "Which acquisitions came out of the Technical Acquisition Committee's evaluations?",
+    "What are the 8 patents you authored about?",
+    "What are the 7 publications you authored about?"
+  ],
+  "career|viewplus_technologies#Have you worked on accessibility technology?": [
+    "What did you actually build for blind users at ViewPlus Technologies?",
+    "What did you learn about designing for blind users during your accessibility research?",
+    "What did you do after your computer vision research at Oregon State University ended?",
+    "Why did you take a computer vision research role in assistive technology?"
+  ],
+  "career|viewplus_technologies#What did you build at ViewPlus?": [
+    "How did the braille finger tracking at ViewPlus work on a low-resolution webcam?",
+    "What was the hardest part of registering braille documents in real time at ViewPlus?",
+    "What happened to the ViewPlus braille finger tracking system after you built it?",
+    "What would you do differently on the ViewPlus braille finger tracking project?"
+  ],
+  "career|viewplus_technologies#What did that project teach you?": [
+    "What was the finger-tracking project, and what was it built to do?",
+    "How did you get finger tracking to run in real time on cheap cameras?",
+    "Which projects since then have you built around the hardware people already own?",
+    "What's an example of computer vision work that was publishable but not useful?"
+  ],
+  "career|viewplus_technologies#Is there a line from that project to what you did later?": [
+    "What did the ViewPlus project actually involve?",
+    "What did you work on in the thirteen years between ViewPlus and Heali?",
+    "How did Heali get started?",
+    "What does AI for good look like in practice at Heali?"
+  ],
+  "career|what_im_doing_now#What are you doing now? What's your current role? What are you working on?": [
+    "Why did you decide to build a company at the crossroads of AI and water management?",
+    "What did you do before co-founding your AI and water management startup?",
+    "What water management problems do you want to tackle with AI?",
+    "Who are your co-founders in your AI and water management startup?"
+  ],
+  "career|what_im_doing_now#What was Crossroads Venture Studio?": [
+    "Which companies were in the Crossroads Venture Studio portfolio?",
+    "Why did you found Crossroads Venture Studio in May 2023?",
+    "How did you approach product-market fit for AI-driven companies at Crossroads Venture Studio?",
+    "What led to the end of your time at Crossroads Venture Studio in July 2026?"
+  ],
+  "logistics|contact_and_links#How can I get in touch with you? What's your email?": [
+    "What is your professional background?",
+    "What kind of work are you doing at the moment?"
+  ],
+  "logistics|contact_and_links#How do I book time with you? Can we set up a call?": [
+    "What other ways can I reach you besides booking a 30-minute call?"
+  ],
+  "logistics|contact_and_links#What's your LinkedIn? Where can I find your profile?": [
+    "What is your research about?",
+    "What does your professional background look like?"
+  ],
+  "logistics|contact_and_links#Where can I find your resume? Can I download your CV?": [
+    "What is your professional background and work experience?",
+    "What are your main skills?"
+  ],
+  "logistics|intro#Introduce yourself. Tell me about yourself in one minute.": [
+    "What AI systems did you ship at Google, Amazon, and Snap?",
+    "What were the three startups you founded, and how did each one turn out?",
+    "Why did you decide to apply AI to water management?",
+    "What was your PhD in AI about?"
+  ],
+  "logistics|intro#What are you optimizing for? Why do you do this work?": [
+    "What made you decide to leave big tech?",
+    "What healthcare systems have you built over the last six years?",
+    "How do you balance speed, precision, and scale when building healthcare systems?",
+    "What do you want to build next in healthcare with AI?"
+  ],
+  "logistics|questions_i_ask#Do you have any questions for me?": [
+    "Why ask an interviewer about the company's biggest engineering challenge?",
+    "What other questions are worth asking at the end of a job interview?",
+    "How should I prepare to explain how I'd move a company's mission forward in a year?"
+  ],
+  "logistics|questions_i_ask#Why do you ask those questions?": [
+    "What questions do you ask a company when deciding whether to take a role?",
+    "What do you do when a company isn't honest about its hardest problem?",
+    "What do you want from a role yourself?",
+    "What kinds of hard problems do you think you'd be good at?"
+  ],
+  "logistics|what_im_looking_for#Why do you want to join our company? What kind of company suits you?": [
+    "What have you worked on in healthcare?",
+    "Why do you think healthcare is where AI has the most leverage?",
+    "Which uses of AI besides healthcare do you consider among the most important?",
+    "What does it look like when AI is the core of a product rather than a feature?"
+  ],
+  "logistics|what_im_looking_for#What kind of role are you looking for?": [
+    "How did you grow an engineering organization from a handful of people to 50+?",
+    "Can you give an example of technical ambiguity you resolved as an engineering leader?",
+    "What kinds of teams and companies have you led engineering for before?",
+    "What do you do differently when you need to scale an engineering team quickly?"
+  ],
+  "logistics|what_im_looking_for#If you were fired tomorrow, how would you make money?": [
+    "What kind of venture would you build next?",
+    "Why would you choose AI architecture and compliance as your consulting focus?",
+    "What background do you have in AI architecture and compliance?"
+  ],
+  "logistics|why_i_left_iscribehealth#What does iScribeHealth do?": [
+    "How does iScribeHealth's AI scribing tool actually work?",
+    "How do iScribeHealth's pre-authorization tools work?",
+    "How much time do clinicians actually save with iScribeHealth?",
+    "Why did iScribeHealth focus on reducing clinicians' administrative burden?"
+  ],
+  "logistics|why_i_left_iscribehealth#Why did you leave your last role? What happened at iScribeHealth?": [
+    "What did the iScribeHealth re-architecture involve, and how did it cut downtime by 70%?",
+    "What compliance work did you do at iScribeHealth?",
+    "Which integrations did you build at iScribeHealth?",
+    "How did you plan to reorganise the engineering team at iScribeHealth?"
+  ],
+  "perspective|ai_adoption#How would you approach AI adoption at our company?": [
+    "How did Walmart's AI routing overhaul work in practice?",
+    "How was Klarna's AI support assistant rolled out?",
+    "How do you tell whether company data is clean enough for an AI project?",
+    "After a small AI pilot proves its value, how do you choose the next project?"
+  ],
+  "perspective|ai_adoption#How do you evaluate a vendor's productivity claims?": [
+    "How do you design a pilot that tests a vendor's productivity claims under real conditions?",
+    "Why do experienced developers feel faster when measurements show they are slower?",
+    "How do you find the downstream work that a vendor's productivity demo doesn't count?",
+    "What does adjusting without embarrassment look like when a vendor's productivity gains don't hold up?"
+  ],
+  "perspective|ai_adoption#What guardrails would you put in place first?": [
+    "What guardrails would you add after setting data boundaries for AI tools?",
+    "How did Samsung respond after engineers pasted source code into ChatGPT?",
+    "Who should be accountable for the output when AI tools are used at work?",
+    "How should teams review AI-generated code before it ships?"
+  ],
+  "perspective|ai_adoption#What's the cultural risk nobody budgets for?": [
+    "How do you make it safe for staff to say they don't believe an AI output?",
+    "What does verifying AI outputs and assumptions look like in day-to-day practice?",
+    "How should the environmental cost of deploying AI at scale enter a business case?",
+    "What does a decision failing because of hollow AI input look like in a real organisation?"
+  ],
+  "perspective|ai_for_good#What do you believe AI should be used for?": [
+    "How did the braille registration and finger tracking system work on a cheap webcam?",
+    "What happened to the real-time braille reading project after it was built?",
+    "How does Heali work out what someone with a chronic condition should eat?",
+    "What results did Heali's users see in their symptoms?"
+  ],
+  "perspective|ai_for_good#Why does that matter to you specifically?": [
+    "Which problems do you think machine learning should be pointed at instead?",
+    "Was there a specific project that changed how you saw recommendation systems work?",
+    "Who actually decides which problems get machine learning attention and funding?",
+    "Looking back, what would you do differently in your years on recommendation systems?"
+  ],
+  "perspective|ai_for_good#Is \"AI for good\" not just marketing?": [
+    "What did Heali do, and what problem was it trying to solve?",
+    "Have you seen a case where an AI-for-good mission and the business pulled apart?",
+    "What problems have you chosen to work on in AI, and why those?",
+    "How did Heali track whether users' symptoms were actually improving?"
+  ],
+  "perspective|core_values#What are your core values? What do you stand for?": [
+    "Can you give an example of a time you led by example?",
+    "What's a time you failed, and what did you learn from it quickly?",
+    "Which domains have you worked across rather than going deep in just one?",
+    "When have you been outspoken at work, and what happened?"
+  ],
+  "perspective|core_values#Which one matters most to you, and why that one?": [
+    "Which parts of the Amazon leadership principles framework did you leave behind, and why?",
+    "Can you give an example of leading by example, where you did the work yourself?",
+    "Which other Amazon leadership principles did you pick to be measured against at review time?",
+    "How else did working at Amazon shape the way you lead your team?"
+  ],
+  "perspective|core_values#What does \"fail and learn fast\" mean in practice for you?": [
+    "Can you give an example of an MVP you shipped that turned out to be wrong?",
+    "How did failing and iterating quickly play out when you moved from research into founding?",
+    "How do you stay close to the user while you're building a product?",
+    "Was there a time you were slow to admit something you built wasn't working?"
+  ],
+  "perspective|core_values#What do you expect from the people who work for you?": [
+    "What other values are on your list besides being outspoken?",
+    "What do you do when someone on your team hides a problem instead of raising it?",
+    "How do you make it safe for people to bring you bad news early?",
+    "How do you actually go about having an uncomfortable conversation with someone you work with?"
+  ],
+  "perspective|customer_centricity#What does customer-centric actually mean to you?": [
+    "What experience taught you that reliability matters more than innovation?",
+    "How do you keep engineers motivated to build boring, dependable products?",
+    "When is it worth risking predictability to ship something genuinely new?",
+    "How do you tell whether customers actually trust your product?"
+  ],
+  "perspective|customer_centricity#Can you give an example of choosing reliability over innovation?": [
+    "What did iScribeHealth's first-ever penetration test uncover?",
+    "How did the migration from .NET 4 to .NET 8 at iScribeHealth go?",
+    "What architecture changes cut iScribeHealth's production downtime by 70%?",
+    "What was hardest about taking iScribeHealth through SOC 2 and HIPAA compliance?"
+  ],
+  "perspective|customer_centricity#Why does that matter more in healthcare?": [
+    "What does reliability mean in practice for a healthcare documentation system?",
+    "How do you decide what to cut when scoping a healthcare software product?",
+    "Did a documentation product ever lose providers' trust, and how did it happen?",
+    "Can trust be rebuilt with providers after a documentation system fails them?"
+  ],
+  "perspective|customer_centricity#Isn't that just risk aversion?": [
+    "What counts as unglamorous work that should come before big bets?",
+    "How do you know a platform is solid enough to start taking big swings?",
+    "Can you give an example of skipped foundational work that cost customers?",
+    "What big swings did a solid platform let you take?"
+  ],
+  "perspective|distributed_teams#Have you managed remote or distributed teams?": [
+    "How did you handle time zones when running teams across four continents?",
+    "What did the teams you ran at Heali actually work on?",
+    "What was the hardest part of managing distributed teams at iScribeHealth?",
+    "What would you do differently when managing a distributed team?"
+  ],
+  "perspective|distributed_teams#How do you handle accountability when nobody is in the room?": [
+    "How do you make the state of work visible to everyone on a distributed team?",
+    "What does a good definition of done look like for a distributed team?",
+    "Can you give an example of ambiguity costing a distributed team a whole day?",
+    "When, if ever, are check-ins worth having on a team across eight time zones?"
+  ],
+  "perspective|distributed_teams#Doesn't leading by example fall apart when you're not co-located?": [
+    "What caused iScribe's services to go dark?",
+    "What changed at iScribe after the services went dark?",
+    "How do you decide who takes the awkward timezone on a distributed team?",
+    "Why does being the one who writes things down count as leading by example?"
+  ],
+  "perspective|distributed_teams#What's hardest about it?": [
+    "How do you check whether people working remotely are actually alright?",
+    "Have you seen someone on a remote team drift without anyone noticing?",
+    "What do you do when you realise a remote colleague has become isolated?",
+    "How much time do you spend on people's wellbeing versus their work when managing remotely?"
+  ],
+  "perspective|diversity_and_inclusion#What's your view on diversity in a team?": [
+    "Have you seen a team fail because everyone trained and worked the same way?",
+    "What does team diversity cost in speed or coordination, in your experience?",
+    "How do you hire for diversity without hurting how well a team works together?",
+    "Which kinds of diversity matter most on a team: background, skills, or ways of thinking?"
+  ],
+  "perspective|diversity_and_inclusion#Isn't that just an argument about cognitive diversity?": [
+    "What does the case for diversity cover beyond cognitive diversity?",
+    "Can you give an example of something you noticed as the only outsider in a room?",
+    "What happened after you arrived in the US as a French exchange student?",
+    "Who told you at home that you wouldn't amount to an engineer, and why?"
+  ],
+  "perspective|diversity_and_inclusion#How do you promote diversity, equity and inclusion in hiring and project assignment?": [
+    "Why did the Heali hire who was let go for a fit problem not work out?",
+    "How has cultural-add interviewing worked out in practice at Heali?",
+    "How did Snap's multidisciplinary teams actually work together day to day?",
+    "How do you decide which disciplines a new project team needs?"
+  ],
+  "perspective|diversity_and_inclusion#What have your teams actually looked like?": [
+    "How did you recruit the Heali team of engineers, designers and UX researchers?",
+    "What did you work on at Snap that needed business, design, data science, engineering and legal?",
+    "Can you give an example of an insight that came from outside the discipline owning the problem?",
+    "What other values are on your list besides cross-domain knowledge and diversity?"
+  ],
+  "perspective|firing_and_accountability#How do you feel about firing people?": [
+    "How do you decide when firing someone is necessary?",
+    "What does handling a firing with compassion look like in practice?",
+    "Can you describe a time you had to let someone go?"
+  ],
+  "perspective|firing_and_accountability#How do you think about accountability when someone underperforms?": [
+    "What if someone still fails despite clear expectations, honest feedback and support?",
+    "How do you give honest feedback early enough for an underperformer to act on?",
+    "How do you define a role clearly enough that someone can succeed in it?",
+    "Can you share a time an employee's failure turned out to be your leadership failure?"
+  ],
+  "perspective|firing_and_accountability#Why does leadership matter when someone fails?": [
+    "How do you tell whether someone failed because they were set up badly?",
+    "What does setting a new hire up well look like?",
+    "When is firing someone the right response to failure?",
+    "What does fixing a hiring problem upstream look like in practice?"
+  ],
+  "perspective|first_90_days#What are the first things you would do if you got hired?": [
+    "How do you decide which engineering bottlenecks to fix first?",
+    "What kind of quick win would you ship to build momentum and trust with a new team?",
+    "How do you assess a new team's strengths and existing practices?",
+    "How have you aligned with leadership on engineering priorities in the past?"
+  ],
+  "perspective|first_90_days#Why would you do those things in that order?": [
+    "What should a new engineering leader's initial assessment actually cover?",
+    "What makes a good quick win for a new engineering leader?",
+    "What steps come between the assessment and the quick win for a new engineering leader?",
+    "What bigger work does a quick win give a new engineering leader room to do?"
+  ],
+  "perspective|future_of_healthcare_ai#What will the industry look like in five years?": [
+    "Why are EHR systems an archaic middleman in healthcare?",
+    "What will human clinicians do once AI agents handle most clinical workflows?",
+    "How would AI agents make healthcare cheaper and more accessible to more people?",
+    "What has to happen for AI agents to take over most healthcare workflows within five years?"
+  ],
+  "perspective|future_of_healthcare_ai#What would you like to build if you joined us?": [
+    "How do you build enough trust in AI agents for instant insurance reimbursement?",
+    "What makes an AI agent for healthcare robust enough to be trusted?",
+    "Where would you start building AI agents that connect patients, providers, and insurers?",
+    "What stands in the way of instant health insurance reimbursement today?"
+  ],
+  "perspective|future_of_healthcare_ai#Why is that the right problem to work on?": [
+    "Which clinical workflow carries the most indefensible administrative burden?",
+    "How does reducing clinician paperwork compound over time?",
+    "How much of a clinician's time does paperwork currently take away from patient care?"
+  ],
+  "perspective|how_i_run_teams#What's your management style? How do you run teams?": [
+    "How do you measure the performance of a team you manage?",
+    "What do you do when someone on your team drops the ball on their job?",
+    "Can you give an example of a team you ran like a Formula One pit crew?",
+    "What are the downsides of managing a team like a Formula One pit crew?"
+  ],
+  "perspective|how_i_run_teams#How do you actually run a team day to day?": [
+    "How do you make sure everyone on a team is clear about what they own?",
+    "What does accountability look like in practice once ownership is clear?",
+    "Can you give an example of a team that struggled because ownership was unclear?",
+    "How do you get a team to move faster without simply asking for speed?"
+  ],
+  "perspective|how_i_run_teams#What are your strengths and weaknesses?": [
+    "Can you give an example of taking an organization from ambiguity to velocity?",
+    "What does going from ambiguity to velocity involve, step by step?",
+    "Has being a straight shooter ever cost you in a room that didn't want the truth?",
+    "How do you work around not being a good salesman?"
+  ],
+  "perspective|how_i_see_myself#What keeps you awake at night running an organization?": [
+    "How can a team keep the habit of questioning AI model outputs?",
+    "How should a company automate without losing its institutional memory?",
+    "How can a leader spot AI slop taking hold in an organisation early?",
+    "What else does the chapter \"AI: The Reality Beyond The Fantasy\" cover?"
+  ],
+  "perspective|how_i_see_myself#What does that actually look like day to day?": [
+    "How can you tell when AI-assisted work is hollow rather than genuinely good?",
+    "What should leaders do differently when they hand AI tools to their teams?",
+    "How can knowledge workers keep thinking critically when they use AI tools?",
+    "What does AI-assisted work look like when a person's voice is still in it?"
+  ],
+  "perspective|how_i_see_myself#So what do you do about it?": [
+    "What does keeping humans in the loop look like when you actually mean it?",
+    "What kinds of systems did you spend twenty years building?",
+    "Who should be accountable for the volume of plausible machine-generated output?",
+    "How do you decide a problem is narrow enough to automate?"
+  ],
+  "perspective|how_i_see_myself#How would your toughest critic describe you?": [
+    "How have you learned to time your realism better in team discussions?",
+    "Can you give an example of a plan where your realism proved useful?",
+    "Has anyone pushed back on you for puncturing the optimism in a meeting?",
+    "Have you seen a problem cost more because it was found late instead of raised early?"
+  ],
+  "perspective|how_i_see_myself#What's the most misunderstood aspect of your leadership style?": [
+    "What unspoken knowledge do you pass down to your team that never makes it into documentation?",
+    "How do you decide when it's time to step back and leave a team member to the work?",
+    "How have you handled a team member who read your hands-on approach as a lack of trust?",
+    "Can you share an example of mentoring someone by working alongside them?"
+  ],
+  "perspective|how_i_see_myself#How do you evaluate your own performance when the metrics are subjective?": [
+    "Can you give an example of a subjective metric you redefined into something observable?",
+    "How do you choose which proxy to commit to before the results are in?",
+    "When has a metric you committed to told you that you were doing worse than you thought?",
+    "How do you judge work that has no observable proxy at all?"
+  ],
+  "perspective|how_i_see_myself#How do you measure whether a culture is healthy?": [
+    "Why is watching better than surveying for judging a company's culture?",
+    "How should a leader respond when someone on the team makes a mistake?",
+    "What can you do once you find a company's culture is unhealthy?",
+    "How do you make sure people are truly empowered, not just told they are?"
+  ],
+  "perspective|how_i_see_myself#What's the toughest decision you've made in the last six months?": [
+    "Which of the things you've built as an entrepreneur worked, and which didn't?",
+    "What has being an entrepreneur actually cost you?",
+    "What were the hardest calls you made when you worked inside a company?",
+    "Have you ever seriously considered taking a safer job instead of building your own things?"
+  ],
+  "perspective|influences#What's your favorite book?": [
+    "How have you used build, measure, learn at a big tech company?",
+    "What did applying fast feedback loops look like at your startups?",
+    "How do you actually learn faster than your competitors day to day?",
+    "What other books besides The Lean Startup have shaped how you work?"
+  ],
+  "perspective|influences#What's your favorite movie?": [
+    "Where have you used technology to challenge an old way of doing things?",
+    "What overlooked value have you found by using data in your work?",
+    "How do people react when you challenge old ways of working with technology?"
+  ],
+  "perspective|influences#What shaped how you work? What are your influences?": [
+    "What received wisdom in engineering leadership have you refused to accept?",
+    "What happened when you went against what everyone else in engineering does?",
+    "Besides questioning received wisdom, what interests you about engineering leadership?"
+  ],
+  "perspective|work_hours#What do you think about an 80 hour work week?": [
+    "When does a moment genuinely call for an 80-hour work week?",
+    "Which all-hands, weekends-included weeks have you worked, and what prompted them?",
+    "What have 80-hour work weeks cost you?"
+  ],
+  "perspective|work_hours#Do you believe in working long hours? Work hard or work smart?": [
+    "When is an 80-hour work week actually justified, if ever?",
+    "What does working smart instead of working long look like in a typical week?",
+    "Have you ever worked 80-hour weeks yourself, and what did it teach you?",
+    "How do your AI products give people back their time?"
+  ],
+  "perspective|work_hours#How do you think about sustainable pace and overwork?": [
+    "How do you tell when unclear priorities are what's driving overwork?",
+    "How do you recognize an architecture that makes everything expensive?",
+    "When have you fixed the cause of overwork instead of just pushing through it?",
+    "Is there ever a time when working extra hours is the right call?"
+  ],
+  "stories|apple_offer_and_google#How did you end up at Google? Was that the plan?": [
+    "How did you end up at Google after Apple retracted your offer?",
+    "Did you ever get to work in CGI or graphics?",
+    "What was the interview process at Apple like?",
+    "How did you react when Apple retracted your offer because of the hiring freeze?"
+  ],
+  "stories|apple_offer_and_google#What happened after the offer was pulled?": [
+    "What was the job offer that fell through just before Google's offer arrived?",
+    "What did you expect your career to look like before you went to Google on YouTube?",
+    "What was your work at Google on YouTube actually like?",
+    "Where did your career go from Google on YouTube?"
+  ],
+  "stories|apple_offer_and_google#Do you regret not getting the Apple job?": [
+    "How did you end up working in AI after being rejected from it?",
+    "How did you feel at the time about not getting the Apple job?",
+    "How did you end up working at YouTube?",
+    "What video effects and filters did you build at YouTube using computer vision?"
+  ],
+  "stories|heali_early_team#Tell me about an early team you built. What was it like with under 10 people?": [
+    "What led you to co-found Heali?",
+    "How did you decide who to hire first at Heali?",
+    "Did you ever make a hire at Heali that turned out to be a bad fit?",
+    "How did engineers, designers and UX researchers work together at Heali?"
+  ],
+  "stories|heali_early_team#What did your early team at Heali accomplish?": [
+    "How was Heali's AI pipeline designed to be accurate and robust?",
+    "How did Heali's B2C app grow to over 10K users so fast?",
+    "How did Heali go about raising its $4M in funding?",
+    "What were the hardest challenges for Heali's early team?"
+  ],
+  "stories|heali_early_team#What values does your team operate on?": [
+    "What pressure showed your team its real values were speed and customer satisfaction?",
+    "When speed and customer satisfaction conflicted, which did your team choose?",
+    "How did you name your team's values after the fact so that they stuck?",
+    "How do you pass speed and customer satisfaction on to new team members?"
+  ],
+  "stories|heali_letting_someone_go#Tell me about a time you had to manage a layoff or let someone go": [
+    "How did you tell the senior leader at Heali that you were letting them go?",
+    "How did you change Heali's hiring after letting a senior leader go?",
+    "How did the rest of the Heali team react when a senior leader was let go?",
+    "How do you test whether a senior candidate is scrappy enough for a seed-stage startup?"
+  ],
+  "stories|heali_letting_someone_go#How did you handle the human side of it?": [
+    "What did waiting until mid-January cost the business?",
+    "How did the search you ran in the new year turn out?",
+    "What would you do differently when judging whether someone is the right fit?"
+  ],
+  "stories|heali_letting_someone_go#Whose fault was it?": [
+    "How do you test whether a candidate's way of working fits what a company needs?",
+    "What happened with the hire who looked strong on paper but didn't fit how you worked?",
+    "What did you change in your interview process after a hire went wrong?",
+    "What other times have you seen a failed employee come with failed leadership?"
+  ],
+  "stories|heali_letting_someone_go#What did you change afterwards?": [
+    "What went wrong in hiring that made you rebuild the interview process?",
+    "What does cultural add mean to you, and how is it different from cultural fit?",
+    "What questions do you ask candidates about working with no process or support?",
+    "Did building cultural-add evaluation into interviews actually reduce bad hires?"
+  ],
+  "stories|heali_nutrition_engine#What's a project you're proud of? What's your favorite thing you built?": [
+    "Why was building the AI nutrition engine at Heali one of your favorite projects?",
+    "How did Heali's nutrition engine process over 2 billion data points?",
+    "What results did chronic disease patients see from Heali's personalized diets?",
+    "What would you do differently if you rebuilt Heali's AI nutrition engine?"
+  ],
+  "stories|heali_nutrition_engine#Why was the Heali nutrition engine hard to build?": [
+    "Where does the Heali nutrition engine get its data from?",
+    "How did Heali resolve contradictions between nutrition data sources?",
+    "What role does modeling play in the Heali nutrition engine?",
+    "Which chronic conditions is the Heali nutrition engine designed for?"
+  ],
+  "stories|heali_nutrition_engine#Tell me about solving a complex problem with very limited data or resources.": [
+    "Where did Heali's small set of trustworthy nutrition data come from?",
+    "How did Heali verify its nutrition data was accurate enough for patients with chronic conditions?",
+    "What would you do differently in building Heali's semi-supervised data pipeline?",
+    "Have you used the same approach of propagating reliable signal on data problems outside Heali?"
+  ],
+  "stories|heali_nutrition_engine#What came of the Heali nutrition engine?": [
+    "How did the Heali app grow to more than 10,000 users?",
+    "How did Heali's partnership with Blue Cross Blue Shield come about?",
+    "Which other national partners did Heali work with besides Blue Cross Blue Shield?",
+    "How does the Heali nutrition engine work?"
+  ],
+  "stories|heali_overbuilt_before_validating#Tell me about a time you failed. What's your biggest mistake?": [
+    "What was Heali's technical thesis in the early days?",
+    "Which features did Heali build before validating demand?",
+    "What did overbuilding features early on cost Heali?",
+    "What would you do differently at Heali to test demand sooner?"
+  ],
+  "stories|heali_overbuilt_before_validating#What did that mistake cost you?": [
+    "What did you build for demand you hadn't yet confirmed existed?",
+    "How did you realize the demand you were building for was unconfirmed?",
+    "What happened to the good work that was built for unconfirmed demand?",
+    "How would you confirm demand before building next time?"
+  ],
+  "stories|heali_overbuilt_before_validating#What did you learn from failing? What did you change?": [
+    "What failure taught you to prioritize fast iteration and user feedback?",
+    "What does the smallest thing that produces a real signal look like in practice?",
+    "How do you decide when a solution has enough feedback to scale?",
+    "What does a feedback checkpoint in a product roadmap look like?"
+  ],
+  "stories|how_i_became_a_pm#How did you move from engineering into product?": [
+    "Did the retraining infrastructure you proposed at Amazon A9 ever get built?",
+    "How did the A9 product and engineering teams respond to your written proposal?",
+    "What did you learn from writing a product case and architecture as a researcher?",
+    "What would you do differently if missing infrastructure blocked your research again?"
+  ],
+  "stories|how_i_became_a_pm#What happened when you took that proposal around?": [
+    "Where did the proposal behind the global visual search database originally come from?",
+    "What was the approach and timeline in the visual search proposal engineering approved?",
+    "How did the global visual search database project go once you became its lead?",
+    "Would you handle the origins of the visual search proposal differently now?"
+  ],
+  "stories|how_i_became_a_pm#So how did the title actually change?": [
+    "What work did you do as a researcher that made the product team want you?",
+    "What was your first project after becoming a technical product manager?",
+    "How is being a technical product manager different from being a researcher?",
+    "What would you do differently about moving from researcher to product manager?"
+  ],
+  "stories|how_i_became_a_pm#Did you try to go back to engineering afterwards?": [
+    "Why did Snap move you back to product just three days after you joined?",
+    "What did you actually do day to day as a Technical Program Manager at Snap?",
+    "Why did you want to go back to engineering in the first place?",
+    "What was the product work you did before joining Snap?"
+  ],
+  "stories|how_i_ended_up_in_ai#How did you get into AI? What made you choose this field?": [
+    "Why didn't you end up building computer graphics technology for animation studios?",
+    "What kept you at Oregon State for seven years when you planned to stay one?",
+    "Did you get to surf much while you were studying at Oregon State?",
+    "What did you do after leaving Oregon State?"
+  ],
+  "stories|how_i_ended_up_in_ai#Is it true you were rejected from AI before you ended up in it?": [
+    "What was your PhD research in graphics before you switched to AI?",
+    "What was it like being Sinisa Todorovic's first doctoral student?",
+    "What did your work on spatiotemporal video segmentation and event recognition involve?",
+    "How did your early work in 3D reconstruction shape the rest of your career?"
+  ],
+  "stories|how_i_ended_up_in_ai#What did you actually want to do instead?": [
+    "What did you work on during your internship at Laika?",
+    "Why didn't you end up building technology for animation studios?",
+    "What did you do after your Laika internship ended?",
+    "What was it about Pixar that made you want to work in animation technology?"
+  ],
+  "stories|how_i_ended_up_in_ai#Why did you stay at Oregon State after the exchange year?": [
+    "Why did you go to Oregon State as an exchange student in the first place?",
+    "What did the Dean of Engineering say at Oregon State that made you want to stay?",
+    "Which professor at Oregon State took you on as an assistant, and what did you work on?",
+    "What did you do after leaving Oregon State?"
+  ],
+  "stories|how_i_ended_up_in_ai#Is it true you never meant to do a PhD?": [
+    "What was the research that made the PhD interesting enough for you to stay?",
+    "How did you handle all the writing a PhD involves, given that you hated writing?",
+    "Did your friend in France ever end up doing a PhD?",
+    "What did you do after finishing your PhD?"
+  ],
+  "stories|how_i_ended_up_in_ai#What did your family make of you staying in the US?": [
+    "What made you stay in the US instead of going back to France?",
+    "How did your mum's feelings about you living in the US change over time?",
+    "How do you stay close to your family in France while living in the US?",
+    "Do you think you'll ever move back to France?"
+  ],
+  "stories|how_i_ended_up_in_ai#Was AI an obvious career choice at the time?": [
+    "What was the first thing you saw a machine do that felt like science fiction?",
+    "Who were the people you worked alongside on AI in the mid-2000s?",
+    "What changed for your career when demand for AI expertise suddenly took off?",
+    "What would you tell someone choosing a field today that has no industry behind it?"
+  ],
+  "stories|how_i_ended_up_in_ai#What do you tell students going into this field now?": [
+    "Which foundations should students learn properly before relying on AI?",
+    "What is an example of AI getting something wrong that only someone with real understanding would catch?",
+    "Why is resilience one of the qualities students need as AI spreads?",
+    "What happens to companies once having an \"AI company\" sounds as redundant as an \"internet company\"?"
+  ],
+  "stories|iscribe_azure_or_aws#What's the hardest technical decision you've made? What's the hardest technical call you've had to make?": [
+    "Who else weighed in on keeping iScribeHealth on Azure instead of moving to AWS?",
+    "How did the iScribeHealth refactor from .NET 4 to .NET 8 get planned and carried out?",
+    "How do you weigh what's best for the company against the technical case?",
+    "What would you do differently about the Azure versus AWS decision at iScribeHealth?"
+  ],
+  "stories|iscribe_azure_or_aws#Would you make the same call today?": [
+    "Why did you originally decide to do the cloud migration?",
+    "How did the cloud migration actually turn out?",
+    "What did the cloud migration originally cost in time and effort?",
+    "Why is maintaining a ten-year-old backend system so expensive?"
+  ],
+  "stories|iscribe_outage_night#Tell me about a critical decision you made under severe time pressure": [
+    "What caused the iScribeHealth services to go dark?",
+    "What was the first decision you made about people during the iScribeHealth outage?",
+    "What technical decision did you make to get iScribeHealth's services back up?",
+    "Were iScribeHealth's services restored before customers woke up?"
+  ],
+  "stories|iscribe_outage_night#What did you do in the first hour?": [
+    "What was the fixed deadline you only had one shot at meeting?",
+    "How did the overnight work with your two strongest engineers turn out?",
+    "What were you and your two engineers trying to diagnose through the night?",
+    "What did you do after the first hour, once your engineers were fed and working?"
+  ],
+  "stories|iscribe_outage_night#What's the principle you took from that?": [
+    "What experience taught you to look after the people first under time pressure?",
+    "How do you work out who is sharpest on a fix when time is short?",
+    "How do you find out what the real deadline is during a high-pressure fix?",
+    "What does working alongside the team look like during a high-pressure fix?"
+  ],
+  "stories|iscribe_outage_night#Did you fix it?": [
+    "What caused the outage that was fixed before customers woke up?",
+    "Who worked through the night to fix the outage before customers noticed?",
+    "What changed afterwards to keep a similar overnight outage from happening again?",
+    "Why does delivering dinner to someone's door count as leading by example?"
+  ],
+  "stories|iscribe_tech_debt_tradeoff#Tell me about a time you had to make a hard tradeoff": [
+    "What technical debt was piling up at iScribeHealth?",
+    "How did you decide between cleaning up debt and shipping features at iScribeHealth?",
+    "How did you handle the pressure to defer technical debt cleanup at iScribeHealth?",
+    "What would you do differently about technical debt tradeoffs at iScribeHealth?"
+  ],
+  "stories|iscribe_tech_debt_tradeoff#How do you prioritize technical debt against shipping features?": [
+    "What did you choose to re-architect first, and why before shipping features?",
+    "How did you hold the line when feature delivery slowed during re-architecture?",
+    "Did putting re-architecture ahead of features pay off in the end?",
+    "What would you do differently when prioritizing technical debt against features?"
+  ],
+  "stories|iscribe_tech_debt_tradeoff#How do you balance long-term strategic goals with short-term fire-fighting?": [
+    "How did the iScribeHealth platform re-architecture actually turn out?",
+    "What visible progress did you ship alongside the iScribeHealth re-architecture?",
+    "How did iScribeHealth's SOC 2 and HIPAA compliance work go?",
+    "How did iScribeHealth customers react while the platform was being re-architected?"
+  ],
+  "stories|iscribe_tech_debt_tradeoff#Why did prioritizing re-architecture work out?": [
+    "What did the platform re-architecture actually involve?",
+    "How did the SOC 2 and HIPAA work go once the platform was re-architected?",
+    "What innovation did the platform re-architecture make possible?",
+    "Is there anything you would do differently about the platform re-architecture?"
+  ],
+  "stories|iscribe_turnaround#What's an achievement you're proud of?": [
+    "Why did the system need to be re-architected for scale?",
+    "What did the first penetration test uncover?",
+    "What AI work was being advanced alongside the compliance and architecture projects?",
+    "Which EHR integrations were shipped?"
+  ],
+  "stories|iscribe_turnaround#How did your work at iScribeHealth land? What did people say?": [
+    "What did Will actually accomplish at iScribeHealth that impressed the security team?",
+    "How did Will approach his work at iScribeHealth?",
+    "What did people at iScribeHealth other than the security team say about Will's work?",
+    "What would Will do differently if he did his iScribeHealth work again?"
+  ],
+  "stories|iscribe_turnaround#Why are you proud of the iScribeHealth turnaround?": [
+    "What did the iScribeHealth turnaround actually involve?",
+    "How did you make compliance, product and re-architecture work compound at iScribeHealth?",
+    "What state was iScribeHealth in before the turnaround began?",
+    "What would you do differently in the iScribeHealth turnaround?"
+  ],
+  "stories|kelley_building_and_jensen_huang#What's your best story from grad school?": [
+    "What research did you do as a grad student at Oregon State?",
+    "How did watching Jensen Huang donate to the Kelley Engineering Center change how you think about money?",
+    "What did you do after finishing grad school at Oregon State?",
+    "What was the dinner before the Kelley Engineering Center opening like?"
+  ],
+  "stories|kelley_building_and_jensen_huang#Did you ever meet Jensen Huang?": [
+    "What did you work on in the Nvidia Graphics and Image Technologies Laboratory?",
+    "What else has Jensen Huang given to Oregon State University?",
+    "What Nvidia goodies did Jensen Huang hand out when he visited the graphics lab?"
+  ],
+  "stories|leaving_big_tech_for_heali#Why did you leave big tech? What made you go found a company?": [
+    "What does Heali actually do?",
+    "Who did you co-found Heali with?",
+    "What did you work on at A9 at Amazon?",
+    "How different was building Heali from working at Google, A9 and Snap?"
+  ],
+  "stories|leaving_big_tech_for_heali#Was there a specific moment you decided?": [
+    "What did you work on after deciding to point your skills away from social media?",
+    "What evidence made you doubt that social media brings joy rather than engagement?",
+    "How do you tell whether your work is succeeding when the goal can't be measured?",
+    "What were you building at Snap during your three years there?"
+  ],
+  "stories|leaving_big_tech_for_heali#So the objection was about measurement as much as ethics?": [
+    "What was the ethical objection that turned out to be about measurement too?",
+    "How does Heali measure whether someone's symptoms have improved?",
+    "What happens at Heali when symptoms don't improve?",
+    "Why work on goals that can show you're wrong instead of goals like \"we bring joy\"?"
+  ],
+  "stories|leaving_big_tech_for_heali#Was it hard to walk away from that kind of scale?": [
+    "What made you decide to leave Snap for a seed-stage company?",
+    "What did your work on machine learning for augmented reality at Snap involve?",
+    "How did you build friend recommendations at Snap for hundreds of millions of people?",
+    "What does the seed-stage company you joined after Snap actually do?"
+  ],
+  "stories|leaving_big_tech_for_heali#What did you take from big tech into founding?": [
+    "What operational insight does Crossroads Venture Studio give technical founders?",
+    "What operational lessons from starting Heali do you wish you'd known earlier?",
+    "What does a serious engineering review process look like in practice?",
+    "What is Heali and how did it get started?"
+  ],
+  "stories|onboarding_my_own_director#Tell me about onboarding a senior or executive hire": [
+    "What did you do to onboard David Salesin when he joined Snap Research in 2017?",
+    "How did onboarding David Salesin differ from onboarding someone onto your own team?",
+    "How did David Salesin's first months leading Snap Research turn out?",
+    "What would you do differently when onboarding a leader who will run your organisation?"
+  ],
+  "stories|onboarding_my_own_director#What does onboarding someone more senior than you actually involve?": [
+    "Which projects in the research organisation had history a new senior hire needed to know about?",
+    "What had the research organisation already tried and quietly abandoned?",
+    "Where did you think the research organisation should go?",
+    "How did working with a senior hire who founded Adobe's Creative Technologies Lab turn out?"
+  ],
+  "stories|onboarding_my_own_director#Was there anything personal about that one?": [
+    "How did you end up in AI after starting out in graphics?",
+    "What was your internship at Laika like?",
+    "What was it like working for a director who'd been at Lucasfilm and Pixar?",
+    "Do you still want to build technology for animation studios?"
+  ],
+  "stories|snap_beauty_score_filter#Tell me about a time you disagreed with someone": [
+    "Did the beauty score AR filter at Snap ever ship?",
+    "Why did you push back on the Snap group AR filter that crowned the most attractive person?",
+    "How did the beauty score filter disagreement affect your working relationship with the engineer?",
+    "How do you decide to hold back a feature at Snap when the technology already works?"
+  ],
+  "stories|snap_beauty_score_filter#Why did you object to that? What worried you?": [
+    "Did Snap's friend-group attractiveness ranking feature for teenagers ever ship?",
+    "How did people at Snap react when you objected to ranking teens by attractiveness?",
+    "Who first proposed a Snap feature that ranks teenagers by attractiveness?",
+    "How do you judge whether a product feature will harm young users?"
+  ],
+  "stories|snap_beauty_score_filter#How do you handle disagreement with your team?": [
+    "What was your concern about the filter the engineer had finished building?",
+    "What feedback did design give on the filter?",
+    "Was the filter eventually shipped, changed or dropped?",
+    "Have you ever killed a team member's finished work outright?"
+  ],
+  "stories|snap_beauty_score_filter#How did the disagreement resolve?": [
+    "What was the original plan to target teenagers with our model?",
+    "Why did the design team conclude we shouldn't target teenagers?",
+    "How did the model perform once it was used for ad targeting?",
+    "What led to the engineer's promotion after the dispute over targeting teenagers?"
+  ],
+  "stories|snap_beauty_score_filter#How do you handle ethical concerns about a product?": [
+    "Can you give an example of an ethical concern you handled on a product?",
+    "Who do you bring ethical decisions about a product to, and why them?",
+    "How do you find a version of a product that survives an ethical concern?",
+    "What do you do when no version of the product is safe to ship?"
+  ],
+  "stories|told_id_never_make_it#What's the biggest obstacle you've had to get past?": [
+    "What was it like starting over in the United States after leaving France?",
+    "Did you end up working as an engineer despite being told you never would?",
+    "Did you ever make it into management, after being told you wouldn't?",
+    "What advice would you give someone who is being told they will never make it?"
+  ],
+  "stories|told_id_never_make_it#How did you actually get to the US?": [
+    "How did you manage at Infineon in Munich without speaking any German?",
+    "Who told you that you wouldn't make it to the US, and why?",
+    "When else have you committed first and figured it out afterwards?",
+    "What happened once you finally got to the US?"
+  ],
+  "stories|told_id_never_make_it#So you got there by luck?": [
+    "What was it like spending a year abroad without speaking the local language?",
+    "How did you cope with being on the wait list twice before getting a seat?",
+    "What happened in the week you got the call and had to move?",
+    "What happened after you took the seat that opened up when somebody got sick?"
+  ],
+  "stories|told_id_never_make_it#Did you prove them wrong?": [
+    "Who told you that you wouldn't make a good engineer, and how did you take it?",
+    "Which systems did you ship at Google, Amazon and Snap that reached hundreds of millions of people?",
+    "How did you run an R&D organisation of 50+ people across 40+ projects at Snap?",
+    "How do you talk to your team about their potential without discouraging them?"
+  ],
+  "stories|youtube_shipping_past_politics#Tell me about a time you faced organizational politics": [
+    "How did the video quality idea at YouTube become Suggested Edits?",
+    "Who opposed the video quality detection idea at YouTube, and why?",
+    "What would you do differently when pitching an idea inside a large company like YouTube?",
+    "What did the Suggested Edits experience teach you about organizational politics?"
+  ],
+  "stories|youtube_shipping_past_politics#How have you made a controversial or challenging decision?": [
+    "What was the hard part you cracked while building the YouTube project at night?",
+    "What were people arguing about before you demoed the project that shipped across YouTube?",
+    "How did the rollout across the entire YouTube video corpus go?",
+    "Have you built a working demo before debating on other decisions since YouTube?"
+  ],
+  "stories|youtube_shipping_past_politics#Tell me about disagreeing with your manager or senior leadership": [
+    "How did leadership react when you came back with your rejected idea working?",
+    "Have you ever built something on your own time that turned out to be wrong?",
+    "When would you escalate a disagreement with senior leadership instead?",
+    "How do you push back when leadership's objection to your idea is technical?"
+  ],
+  "stories|youtube_shipping_past_politics#What did you learn about pushing an idea through?": [
+    "Can you give an example of a demo that settled an argument for you?",
+    "What happened when you built a demo on your own time and turned out to be wrong?",
+    "When did you realise that personally funded bets were a bad way to work all the time?",
+    "How do you push an idea through when you can't fund a demo yourself?"
+  ],
+  "stories|youtube_shipping_past_politics#Did it change anything for you afterwards?": [
+    "What was the project you got built by winning the argument with a demo?",
+    "What had made it hard to get your ideas heard at the company you left for Amazon?",
+    "How did Amazon compare when it came to getting your ideas heard?"
+  ],
+  "stories|youtube_shipping_past_politics#What would you do differently? What do you regret?": [
+    "Which project did you build on conviction before validating the market?",
+    "How do you test whether users need something before you start building it?",
+    "What did building without market validation cost you in time and energy?"
+  ]
+}
