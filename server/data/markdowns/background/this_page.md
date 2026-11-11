@@ -1,6 +1,6 @@
 # How this page works
 
-## Did you build this page? Is this a chatbot?
+## Did you build this website yourself? Did you build this page, or is this a chatbot?
 
 I built all of it — the retrieval, the corpus, the page. It's not a chatbot wrapper and it isn't a product I bought.
 

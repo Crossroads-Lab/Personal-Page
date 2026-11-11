@@ -3,200 +3,205 @@
   "sections": [
     {
       "range": [
-        71,
-        186
+        111,
+        226
       ],
       "questions": [
-        "Did you build this yourself or did someone else?",
-        "What parts of this did you actually build?",
-        "Is this an off-the-shelf chatbot or something you made?"
+        "Did you build this website yourself?",
+        "What exactly did you build for this page?",
+        "Is this just a chatbot wrapper?",
+        "Is this a product you bought or something you made?"
       ]
     },
     {
       "range": [
-        189,
-        582
+        229,
+        622
       ],
       "questions": [
-        "Is this a chatbot, or what is it exactly?",
-        "How does this chat actually work?",
-        "Who actually wrote the answers I'm reading?",
-        "Why does it matter that this only answers from what you wrote?",
-        "What happens if I ask about something you never wrote down?",
-        "Where is this getting its information about you?"
+        "Is this just a chatbot, or what am I actually talking to?",
+        "How does this chat come up with its answers?",
+        "Where does this chat get what it says about you?",
+        "Why does it matter that the answers come from stuff you wrote yourself?",
+        "Could this ever tell me something about you that you didn't write?",
+        "Who actually wrote the answers I'm getting here?"
       ]
     },
     {
       "range": [
-        647,
-        729
+        687,
+        769
       ],
       "questions": [
-        "Are these really your answers, or is an AI making them up?",
-        "How are the answers on this page put together?"
+        "Is this really you answering, or is the AI just making stuff up?",
+        "What are your answers on this page actually built from?",
+        "Did you write this stuff yourself?"
       ]
     },
     {
       "range": [
-        732,
-        1082
+        772,
+        1122
       ],
       "questions": [
-        "What are your answers here actually based on?",
-        "How does this chat turn my question into an answer?",
-        "Are the answers written in your own voice?",
-        "Why does this give me an answer instead of just showing me a page?"
+        "What are you actually drawing on when you answer?",
+        "Is this actually written in your voice?",
+        "How does this chat figure out what to say to my question?",
+        "Am I getting canned answers or something built for my question?",
+        "Why answer me directly instead of just handing me a page to read?"
       ]
     },
     {
       "range": [
-        1085,
-        1416
+        1125,
+        1456
       ],
       "questions": [
-        "What does the chat say when it doesn't have an answer to my question?",
-        "Why would you rather the page say no than give me a decent guess?",
-        "What's the downside of building the chat to refuse instead of improvise?"
+        "What happens when I ask you something that isn't on the page?",
+        "Why would you rather the chat refuse to answer than give me a good guess?",
+        "What did you give up by making the page say no instead of answering everything?"
       ]
     },
     {
       "range": [
-        1457,
-        1524
+        1497,
+        1564
       ],
       "questions": [
-        "How do you stop this chatbot from making things up about you?"
+        "How do you keep this chat from making things up about you?"
       ]
     },
     {
       "range": [
-        1527,
-        1969
+        1567,
+        2009
       ],
       "questions": [
-        "How do you stop this chat from making things up about you?",
-        "What happens when I ask you something this page has no answer for?",
-        "How are the suggested questions on this page picked?",
-        "Why do you only suggest questions the chat can actually answer?"
+        "How do you stop this chat from making things up?",
+        "What happens when I ask you something that isn't covered on this site?",
+        "How do you choose the suggested questions on this page?",
+        "Why does this chat only suggest questions it can actually answer?"
       ]
     },
     {
       "range": [
-        1972,
-        2301
+        2012,
+        2341
       ],
       "questions": [
-        "What does your server do when the chat's data is out of date?",
-        "What do the section ranges in your chat actually point to?",
-        "Why would this chat ever give a confidently wrong answer?",
-        "When does the chat start pointing at the wrong text?",
-        "Why would you rather the site refuse to start than serve a wrong answer?"
+        "What's the extra safeguard you built to keep this chat from giving wrong answers?",
+        "Why would you rather the site refuse to start than serve a wrong answer?",
+        "How can the bot end up quoting the wrong text from your own content?",
+        "When does your site refuse to start up?",
+        "What kind of wrong answer were you most worried about with this bot?"
       ]
     },
     {
       "range": [
-        2350,
-        2426
-      ],
-      "questions": [
-        "What's actually running behind this chat box?",
-        "How did you build this page?",
-        "Why did you keep this so minimal instead of using a standard AI stack?"
-      ]
-    },
-    {
-      "range": [
-        2429,
-        2825
+        2390,
+        2466
       ],
       "questions": [
         "What's the architecture behind this chat box?",
-        "How do you turn your writing into something the chat can search?",
-        "How does the chat find the right part of your site to answer from?",
-        "What do you use for embeddings?",
-        "Why run embeddings locally instead of paying for an API?",
-        "What does it actually cost you to run this chat?"
+        "Are you using a vector database for this?",
+        "Did you build this on LangChain or some other framework?",
+        "Is there an agent or orchestration setup behind the chat?",
+        "How do you think about keeping a system simple versus adding more tooling?"
       ]
     },
     {
       "range": [
-        2828,
-        2999
+        2469,
+        2865
       ],
       "questions": [
-        "What's the tech stack behind this site?",
-        "Is there a database or file upload behind this chat?",
-        "Where do the chat's answers come from?",
-        "Why did you keep this site's architecture so minimal?",
-        "Is this chat box secure?"
+        "What is this chat box actually searching over?",
+        "How does this chat box find the right part of your background for my question?",
+        "What does it cost you to run this chat box?",
+        "Why run your own embedding model instead of just paying for an API?",
+        "Can you give me an example of a cost-conscious technical decision you made on your own site?",
+        "Where do the embeddings get computed, on your server or somewhere else?"
       ]
     },
     {
       "range": [
-        3052,
-        3139
+        2868,
+        3039
       ],
       "questions": [
-        "Isn't it expensive for you to run an AI chat like this?",
-        "Why doesn't this page cost you much to run?",
-        "Does every interaction here actually hit an AI model?"
+        "What does the backend of this chat actually look like?",
+        "Do you use a database for this?",
+        "Can I upload a file or document to this chat?",
+        "What is this chat actually answering from?",
+        "Why did you keep this architecture so small?",
+        "How did you limit the security risk of this chat?"
       ]
     },
     {
       "range": [
-        3142,
-        3498
+        3092,
+        3179
       ],
       "questions": [
-        "What happens when I click one of your suggested questions?",
-        "How do the follow-up questions work without hitting the AI every time?",
-        "Why can you offer these answers for free?"
+        "Does every message I send here actually call an AI model?",
+        "Why doesn't this site cost you a fortune to run?"
       ]
     },
     {
       "range": [
-        3501,
-        3743
+        3182,
+        3538
       ],
       "questions": [
-        "When does this chat actually call an AI model?",
-        "Why only use AI when I ask something you didn't expect?",
-        "Why isn't this chat expensive to run?",
-        "Why does this chat respond so fast?"
+        "Does it cost you anything when I click one of the suggested questions?",
+        "How do the suggested questions show up with answers so fast?",
+        "How do the follow-up questions work without making a new request each time?",
+        "Why isn't running an AI chat page like this expensive for you?",
+        "Which questions on this page are free to press?"
       ]
     },
     {
       "range": [
-        3802,
-        3865
+        3541,
+        3783
       ],
       "questions": [
-        "Why did you build a chat box instead of just posting a resume?",
-        "What do you think a resume leaves out?"
+        "When does the AI actually kick in when I talk to you?",
+        "Why isn't running this chat costing you a fortune?",
+        "Why does this page respond so quickly?",
+        "Why only pay for AI when someone asks something you didn't expect?"
       ]
     },
     {
       "range": [
-        3868,
-        4118
+        3842,
+        3905
       ],
       "questions": [
-        "Why did you build a chat box instead of just posting a resume?",
-        "What do recruiters actually want to know beyond where you worked?",
-        "How does asking you questions here beat just reading a static page?",
-        "What kind of follow-up questions are worth asking you here?"
+        "Why did you build a chat box instead of just posting your resume?"
       ]
     },
     {
       "range": [
-        4121,
-        4408
+        3908,
+        4158
       ],
       "questions": [
-        "Why build a chat box instead of just posting a resume?",
+        "Why did you build a chat box instead of just posting your resume?",
+        "What do you think recruiters actually want to know beyond where you worked?",
+        "How is asking you questions here better than reading a normal career page?"
+      ]
+    },
+    {
+      "range": [
+        4161,
+        4448
+      ],
+      "questions": [
+        "Why did you build a chat box instead of just putting up a resume?",
         "What's your philosophy on building AI systems?",
-        "What happens when I ask you something you haven't covered?",
-        "What have you built that shows how you actually work?"
+        "How does this chat box show what you actually do?",
+        "What happens when I ask you something you haven't covered?"
       ]
     }
   ]
