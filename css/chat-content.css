@@ -297,6 +297,18 @@ main::after {
   height: 16px;
   aspect-ratio: 1 / 1;
   filter: var(--icon-filter);
+  /* Held back from full black. These are solid marks on pale glass directly
+     under the headline, and at full strength four of them pull harder than
+     the line of type they sit beneath. They come up to full on hover, so
+     the one being pointed at is the darkest thing in the row. */
+  opacity: 0.6;
+  transition: opacity 140ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .quick-link:hover > img {
+    opacity: 1;
+  }
 }
 
 /* The reset in common.css no longer reaches into :active, so nothing here

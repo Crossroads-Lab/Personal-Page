@@ -238,17 +238,28 @@ body:has(#chat-input-container:not([menu-visible])) {
     opacity: 1;
   }
 
-  /* The dots lift towards the menu they will open. That menu hangs ABOVE the
-     bar once a conversation is running, and BELOW it while the bar is in the
-     middle of the page — so the nudge has to turn over with it, or it points
-     away from where the thing actually appears. */
+  /* The dots lift towards the menu they will open, so the nudge has to turn
+     over wherever the menu does — otherwise it points away from the thing it
+     is announcing. Up is the default, because the menu hangs ABOVE the bar
+     in every case but one. */
   #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
     margin-bottom: 4px;
   }
+}
 
-  body:not([chat-started]) #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
-    margin-bottom: -4px;
-    margin-top: 4px;
+/* The one exception: a WIDE screen before the first question. There the bar
+   floats mid-page and the menu drops below it, so the dots point down.
+   
+   This has to carry the same width condition as the rule that moves the menu
+   (min-width: 901px further down). Without it the dots pointed down on a
+   phone too, where the bar is at the bottom of the screen and the menu has
+   nowhere to go but up. */
+@media (hover: hover) and (pointer: fine) {
+  @media only screen and (min-width: 901px) {
+    body:not([chat-started]) #chat-input-container:not([menu-visible]) #chat-menu-button:hover::before {
+      margin-bottom: -4px;
+      margin-top: 4px;
+    }
   }
 }
 
