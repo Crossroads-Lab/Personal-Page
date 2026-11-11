@@ -1,7 +1,8 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=148645e5";
-@import "./chat-input.css?v=56520e36";
-@import "./chat-content.css?v=9b472afe";
+@import "./common.css?v=9723fea2";
+@import "./chat-input.css?v=5d7d38c8";
+@import "./chat-content.css?v=3afb438e";
+@import "./more.css?v=682e6db1";
 
 /* 
  * =====================================================
@@ -9,24 +10,53 @@
  * =====================================================
  * Establishes the main flexbox layout for content
  */
-body {
+/* The first screen. Exactly one window tall, whatever follows it.
+ *
+ * Everything in this rule was on `body` until the dark section arrived. It
+ * had to move because body now has to be taller than the window, and the
+ * first screen still has to be exactly the window — otherwise the cut and
+ * the dark area show before anyone scrolls, which section 12 of the spec
+ * disallows at every width.
+ *
+ * position: relative so the portrait below anchors to the first screen
+ * rather than to a page that keeps going. */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
   align-items: center;
-  
+
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
   padding-bottom: var(--safearea-padding-bottom);
+
+  /* The portrait hangs below the first screen so the cut can hide its
+     bottom edge; clipping sideways keeps the phone layout's overhang from
+     creating a horizontal scrollbar. overflow-x: clip rather than hidden
+     because hidden on one axis makes the other a scroll container. */
+  overflow-x: clip;
 }
 
-body:before {
+.hero:before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  /* Taller than the first screen by exactly the sink, so the portrait has
+     somewhere to paint below the fold.
+     
+     Sliding the background down inside a box that still ends at the fold
+     does nothing: the bottom of the image falls outside the painting area
+     and is simply not drawn, which puts a hard horizontal edge AT the fold
+     — the one place the cut can never reach. Caught by walking the pixels
+     of a 768px screenshot: the strongest edge in the column sat exactly on
+     the fold rather than on the slope. */
+  height: calc(100% + var(--portrait-sink));
   /* Sized to land him exactly where `cover` on the OLD artwork put him.
    *
    * That artwork was 4096x2726 — LANDSCAPE, with him occupying 27.4% of its
@@ -50,6 +80,8 @@ body:before {
    * viewport, so a percentage would float him in open space instead. His
    * feet are 0.3% off the bottom of the crop, so anchoring the crop to the
    * bottom seats him on the floor, which is where 70% effectively had him. */
+  /* `right bottom` of a box that now extends past the fold — see the height
+     above. See --portrait-sink in common.css for why it extends. */
   background: url("../assets/background.webp") no-repeat right bottom / auto var(--portrait-crop) scroll;
 }
 
@@ -94,7 +126,7 @@ body:before {
  * them would give a band of widths with half of it applied.
  */
 @media only screen and (max-width: 900px) {
-  body:before {
+  .hero:before {
     /* Bottom right of the SCREEN. The band I had here before — inset above
        the input furniture — stopped the overlap by lifting him off the
        bottom edge, which is not where he belongs.

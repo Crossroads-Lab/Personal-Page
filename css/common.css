@@ -77,6 +77,27 @@
    * `clamp` keeps it sane between a short phone and a tall one. */
   --portrait-top: clamp(224px, 35dvh, 300px);
 
+  /* How far the portrait sinks below the first screen, so the diagonal cut
+     passes UNDER its hard bottom edge instead of across it.
+     
+     The photo is cropped at the shoe. Anchored to the fold, that flat edge
+     sits above the slope on the right-hand side of the page and reads as a
+     photo someone forgot to finish — the spec's own test (`.more { opacity:
+     .5 }`) shows it plainly.
+     
+     The number is the slope's depth at the photo's LEFT edge, which is the
+     deepest point the photo reaches: cut x photoWidth / pageWidth. Swept
+     across the desktop range it peaks at 47px (901px wide, where the
+     portrait is tallest relative to the page) and falls to 35px by 1280.
+     48 covers all of it. Mobile needs more because the cut is shallower but
+     the photo is proportionally much wider: 55px at 375.
+     
+     THIS IS THE FALLBACK. design/v2/SPEC.md section 2 extends the portrait
+     downward by 350px, and the extra content — leg, chair base, floor,
+     shadow — is what should be hidden under the cut instead of 6-10% of the
+     figure. When that asset lands, set this back to 0. */
+  --portrait-sink: 48px;
+
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
   /* --blur-filter: blur(10px) url(#liquid-glass-distortion); */
@@ -157,6 +178,13 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+/* Anchor links to the second section glide rather than jump — but only for
+   someone who has not asked for less motion, which is why this is not a
+   bare `html { scroll-behavior: smooth }`. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
 /* 
  * =====================================================
  * HTML & Body Base Styles
@@ -172,7 +200,11 @@ body {
      vertical scrollbar as a strip that does not match the page. 100% is the
      containing block, which is the area actually available. */
   width: 100%;
-  height: 100dvh;
+  /* min-height, not height. The page is taller than the window now — the
+     first screen is .hero and the dark section follows it — so pinning the
+     body to one viewport would clip everything below the fold. .hero keeps
+     the exact 100dvh the first screen needs (css/index.css). */
+  min-height: 100dvh;
 }
 
 body {

@@ -1,5 +1,5 @@
 /* Import base styles and variables from common.css */
-@import "./common.css?v=148645e5";
+@import "./common.css?v=9723fea2";
 
 /* 
  * =====================================================
@@ -200,7 +200,11 @@ body[thinking] #send {
    without them a 512px bar would simply ignore the narrowed column and run
    under him anyway. */
 @media only screen and (min-width: 901px) {
-  body:not([chat-started]) {
+  /* On .hero, not on body. This reserves the portrait's width, and the
+     portrait belongs to the first screen — left on body it padded the whole
+     page, so the dark section inherited a 305px gutter down its right side
+     and the hero itself came out 951px wide inside a 1280px window. */
+  body:not([chat-started]) .hero {
     /* The column keeps its own gutter; only the right side gives way. */
     padding-left: calc(var(--safearea-left) + var(--padding));
     padding-right: calc(var(--safearea-right) + var(--padding) + var(--portrait-width));
@@ -236,7 +240,10 @@ body:not([chat-started]) main {
   overflow-y: hidden !important;
 }
 
-body::after {
+/* On .hero, not on body: body is the whole page now and its ::after would
+   be a growing box under the dark section rather than slack inside the
+   first screen. */
+.hero::after {
   content: "";
   flex: 0 0 0;
   min-height: 0;
@@ -244,7 +251,7 @@ body::after {
 }
 
 /* Half the slack above the bar, half below: the bar lands in the middle. */
-body:not([chat-started])::after {
+body:not([chat-started]) .hero::after {
   flex-grow: 1;
 }
 
@@ -611,14 +618,14 @@ body[chat-started] #starter-chips {
   }
   /* A phone has no room to centre the bar, so it stays at the bottom and
      only the rows above it change. */
-  body:not([chat-started])::after {
+  body:not([chat-started]) .hero::after {
     flex-grow: 0;
   }
 }
 
 /* Someone who prefers less motion gets the same layout without the glide. */
 @media (prefers-reduced-motion: reduce) {
-  body::after,
+  .hero::after,
   #chat-input-left-buttons,
   #starter-chips,
   .starter-chip {

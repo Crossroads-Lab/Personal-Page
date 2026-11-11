@@ -1,0 +1,434 @@
+/*
+ * =====================================================
+ * MORE ABOUT ME — the second screen
+ * =====================================================
+ * design/v2/SPEC.md sections 6–8. A dark area cut diagonally into the
+ * bottom of the first screen, holding the things the chat cannot be: a
+ * book you can buy, an article you can read, a talk you can watch, the
+ * research, and a slot you can book.
+ *
+ * The chat answers questions. This section answers the one nobody types,
+ * which is "what else is there".
+ */
+
+:root {
+  /* The dark half. Warm greys rather than neutral: against the portrait's
+     cool backdrop a neutral charcoal reads blue, and the page is one
+     photograph away from looking like two different sites. */
+  --bg-more: #262624;
+  --card: #30302E;
+  --card-inverse: #F5F4EF;
+  --text-on-dark: #F5F4EF;
+  --text-on-dark-2: #C2C0B6;
+  --text-on-dark-3: #B5B3AA;
+  --line-on-dark: #45443F;
+  --outline-on-dark: #6B6A65;
+  --media-placeholder: #1B1B1A;
+
+  /* One colour per kind of thing, so a card is identifiable before it is
+     read. They are tints rather than hues at full strength — on #262624 a
+     saturated label is the loudest thing on the screen. */
+  --label-blue: #8AB8E6;
+  --label-amber: #E0B36A;
+  --label-green: #7FC8B0;
+  --badge-bg: #FFF1D6;
+  --badge-text: #7A4B00;
+
+  --r-card: 24px;
+  --r-card-m: 22px;
+  --r-media: 14px;
+  --r-pill: 999px;
+
+  /* How far the slope drops from the right edge of the fold to the left. */
+  --cut-desktop: 120px;
+  --cut-mobile: 56px;
+}
+
+/*
+ * =====================================================
+ * THE CUT
+ * =====================================================
+ * The slope's high point is the right edge, exactly at the fold; it falls
+ * to --cut below the fold at the left. The portrait is on the right, so
+ * the steep side of the slope is the side with nothing behind it.
+ *
+ * clip-path on the section itself, not a rotated pseudo-element: a
+ * rotation has to be recalculated against the page width at every size and
+ * drifts by a pixel or two when the scrollbar appears. A polygon in
+ * percentages cannot.
+ */
+.more {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--bg-more);
+  color: var(--text-on-dark);
+  clip-path: polygon(0 var(--cut-desktop), 100% 0, 100% 100%, 0 100%);
+  /* The content has to clear the slope, or the first card's corner is cut
+     off along with the background. */
+  padding-top: var(--cut-desktop);
+}
+
+.more-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* "MORE ABOUT ME" — the only thing between the fold and the first card, so
+   it has to carry the transition on its own. Small, wide-tracked and
+   quiet: a heading at full size here would compete with the headline the
+   visitor has just scrolled away from. */
+.more-label {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-on-dark-3);
+}
+
+/*
+ * =====================================================
+ * CARDS
+ * =====================================================
+ */
+
+.more-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--r-card);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-media {
+  position: relative;
+  border-radius: var(--r-media);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--media-placeholder);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--c, var(--text-on-dark-3));
+}
+
+.card-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.card-body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-on-dark-2);
+}
+
+.card-body em { font-style: italic; }
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* 44px minimum on every control in here. The cards are the part of the
+   page most likely to be used with a thumb, on a phone, one-handed. */
+.btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+}
+
+.btn--primary {
+  background: var(--text-on-dark);
+  color: var(--bg-more);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-on-dark);
+  border: 1px solid var(--outline-on-dark);
+}
+
+.btn:focus-visible,
+.more-chevron:focus-visible,
+.chip--more:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover { background: #FFFFFF; }
+  .btn--ghost:hover { border-color: var(--text-on-dark-3); background: rgb(255 255 255 / 0.06); }
+}
+
+/* ── The book card: cover beside the text rather than above it ────────── */
+
+.card--book {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.card--book .book-cover {
+  flex: none;
+  width: 150px;
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.35);
+  display: block;
+}
+
+.card--book .card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.card--book .card-title { font-size: 26px; }
+
+.badge {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 14px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+/* ── The research card ───────────────────────────────────────────────── */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 4px 0;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-on-dark-3);
+}
+
+.card hr {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  margin: 4px 0;
+  background: var(--line-on-dark);
+}
+
+/* One top paper per line. Unused until the three are to hand (index.html),
+   but the shape is settled so adding them is three lines of content and no
+   layout decisions. */
+.paper {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-on-dark-2);
+}
+
+.paper:last-of-type { margin-bottom: 6px; }
+
+.previously {
+  margin: 0;
+  font-size: 13px;
+  color: #E8E6DC;
+}
+
+/* ── The closing card: light on dark, so it reads as the way out ─────── */
+
+.card--cta {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 32px;
+  background: var(--card-inverse);
+  color: var(--bg-more);
+}
+
+.card--cta .card-title { font-size: 24px; }
+.card--cta p { margin: 0; font-size: 14px; color: #5E5D59; }
+
+.card--cta .btn {
+  background: var(--bg-more);
+  color: var(--card-inverse);
+  padding: 14px 24px;
+  font-size: 14px;
+  flex: none;
+}
+
+.more-footer {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-on-dark-3);
+}
+
+/*
+ * =====================================================
+ * THE TWO CUES
+ * =====================================================
+ * Nothing on the first screen says there is a second one. Two hints, both
+ * links to #more, neither of which touches the chat: a dark chip at the
+ * end of the suggestion row, and a chevron in the gap under the input bar.
+ */
+
+.chip--more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-more) !important;
+  color: var(--text-on-dark) !important;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+}
+
+.more-chevron {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: 14px;
+  width: 44px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg-more);
+  opacity: 0.55;
+  z-index: 2;
+  /* After three seconds, not on load: an animation that starts with the
+     page is part of the page arriving, and gets read as decoration. One
+     that starts once the visitor has stopped reading is a suggestion. */
+  animation: chevron-nudge 2.4s ease-in-out 3s infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .more-chevron:hover { opacity: 0.9; }
+}
+
+@keyframes chevron-nudge {
+  0%, 100% { translate: -50% 0; }
+  50%      { translate: -50% 3px; }
+}
+
+/* Both cues go while the chat is working or showing an answer, and once
+   the cards are on screen and have made their own case. visibility rather
+   than display: nothing reflows when they come back. */
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/*
+ * =====================================================
+ * PHONE
+ * =====================================================
+ */
+@media only screen and (max-width: 767px) {
+  /* The cut is shallower here but the photo is proportionally much wider,
+     so it reaches deeper into the slope: 55px at 375 against 35 at 1280. */
+  :root { --portrait-sink: 56px; }
+
+  .more {
+    clip-path: polygon(0 var(--cut-mobile), 100% 0, 100% 100%, 0 100%);
+    padding-top: calc(var(--cut-mobile) + 40px);
+  }
+
+  .more-inner {
+    padding: 0 16px 48px;
+    gap: 14px;
+  }
+
+  .card { padding: 20px; border-radius: var(--r-card-m); }
+  .card-title { font-size: 20px; }
+  .card-body { font-size: 13px; }
+  .card-label { font-size: 11px; }
+
+  /* Full width and side by side, so both are reachable with one thumb
+     rather than one of them being a second row to aim at.
+     
+     nowrap because that is what the pair is for: two equal halves. "Watch
+     on YouTube" wrapped to two lines while "Ask about this" stayed on one,
+     which made a row of two matched buttons look like a mistake. The
+     labels shorten instead (.wide-only below), which is what the spec's
+     own card table asks for on the book button. */
+  .card-actions .btn { flex: 1; font-size: 14px; white-space: nowrap; }
+
+  /* The words a phone has no room for. The accessible name does not change
+     with the viewport — the anchors carry an aria-label.
+     
+     `inline` matters: .btn is a flex container, so a bare <span> child
+     would be a flex ITEM and the 6px gap meant for a label and its icon
+     would open up inside the phrase. The label is wrapped in one span and
+     this one sits inside that, as ordinary inline text. */
+  .wide-only { display: none; }
+
+  .card--book { flex-direction: row; gap: 16px; }
+  .card--book .book-cover { width: 84px; }
+  .card--book .card-title { font-size: 20px; }
+
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 26px; }
+
+  .card--cta { flex-direction: column; align-items: stretch; padding: 24px; }
+  .card--cta .btn { width: 100%; }
+
+  .more-chevron { bottom: 2px; height: 24px; }
+}
+
+/*
+ * =====================================================
+ * REDUCED MOTION
+ * =====================================================
+ */
+@media (prefers-reduced-motion: reduce) {
+  .more-chevron { animation: none; }
+}

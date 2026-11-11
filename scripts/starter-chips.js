@@ -131,6 +131,10 @@ container?.addEventListener("scroll", markOverflow, { passive: true });
 
 const render = (starters) => {
   if (!container) return;
+  // The More cue lives in this row but is not a suggestion — it is a link
+  // to the section below. Held across the rebuild, because replaceChildren
+  // would otherwise take it out with the fallback chips it replaces.
+  const more = container.querySelector(".chip--more");
   // Mounted in the "entering" state so the chips arrive as the same staggered
   // wave they leave on, rather than appearing fully formed the instant the
   // fetch lands — after a beat of empty space that reads as a glitch.
@@ -138,6 +142,7 @@ const render = (starters) => {
   container.replaceChildren(
     ...starters.map((starter) => chip(starter.label, () => press(starter))),
   );
+  if (more) container.appendChild(more);
   markOverflow();
 
   // Two frames, not one. A single rAF can run before the browser has styled
