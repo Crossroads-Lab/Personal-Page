@@ -90,14 +90,20 @@ const normalise = (q) => String(q || "")
   .trim();
 
 /**
- * `## heading` → body, in document order, with the byte offset each
- * section starts at.
+ * `## heading` → body, in document order, with the offset each section
+ * starts at.
  *
- * Byte offsets, not character offsets: a .bin stores section ranges as
- * byte offsets into its source markdown, and this corpus is full of em
- * dashes and curly quotes that are three bytes and one character. Getting
- * that wrong would mis-attribute a citation by a few hundred bytes, which
- * on a file this size means the wrong section entirely.
+ * Offsets are STRING indices, matching what a .bin stores. This is easy to
+ * get backwards — llms' own extractSections calls them a "byte range" in
+ * two comments — but both it and SectionResolver do `markdown.slice(start,
+ * end)` on a JS string, so a range is in UTF-16 code units, not bytes.
+ *
+ * It was written here with Buffer.byteLength first, and the difference is
+ * not academic: this corpus is full of em dashes, three bytes and one
+ * character each, so the two offsets drift apart as a file goes on. Four
+ * characters by the middle of a short story, more in a long one — enough
+ * to attribute a citation near a section boundary to the section next
+ * door, silently, which is the only kind of wrong that matters here.
  */
 const parseSections = (markdown) => {
   const sections = [];
@@ -108,7 +114,7 @@ const parseSections = (markdown) => {
     const match = /^##\s+(.+?)\s*$/.exec(line);
     if (match) sections.push(current = { heading: match[1], lines: [], start: offset });
     else if (current) current.lines.push(line);
-    offset += Buffer.byteLength(line, "utf8") + 1;    // + the newline
+    offset += line.length + 1;                        // + the newline
   }
 
   return sections.map(({ heading, lines, start }, i) => ({

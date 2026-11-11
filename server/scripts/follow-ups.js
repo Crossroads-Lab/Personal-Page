@@ -4,6 +4,7 @@
  * Build the follow-up graph for this corpus.
  *
  *   npm run follow-ups -- --limit 5        pilot: five sections, print, write nothing
+ *   npm run follow-ups -- --questions-only a writing queue → data/follow-ups.md
  *   npm run follow-ups                     the whole corpus → data/follow-ups.json
  *   npm run follow-ups -- --floor 0.45     override the grounding threshold
  *
@@ -38,6 +39,7 @@ const flag  = (name, fallback) => {
   return i >= 0 && args[i + 1] ? args[i + 1] : fallback;
 };
 const LIMIT = Number(flag("limit", 0));
+const QUESTIONS_ONLY = args.includes("--questions-only");
 const FLOOR = Number(flag("floor", 0.55));
 const OUT   = path.join(CONFIG.DATASET, "..", flag("out", "follow-ups.json"));
 
@@ -176,6 +178,41 @@ const main = async () => {
 
   const started = Date.now();
   const rag = requireRag();
+
+  // Questions only: the library's first half, on its own. One call per
+  // section, no retrieval and no answering pass — which for this corpus is
+  // the half that pays. Every section here is written as a complete answer
+  // to its own heading, so there is rarely a second section to ground a
+  // follow-up in; what is worth knowing is which questions nobody has
+  // written an answer to yet.
+  if (QUESTIONS_ONLY) {
+    const { askNext, writingQueue } = rag.buildFollowUps;
+    const { questions, notes } = await askNext({
+      sections: chosen,
+      runLLM: claudeRun,
+      prompt: prompts.questions,
+      config: CONFIG.SONNET55,
+      limit: makeLimit(4),
+      onNote: (note) => console.error(`  note  ${note.id} [${note.stage}] ${note.what}`),
+    });
+
+    const out = path.join(CONFIG.DATASET, "..", "follow-ups.md");
+    await fs.writeFile(out, writingQueue(chosen, questions, {
+      title: "What to write next",
+      // Where to go and write it: the markdown file and the heading above
+      // the one being extended.
+      where: (section) => {
+        const [documentId, heading] = section.id.split("#");
+        return `data/markdowns/${documentId.replace("|", "/")}.md — after "## ${heading}"`;
+      },
+    }));
+
+    const asked = Object.values(questions).flat().length;
+    console.log(`\n${asked} questions across ${Object.keys(questions).length} of ${chosen.length} sections`);
+    console.log(`${Math.round((Date.now() - started) / 1000)}s, ${notes.length} notes`);
+    console.log(`Wrote ${out}`);
+    return;
+  }
 
   const { graph, index, links, gaps, notes } = await rag.buildFollowUps({
     sections: chosen,
