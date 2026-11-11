@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop — home with More section (reference mock)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+body{margin:0;background:#E3E5E6}
+a{color:#1F5F99}a:hover{color:#163F66}
+</style>
+<style>html{scroll-behavior:smooth}</style>
+</head>
+<body>
+<!-- Reference mock for william-brendel.com v2. Not production code: see ../SPEC.md -->
+<div style="font-family: Poppins, system-ui, sans-serif; color: #26282B; background: #E3E5E6; width: 100%;">
+
+  <section style="position: relative; z-index: 0; height: 820px; max-width: 1280px; margin: 0 auto; overflow: visible;">
+    <img src="assets/portrait.webp" alt="William Brendel seated in a white armchair" style="position: absolute; right: 0; bottom: -40px; height: 820px; width: 570px; object-fit: cover; object-position: top center;">
+    <div style="position: absolute; left: 120px; top: 230px; width: 520px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      <p style="margin: 0; font-size: 20px; font-weight: 300;">Hi, I'm <strong style="font-weight: 600;">William</strong> Brendel</p>
+      <h1 style="margin: 0; font-size: 40px; font-weight: 400; letter-spacing: -0.5px;">Where should we <em style="font-family: 'Instrument Serif', serif; font-size: 48px;">start?</em></h1>
+      <nav aria-label="Links" style="display: flex; gap: 12px;">
+        <a href="https://www.linkedin.com/in/william-brendel" aria-label="View my LinkedIn" style="width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.03); box-shadow: inset -6px -6px 16px rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.07), 0 1px 4px rgba(0,0,0,.035); display: flex; align-items: center; justify-content: center; color: #3A3D41;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity: .72;"><path d="M22.2283 0H1.77167C1.30179 0 0.851161 0.186657 0.518909 0.518909C0.186657 0.851161 0 1.30179 0 1.77167V22.2283C0 22.6982 0.186657 23.1488 0.518909 23.4811C0.851161 23.8133 1.30179 24 1.77167 24H22.2283C22.6982 24 23.1488 23.8133 23.4811 23.4811C23.8133 23.1488 24 22.6982 24 22.2283V1.77167C24 1.30179 23.8133 0.851161 23.4811 0.518909C23.1488 0.186657 22.6982 0 22.2283 0ZM7.15333 20.445H3.545V8.98333H7.15333V20.445ZM5.34667 7.395C4.93736 7.3927 4.53792 7.2692 4.19873 7.04009C3.85955 6.81098 3.59584 6.48653 3.44088 6.10769C3.28591 5.72885 3.24665 5.31259 3.32803 4.91145C3.40941 4.51032 3.6078 4.14228 3.89816 3.85378C4.18851 3.56529 4.55782 3.36927 4.95947 3.29046C5.36112 3.21165 5.77711 3.25359 6.15495 3.41099C6.53279 3.56838 6.85554 3.83417 7.08247 4.17481C7.30939 4.51546 7.43032 4.91569 7.43 5.325C7.43386 5.59903 7.38251 5.87104 7.27901 6.1248C7.17551 6.37857 7.02198 6.6089 6.82757 6.80207C6.63316 6.99523 6.40185 7.14728 6.14742 7.24915C5.893 7.35102 5.62067 7.40062 5.34667 7.395ZM20.4533 20.455H16.8467V14.1933C16.8467 12.3467 16.0617 11.7767 15.0483 11.7767C13.9783 11.7767 12.9283 12.5833 12.9283 14.24V20.455H9.32V8.99167H12.79V10.58H12.8367C13.185 9.875 14.405 8.67 16.2667 8.67C18.28 8.67 20.455 9.865 20.455 13.365L20.4533 20.455Z" fill="black" fill-opacity="0.85098"></path></svg>
+        </a>
+        <a href="https://calendly.com/william-brendel/30min" aria-label="Book 30 minutes with me" style="width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.03); box-shadow: inset -6px -6px 16px rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.07), 0 1px 4px rgba(0,0,0,.035); display: flex; align-items: center; justify-content: center; color: #3A3D41;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity: .72;"><path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 14.2774 0.634407 16.4066 1.73614 18.2206L0 24L6.02703 22.4102C7.78595 23.4216 9.82543 24 12 24ZM13.9384 13.9733C14.1418 13.8818 14.3773 13.9062 14.556 14.0401C15.1 14.4477 16.2735 15.3264 16.8176 15.7335C17.0354 15.8967 17.1179 16.1802 17.0243 16.4361C16.9325 16.6855 16.7434 17.0012 16.3543 17.3109C15.1388 18.2785 13.2332 18.6486 9.59606 14.0797C5.95888 9.51069 6.74733 7.73619 7.96229 6.769C8.35035 6.45965 8.7 6.34557 8.9631 6.3124C9.23401 6.27773 9.49348 6.42373 9.60413 6.67318L10.7451 9.2518C10.8355 9.45597 10.8077 9.69303 10.6724 9.87062L9.98809 10.7701C9.83485 10.9714 9.81932 11.2428 9.95148 11.4584C10.18 11.8311 10.5672 12.4334 10.9923 12.9673C11.4173 13.5013 11.9175 14.0137 12.2294 14.3199C12.4099 14.4971 12.6779 14.5428 12.9085 14.4386L13.9384 13.9733Z" fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098"></path></svg>
+        </a>
+        <a href="#" aria-label="Download my resume" style="width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.03); box-shadow: inset -6px -6px 16px rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.07), 0 1px 4px rgba(0,0,0,.035); display: flex; align-items: center; justify-content: center; color: #3A3D41;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity: .72;"><path fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM12 5.3C10.6193 5.3 9.5 6.41929 9.5 7.8C9.5 9.18071 10.6193 10.3 12 10.3C13.3807 10.3 14.5 9.18071 14.5 7.8C14.5 6.41929 13.3807 5.3 12 5.3ZM8.3 14.4C8.3 12.1 9.9 10.9 12 10.9C14.1 10.9 15.7 12.1 15.7 14.4H8.3ZM7.2 17.6H10.8C11.2418 17.6 11.6 17.9582 11.6 18.4C11.6 18.8418 11.2418 19.2 10.8 19.2H7.2C6.75817 19.2 6.4 18.8418 6.4 18.4C6.4 17.9582 6.75817 17.6 7.2 17.6ZM14 17.6H16.8C17.2418 17.6 17.6 17.9582 17.6 18.4C17.6 18.8418 17.2418 19.2 16.8 19.2H14C13.5582 19.2 13.2 18.8418 13.2 18.4C13.2 17.9582 13.5582 17.6 14 17.6Z"></path></svg>
+        </a>
+        <a href="https://www.amazon.com/dp/1968318747" aria-label="Get the book" style="width: 44px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.03); box-shadow: inset -6px -6px 16px rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.07), 0 1px 4px rgba(0,0,0,.035); display: flex; align-items: center; justify-content: center; color: #3A3D41;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity: .72;"><path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM6.5 1.5V22.5H8V1.5H6.5ZM11.4 7.2C10.9582 7.2 10.6 7.55817 10.6 8C10.6 8.44183 10.9582 8.8 11.4 8.8H16.6C17.0418 8.8 17.4 8.44183 17.4 8C17.4 7.55817 17.0418 7.2 16.6 7.2H11.4Z"></path></svg>
+        </a>
+      </nav>
+      <form style="margin: 36px 0 0; width: 100%; display: flex; align-items: center; background: #F2F3F4; border-radius: 28px; padding: 8px 8px 8px 24px; box-sizing: border-box; box-shadow: 0 1px 2px rgba(0,0,0,.04);">
+        <label for="ask" style="position: absolute; left: -9999px;">Ask me anything</label>
+        <input id="ask" placeholder="Ask me anything…" style="flex: 1; border: 0; background: transparent; font: italic 15px Poppins, sans-serif; color: #26282B; outline: none;">
+        <button type="button" aria-label="Send your question" style="width: 40px; height: 40px; border-radius: 20px; border: 0; background: #E3E4E6; color: #3A3D41; display: flex; align-items: center; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        </button>
+      </form>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+        <button type="button" style="border: 0; border-radius: 18px; background: #F2F3F4; padding: 10px 16px; font: 13px Poppins, sans-serif; color: #3A3D41;">A time I failed</button>
+        <button type="button" style="border: 0; border-radius: 18px; background: #F2F3F4; padding: 10px 16px; font: 13px Poppins, sans-serif; color: #3A3D41;">My chapter in The AI Transformation</button>
+        <button type="button" style="border: 0; border-radius: 18px; background: #F2F3F4; padding: 10px 16px; font: 13px Poppins, sans-serif; color: #3A3D41;">My biggest obstacle</button>
+        <a href="#more" aria-label="More about me" style="display: flex; align-items: center; gap: 6px; border-radius: 18px; background: #262624; color: #F5F4EF; padding: 10px 16px; font-size: 13px; font-weight: 500; text-decoration: none;">More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></a>
+      </div>
+    </div>
+    <a href="#more" aria-label="More about me" style="position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: 44px; height: 28px; display: flex; align-items: center; justify-content: center; opacity: .55;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#262624" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+  </section>
+
+  <section id="more" style="position: relative; z-index: 1; background: #262624; color: #F5F4EF; clip-path: polygon(0 120px, 100% 0, 100% 100%, 0 100%); padding-top: 120px;">
+    <div style="max-width: 880px; margin: 0 auto; padding: 72px 24px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+    <p style="margin: 0 0 8px; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #B5B3AA; text-align: center;">More about me</p>
+
+    <article style="background: #30302E; border-radius: 24px; padding: 28px; display: flex; gap: 28px; align-items: center; flex-wrap: wrap;">
+      <div role="img" aria-label="Book cover placeholder" style="width: 150px; height: 220px; flex: none; border-radius: 6px; background: #1E2A3A; color: #F4F1EA; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 24px rgba(30,42,58,.25);">
+        <span style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;">Cover image</span>
+        <span style="font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 1.05;">The AI Transformation</span>
+      </div>
+      <div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 12px;">
+        <span style="align-self: flex-start; padding: 6px 12px; border-radius: 14px; background: #FFF1D6; color: #7A4B00; font-size: 12px; font-weight: 500;">#1 Amazon bestseller · Technology</span>
+        <h2 style="margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.3px;">The AI Transformation</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C2C0B6;">I wrote Chapter 5, <em>"AI: The Reality Beyond the Fantasy"</em>, in this multi-author book on thriving through AI's disruption.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+          <a href="https://www.amazon.com/dp/1968318747" style="padding: 12px 20px; border-radius: 22px; background: #F5F4EF; color: #262624; text-decoration: none; font-size: 14px; font-weight: 500;">Get it on Amazon</a>
+          <button type="button" style="padding: 12px 20px; border-radius: 22px; border: 1px solid #6B6A65; background: transparent; color: #F5F4EF; font: 500 14px Poppins, sans-serif;">Ask about this</button>
+        </div>
+      </div>
+    </article>
+
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"><article style="background: #30302E; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px;"><div role="img" aria-label="Article photo" style="height: 200px; border-radius: 14px; background: #45443F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #B5B3AA; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;"><span>Article photo</span></div><span style="font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #8AB8E6;">In the press</span><h2 style="margin: 0; font-size: 22px; font-weight: 500; line-height: 1.3;">Serendipity and Oregon State led to William Brendel's career in AI</h2><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #C2C0B6;">Oregon State University College of Engineering on how my path into AI started.</p><div style="display: flex; gap: 8px; flex-wrap: wrap;"><a href="#" style="padding: 10px 18px; border-radius: 22px; background: #F5F4EF; color: #262624; text-decoration: none; font-size: 13px; font-weight: 500;">Read the story</a><button type="button" style="padding: 10px 18px; border-radius: 22px; border: 1px solid #6B6A65; background: transparent; color: #F5F4EF; font: 500 13px Poppins, sans-serif;">Ask about this</button></div></article>
+<article style="background: #30302E; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px;"><div role="img" aria-label="Video thumbnail" style="height: 200px; border-radius: 14px; background: #1B1B1A; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #B5B3AA; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;"><span style="width: 56px; height: 56px; border-radius: 28px; background: #F5F4EF; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#262624" aria-hidden="true"><polygon points="8 5 19 12 8 19 8 5"></polygon></svg></span><span>Video thumbnail</span></div><span style="font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #E0B36A;">Interview · RE•WORK · Oct 2018 · 22 min</span><h2 style="margin: 0; font-size: 22px; font-weight: 500; line-height: 1.3;">Inside Snap Research: learning how to learn</h2><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #C2C0B6;">At the Deep Learning Summit in Toronto, I talked with RE•WORK about my work at Snap Research: computer vision, NLP, new optimization frameworks, and teaching machines to learn how to learn.</p><div style="display: flex; gap: 8px; flex-wrap: wrap;"><a href="https://www.youtube.com/watch?v=8_S0888ZWGw" style="padding: 10px 18px; border-radius: 22px; background: #F5F4EF; color: #262624; text-decoration: none; font-size: 13px; font-weight: 500;">Watch on YouTube</a><button type="button" style="padding: 10px 18px; border-radius: 22px; border: 1px solid #6B6A65; background: transparent; color: #F5F4EF; font: 500 13px Poppins, sans-serif;">Ask about this</button></div></article></div>
+    <article style="background: #30302E; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px;"><span style="font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #7FC8B0;">Research · Google Scholar</span><h2 style="margin: 0; font-size: 22px; font-weight: 500; line-height: 1.3;">Research</h2><div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;"><div><p style="margin: 0; font-size: 32px; font-weight: 500;">2,200+</p><p style="margin: 0; font-size: 13px; color: #B5B3AA;">citations</p></div><div><p style="margin: 0; font-size: 32px; font-weight: 500;">30+</p><p style="margin: 0; font-size: 13px; color: #B5B3AA;">patents &amp; publications</p></div><div><p style="margin: 0; font-size: 32px; font-weight: 500;">PhD</p><p style="margin: 0; font-size: 13px; color: #B5B3AA;">Computer Science &amp; AI</p></div></div><div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #45443F; padding-top: 14px;"><p style="margin: 0; font-size: 14px; color: #C2C0B6;">[Top paper 1 · venue · year · citations]</p><p style="margin: 0; font-size: 14px; color: #C2C0B6;">[Top paper 2 · venue · year · citations]</p><p style="margin: 0; font-size: 14px; color: #C2C0B6;">[Top paper 3 · venue · year · citations]</p></div><p style="margin: 0; font-size: 13px; color: #E8E6DC;">Previously at Google · Amazon · Snap</p><div style="display: flex; gap: 8px; flex-wrap: wrap;"><a href="#" style="padding: 10px 18px; border-radius: 22px; background: #F5F4EF; color: #262624; text-decoration: none; font-size: 13px; font-weight: 500;">View on Google Scholar</a><button type="button" style="padding: 10px 18px; border-radius: 22px; border: 1px solid #6B6A65; background: transparent; color: #F5F4EF; font: 500 13px Poppins, sans-serif;">Ask about this</button></div></article>
+
+    <article style="background: #F5F4EF; color: #262624; border-radius: 24px; padding: 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <div>
+        <h2 style="margin: 0 0 6px; font-size: 24px; font-weight: 500;">Let's talk it through</h2>
+        <p style="margin: 0; font-size: 14px; color: #5E5D59;">30 minutes, straight to the point.</p>
+      </div>
+      <a href="https://calendly.com/william-brendel/30min" style="padding: 14px 24px; border-radius: 24px; background: #262624; color: #F5F4EF; text-decoration: none; font-size: 15px; font-weight: 500;">Book 30 min</a>
+    </article>
+
+    <p style="margin: 12px 0 0; text-align: center; font-size: 12px; color: #B5B3AA;">© 2026 William Brendel</p>
+  </div>
+  </section>
+</div>
+</body>
+</html>

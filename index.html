@@ -6,7 +6,11 @@
 
     <!-- Default meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+    <!-- No maximum-scale and no user-scalable=no. Those three words disable
+         pinch-zoom on iOS and Android, which takes the page away from anyone
+         who needs to magnify it — and this is a page people read on a phone
+         with one hand. The app-like feel they buy is not worth that. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <!-- Apple: Transparent Mode notch color -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -53,7 +57,7 @@
     
     <!-- SEO | Open Graph meta tags -->
     <meta property="og:locale" content="en_US">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="profile">
     <meta property="og:url" content="https://william-brendel.com/">
     <meta property="og:site_name" content="William Brendel">
     <meta property="og:title" content="Product Strategist & Machine Learning Expert" />
@@ -62,14 +66,21 @@
     <meta property="og:image:alt" content="William Brendel's profile picture">
      
     <!-- SEO | Twitter/X card tags -->
-    <meta property="twitter:card" content="summary">
-    <meta property="twitter:creator" content="@iamnotanaibot">
-    <meta property="twitter:description" content="Book a session with William Brendel or download his resume.">
-    <meta property="twitter:title" content="Product Strategist & Machine Learning Expert">
-    <meta property="twitter:image" content="https://william-brendel.com/assets/profile.webp">
-    <meta property="twitter:image:alt" content="William Brendel's profile picture">
+    <!-- name=, not property=. Open Graph is RDFa and uses property; the
+         Twitter card spec uses name. Most parsers forgive the mix, X's own
+         validator is the one that does not. -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@iamnotanaibot">
+    <meta name="twitter:description" content="Book a session with William Brendel or download his resume.">
+    <meta name="twitter:title" content="Product Strategist & Machine Learning Expert">
+    <meta name="twitter:image" content="https://william-brendel.com/assets/profile.webp">
+    <meta name="twitter:image:alt" content="William Brendel's profile picture">
     
     <!-- Structured data -->
+    <!-- This block had a trailing comma after "image", which is invalid JSON
+         — so every consumer dropped the whole thing and the page shipped with
+         no structured data at all rather than with slightly wrong structured
+         data. Silent, because nothing renders it. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -77,8 +88,11 @@
         "mainEntity": {
           "@type": "Person",
           "name": "William Brendel",
+          "jobTitle": "Product Strategist & Machine Learning Expert",
           "description": "Product Strategist & Machine Learning Expert",
+          "url": "https://william-brendel.com/",
           "image": "https://william-brendel.com/assets/profile.webp",
+          "sameAs": ["https://www.linkedin.com/in/william-brendel"]
         }
       }
     </script>
@@ -139,8 +153,11 @@
 
         <!-- Right-side input actions (send, voice, etc.) -->
         <div id="chat-input-right-buttons">
-          <button id="send" class="liquid-glass" title="Send your question">
-            <img src="assets/icons/arrow-up.svg">
+          <button id="send" class="liquid-glass" title="Send your question" aria-label="Send your question">
+            <!-- alt="", not a missing alt: the arrow says nothing the button's
+                 own label does not already say, and an <img> with no alt at
+                 all is read out as its file name by some screen readers. -->
+            <img src="assets/icons/arrow-up.svg" alt="">
           </button>
           <button id="stop" class="liquid-glass" type="button" title="Click to stop thinking">
             <div></div>
