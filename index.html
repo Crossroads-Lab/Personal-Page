@@ -43,10 +43,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=878e45c4" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=24fefb75" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=4bbeedc3" type="module" defer></script>
+    <script src="scripts/index.js?v=a9aa97a8" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -186,11 +186,167 @@
         the bar already sits at the bottom. Filled by
         scripts/starter-chips.js; empty, it takes no space.
       -->
-      <div id="starter-chips" aria-label="Suggested questions"></div>
+      <div id="starter-chips" aria-label="Suggested questions">
+        <!--
+          Last in the row, and the only item in it that is not a question.
+          A link, not a button: pressing it must scroll, never ask the chat
+          "More". scripts/starter-chips.js holds it across the rebuild when
+          the real suggestions arrive.
+        -->
+        <a class="starter-chip chip--more" href="#more" aria-label="More about me">
+          More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+          </svg>
+        </a>
+      </div>
     
     </div>
 
+      <!--
+        The second cue. Quiet enough to ignore, and it nudges only after
+        three seconds — long enough that it reads as a suggestion rather
+        than as part of the page arriving.
+      -->
+      <a class="more-chevron" href="#more" aria-label="More about me">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </a>
     </div><!-- /.hero -->
+
+    <!--
+      MORE ABOUT ME
+      =========================================================
+      design/v2/SPEC.md sections 7-8. The things the chat cannot be: a book
+      you can buy, an article you can read, a talk you can watch, the
+      research, and a slot you can book.
+
+      Two cards are deliberately short of a link. The spec is explicit —
+      "if the Scholar paper titles or the article URL aren't available at
+      build time, leave those lines out rather than shipping placeholder
+      text" — so where a URL is missing the button is commented out beside
+      the content it belongs to, ready to uncomment. Nothing here is
+      invented and nothing says [TBD].
+    -->
+    <section class="more" id="more" aria-labelledby="more-title">
+      <div class="more-inner">
+        <h2 id="more-title" class="more-label">More about me</h2>
+
+        <!-- 1. The book -->
+        <article class="card card--book">
+          <!-- The cover goes here as <img class="book-cover" src="assets/book-cover.webp"
+               width="150" height="220" alt="Cover of The AI Transformation"
+               loading="lazy" decoding="async"> once the file exists. Omitted
+               rather than drawn as an empty box: a grey rectangle where a
+               book cover should be looks like a broken image, not a
+               placeholder. -->
+          <div class="card-text">
+            <span class="badge">#1 Amazon bestseller · Technology</span>
+            <h3 class="card-title">The AI Transformation</h3>
+            <p class="card-body">
+              I wrote Chapter 5, <em>"AI: The Reality Beyond the Fantasy"</em>, in this
+              multi-author book on thriving through AI's disruption.
+            </p>
+            <div class="card-actions">
+              <a class="btn btn--primary" href="https://www.amazon.com/dp/1968318747"
+                 target="_blank" rel="noopener">Get it on Amazon</a>
+              <button class="btn btn--ghost" type="button"
+                      data-ask="What is your chapter in The AI Transformation about?">Ask about this</button>
+            </div>
+          </div>
+        </article>
+
+        <div class="more-row">
+          <!-- 2. Press -->
+          <article class="card">
+            <span class="card-label" style="--c: var(--label-blue)">In the press</span>
+            <h3 class="card-title">Serendipity and Oregon State led to William Brendel's career in AI</h3>
+            <p class="card-body">
+              Oregon State University College of Engineering on how my path into AI started.
+            </p>
+            <div class="card-actions">
+              <!-- Needs the article URL from LinkedIn Featured:
+                   <a class="btn btn--primary" href="…" target="_blank" rel="noopener">Read the story</a> -->
+              <button class="btn btn--ghost" type="button"
+                      data-ask="How did Oregon State lead you into AI?">Ask about this</button>
+            </div>
+          </article>
+
+          <!-- 3. Interview -->
+          <article class="card">
+            <!-- The thumbnail is hot-linked from YouTube, which the spec allows.
+                 No iframe until it is clicked: an embed on load costs a
+                 third-party frame and a set of cookies on a page nobody has
+                 asked to watch anything on yet. -->
+            <a class="card-media" href="https://www.youtube.com/watch?v=8_S0888ZWGw"
+               target="_blank" rel="noopener" aria-label="Watch the RE•WORK interview on YouTube">
+              <img src="https://i.ytimg.com/vi/8_S0888ZWGw/hqdefault.jpg"
+                   alt="RE•WORK interview video thumbnail" loading="lazy" decoding="async">
+            </a>
+            <span class="card-label" style="--c: var(--label-amber)">Interview · RE•WORK · Oct 2018 · 22 min</span>
+            <h3 class="card-title">Inside Snap Research: learning how to learn</h3>
+            <p class="card-body">
+              At the Deep Learning Summit in Toronto, I talked with RE•WORK about my work at
+              Snap Research: computer vision, NLP, new optimization frameworks, and teaching
+              machines to learn how to learn.
+            </p>
+            <div class="card-actions">
+              <a class="btn btn--primary" href="https://www.youtube.com/watch?v=8_S0888ZWGw"
+                 target="_blank" rel="noopener">Watch on YouTube</a>
+              <button class="btn btn--ghost" type="button"
+                      data-ask="What did you work on at Snap Research?">Ask about this</button>
+            </div>
+          </article>
+        </div>
+
+        <!-- 4. Research -->
+        <article class="card">
+          <span class="card-label" style="--c: var(--label-green)">Research · Google Scholar</span>
+          <h3 class="card-title">Research</h3>
+          <!-- Every figure here is in the corpus (background/education_and_research.md),
+               so the card and the chat cannot drift apart. -->
+          <div class="stats">
+            <div>
+              <div class="stat-number">2,200+</div>
+              <div class="stat-label">citations</div>
+            </div>
+            <div>
+              <div class="stat-number">30+</div>
+              <div class="stat-label">patents &amp; publications</div>
+            </div>
+            <div>
+              <div class="stat-number">PhD</div>
+              <div class="stat-label">Computer Science &amp; AI</div>
+            </div>
+          </div>
+          <hr>
+          <!-- The three top papers go here, one line each: title · venue ·
+               year · citations. Left out until the real ones are to hand. -->
+          <p class="previously">Previously at Google · Amazon · Snap</p>
+          <div class="card-actions">
+            <!-- Needs the Google Scholar profile URL:
+                 <a class="btn btn--primary" href="…" target="_blank" rel="noopener">View on Google Scholar</a> -->
+            <button class="btn btn--ghost" type="button"
+                    data-ask="What is your most cited research about?">Ask about this</button>
+          </div>
+        </article>
+
+        <!-- 5. The way out -->
+        <article class="card card--cta">
+          <div>
+            <h3 class="card-title">Let's talk it through</h3>
+            <p>30 minutes, straight to the point.</p>
+          </div>
+          <a class="btn" href="https://calendly.com/william-brendel/30min"
+             target="_blank" rel="noopener">Book 30 min</a>
+        </article>
+
+        <p class="more-footer">© 2026 William Brendel</p>
+      </div>
+    </section>
 
     <!--
       THE one list of destinations. Never shown: it is the source every other
