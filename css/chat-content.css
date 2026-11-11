@@ -412,13 +412,28 @@ body[chat-started] #quick-links-docked {
 
     font-family: inherit;
     font-size: 0.78em;
-    font-weight: 400;
-    color: var(--color);
+    font-weight: 500;
     letter-spacing: 0.2px;
 
-    padding: 5px 12px;
+    padding: 6px 12px;
     border: 0;
-    border-radius: var(--border-radius-round);
+    /* Solid and dark, not glass.
+     *
+     * It sits ON the answer, and a translucent control over body text reads
+     * as a rendering artefact — you see the sentence through it before you
+     * see the button. White-on-shadow was the first attempt and still lost
+     * against this page: the background is #E3E5E6, so a white chip is a
+     * shade away from its surroundings and has to lean entirely on the
+     * shadow to exist. Inverting it is the one combination nothing else on
+     * the page uses, so it cannot be mistaken for content.
+     *
+     * 8px rather than the pill radius used elsewhere: a pill says "chip,
+     * like the others"; this is a tool that appears on hover over something
+     * else, and a tighter radius is the quieter way to say so. */
+    color: var(--background);
+    background: var(--color);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 4px 14px rgb(0 0 0 / 0.18);
     cursor: pointer;
 
     /* Hidden, not absent: it fades in under the pointer rather than
@@ -442,6 +457,10 @@ body[chat-started] #quick-links-docked {
   .copy-answer[copied] {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  .copy-answer:hover {
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.14), 0 6px 18px rgb(0 0 0 / 0.24);
   }
 
   .copy-answer:focus-visible {

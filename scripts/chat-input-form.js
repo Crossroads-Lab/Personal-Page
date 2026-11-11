@@ -276,7 +276,9 @@ const answerSlot = () => {
 
   const copy = block.appendChild(document.createElement("button"));
   copy.type = "button";
-  copy.className = "copy-answer liquid-glass";
+  // Not liquid-glass: this one is opaque on purpose. See css/chat-content.css
+  // — a translucent control sitting on top of body text reads as a glitch.
+  copy.className = "copy-answer";
   copy.title = "Copy this answer";
   copy.setAttribute("aria-label", "Copy this answer");
   copy.textContent = "Copy";
