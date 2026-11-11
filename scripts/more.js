@@ -72,18 +72,21 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 /*
  * When the cues are worth showing.
  *
- * Three ways they stop being worth it: the cards are on screen (the cue has
- * done its job), the chat is thinking, or there is an answer to read. The
- * last two matter because both cues sit in the furniture around the input
- * bar, and an arrow pointing away from an answer someone is reading is
- * noise at best.
+ * Two ways they stop being worth it: the cards are already on screen, or
+ * the chat is working and an arrow pointing away from it is noise.
+ *
+ * NOT while an answer is up. That was the first rule here and it was
+ * wrong: `chat-started` is set by the first question and never cleared, so
+ * both cues disappeared permanently the moment anyone asked anything. The
+ * section was still down there and still scrollable — there was simply
+ * nothing left on the page that said so, which is the same as not having
+ * it for most people. An answer is exactly when someone has finished
+ * reading and is deciding what to do next.
  */
 let cardsInView = false;
 
 const sync = () => {
-  const busy = document.body.hasAttribute("thinking")
-    || document.body.hasAttribute("chat-started");
-  const hide = cardsInView || busy;
+  const hide = cardsInView || document.body.hasAttribute("thinking");
   for (const cue of cues()) cue.classList.toggle("is-hidden", hide);
 };
 

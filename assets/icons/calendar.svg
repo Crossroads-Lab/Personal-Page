@@ -1,11 +1,23 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- A calendar: two rings over a page, a header band, three days.
-     Solid and drawn 19x21 of the 24 box, to sit in the row of solid marks
-     with linkedin.svg and resume.svg (css/chat-content.css).
+<!-- A calendar with a plus: the link books a slot, so the mark says add a
+     time rather than just "a calendar".
 
-     It replaces call.svg on the booking link. That file was the WhatsApp
-     logo — bubble, tail and handset — pointing at Calendly, which on a page
-     whose whole claim is that nothing here is borrowed was the one mark
-     that said otherwise. -->
-<path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M8.25 1.5C8.80228 1.5 9.25 1.94772 9.25 2.5V4.5H14.75V2.5C14.75 1.94772 15.1977 1.5 15.75 1.5C16.3023 1.5 16.75 1.94772 16.75 2.5V4.5H19C20.3807 4.5 21.5 5.61929 21.5 7V9.2H2.5V7C2.5 5.61929 3.61929 4.5 5 4.5H7.25V2.5C7.25 1.94772 7.69772 1.5 8.25 1.5ZM2.5 10.8H21.5V20C21.5 21.3807 20.3807 22.5 19 22.5H5C3.61929 22.5 2.5 21.3807 2.5 20V10.8ZM6.6 13.6V16.1H9.1V13.6H6.6ZM10.75 13.6V16.1H13.25V13.6H10.75ZM14.9 13.6V16.1H17.4V13.6H14.9Z"/>
+     Chosen over three other drafts by rendering all four at 16px against
+     the rest of the row. The two that pair a stroked outline with a filled
+     header read as a box with a dot at that size, and a fully outlined one
+     is line art among solid marks — which is what made the old book icon
+     look wrong. This one holds its shape small and carries the same weight
+     as linkedin.svg and resume.svg beside it.
+
+     Opacity normalised to 1: the source came at 0.85, and the row already
+     dims every icon to 0.72 (css/chat-content.css). Two dimmings would
+     have left this one visibly paler than its neighbours. -->
+<g clip-path="url(#calendar-clip)">
+  <path d="M7 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M17 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+  <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M9.25 1H14.75V3.75C14.75 4.99264 15.7574 6 17 6C18.2426 6 19.25 4.99264 19.25 3.75V1.00614C21.8953 1.1364 24 3.32241 24 6V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V6C0 3.32241 2.10472 1.1364 4.75 1.00614V3.75C4.75 4.99264 5.75736 6 7 6C8.24264 6 9.25 4.99264 9.25 3.75V1ZM12 8C12.5523 8 13 8.44772 13 9V12H16C16.5523 12 17 12.4477 17 13C17 13.5523 16.5523 14 16 14H13V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V14H8C7.44772 14 7 13.5523 7 13C7 12.4477 7.44772 12 8 12H11V9C11 8.44772 11.4477 8 12 8Z"/>
+</g>
+<defs>
+  <clipPath id="calendar-clip"><rect width="24" height="24" rx="5" fill="white"/></clipPath>
+</defs>
 </svg>

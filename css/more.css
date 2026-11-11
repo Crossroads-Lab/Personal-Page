@@ -116,7 +116,19 @@
 .card-media {
   position: relative;
   border-radius: var(--r-media);
-  overflow: hidden;
+  /* clip, NOT hidden.
+     
+     `overflow: hidden` makes an element a scroll container even when it has
+     nothing to scroll, and a scroll container under the pointer absorbs the
+     wheel instead of passing it up. The page simply stopped scrolling over
+     the two cards with photos: measured at 1000x800, three wheel ticks over
+     the press photo moved the page 0px, and the same three over the card's
+     text moved it 300. The book cover is a bare <img> with no wrapper,
+     which is why that one never misbehaved.
+     
+     `clip` crops exactly the same way, border-radius included, and creates
+     no scroll container at all. */
+  overflow: clip;
   aspect-ratio: 16 / 9;
   background: var(--media-placeholder);
 }
@@ -211,6 +223,12 @@
 .card--book .book-cover {
   flex: none;
   width: 150px;
+  /* The <img> carries width/height attributes so the card reserves the
+     right box before the file lands. Those attributes are also what the
+     browser falls back to for the OTHER dimension once CSS changes one —
+     so narrowing the cover to 84px on a phone left the height at 224 and
+     the cover came out stretched a third taller than the book is. */
+  height: auto;
   border-radius: 6px;
   box-shadow: 0 10px 24px rgb(0 0 0 / 0.35);
   display: block;
@@ -320,15 +338,41 @@
  * end of the suggestion row, and a chevron in the gap under the input bar.
  */
 
+/* Held back at rest so there is somewhere to go.
+ *
+ * At full --bg-more it was the darkest thing on a pale screen and sat in
+ * the suggestion row like a button someone had already pressed. A step
+ * lighter reads as one of the chips; the hover takes it the rest of the
+ * way down and lifts the shadow with it, so the cue arrives under the
+ * pointer rather than shouting from across the page. */
 .chip--more {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg-more) !important;
-  color: var(--text-on-dark) !important;
+  background: #4A4A46 !important;
+  color: rgb(from var(--text-on-dark) r g b / 0.88) !important;
   font-weight: 500;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.10);
+  transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip--more:hover,
+  .chip--more:focus-visible {
+    background: var(--bg-more) !important;
+    color: var(--text-on-dark) !important;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 0.20);
+  }
+}
+
+/* No hover on a phone, so it settles at the darker, more definite end
+   rather than sitting at a resting state that never resolves. */
+@media not all and (hover: hover) {
+  .chip--more {
+    background: var(--bg-more) !important;
+    color: var(--text-on-dark) !important;
+  }
 }
 
 .more-chevron {
@@ -421,7 +465,19 @@
   .card--cta { flex-direction: column; align-items: stretch; padding: 24px; }
   .card--cta .btn { width: 100%; }
 
-  .more-chevron { bottom: 2px; height: 24px; }
+  /* Gone on a phone, not nudged.
+     
+     Measured at 375x812: the input bar bottoms at 796 inside an 812 hero,
+     so there are sixteen pixels under it. The chevron needs 44 for a tap
+     target, it was overlapping the bar by ten, and the bar's z-index of
+     999 was drawing straight over it — so what reached the screen was half
+     an arrow behind the input. Giving it room means lifting the bar, which
+     is a first-screen layout decision this section has no business making.
+     
+     The More chip carries the cue here instead. It is the spec's first
+     cue, it is in the suggestion row where a thumb already is, and it is
+     the one that still has somewhere to live. */
+  .more-chevron { display: none; }
 }
 
 /*

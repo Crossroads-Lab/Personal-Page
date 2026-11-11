@@ -43,10 +43,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=8517ab6e" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=7d09f69b" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=a9aa97a8" type="module" defer></script>
+    <script src="scripts/index.js?v=125f22c7" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -237,12 +237,13 @@
 
         <!-- 1. The book -->
         <article class="card card--book">
-          <!-- The cover goes here as <img class="book-cover" src="assets/book-cover.webp"
-               width="150" height="220" alt="Cover of The AI Transformation"
-               loading="lazy" decoding="async"> once the file exists. Omitted
-               rather than drawn as an empty box: a grey rectangle where a
-               book cover should be looks like a broken image, not a
-               placeholder. -->
+          <!-- 300x448, twice the 150px the card draws it at, so it stays
+               sharp on a retina screen. From Amazon's image endpoint keyed
+               by ASIN, which answers where the product page serves a bot
+               wall. -->
+          <img class="book-cover" src="assets/book-cover.webp"
+               width="150" height="224" alt="Cover of The AI Transformation"
+               loading="lazy" decoding="async">
           <div class="card-text">
             <span class="badge">#1 Amazon<span class="wide-only"> bestseller</span> · Technology</span>
             <h3 class="card-title">The AI Transformation</h3>
@@ -420,6 +421,23 @@
       <a id="dest-the-book" class="button" title="Click to get the book on Amazon" href="https://www.amazon.com/dp/1968318747" target="_blank" rel="noopener">
         Get the book
         <img src="assets/icons/book.svg"/>
+      </a>
+      <!--
+        The only destination on this page rather than off it.
+
+        It is here because the icon row is the one thing that survives the
+        first question. The More chip lives in the suggestion row and the
+        chevron needs room under the input bar — on a phone there are
+        sixteen pixels there, and after a question the suggestion row is
+        gone entirely. Without this, asking anything made the second
+        section unreachable except by scrolling at it blind.
+
+        target="_self" matters: quick-links.js defaults to _blank, which
+        would open "#more" in a new tab.
+      -->
+      <a id="dest-more" class="button" title="More about me" href="#more" target="_self">
+        More about me
+        <img src="assets/icons/more-down.svg"/>
       </a>
     </div>
     <svg style="display: none;">
