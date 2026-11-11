@@ -439,6 +439,7 @@ const ACTION_TARGETS = {
   linkedin: { id: "dest-linkedin",      label: "View my LinkedIn" },
   book:     { id: "dest-book-call",     label: "Book 30min with me" },
   share:    { id: "dest-share-profile", label: "Share my profile" },
+  thebook:  { id: "dest-the-book",      label: "Get the book" },
 };
 
 /**

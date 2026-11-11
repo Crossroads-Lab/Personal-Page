@@ -23,7 +23,7 @@
 // --------------------------------------------------------------------------
 
 import { API_BASE } from "./api.js?v=01b9ad0a";
-import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=9b055a51";
+import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=c8829b6c";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");

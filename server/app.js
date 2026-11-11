@@ -213,6 +213,22 @@ const main = async () => {
       // threshold. Costs one embedding and no money.
       body.actions = await actionsFor(query);
 
+      // An answer built from the book chapter always offers the book.
+      //
+      // Matching the question against phrasings is the right mechanism for
+      // "where's your CV" and the wrong one here: the chapter answers are
+      // teasers, so the questions that most need the button are about
+      // privacy, or research, or where AI actually works — none of which
+      // look like "buy your book" to an embedding. What they have in common
+      // is not their wording, it is their source. So key it on the source.
+      //
+      // Costs nothing: the citations are already in hand.
+      const fromTheBook = (body.answer || [])
+        .some(chunk => chunk?.source?.documentId === "background|book");
+      if (fromTheBook && !body.actions.includes("thebook")) {
+        body.actions = ["thebook", ...body.actions].slice(0, 2);
+      }
+
       // One line per question. The cited documentIds are the point: a wrong
       // answer is nearly always a retrieval miss, and without them there is
       // nothing to look at afterwards. See server/log.js for what is left

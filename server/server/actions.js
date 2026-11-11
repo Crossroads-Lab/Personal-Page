@@ -61,6 +61,20 @@ const ANCHORS = Object.freeze({
     "Can I share this page?",
     "How do I send this to someone?",
   ],
+  // The book answers are written as teasers — they say what the chapter
+  // argues and leave the evidence in it — so the one thing they must always
+  // offer is a way to go and read it. A link inside the prose does not
+  // survive: the answering model composes from the section and drops the
+  // trailing sentence often enough that an upsell resting on it is not an
+  // upsell. A button does not depend on the model saying anything.
+  thebook: [
+    "Where can I buy your book?",
+    "How do I get a copy of The AI Transformation?",
+    "Is your book on Amazon?",
+    "Have you written a book?",
+    "What's your chapter about?",
+    "Tell me about your book.",
+  ],
 });
 
 /**
