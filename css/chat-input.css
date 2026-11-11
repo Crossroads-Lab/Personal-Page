@@ -166,6 +166,14 @@ body[thinking] #send {
   flex-direction: column;
   border-radius: var(--border-radius);
   overflow: hidden;
+  /* Above the bar's 999, and the number has to be said out loud. Without it
+     the menu opened UNDERNEATH the chips: it is positioned but carries no
+     z-index, while `#chat-input-form` asks for 999 and every chip builds its
+     own stacking context out of the `translate` that carries the wave. Both
+     therefore paint after it, and on a phone — where the menu hangs upwards
+     into exactly the space the chip row occupies — the result was a menu
+     with chips lying across its last item. */
+  z-index: 1000;
 }
 
 #chat-menu a {
@@ -743,6 +751,25 @@ body[chat-started] #starter-chips {
   }
   /* Chips above the bar here, so "behind the bar" is downwards. */
   #chat-input-container[input-focused] .starter-chip {
+    translate: 0 12px;
+  }
+
+  /* An open menu takes the chip row's space. On a wide screen the menu drops
+     BELOW the whole container instead (see the 901px block above), which is
+     how it keeps the chips in sight; a phone has nowhere to drop to, so the
+     row tucks behind the bar the way it does for the keyboard. Same fade,
+     same direction, same reason — the chips are not what the visitor is
+     looking at any more.
+
+     Raising the menu's z-index alone would have been enough to stop them
+     overlapping it, but chips stacked edge-on behind a panel still read as
+     breakage. They come back when the menu closes. */
+  #chat-input-container[menu-visible] #starter-chips {
+    pointer-events: none;
+  }
+
+  #chat-input-container[menu-visible] .starter-chip {
+    opacity: 0;
     translate: 0 12px;
   }
   #starter-chips[entering] .starter-chip {
