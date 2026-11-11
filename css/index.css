@@ -1,7 +1,7 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=b98dae52";
-@import "./chat-input.css?v=3e4e6b06";
-@import "./chat-content.css?v=b50dcdd8";
+@import "./common.css?v=148645e5";
+@import "./chat-input.css?v=f12563e1";
+@import "./chat-content.css?v=d8968d44";
 
 /* 
  * =====================================================
@@ -95,17 +95,16 @@ body:before {
  */
 @media only screen and (max-width: 900px) {
   body:before {
-    /* A band, not a size. Bounded by the headline above and the input
-       furniture below, so he cannot land on either — and `contain` inside
-       it shrinks him on BOTH axes, which is the behaviour that kept going
-       missing: narrow the window and he narrows with it. */
-    top: var(--portrait-top);
-    bottom: var(--portrait-floor);
-    height: auto;
-    /* Bottom right at every width. Centring him on a narrow screen was my
-       own invention and it broke the one constant of the design. */
+    /* Bottom right of the SCREEN. The band I had here before — inset above
+       the input furniture — stopped the overlap by lifting him off the
+       bottom edge, which is not where he belongs.
+       
+       So the overlap is solved by SIZE, not by position: he is as tall as
+       the viewport less the room the headline and the icons need, and no
+       taller. His head therefore clears them, and the chips and the bar
+       pass over his legs the way the glass was always meant to. */
     background-position: right bottom;
-    background-size: contain;
+    background-size: auto calc(100dvh - var(--portrait-top));
   }
 }
 

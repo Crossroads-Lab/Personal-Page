@@ -66,20 +66,16 @@
      0.6945 as wide as it is tall (1389/2000) — so 0.529 of its height. */
   --portrait-width: calc(0.529 * var(--portrait-crop));
 
-  /* The band he gets on a narrow screen, as insets rather than a size.
+  /* What the headline and the icon row need at the top of a narrow screen.
    *
-   * Sizing him and hoping was the mistake: anchored to the bottom of the
-   * viewport he shares that edge with the input bar and the chips, so every
-   * number only chose how much of him they covered. Given a band bounded by
-   * the headline above and the furniture below, `contain` cannot overlap
-   * either one, at any width, without a single measurement.
+   * He is anchored to the bottom right of the viewport and sized to the
+   * rest: `100dvh - var(--portrait-top)`. That keeps his head clear of the
+   * text without lifting him off the bottom edge, which is what an inset
+   * band did and why it looked wrong. The chips and the bar still pass over
+   * his legs — that is the glass doing its job, not a collision.
    *
-   * --portrait-floor is the bar plus the chip row plus their gaps.
-   * --portrait-top is the headline's share — headline AND the quick-link
-   * icons under it — and `clamp` keeps it sane between a short phone and a
-   * tall one. */
-  --portrait-floor: calc(var(--chat-form-height) + 68px);
-  --portrait-top: clamp(150px, 26dvh, 236px);
+   * `clamp` keeps it sane between a short phone and a tall one. */
+  --portrait-top: clamp(224px, 35dvh, 300px);
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
