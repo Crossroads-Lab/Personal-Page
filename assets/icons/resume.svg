@@ -1,11 +1,12 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <!-- A CV: a page with a person on it, and the text below rather than beside.
-     Nothing sits next to the portrait, so the two read as one thing at 16px
-     instead of three small marks competing.
+     Nothing sits next to the portrait, and ONE broken line rather than two
+     full ones: at 16px two stacked bars turned into a smudge under the
+     figure, where a single interrupted line still reads as writing.
      One path with fill-rule evenodd, so the portrait and the lines are holes
      in the page rather than shapes laid over it: the icon is tinted by a
      filter and sits on glass, so anything opaque reads as a colour patch.
      (No double hyphen in this comment. SVG is XML, and two of them make the
      file unparseable, which is how an earlier version broke silently.) -->
-<path fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM12 5.3C10.6193 5.3 9.5 6.41929 9.5 7.8C9.5 9.18071 10.6193 10.3 12 10.3C13.3807 10.3 14.5 9.18071 14.5 7.8C14.5 6.41929 13.3807 5.3 12 5.3ZM8.3 14.4C8.3 12.1 9.9 10.9 12 10.9C14.1 10.9 15.7 12.1 15.7 14.4H8.3ZM7.2 16.4H16.8C17.2418 16.4 17.6 16.7582 17.6 17.2C17.6 17.6418 17.2418 18 16.8 18H7.2C6.75817 18 6.4 17.6418 6.4 17.2C6.4 16.7582 6.75817 16.4 7.2 16.4ZM7.2 19.2H13.6C14.0418 19.2 14.4 19.5582 14.4 20C14.4 20.4418 14.0418 20.8 13.6 20.8H7.2C6.75817 20.8 6.4 20.4418 6.4 20C6.4 19.5582 6.75817 19.2 7.2 19.2Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM12 5.3C10.6193 5.3 9.5 6.41929 9.5 7.8C9.5 9.18071 10.6193 10.3 12 10.3C13.3807 10.3 14.5 9.18071 14.5 7.8C14.5 6.41929 13.3807 5.3 12 5.3ZM8.3 14.4C8.3 12.1 9.9 10.9 12 10.9C14.1 10.9 15.7 12.1 15.7 14.4H8.3ZM7.2 17.6H8.4C8.84183 17.6 9.2 17.9582 9.2 18.4C9.2 18.8418 8.84183 19.2 8.4 19.2H7.2C6.75817 19.2 6.4 18.8418 6.4 18.4C6.4 17.9582 6.75817 17.6 7.2 17.6ZM11.6 17.6H16.8C17.2418 17.6 17.6 17.9582 17.6 18.4C17.6 18.8418 17.2418 19.2 16.8 19.2H11.6C11.1582 19.2 10.8 18.8418 10.8 18.4C10.8 17.9582 11.1582 17.6 11.6 17.6Z"/>
 </svg>
