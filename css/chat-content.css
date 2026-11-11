@@ -468,3 +468,69 @@ body[chat-started] #quick-links-docked {
     outline-offset: 2px;
   }
 }
+
+/* ------------------------------------------------------------------------
+ * Drop a questionnaire on the page
+ *
+ * Covers the window rather than offering a small target, because the point
+ * is that you do not have to aim. It only exists once a file is actually
+ * being dragged (body[file-over]); the rest of the time it is display:none
+ * and cannot intercept a click.
+ *
+ * Desktop only, gated in scripts/file-drop.js by the same min-width the
+ * chip row uses — there is no dragging a file onto a phone, and below the
+ * breakpoint the module binds nothing, so these rules never match.
+ * --------------------------------------------------------------------- */
+
+#file-drop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;              /* over the input bar, which sits at 999 */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgb(from var(--background) r g b / 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  /* The overlay must never eat the drop itself: the listeners are on the
+     window, and a child that swallowed the event would break the feature
+     it exists to advertise. */
+  pointer-events: none;
+}
+
+body[file-over] #file-drop {
+  display: flex;
+}
+
+#file-drop-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+  max-width: 560px;
+  padding: 32px 40px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1), 0 16px 48px rgb(0 0 0 / 0.18);
+  /* Dashed, because the whole window is the target and this is the only
+     thing on screen saying so. */
+  outline: 2px dashed rgb(from var(--color) r g b / 0.25);
+  outline-offset: -10px;
+}
+
+#file-drop-title {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--color);
+  line-height: 1.4;
+}
+
+#file-drop-note {
+  font-size: 0.85em;
+  color: rgb(from var(--color) r g b / 0.65);
+  line-height: 1.5;
+  /* A question being answered goes here, and some of them are long. */
+  overflow-wrap: anywhere;
+}
