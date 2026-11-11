@@ -54,6 +54,16 @@ OUTPUT
       - Each chunk is EITHER sourced from ONE section (with attribution) OR is
         connective prose (no attribution). Never mix two sources in one chunk.
       - `source.documentId` and `source.range` copied VERBATIM from a Results row.
+      - OPEN WITH THE ANSWER. First sentence answers the question asked.
+        No preamble, no framing, no scene-setting, no working up to it. If
+        the best section opens with reflection and reaches the substance
+        later, START FROM THE SUBSTANCE — the reflection may follow if it
+        earns its place, and is cut if it does not.
+      - Answer the question that was asked, not the nearest one. A question
+        about a TECHNICAL decision wants a technical decision; a section
+        about decisions in general is not a substitute for it however well
+        it scored. Where nothing in the Results answers what was actually
+        asked, say that plainly instead of serving the closest thing.
       - `followUpQuestions` is 0–3 complete natural questions.
       - NEVER propose a follow-up about why he left a role, how a job ended,
         or the circumstances of a departure — not for iScribeHealth, not for

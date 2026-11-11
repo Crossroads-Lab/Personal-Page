@@ -492,6 +492,18 @@ body:not([chat-started]) #chat-input-container[input-focused] #chat-input {
   /* The chips must keep their shape — shrinking them squeezes the text into
      the rounded ends long before the row runs out of room. */
   padding: 2px 0;
+
+  /* Without this the row scrolls in code and not under a finger.
+     `body:has(#chat-input-container:not([menu-visible]))` sets
+     `pointer-events: none` on the whole body — that is how a click anywhere
+     closes the menu — and the reset in common.css hands it back to buttons
+     and links only. So a chip could be TAPPED while the scroller holding it
+     could not be hit at all, and a drag landed on nothing. The element that
+     does the scrolling has to be hit-testable itself. */
+  pointer-events: auto;
+  /* Say so explicitly: some mobile browsers will not start a pan on a
+     container whose touch behaviour they have to infer. */
+  touch-action: pan-x;
 }
 
 #starter-chips::-webkit-scrollbar {
