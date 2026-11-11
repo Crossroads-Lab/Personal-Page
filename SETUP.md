@@ -144,6 +144,25 @@ The site deploys by pushing to `main`; Pages serves the repository root. **Ship
 the API before pushing the site** whenever a change spans both, or the live
 page briefly calls an endpoint that does not exist yet.
 
+**After touching anything in `css/` or `scripts/`, run this before you
+commit:**
+
+```bash
+npm --prefix server run stamp
+```
+
+Pages serves every file with `cache-control: max-age=600`, and the HTML
+revalidates on reload while the stylesheet does not — so for ten minutes
+after a deploy a browser shows the new page with the old CSS, which looks
+exactly like a change that was never made. The command version-stamps the
+`<link>`, the `<script>`, and the `@import` chain inside `css/index.css`
+(where common.css and chat-input.css live, which is the part that matters)
+with a hash of each file's own contents. It is a no-op when nothing moved.
+
+A content hash, not the commit SHA: a SHA would be circular, since stamping
+rewrites `index.html` and so changes the commit, and it would bust the cache
+on every deploy whether or not the asset changed.
+
 ---
 
 ## Rules for this machine

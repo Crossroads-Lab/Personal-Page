@@ -18,7 +18,8 @@
     "calibrate-gate": "node scripts/calibrate-gate.js",
     "push-models": "bash scripts/push-models.sh",
     "ship": "bash scripts/ship.sh",
-    "measure-actions": "node scripts/measure-actions.js"
+    "measure-actions": "node scripts/measure-actions.js",
+    "stamp": "node scripts/stamp-site.js"
   },
   "author": "William Brendel",
   "license": "MIT",
