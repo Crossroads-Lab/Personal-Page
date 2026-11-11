@@ -313,10 +313,19 @@ body:has(#chat-input-container:not([menu-visible])) {
     padding-right: calc(var(--safearea-right) + var(--padding) + var(--portrait-width));
   }
 
+  /* max-width ONLY. These already carry `width: var(--main-width)`, which is
+     max(512px, 40%) — a sane measure that tracks the column. What they also
+     carry is `max-width: calc(100dvw - 2 * var(--padding))`, measured off
+     the VIEWPORT, which knows nothing about the space reserved for the
+     portrait and so lets the bar run under him. Capping at 100% hands that
+     job to the narrowed column.
+     
+     Setting `width: 100%` here as well was wrong: it made the bar fill the
+     whole column rather than shrink into it, so on a 2000px screen the
+     input stretched to about 1500px. */
   body:not([chat-started]) main,
   body:not([chat-started]) #chat-input-container,
   body:not([chat-started]) #starter-chips {
-    width: 100%;
     max-width: 100%;
   }
 }
@@ -358,7 +367,10 @@ body:not([chat-started])::after {
 @media only screen and (min-width: 901px) {
   body:not([chat-started]) #welcome {
     justify-content: flex-end;
-    padding-bottom: 4px;
+    /* Breathing room between the icon row and the bar. The headline block
+       is bottom-aligned, so this is the only gap between the two — at 4px
+       they read as one stack rather than as a heading and a control. */
+    padding-bottom: 32px;
   }
 }
 

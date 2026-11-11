@@ -270,6 +270,10 @@ main::after {
   justify-content: center;
   gap: 10px;
   margin-top: 4px;
+  /* `main * { width: fit-content }` shrinks this row to its contents, so
+     without this it sits at the start of the column rather than under the
+     middle of the headline. The h1 and h2 above solve it the same way. */
+  margin-inline: auto;
 }
 
 #quick-links:empty {
