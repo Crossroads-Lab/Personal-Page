@@ -1,9 +1,11 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- A CV: a page with a person on it. One path with fill-rule="evenodd", so
-     the portrait and the lines are holes in the page rather than shapes
-     painted over it. The icon is tinted by the icon-filter variable and sits
-     on glass, so anything opaque would read as a colour patch, not a gap.
-     (No double hyphen anywhere in here: SVG is XML, and two hyphens inside a
-     comment make the whole file unparseable. That is what broke it once.) -->
-<path fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM8.5 4.9C7.33968 4.9 6.4 5.83968 6.4 7C6.4 8.16032 7.33968 9.1 8.5 9.1C9.66032 9.1 10.6 8.16032 10.6 7C10.6 5.83968 9.66032 4.9 8.5 4.9ZM5.6 12.8C5.6 11 6.9 9.9 8.5 9.9C10.1 9.9 11.4 11 11.4 12.8H5.6ZM13.75 5.6H17.65C18.0642 5.6 18.4 5.93579 18.4 6.35C18.4 6.76421 18.0642 7.1 17.65 7.1H13.75C13.3358 7.1 13 6.76421 13 6.35C13 5.93579 13.3358 5.6 13.75 5.6ZM13.75 8.9H16.45C16.8642 8.9 17.2 9.23579 17.2 9.65C17.2 10.0642 16.8642 10.4 16.45 10.4H13.75C13.3358 10.4 13 10.0642 13 9.65C13 9.23579 13.3358 8.9 13.75 8.9ZM6.35 15.3H7.45C7.86421 15.3 8.2 15.6358 8.2 16.05C8.2 16.4642 7.86421 16.8 7.45 16.8H6.35C5.93579 16.8 5.6 16.4642 5.6 16.05C5.6 15.6358 5.93579 15.3 6.35 15.3ZM9.95 15.3H17.65C18.0642 15.3 18.4 15.6358 18.4 16.05C18.4 16.4642 18.0642 16.8 17.65 16.8H9.95C9.53579 16.8 9.2 16.4642 9.2 16.05C9.2 15.6358 9.53579 15.3 9.95 15.3ZM6.35 18.4H7.45C7.86421 18.4 8.2 18.7358 8.2 19.15C8.2 19.5642 7.86421 19.9 7.45 19.9H6.35C5.93579 19.9 5.6 19.5642 5.6 19.15C5.6 18.7358 5.93579 18.4 6.35 18.4ZM9.95 18.4H15.45C15.8642 18.4 16.2 18.7358 16.2 19.15C16.2 19.5642 15.8642 19.9 15.45 19.9H9.95C9.53579 19.9 9.2 19.5642 9.2 19.15C9.2 18.7358 9.53579 18.4 9.95 18.4Z"/>
+<!-- A CV: a page with a person on it, and the text below rather than beside.
+     Nothing sits next to the portrait, so the two read as one thing at 16px
+     instead of three small marks competing.
+     One path with fill-rule evenodd, so the portrait and the lines are holes
+     in the page rather than shapes laid over it: the icon is tinted by a
+     filter and sits on glass, so anything opaque reads as a colour patch.
+     (No double hyphen in this comment. SVG is XML, and two of them make the
+     file unparseable, which is how an earlier version broke silently.) -->
+<path fill-rule="evenodd" clip-rule="evenodd" fill="black" fill-opacity="0.85098" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM12 5.3C10.6193 5.3 9.5 6.41929 9.5 7.8C9.5 9.18071 10.6193 10.3 12 10.3C13.3807 10.3 14.5 9.18071 14.5 7.8C14.5 6.41929 13.3807 5.3 12 5.3ZM8.3 14.4C8.3 12.1 9.9 10.9 12 10.9C14.1 10.9 15.7 12.1 15.7 14.4H8.3ZM7.2 16.4H16.8C17.2418 16.4 17.6 16.7582 17.6 17.2C17.6 17.6418 17.2418 18 16.8 18H7.2C6.75817 18 6.4 17.6418 6.4 17.2C6.4 16.7582 6.75817 16.4 7.2 16.4ZM7.2 19.2H13.6C14.0418 19.2 14.4 19.5582 14.4 20C14.4 20.4418 14.0418 20.8 13.6 20.8H7.2C6.75817 20.8 6.4 20.4418 6.4 20C6.4 19.5582 6.75817 19.2 7.2 19.2Z"/>
 </svg>
