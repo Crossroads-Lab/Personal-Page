@@ -85,9 +85,12 @@
      terms meet exactly on the mock's own aspect. The subject comes out
      654 tall against the mock's 654.
      
-     Written against --hero-height rather than vh so it means the same
-     thing on a phone, where the first screen is taller than the window
-     by the chrome slack.
+     Written against 100dvh, which the first screen now is — exactly,
+     on every device. It used to be --hero-height, a viewport plus two
+     toolbars, because the page scrolled and the dark section had to
+     start below the bottom of the screen in every toolbar state. The
+     document does not scroll any more (css/common.css, the shell), so
+     the bar docks and the first screen is the viewport.
      
      min, not max. max was inherited from when both numbers were small
      enough that it rarely bit, and at these it bites immediately: on a
@@ -103,7 +106,7 @@
      height binds and the width never comes into it; on a tall narrow
      window the width binds instead and keeps him off the headline
      rather than letting a tall window inflate him. */
-  --portrait-crop: min(74.2vw, calc(0.9324 * var(--hero-height) + var(--portrait-sink) / 0.858));
+  --portrait-crop: min(74.2vw, calc(0.9324 * 100dvh + var(--portrait-sink) / 0.858));
   --portrait-subject: calc(0.858 * var(--portrait-crop));
   /* How wide he lands. He is 77.5% of the crop's width, and the crop is
      0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
@@ -142,101 +145,36 @@
      downward by 350px, and the extra content — leg, chair base, floor,
      shadow — is what should be hidden under the cut instead of 6-10% of the
      figure. When that asset lands, set this back to 0. */
-  /* How much of the screen a phone's browser chrome is sitting over.
-   *
-   * 100svh is the viewport with the toolbars OUT; 100lvh is with them
-   * retracted. Both are static — they do not change while you scroll,
-   * which is the whole point of using them instead of dvh.
-   *
-   * dvh was the first attempt and it was wrong twice over. It is the
-   * CURRENT height, so the first screen resized as Safari's toolbar slid
-   * away and everything inside it slid with it — the bottom of the page
-   * appeared to animate on every scroll. And `100lvh - 100dvh` measures
-   * nothing at all once the toolbar is the floating kind that the page
-   * paints behind: dvh already equals lvh there, the difference is zero,
-   * and the dark section was still showing through the strip under the
-   * bar.
-   *
-   * svh is the honest floor. 0 on a desktop, so nothing below is
-   * conditional on a device.
-   *
-   * Declared 0 first and raised behind @supports, because an unsupported
-   * unit does not make a custom property fall back — it makes it invalid,
-   * and every property built on it goes with it. */
-  --chrome-slack: 0px;
-
-  /* How far through its arrival the cut is: 0 at the top of the page, 1
-   * once it has fully tilted. scripts/more.js drives it from the scroll
-   * position. Everything about the diagonal is expressed against it. */
-  --cut-progress: 0;
-
-  /* How tall the first screen is. Written once here because two things
-   * need it: .hero itself, and the sum below. */
-  --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
-
-  /* Where the cut rests before anyone scrolls, measured from the bottom
-   * of the hero.
-   *
-   *     --page-height  -  --hero-height
-   *
-   * --page-height is the last row of pixels the page actually PAINTS,
-   * which is not any viewport. iOS Safari paints behind its own floating
-   * bar: Will's panel read innerHeight 836, 100lvh 836, dark edge 836,
-   * LEAK 0, and there was dark on the glass under all of it. Measured
-   * off that screenshot the page runs from 62.5 points down a 956-point
-   * display to the very bottom of it.
-   *
-   * So the real resting place is 894 on his phone and FOUR properties
-   * have now failed to say so:
-   *
-   *     window.screenY             0
-   *     env(safe-area-inset-top)   0
-   *     env(safe-area-inset-bottom) 0   (documented Safari bug)
-   *     screen.availHeight         956, i.e. the whole glass
-   *
-   * Until one of them answers, --page-height stays unset and this falls
-   * back to --hero-height, which makes the whole sum 0: the cut rests at
-   * the bottom of the hero.
-   *
-   * That is not a surrender, it is the best number in the building.
-   * --hero-height is 100lvh plus the chrome slack plus the bottom inset,
-   * which on his phone is 876 against a true 894 — 18 short, where
-   * 100lvh was 58 short and screen.height - 100svh was 142 long. The
-   * error that is left is a sliver, and it sits behind the floating bar.
-   *
-   * 0 until the @supports below confirms lvh, because an unsupported
-   * unit makes the whole custom property invalid rather than falling
-   * back, and every property built on it dies with it. */
-  --cut-rest: 0px;
-
-  /* The height the artwork is actually drawn at, extension included.
-     Everything else derives from this one value, because the phone
-     overrides it (css/index.css) and a sink computed from a different
-     number than the one on screen is wrong by exactly the difference. */
-  --portrait-height: calc(var(--portrait-crop) * (1 + var(--portrait-extra)));
-
   /* How far the artwork hangs below the first screen.
    *
-   * Exactly the lowest point the cut ever reaches: its resting line plus
+   * Exactly the lowest point the cut ever reaches — its level line plus
    * the pivot's share of the slope, which is where the left end gets to
-   * at full tilt. So the photograph is behind the diagonal everywhere
-   * the diagonal goes, and stops one pixel later.
+   * at full swing — so the photograph is behind the diagonal everywhere
+   * the diagonal goes.
+   *
+   * Plus a pixel. The exact value makes the cut TANGENT to the bottom of
+   * the artwork at full swing: correct in arithmetic and a hairline away
+   * from wrong once subpixel rounding has its say. Without it the wedge
+   * the cut opens on the left showed page background, which is the
+   * photograph's own cropped edge, exposed.
    *
    * It used to be a fraction of a GENERATED strip — rows mirrored off
    * the bottom of the file and faded toward the floor tone. Will, on
    * seeing it: "Why did you add so reflective bullshit? The picture is
-   * long enough." It is. The file runs from his head to below the chair
-   * base, and sinking it uses the photograph's own last inches instead
-   * of inventing new ones. Nothing is generated now and
-   * server/scripts/extend-portrait.py is not run on this artwork.
-   *
-   * The crop grows by the same amount (see --portrait-crop), so what
-   * sinks is the bottom of the picture and not the man: his head stays
-   * exactly where the mock puts it. */
-  --portrait-sink: calc(var(--cut-rest) + var(--cut) * var(--cut-pivot));
+   * long enough." It is. Nothing is generated now and
+   * server/scripts/extend-portrait.py is not run on this artwork. */
+  --portrait-sink: calc(var(--cut) * var(--cut-pivot) + 1px);
 
-  /* Nothing is added to the file any more, so there is no extra. */
-  --portrait-extra: 0;
+  /* How much lower than the sink he hangs. Zero on a phone, where
+     --portrait-top places him; set on a wide screen in css/index.css.
+     One number, so there is one number to change. */
+  --portrait-drop: 0px;
+
+  /* The height the artwork is actually drawn at. Everything else derives
+     from this one value, because the phone overrides it (css/index.css)
+     and a sink computed from a different number than the one on screen
+     is wrong by exactly the difference. */
+  --portrait-height: var(--portrait-crop);
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
@@ -269,8 +207,16 @@
   overscroll-behavior: none;  /* Prevent bounce scrolling on iOS/Android */
 }
 
-/* Only allow overflow on media elements and body */
-*:not(img):not(video):not(canvas):not(body) {
+/* Only allow overflow on media elements, body and the root.
+   
+   html is in the exclusion list now and leaving it out cost an hour: the
+   selector is `*` plus four :not(type) arguments, and :not() contributes
+   its argument's specificity — so this is (0,0,4) and beat the plain
+   `html { overflow: hidden }` that makes the document non-scrollable.
+   The root stayed `visible`, body's overflow propagated to the viewport
+   instead, and the page went back to being a scrolling DOCUMENT, which
+   is the one thing the whole first screen depends on not being. */
+*:not(img):not(video):not(canvas):not(body):not(html) {
   overflow: visible;
 }
 
@@ -325,25 +271,6 @@ input[type=number] {
   html { scroll-behavior: smooth; }
 }
 
-@supports (height: 1lvh) and (height: 1svh) {
-  :root {
-    --chrome-slack: calc(100lvh - 100svh);
-    /* The notch allowance, never more than the picture can cover.
-     
-       The first term is how far the glass runs past the first screen —
-       the strip iOS paints behind its own bar, which is where the cut
-       has to rest so nothing of it surfaces up there. The second is how
-       far the artwork actually reaches below the hero. Taking the
-       smaller means the photograph is always the thing behind the cut.
-       Drop the min() and on a tall enough screen the cut rests below
-       the picture's own bottom edge, which is the grey band again.
-     
-       The pivot's share of the slope comes off the second term, because
-       the left end swings that far BELOW the resting line at full tilt
-       and the picture has to be behind it there too. */
-    --cut-rest: max(0px, calc(var(--page-height, var(--hero-height)) - var(--hero-height)));
-  }
-}
 
 /* 
  * =====================================================
@@ -351,28 +278,50 @@ input[type=number] {
  * =====================================================
  */
 
-html,
-body {
-  /* 100%, not 100dvw. The viewport units INCLUDE the scrollbar, so the
-     moment a scrollbar appears the body is wider than the area it can be
-     seen in: the page gains a horizontal scrollbar it never needed, and the
-     right edge of the body — background and all — sits underneath the
-     vertical scrollbar as a strip that does not match the page. 100% is the
-     containing block, which is the area actually available. */
+/*
+ * The document does not scroll. body does.
+ *
+ * This is the arrangement test.html was built to find, and the whole
+ * first screen depends on it: Safari FLOATS its bottom bar over a
+ * scrollable document and DOCKS it above one that does not scroll. A
+ * docked bar has its own backdrop, so the page ends cleanly above it and
+ * nothing of the dark section can show through the strip it sits on.
+ * Months of grey bands at the bottom of the first screen were that one
+ * fact, unknown.
+ *
+ * So the two pages live inside a box exactly one viewport tall, and the
+ * BOX scrolls. The root is what makes that true and leaving it out would
+ * undo all of it: overflow on body propagates to the viewport when the
+ * root is `visible`, which would hand the scrolling back to the document
+ * and float the bar again. The root carrying its own `overflow: hidden`
+ * stops the propagation, and body's `auto` then applies to body's own
+ * box the ordinary way.
+ *
+ * 100%, not 100dvw, for the width: the viewport units INCLUDE the
+ * scrollbar, so the moment one appears the body is wider than the area
+ * it can be seen in.
+ */
+html {
   width: 100%;
-  /* min-height, not height. The page is taller than the window now — the
-     first screen is .hero and the dark section follows it — so pinning the
-     body to one viewport would clip everything below the fold. .hero keeps
-     the exact height the first screen needs (css/index.css).
-     
-     svh, not dvh: a dynamic floor on the document is one more thing that
-     resizes while a phone's toolbar slides away, and every resize of an
-     ancestor moves the first screen with it. */
-  min-height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 body {
-  min-height: -webkit-fill-available;  /* Fix iOS viewport height issue */
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  /* body being the scroller means a desktop browser draws a scrollbar,
+     and it lands over the right edge of the photograph, which is where
+     he is. iOS uses a fading overlay and never shows one. */
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar { display: none; }
+
+body {
   background: var(--background);
   color: var(--color);
   font-weight: 300;                    /* Light font weight for body text */

@@ -19,102 +19,13 @@ import { askAsChip } from "./chat-input-form.js?v=04e20b52";
 // --------------------------------------------------------------------------
 
 /*
- * ?solo — the first screen and nothing else.
- *
- * Will: "Please produce a version with no second page at all. None. And
- * let's take baby steps from there."
- *
- * The second section is removed from the document at load, along with
- * both cues, and none of the cut, the scroll-to-More or the keyboard
- * machinery is wired up. What is left is the hero, the bar, and
- * whatever Safari does with them on its own — a floor to measure from,
- * with nothing of mine in the way.
- *
- * Add one thing at a time from here.
+ * The scaffolding that was here — ?solo and ?shell, which stripped the
+ * page down to find which piece was breaking the keyboard — is gone. The
+ * answer it found is now the page: the document does not scroll, body
+ * does, and the first screen is exactly one viewport. test.html is the
+ * baseline it was all built against.
  */
-const SOLO = location.search.includes("solo");
-
-/*
- * ?shell — ask-nereus-client's layout, ported as-is.
- *
- * That app has no keyboard code at all and its bar behaves. Its whole
- * recipe is three declarations:
- *
- *   html, body { width: 100dvw; height: 100dvh; }
- *   body       { display: flex; flex-direction: column; overflow: hidden }
- *   #chat-input-container { position: relative; flex-shrink: 0 }
- *
- * dvh is the DYNAMIC viewport: it is whatever the browser is giving you
- * right now. The shell tracks it, the bar is the last item in the shell,
- * so the bar tracks it too — for free.
- *
- * This page sizes its first screen in 100lvh plus the chrome slack
- * instead: the LARGEST the viewport ever gets, held static on purpose so
- * the diagonal cut has a fixed edge to rest below. That is the whole
- * difference, and it is why none of the Nereus behaviour came along with
- * the Nereus markup.
- *
- * So: the second page out, the hero sized in dvh, nothing else. If the
- * bar sits on the keyboard here with no JS, then dvh follows the
- * keyboard on this device and the fix is this, not any of tonight's
- * machinery. If it does not move, dvh ignores the keyboard in Safari and
- * only the pin can work.
- */
-const SHELL = location.search.includes("shell");
-
-if (SHELL) {
-  for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
-    node.remove();
-  }
-  const shell = document.createElement("style");
-  shell.textContent = [
-    "html, body { height: 100dvh !important; overflow: hidden !important; }",
-    ".hero { height: 100dvh !important; padding-bottom: var(--safearea-padding-bottom) !important; }",
-  ].join("\n");
-  document.head.appendChild(shell);
-}
-
-if (SOLO) {
-  for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
-    node.remove();
-  }
-
-  /* And nothing to scroll.
-   
-     Taking the section out still left a page taller than the window:
-     the hero is 100lvh plus the chrome slack, and .hero::before hangs
-     --portrait-sink below that again. Will: "You can still scroll on
-     solo." Forty points of it, which is enough to drift the headline
-     under the status bar and make the baseline something other than one
-     screen.
-     
-     Two things at once, and they fought each other for two rounds.
-     
-     The clip stops the page scrolling. But clip on a box clips what
-     overflows it, and the body box ends at the hero — so it cut off
-     .hero::before, whose overhang is the only thing covering the strip
-     iOS paints past the viewport. Measured off Will's screenshot: the
-     page stopped 17 points short of the bottom of the glass and those
-     17 points were bare background. "Still small bottom gray bar in
-     solo", twice, because I moved the clip around instead of asking
-     what it was clipping.
-     
-     So the body is given the height of the GLASS. Now the box the clip
-     applies to reaches the bottom of the display, the overhang paints
-     all the way into the strip, and there is still nothing to scroll.
-     
-     --screen-height is screen.height, set by measurePage below, which
-     runs in ?solo like everything else that is not the cut. 100lvh if
-     it is somehow not there, which is the old behaviour rather than a
-     crash. */
-  const lock = document.createElement("style");
-  lock.textContent = [
-    "html, body { height: 100dvh !important; overflow: hidden !important; }",
-  ].join("\n");
-  document.head.appendChild(lock);
-}
-
-const more = SOLO || SHELL ? null : document.getElementById("more");
+const more = document.getElementById("more");
 const cues = () => document.querySelectorAll(".chip--more, .more-chevron");
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)");
@@ -137,9 +48,11 @@ const SCROLL_MS = 450;
  * question goes, move it outright.
  */
 const toTop = () => {
-  window.scrollTo({ top: 0, behavior: REDUCED.matches ? "instant" : "smooth" });
+  /* document.body, not window: body is the scroller now and the document
+     does not scroll at all, so window.scrollTo moves nothing. */
+  document.body.scrollTo({ top: 0, behavior: REDUCED.matches ? "instant" : "smooth" });
   setTimeout(() => {
-    if (window.scrollY > 4) window.scrollTo({ top: 0, behavior: "instant" });
+    if (document.body.scrollTop > 4) document.body.scrollTo({ top: 0, behavior: "instant" });
   }, REDUCED.matches ? 0 : SCROLL_MS);
 };
 
@@ -166,137 +79,29 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
- * How far down the glass the page actually paints.
+ * measurePage used to live here, writing --page-height from
+ * screen.height and screen.availHeight so the cut could rest on the last
+ * row of pixels iOS actually paints rather than on any viewport.
  *
- * Not a viewport. Will's screenshots show iOS Safari painting page
- * content BELOW innerHeight, behind its own floating address bar: at
- * rest, with innerHeight, 100lvh and the dark edge all reading 836,
- * there was dark on the glass under all three. Measured off that
- * screenshot the page occupies 62.5 to 956 on a 956-point display, so
- * it paints 57 points further than any unit admits to.
- *
- * screen.availHeight is the one property that can say so. MDN: the
- * display, less whatever the device or user agent reserves for itself —
- * here, the status bar. Three others that looked like they should have
- * worked all return 0 on his phone: window.screenY,
- * env(safe-area-inset-top) and env(safe-area-inset-bottom), the last of
- * which is a documented Safari bug when the toolbar is hidden.
- *
- * Three conditions before it is trusted, because the reports of this
- * property on iOS are old and mixed:
- *
- *   the chrome floats      otherwise there is nothing to paint behind
- *   avail < glass          it reserved something, so it is reporting
- *   avail >= innerHeight   it is at least a whole viewport, so it is
- *                          not the stale 20px-address-bar answer from
- *                          the 2015 reports
- *
- * Fail any of them and the property is left unset, css/common.css falls
- * back to 100lvh, and the cut stays where it is today rather than
- * dropping 60 points on an unverified reading.
- *
- * Re-read on resize and rotation: the toolbar collapsing changes
- * innerHeight, and a turn swaps width and height.
+ * It is gone because the question is gone. That strip only exists when
+ * Safari FLOATS its bottom bar, which it does over a scrollable
+ * document; the document does not scroll now, so the bar docks, brings
+ * its own backdrop, and the page ends cleanly at 100dvh. Four properties
+ * failed to report that strip — window.screenY, both safe-area insets,
+ * screen.availHeight — and none of them need to any more.
  */
-const FLOATING_CHROME = matchMedia("(hover: none)");
-
-const measurePage = () => {
-  const root = document.documentElement.style;
-  const glass = Math.round(window.screen?.height ?? 0);
-  const avail = Math.round(window.screen?.availHeight ?? 0);
-
-  /*
-   * On a phone the cut rests at the bottom of the GLASS, not the bottom
-   * of the first screen — Will: "for mobile, some extra notch space
-   * should be added".
-   *
-   * screen.height is the whole display: status bar, notch, home
-   * indicator and all. It is the furthest anything can possibly be from
-   * the top of the page, so a cut resting there cannot surface in the
-   * strip iOS paints behind its own floating bar, whatever that strip
-   * turns out to measure. That was never usable before, because the
-   * photograph ended at the hero's bottom edge and pushing the cut past
-   * it only exposed page background. The artwork now reaches 103 points
-   * below the hero (--portrait-extra), and the biggest gap measured on
-   * Will's devices is 80, so the picture covers the whole allowance.
-   *
-   * availHeight first, on the devices where it reports something the
-   * glass does not: it is the same quantity measured more precisely.
-   * Four of Will's phones' properties return 0 or the full screen, so in
-   * practice this is the glass.
-   */
-  if (FLOATING_CHROME.matches) {
-    const bottom = avail > 0 && avail < glass && avail >= window.innerHeight ? avail : glass;
-    if (bottom > 0) root.setProperty("--page-height", `${bottom}px`);
-    else root.removeProperty("--page-height");
-  } else {
-    root.removeProperty("--page-height");
-  }
-
-  /* For scripts/viewport-probe.js only. Nothing in the CSS reads these. */
-  root.setProperty("--screen-height", `${glass}px`);
-  root.setProperty("--avail-height", `${avail}px`);
-};
-
-measurePage();
-addEventListener("orientationchange", measurePage);
 
 /*
- * How far through its arrival the cut is, as a number from 0 to 1.
+ * The scroll handler that drove --cut-progress is gone too. The swing is
+ * a scroll-driven CSS animation now (css/more.css): the timeline is
+ * body's own scroll, so it runs on the compositor.
  *
- * This replaces a threshold. The cut used to sit in one of two places
- * and swap between them, which meant picking a scroll position for the
- * swap and hoping nobody was looking at the line when it happened. Tying
- * it to the scroll instead means there is nothing to hide: the line
- * starts horizontal and below the first screen, and tilts into its
- * diagonal as the page moves, at exactly the rate the finger moves.
- *
- * 18% of a viewport to complete — a thumb's worth, not half a screen.
- *
- * It was half a viewport, which made the whole arrival feel like it
- * started from way too low: the cut has a hard resting floor (see
- * --cut-rest) and a slow climb out of it means a long scroll looking at
- * nothing. Measured against Will's numbers, the dark used to appear
- * after 137px of scroll and now appears after 71.
- *
- * Relative to the viewport rather than a pixel count, so it is the same
- * gesture on a small phone and a large desktop.
+ * Which also retires the reason it could not be coalesced with
+ * requestAnimationFrame — on iOS the scroll runs on the compositor and
+ * rAF callbacks are not serviced while a flick is in flight, so the
+ * property only moved once the scroll came to rest and the line did not
+ * tilt, it arrived already tilted. Nothing is written per frame now.
  */
-const travel = () => Math.max(1, window.innerHeight * 0.18);
-
-let last = -1;
-
-/*
- * Written straight out of the scroll handler, NOT deferred to a frame.
- *
- * The first version coalesced with requestAnimationFrame, which is the
- * usual advice and is wrong here. On iOS the scroll runs on the
- * compositor and rAF callbacks are not serviced while a flick is in
- * flight — so the property only moved once the scroll came to rest, and
- * the line did not tilt, it arrived already tilted. The same thing shows
- * up in a backgrounded tab: measured in a hidden browser pane, scrollY
- * went 0 to 200 and not one frame callback ran.
- *
- * What it costs is a single custom-property write per scroll event. The
- * guard below drops the ones too small to see, so a flick writes tens of
- * times, not hundreds.
- */
-const paintProgress = () => {
-  if (!more) return;
-  const progress = Math.min(1, Math.max(0, window.scrollY / travel()));
-  if (Math.abs(progress - last) < 0.004 && progress !== 0 && progress !== 1) return;
-  last = progress;
-  /* On the section, NOT on :root. A custom property set on the root
-     invalidates style for every element in the document, because custom
-     properties inherit and the engine cannot know who read it. Setting
-     it here keeps the recalculation to one subtree, which is the other
-     half of why the tilt juddered. */
-  more.style.setProperty("--cut-progress", progress.toFixed(4));
-};
-
-paintProgress();
-addEventListener("scroll", paintProgress, { passive: true });
-addEventListener("resize", () => { measurePage(); paintProgress(); });
 
 /*
  * When the cues are worth showing.
@@ -356,7 +161,22 @@ sync();
 // Nothing above that is worth arriving at.
 // --------------------------------------------------------------------------
 
-/** Resolve a CSS length — var(), env(), svh, any of it — to pixels. */
+/*
+ * Where "More" lands: the bottom of body's scroll range.
+ *
+ * The section's top plus --cut: the diagonal's lowest point, level with
+ * the top of the screen. Which is also the snap position css/more.css
+ * gives it, by the same arithmetic in a negative scroll-margin.
+ *
+ * NOT the scroller's maximum, which is what this was for one draft. On
+ * test.html the second page is exactly one viewport, so its top and the
+ * bottom of the scroll range are the same place; here it is real content
+ * and taller than the screen, and scrolling to the end lands on the
+ * bottom of the dark section rather than the start of it.
+ *
+ * resolve() rather than reading padding-top, which is var(--cut) in the
+ * base rule and calc(var(--cut) + 40px) under 767px.
+ */
 const resolve = (value) => {
   const probe = document.createElement("div");
   probe.style.cssText = `position:absolute;visibility:hidden;height:${value}`;
@@ -368,22 +188,22 @@ const resolve = (value) => {
 
 const landing = () => {
   if (!more) return 0;
-  const boxTop = more.getBoundingClientRect().top + window.scrollY;
-  // Plus the top inset, so the status bar is not sitting over the first
-  // thing you were brought here to read. 0 where it is not reported,
-  // which costs nothing: the cut is already clear by then.
-  return Math.round(boxTop + resolve("var(--cut)") + resolve("env(safe-area-inset-top, 0px)"));
+  /* offsetTop, not a rect plus the current scroll: offsetParent is body,
+     which IS the scroller, so this is already in scroll coordinates and
+     does not care where the page happens to be sitting. */
+  return Math.round(more.offsetTop + resolve("var(--cut)"));
 };
+
 
 for (const cue of document.querySelectorAll('a[href="#more"]')) {
   cue.addEventListener("click", (event) => {
     if (!more) return;
     event.preventDefault();
-    window.scrollTo({ top: landing(), behavior: REDUCED.matches ? "instant" : "smooth" });
+    document.body.scrollTo({ top: landing(), behavior: REDUCED.matches ? "instant" : "smooth" });
     // Same lesson as toTop(): smooth is a request, not a promise.
     setTimeout(() => {
-      if (Math.abs(window.scrollY - landing()) > 4) {
-        window.scrollTo({ top: landing(), behavior: "instant" });
+      if (Math.abs(document.body.scrollTop - landing()) > 4) {
+        document.body.scrollTo({ top: landing(), behavior: "instant" });
       }
     }, REDUCED.matches ? 0 : SCROLL_MS);
   });

@@ -1,8 +1,8 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=b7157581";
-@import "./chat-input.css?v=d1258e50";
+@import "./common.css?v=6a05d641";
+@import "./chat-input.css?v=453892bf";
 @import "./chat-content.css?v=de3662c4";
-@import "./more.css?v=f7f7a3b2";
+@import "./more.css?v=d5ed795b";
 
 /* 
  * =====================================================
@@ -24,46 +24,20 @@
   position: relative;
   width: 100%;
 
-  /* The BOX is the largest the viewport ever gets; the CONTENT sits in
-     the smallest.
+  /* Exactly the viewport. 100% of body, and body is 100dvh.
+   
+     This used to be --hero-height — 100lvh plus a chrome slack plus the
+     bottom inset, deliberately TALLER than the screen — because the page
+     scrolled and the dark section had to start below the bottom of it in
+     every toolbar state, or it leaked into the strip Safari paints
+     behind its own floating bar.
      
-     height is 100lvh so whatever follows this section starts below the
-     bottom of the screen in every toolbar state — including the floating
-     kind the page paints behind, which is what kept leaking the diagonal
-     cut through the strip under Safari's bar. The extra padding then
-     holds the headline, the chips and the input bar inside 100svh, so the
-     bar stays above the chrome rather than behind it.
-     
-     box-sizing is border-box here (common.css), so height includes the
-     padding and the content area comes out at exactly 100svh.
-     
-     Both units are static. 100dvh was what this used to be, and because
-     dvh tracks the toolbar sliding away, the whole first screen resized
-     mid-scroll and everything in it moved — the "weird animation" at the
-     bottom of the page.
-     
-     Plus ANOTHER slack, which is the part no unit will tell you.
-     
-     Measured on the device (?viewport, see scripts/viewport-probe.js):
-     
-       innerHeight 796   100svh 796   100lvh 836
-       safe-area-inset-bottom 0
-       hero bottom 836   #more top 836
-     
-     By every number the browser reports, the dark section starts 40px
-     BELOW the bottom of the viewport. It was still visible. So the screen
-     paints past 100lvh, and the inset that is supposed to describe that
-     region reads 0 — which is why adding it changed nothing.
-     
-     The leak measured one toolbar tall, so the box reaches one toolbar
-     past lvh. That is extrapolation from a measurement rather than a rule
-     from a spec, and it is written down here because the next person will
-     reasonably assume 100lvh is the bottom of the screen. It is not, on
-     an iPhone with the bottom address bar.
-     
-     The inset stays in the sum: 0 here, non-zero elsewhere, costs
-     nothing. */
-  height: var(--hero-height);
+     The document does not scroll any more. body is the scroller and the
+     document is one viewport, so Safari DOCKS its bar instead of
+     floating it, the bar brings its own backdrop, and the page ends
+     cleanly above it. There is no strip to leak into and no slack to
+     carry. See the shell in css/common.css. */
+  height: 100%;
 
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
@@ -72,27 +46,9 @@
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
-  /* The content ends where the DYNAMIC viewport ends.
-   
-     This is ask-nereus-client's arrangement, which has no keyboard code
-     at all and does not need any: its shell is 100dvh, the bar is the
-     last item in it, so when the browser gives back less room the shell
-     shrinks and the bar comes with it. dvh is whatever you have right
-     now — toolbar out, toolbar away, and, where the browser resizes for
-     it, keyboard up.
-     
-     The BOX stays --hero-height, which is static on purpose: the
-     diagonal rests against the bottom of this box, and a box that
-     changed size mid-scroll is what made the cut move around in the
-     first place. Only the padding is dynamic, so only the CONTENT
-     follows the viewport. The cut does not move.
-     
-     It was 2 * --chrome-slack, which is the same number by a longer
-     road: hero is lvh + slack, so hero - dvh is 2*slack with the
-     toolbar out and 1*slack with it away — exactly what the old pair of
-     rules worked out to. The difference is that this one keeps tracking
-     after the toolbar has finished moving. */
-  padding-bottom: calc(var(--safearea-padding-bottom) + var(--hero-height) - 100dvh);
+  /* The notch and the gutter, and nothing else. The box is the viewport
+     now, so there is no slack between it and the screen to subtract. */
+  padding-bottom: var(--safearea-padding-bottom);
 
   /* The portrait hangs below the first screen so the cut can hide its
      bottom edge; clipping sideways keeps the phone layout's overhang from
@@ -104,9 +60,13 @@
 .hero:before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  /* inset rather than top/left/width/height, so the bottom can go
+     NEGATIVE: the artwork hangs --portrait-sink below the first screen,
+     which is where the diagonal's lowest point reaches, plus
+     --portrait-drop on a wide screen. The overhang is covered by the
+     dark section at rest and is what the cut passes across once it
+     swings. */
+  inset: 0 0 calc(0px - var(--portrait-sink) - var(--portrait-drop)) 0;
   /* Taller than the first screen by exactly the sink, so the portrait has
      somewhere to paint below the fold.
      
@@ -116,16 +76,6 @@
      — the one place the cut can never reach. Caught by walking the pixels
      of a 768px screenshot: the strongest edge in the column sat exactly on
      the fold rather than on the slope. */
-  /* The whole box plus the sink — 100% is the full 100lvh, so the artwork
-     reaches past the cut no matter how much of the screen the chrome is
-     sitting over.
-     
-     Subtracting the slack here was the obvious-looking version and it is
-     wrong: it ends the artwork at 100svh + sink while the cut starts at
-     100lvh, which exposes the photograph's own bottom edge by however
-     much the toolbar covers minus the sink. The strip it reaches into is
-     the one behind the toolbar, which nobody can see anyway. */
-  height: calc(100% + var(--portrait-sink));
   /* Sized to land him exactly where `cover` on the OLD artwork put him.
    *
    * That artwork was 4096x2726 — LANDSCAPE, with him occupying 27.4% of its
@@ -194,6 +144,19 @@
  * one decision — headline top, portrait middle, bar bottom — and splitting
  * them would give a band of widths with half of it applied.
  */
+/* ── On a wide screen he sits a little below the mock ─────────────────── */
+/*
+ * --portrait-crop puts his head at exactly 0.200 of the screen, which is
+ * where design/v2 has it. Will, looking at that: "on desktop, the
+ * picture is slightly too high." 40px takes him to about 0.244.
+ *
+ * THIS IS THE ONE TO TUNE — larger drops him further, smaller raises
+ * him, 0 puts him back on the mock.
+ */
+@media only screen and (min-width: 901px) {
+  :root { --portrait-drop: 40px; }
+}
+
 @media only screen and (max-width: 900px) {
   /* On :root, not on .hero:before.
      
@@ -231,6 +194,28 @@
        with no division, buys about 60px of lift for about 60px of
        width and stops there. */
     --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
+
+    /* How tall the fade under him is, measured from the bottom of the
+       ARTWORK — which is --portrait-sink below the fold.
+       
+       Will: "a fading band, from the gray to transparent, vertical
+       fading, solid at the bottom to fade the picture leg all the way to
+       mid height point of the input bar." So the top of the band is the
+       middle of the input row: up from the bottom of the artwork by the
+       sink, then the gutter and safe area the bar sits on, then half the
+       row's height. */
+    --portrait-fade: calc(var(--portrait-sink)
+                        + var(--safearea-padding-bottom)
+                        + 0.5 * var(--chat-form-height));
+
+    /* And how much of that band is FULLY solid before the fade begins,
+       from the same bottom edge. This is the bar's bottom EDGE, so there
+       is nothing of him under the bar at all and the whole fade is spent
+       between the bar's bottom and its middle. Solid only to the sink
+       left his leg coming through at about 40% down there — Will: "fade
+       more, I don't really want to see the leg below the bar." */
+    --portrait-solid: calc(var(--portrait-sink)
+                         + var(--safearea-padding-bottom));
   }
 
   .hero:before {
@@ -242,8 +227,16 @@
        the viewport less the room the headline and the icons need, and no
        taller. His head therefore clears them, and the chips and the bar
        pass over his legs the way the glass was always meant to. */
-    background-position: right bottom;
-    background-size: auto var(--portrait-height);
+    /* Two layers on one element: the fade over the photograph. Not a box
+       of its own — no node, no z-index to keep in order, and it cannot
+       drift out of alignment with the thing it is fading. The bar's own
+       backdrop-filter samples this rather than his leg, so the glass
+       comes out cleaner too. */
+    background:
+      linear-gradient(to top, var(--background) var(--portrait-solid), transparent)
+        no-repeat bottom / 100% var(--portrait-fade),
+      url("../assets/background.webp")
+        no-repeat right bottom / auto var(--portrait-height);
   }
 }
 

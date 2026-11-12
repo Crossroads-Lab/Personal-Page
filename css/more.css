@@ -31,8 +31,24 @@
   --label-blue: #8AB8E6;
   --label-amber: #E0B36A;
   --label-green: #7FC8B0;
-  --badge-bg: #FFF1D6;
-  --badge-text: #7A4B00;
+  /* An outline, not a slab.
+   
+     It was a filled cream pill with brown text, which on a section this
+     dark was the brightest thing on the screen — brighter than the
+     book's title, which is the thing it is a footnote to. Will: "the #1
+     amazon bestseller chip is too bright, maybe dim a lot the
+     background, add brighter contour matching the text color?"
+     
+     So the ink carries it and the fill barely exists: a warm amber
+     against the dark, a tenth-opacity wash of the same hue behind it,
+     and a rim at just under half. One colour, three strengths, which is
+     why they cannot drift apart.
+     
+     #EBC98E on --bg-more is about 9:1, well clear of the 4.5 floor for
+     12px at weight 500. */
+  --badge-text: #EBC98E;
+  --badge-bg: rgb(from var(--badge-text) r g b / 0.10);
+  --badge-border: rgb(from var(--badge-text) r g b / 0.45);
 
   --r-card: 24px;
   --r-card-m: 22px;
@@ -61,6 +77,10 @@
    * right end carrying the whole slope — which is the same line through
    * different motion, and read wrong. */
   --cut-pivot: 0.8;
+  /* How much scrolling the swing takes: 18% of a viewport, as it always
+     has. Relative to the viewport rather than a pixel count, so it is
+     the same gesture on a small phone and a large desktop. */
+  --cut-travel: calc(0.18 * 100dvh);
 
   /* How much of the slope is on the RIGHT of the pivot: the distance the
      right end travels, and so how far the section's box has to start
@@ -87,12 +107,25 @@
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
-  /* The line is hinged at the LEFT edge of the screen and swings up.
+  /* At least a viewport, PLUS the cut.
+   
+     The box starts --cut-lead above the fold and the diagonal's lowest
+     point is --cut below its own top, so a section of exactly one
+     viewport cannot be scrolled far enough to get that lowest point off
+     the screen — the scroller runs out first and a wedge of the first
+     page stays in the top corner. The extra --cut is the room to scroll
+     past it.
      
-     At --cut-progress 0 it lies flat, --cut-rest below the bottom of
-     the first screen. As the page scrolls the left end does not move at
-     all — it is the hinge — and the right end rises, until at 1 it is
-     the full --cut above it.
+     min-height, not height: there is real content down here and it is
+     taller than this on most screens. */
+  min-height: calc(100dvh + var(--cut));
+
+  /* The line is hinged at --cut-pivot across and swings up.
+   
+     At rest both ends sit at --cut-lead, so the line is level. From
+     there the left end descends by the pivot's share of the slope and
+     the right end climbs by the rest, and the point at --cut-pivot
+     across never moves.
      
      Two earlier versions got this wrong in the same way: both let the
      line change its POSITION as well as its angle. The first slid the
@@ -102,25 +135,23 @@
      a boundary does. Here one point is nailed down and everything else
      is the consequence of the swing.
      
-     The box top sits a full --cut above the hinge, so the right end has
-     room to rise into it without the margin ever changing. The margin
-     being constant is also why this does not judder: no layout per
-     frame, only a clip path, and only inside this element.
+     The margin never changes, and that is why this does not judder: no
+     layout per frame, only a clip path, and only inside this element.
      
-     No transition. The scroll IS the timeline — a transition on top of
-     it would only add lag between the finger and the line. */
-  margin-top: calc(var(--cut-rest) - var(--cut-lead));
+     Plus a pixel on the margin, and the pixel is the point. At rest the
+     level line is --cut-lead below this box's top and the box's top is
+     --cut-lead above the fold, so the dark began at EXACTLY the fold —
+     and exactly is the problem, because a clip-path edge is antialiased
+     and on a 3x screen the boundary has subpixel coverage to spare.
+     Will: "there is a thin dark gray line visible on mobile from the
+     second page creeping in the first page." One pixel down and it
+     starts below the fold, where there is nothing to see it with. */
+  margin-top: calc(1px - var(--cut-lead));
 
-  /* At progress 0 both ends sit at --cut-lead, so the line is level and
-     lands exactly --cut-rest below the hero. From there the left end
-     descends by the pivot's share of the slope and the right end climbs
-     by the rest, and the point at --cut-pivot across never moves. */
-  clip-path: polygon(
-    0 calc(var(--cut-lead) + var(--cut) * var(--cut-pivot) * var(--cut-progress)),
-    100% calc(var(--cut-lead) * (1 - var(--cut-progress))),
-    100% 100%,
-    0 100%
-  );
+  /* Progress 0. Also the fallback: a browser with no scroll-driven
+     animations gets a straight edge rather than a broken one. */
+  clip-path: polygon(0 var(--cut-lead), 100% var(--cut-lead),
+                     100% 100%, 0 100%);
 
   /* Tells the compositor this is the thing that moves. */
   will-change: clip-path;
@@ -128,6 +159,42 @@
   /* Clears the hinge, which is the lowest the edge ever gets — or the
      first card's corner is cut off with it. */
   padding-top: var(--cut);
+}
+
+/*
+ * The swing, with no script.
+ *
+ * This was a scroll handler writing --cut-progress on every event, and
+ * the comments it left behind are worth keeping: it could not be
+ * coalesced with requestAnimationFrame, because on iOS the scroll runs
+ * on the compositor and rAF callbacks are not serviced while a flick is
+ * in flight — so the property only moved once the scroll came to rest
+ * and the line did not tilt, it arrived already tilted.
+ *
+ * None of that applies now. scroll(nearest block) binds to body, which
+ * is the scroller, and the swing plays across the first --cut-travel of
+ * it entirely on the compositor. `both` holds it open past the end of
+ * the range rather than snapping back.
+ */
+@keyframes cut-swing {
+  from {
+    clip-path: polygon(0 var(--cut-lead), 100% var(--cut-lead),
+                       100% 100%, 0 100%);
+  }
+  to {
+    /* Left end down by the pivot's share, right end to the top of the
+       box. */
+    clip-path: polygon(0 calc(var(--cut-lead) + var(--cut) * var(--cut-pivot)),
+                       100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .more {
+    animation: cut-swing linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: 0 var(--cut-travel);
+  }
 }
 
 .more-inner {
@@ -318,9 +385,54 @@
    * overshoots. Will: "it does display below the search bar (yaaay) but
    * move the first page way high than necessary on input focus."
    */
-  html:has(#chat-input:focus, #chat-input:active),
+  /*
+   * Snap between the two pages.
+   *
+   * proximity, not mandatory: the second page has real content and is
+   * taller than a screen on most phones, and mandatory would fight a
+   * reader every time they stopped between its only two snap points.
+   * proximity snaps when the scroll ENDS near one and leaves the rest
+   * alone, which is exactly the boundary we care about.
+   *
+   * scroll-snap-stop: always is what makes it feel paged rather than
+   * flung-then-corrected. Without it iOS does an ordinary fling, lets it
+   * decelerate wherever it likes, and only THEN animates to the snap
+   * point — and that second animation, tacked on after the first has
+   * died away, is a slow tail you can watch. Will: "the end of the
+   * scroll snap animation has a second order speed decrease and is a bit
+   * slow to move the remaining 10-20px in place." `always` forbids
+   * passing a snap point within one gesture, which puts the container on
+   * the paged physics: one animation, ending where the thumb aimed.
+   *
+   * The second page's snap position is moved DOWN past the cut by a
+   * negative scroll-margin, to the diagonal's lowest point — otherwise
+   * it lands --cut-lead short of a clean screen and leaves a wedge of
+   * the first page in the corner.
+   */
+  body {
+    scroll-snap-type: y proximity;
+  }
+
+  .hero,
+  .more {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .more {
+    scroll-margin-top: calc(0px - var(--cut));
+  }
+
+  /*
+   * One viewport, and nothing to scroll.
+   *
+   * On BODY, which is the scroller — the root is already 100dvh and
+   * hidden at rest (css/common.css), so there is nothing to add there.
+   * body's scrolling is what lets the second page exist, and it is
+   * exactly what Safari would spend bringing the field into view, so for
+   * the duration of the keyboard the box stops being a scroller.
+   */
   html:has(#chat-input:focus, #chat-input:active) body {
-    height: 100dvh;
     overflow: hidden;
   }
 
@@ -335,19 +447,27 @@
     display: none !important;
   }
 
-  /* And the first screen is the viewport too.
-     
-     At rest this box is --hero-height, which is deliberately LARGER than
-     the viewport so that whatever follows it starts below the bottom of
-     the screen in every toolbar state — see css/index.css. While typing
-     there is nothing following it, because #more is out of the document,
-     so the box can be the viewport itself. The padding at rest exists to
-     hold the content inside the small viewport while the box stays
-     large; the box IS the viewport now, so the only thing left to clear
-     is the notch. */
+  /*
+   * And the first screen is PINNED.
+   *
+   * Taking #more out of the document shrinks body's scrollable content
+   * to one viewport, which CLAMPS body.scrollTop to 0 — so the first
+   * screen jumps by however far it had been scrolled, at the same moment
+   * Safari is deciding how far to slide the visual viewport for a field
+   * it measured BEFORE the jump. The two disagree by exactly the scroll
+   * offset, and the disagreement is dead space above the keyboard. Then
+   * on the way out the page is left wherever that left it. Will: "If I
+   * focus the input while the page scrolled a bit up, new space is
+   * introduced above the keyboard and unfocusing does not scroll the
+   * first page all the way back."
+   *
+   * Fixed anchors it to the layout viewport rather than to a scroll
+   * offset, so the bar is in the same place whether the page was at the
+   * top or half way down, and body has nothing in flow left to scroll.
+   */
   html:has(#chat-input:focus, #chat-input:active) .hero {
-    height: 100dvh;
-    padding-bottom: var(--safearea-padding-bottom);
+    position: fixed;
+    inset: 0;
   }
 }
 
@@ -408,10 +528,13 @@
   align-self: flex-start;
   font-size: 12px;
   font-weight: 500;
-  padding: 5px 12px;
+  /* One less than it was on each side, so the rim below does not make
+     the pill bigger than the one it replaces. */
+  padding: 4px 11px;
   border-radius: 14px;
   background: var(--badge-bg);
   color: var(--badge-text);
+  border: 1px solid var(--badge-border);
 }
 
 /* ── The research card ───────────────────────────────────────────────── */
