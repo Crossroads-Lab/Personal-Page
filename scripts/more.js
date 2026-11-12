@@ -138,10 +138,16 @@ let last = -1;
  * times, not hundreds.
  */
 const paintProgress = () => {
+  if (!more) return;
   const progress = Math.min(1, Math.max(0, window.scrollY / travel()));
   if (Math.abs(progress - last) < 0.004 && progress !== 0 && progress !== 1) return;
   last = progress;
-  document.documentElement.style.setProperty("--cut-progress", progress.toFixed(4));
+  /* On the section, NOT on :root. A custom property set on the root
+     invalidates style for every element in the document, because custom
+     properties inherit and the engine cannot know who read it. Setting
+     it here keeps the recalculation to one subtree, which is the other
+     half of why the tilt juddered. */
+  more.style.setProperty("--cut-progress", progress.toFixed(4));
 };
 
 paintProgress();

@@ -66,12 +66,16 @@
   /* The cut arrives by tilting, and how far it has tilted is the scroll
      position — not a threshold that trips somewhere.
      
-     At --cut-progress 0 both ends of the slope are level, so the top
-     edge is HORIZONTAL and sitting --cut-rest below the first screen,
-     where nothing a phone paints can reach it. As the page moves the
-     left end drops to the full --cut and the whole section rises past
-     the fold, so the line tilts into its diagonal and bites into the
-     bottom of the first screen at the same time.
+     ONLY the clip-path changes per frame. The first version animated
+     margin-top, which is a layout property: every scroll event reflowed
+     this section and everything in it, and the tilt juddered. The box now
+     sits permanently at its final height — pulled up by --cut-rise — and
+     the clip path alone decides where the dark begins inside it.
+     
+       at progress 0   top edge --cut-rest below the fold, and LEVEL,
+                       which is the one shape that cannot look wrong
+                       down in the strip a phone paints past its viewport
+       at progress 1   top edge --cut-rise ABOVE the fold, full slope
      
      A margin rather than a taller .hero, for the reason that cost an
      hour earlier: the portrait is anchored to the bottom of the hero's
@@ -79,20 +83,24 @@
      
      No transition. The scroll IS the timeline — a transition on top of
      it would only add lag between the finger and the line. */
-  margin-top: calc(
-    var(--cut-rest) - (var(--cut-rest) + var(--cut-rise)) * var(--cut-progress)
-  );
+  margin-top: calc(-1 * var(--cut-rise));
+
+  /* Where the top edge sits inside the box, at the right-hand end. */
+  --cut-top: calc((var(--cut-rest) + var(--cut-rise)) * (1 - var(--cut-progress)));
 
   clip-path: polygon(
-    0 calc(var(--cut-desktop) * var(--cut-progress)),
-    100% 0,
+    0 calc(var(--cut-top) + var(--cut-desktop) * var(--cut-progress)),
+    100% var(--cut-top),
     100% 100%,
     0 100%
   );
 
-  /* The full slope, always: the content has to clear the steepest the
-     line ever gets, or the first card's corner is cut off with it. */
-  padding-top: var(--cut-desktop);
+  /* Tells the compositor this is the thing that moves. */
+  will-change: clip-path;
+
+  /* Clears the rise the box was pulled up by, plus the steepest the line
+     ever gets — or the first card's corner is cut off with it. */
+  padding-top: calc(var(--cut-rise) + var(--cut-desktop));
 }
 
 .more-inner {
@@ -435,12 +443,12 @@ body:not([chat-started]) .quick-link[href$="#more"] {
 
   .more {
     clip-path: polygon(
-      0 calc(var(--cut-mobile) * var(--cut-progress)),
-      100% 0,
+      0 calc(var(--cut-top) + var(--cut-mobile) * var(--cut-progress)),
+      100% var(--cut-top),
       100% 100%,
       0 100%
     );
-    padding-top: calc(var(--cut-mobile) + 40px);
+    padding-top: calc(var(--cut-rise) + var(--cut-mobile) + 40px);
   }
 
   .more-inner {

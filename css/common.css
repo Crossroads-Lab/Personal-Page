@@ -298,11 +298,30 @@ input[type=number] {
   }
 }
 
-/* A phone or a tablet: the chrome floats over the page, so the cut has
-   to start below everything the screen can paint. */
+/* A phone or a tablet: the chrome floats over the page, so the cut has to
+   start below everything the screen can paint.
+   
+   Every term is measured, nothing is a number somebody liked:
+   
+     --screen-slack          screen.height - innerHeight, from JS. The
+                             display minus the viewport: the strip the
+                             browser's own furniture sits over.
+     100lvh - 100svh         the same gap as CSS reports it. It reads 0
+                             against a floating toolbar, which is why it
+                             is not trusted alone — but it is right when
+                             the chrome resizes the viewport instead, so
+                             the larger of the two is the honest answer.
+     safe-area-inset-bottom  the home indicator, where one is reported.
+     2svh                    slop, as a share of the screen rather than a
+                             pixel count, so it scales with the device.
+*/
 @media (hover: none) {
   :root {
-    --cut-rest: calc(var(--screen-slack) + env(safe-area-inset-bottom, 0px) + 16px);
+    --cut-rest: calc(
+      max(var(--screen-slack), 100lvh - 100svh)
+      + env(safe-area-inset-bottom, 0px)
+      + 2svh
+    );
   }
 }
 }
