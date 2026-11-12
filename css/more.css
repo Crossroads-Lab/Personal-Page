@@ -569,7 +569,24 @@
 /* One top paper per line. Unused until the three are to hand (index.html),
    but the shape is settled so adding them is three lines of content and no
    layout decisions. */
+/* The papers are one link, not three lines of text beside a button.
+   
+   Will: "Make it seem like they can click somewhere to see more (link to
+   Google scholar)." The button below has always gone to Scholar, but
+   nothing about the list said the list itself was a way in — and the
+   list is what someone is actually reading when they wonder what else
+   there is.
+   
+   display: block on the anchor so the spans inside stack as lines. */
+.papers {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .paper {
+  display: block;
   margin: 0 0 6px;
   font-size: 13px;
   line-height: 1.5;
@@ -578,10 +595,50 @@
 
 .paper:last-of-type { margin-bottom: 6px; }
 
+/* The affordance, since a touch screen has no hover to discover it with.
+   The arrow is a pseudo-element rather than a character in the markup,
+   so it cannot be selected or read out as "right arrow" by a screen
+   reader that is already announcing the link. */
+.papers-more {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--badge-text);
+}
+
+.papers-more::after {
+  content: " →";
+  display: inline-block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .papers:hover .paper { color: var(--text-on-dark); }
+  .papers:hover .papers-more::after { transform: translateX(3px); }
+}
+
+.papers:focus-visible {
+  outline: 2px solid var(--badge-text);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* Full strength, and the three names bolder still.
+   
+   Will: "Previously at... I would bold and emphasize that." It was 13px
+   at a held-back grey, which put the three most recognisable words on
+   the card below the papers in the reading order. The names carry it
+   now; the words around them stay quiet so the names are what the eye
+   lands on. */
 .previously {
   margin: 0;
-  font-size: 13px;
-  color: #E8E6DC;
+  font-size: 14px;
+  color: var(--text-on-dark-2);
+}
+
+.previously b {
+  font-weight: 600;
+  color: var(--text-on-dark);
 }
 
 /* ── The closing card: light on dark, so it reads as the way out ─────── */

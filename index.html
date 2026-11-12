@@ -52,7 +52,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=3225f467" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=b7c16f21" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=5946fe3c" type="module" defer></script>
@@ -459,14 +459,24 @@
           </div>
           <hr>
           <!--
-            Three papers, not the three most cited.
+            Three papers, not the three most cited, and newest first.
 
             The top three by citations are all 2009-2011 Oregon State work
             with Sinisa Todorovic — 276, 235 and 159 on OpenAlex. Three
             lines all ending in 2011 say the research stopped fifteen years
-            ago, which is not what happened. So the third slot goes to the
-            Snap paper: fourth by citations among his own work, and the
-            same subject as the RE•WORK interview in the card above it.
+            ago, which is not what happened, so the two 2011 entries came
+            out. Will: "remove the first two, add the privacy preserving
+            friend recommendation and the most recent one."
+
+            The most recent one is YMIR, 2021. OpenAlex lists a 2022 entry
+            above it titled "Overview:" with no venue and no citations,
+            which is a metadata stub rather than a paper, so the newest
+            real work is the 2021 arXiv platform paper.
+
+            Newest first, which is the opposite of how this read before. A
+            recruiter scanning the card gets 2021 in the first line
+            instead of having to reach the third to find out the work did
+            not stop.
 
             NO CITATION COUNTS. The figure above this divider is Google
             Scholar's, and Scholar counts roughly double what OpenAlex
@@ -480,10 +490,15 @@
             another William Brendel publishing on mindfulness and
             leadership whose work sorts into the same name search.
           -->
-          <p class="paper">Multiobject tracking as maximum weight independent set · CVPR · 2011</p>
-          <p class="paper">Learning spatiotemporal graphs of human activities · ICCV · 2011</p>
-          <p class="paper">Improving multi-label emotion classification via sentiment classification · EMNLP · 2018</p>
-          <p class="previously">Previously at Google · Amazon · Snap</p>
+          <a class="papers"
+             href="https://scholar.google.com/citations?user=mR3fVeIAAAAJ&amp;hl=en"
+             target="_blank" rel="noopener">
+            <span class="paper">YMIR: a rapid data-centric development platform for vision applications · arXiv · 2021</span>
+            <span class="paper">Practical privacy-preserving friend recommendations on social networks · WWW · 2018</span>
+            <span class="paper">Improving multi-label emotion classification via sentiment classification · EMNLP · 2018</span>
+            <span class="papers-more">All 30+ on Google Scholar</span>
+          </a>
+          <p class="previously">Previously at <b>Google</b> · <b>Amazon</b> · <b>Snap</b></p>
           <div class="card-actions">
             <a class="btn btn--primary"
                href="https://scholar.google.com/citations?user=mR3fVeIAAAAJ&amp;hl=en"
