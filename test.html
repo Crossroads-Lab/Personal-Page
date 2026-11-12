@@ -52,81 +52,59 @@
 
   <!--
     ===================================================================
-    A control.
+    A control, one step further on.
 
-    Still no script of any kind, and still no portrait — those are the
-    two things that make it a control, and they have not changed. What
-    HAS been added is the type and the chips, because a bar that behaves
-    on a bare page and misbehaves on the real one is only useful if the
-    difference between the two is small enough to name. It now is: the
-    real first screen minus the photograph and minus every line of JS.
+    Still no script of any kind. That is the only thing left that makes
+    it a control, and it is the thing worth protecting: whatever this
+    page does is the browser.
 
-    The layout is ask-nereus-client's, which is the thing being tested:
+    Added this round: the second page. Which changes more than it looks
+    like it does, because a page with something below the fold is a page
+    that SCROLLS, and almost everything learned tonight turned on that.
 
-      html, body { height: 100dvh; overflow: hidden }
-      body       { display: flex; flex-direction: column }
-      main       { flex: 1 }            <- absorbs the shrink
+      Safari floats its bottom bar over a scrollable page and docks it on
+      a page that does not scroll. That is why the photograph was cut off
+      here and not on the real page, and the long list of repairs that
+      failed — a taller absolute box, overflow: clip, position: fixed,
+      the canvas background — were all failing against the same wall: on
+      a non-scrolling page that line really is the bottom of the
+      viewport.
+
+      So the canvas-background trick is gone, along with html at 100vh
+      and --portrait-overhang. None of it is needed once there is a
+      second page: the portrait goes back to being .hero::before on a
+      box that is --hero-height tall, exactly as on the real page, and it
+      reaches under the bar because the page scrolls.
+
+    The shell moves off body and onto .hero, for the same reason it did
+    on the real page: body is a page now, not a screen.
+
+    What is NOT here yet, and should be added one at a time:
+
+      the diagonal cut between the two pages
+      the icon row under the headline
+      everything the second page actually contains
+
+    The keyboard arrangement is unchanged and is the thing still under
+    test:
+
+      .hero      { height: --hero-height }   taller than the viewport
+      main       { flex: 1 }                 absorbs the shrink
       the bar    { last child, flex-shrink: 0 }
 
-    dvh is the dynamic viewport. If it follows the keyboard, main gives
-    up the room and the bar rides down onto the keys. If it does not —
-    and the spec says the keyboard resizes only the VISUAL viewport
-    unless interactive-widget says otherwise — then this page is exactly
-    one layout viewport tall with the bar at the bottom and nothing to
-    scroll, so Safari slides the visual viewport to bring the field into
-    view and the bar arrives on the keys that way instead.
-
-    Which of those two it is, this page cannot tell you. What it can
-    tell you, and did, is that the arrangement works. css/more.css now
-    carries the same two rules for the real page while someone is
-    typing, written so it is correct either way.
-
-    THE ONE THING THIS PAGE CANNOT MATCH, and it is worth writing down
-    because three separate repairs were spent on it:
-
-    The photograph is cut off at the bottom here and is not cut off on
-    the real page. That is not the picture, the box, or the clip. It is
-    that the real page SCROLLS and this one does not. Safari floats its
-    bottom bar over a scrollable page — which is why the real page paints
-    under it — and docks the bar on a page that does not scroll, where it
-    gets its own backdrop and the page genuinely ends above it.
-
-    So the line everything stopped at really is the bottom of the
-    viewport here, and nothing a page can draw gets past it. Tried and
-    failed, in order: a taller absolute box (clipped by body's overflow
-    at 100dvh), overflow: clip on the shell instead of hidden (`hidden`
-    is a scroll container that refuses the finger but not Safari's own
-    scroll-into-view — scrollTo(500) moved it to 85), position: fixed
-    (iOS clips fixed boxes to the layout viewport), and the canvas
-    background (painting area is the whole canvas, and it changed
-    nothing, which is what proved the line is the viewport).
-
-    This page has to be exactly one screen with nothing to scroll — that
-    is what makes it a keyboard control — so it cannot also have the
-    floating bar. The cut is expected. It does not reach the real page:
-    at rest that page scrolls and the portrait paints under the bar, and
-    while typing body goes to height: 100dvh and overflow: clip, where
-    the bar docks but its edge lands exactly where the keyboard starts.
-
-    Everything below is copied from the real stylesheets rather than
-    re-invented, so a difference in behaviour is a difference in the
-    page and not in the CSS. Where a rule needed JS to earn its keep —
-    the chip row's overflow fade, the stagger on entry, the focus
-    states — it is either hard-coded or left out, and said so.
+    and while typing, one selector takes the page down to one screen with
+    nothing to scroll and the second page out of the document. No script,
+    no interception. Same rules as css/more.css, to the character.
     ===================================================================
   -->
 
-  <!-- Poppins, plain. The real page defers it behind an onload handler;
-       there is no script here, so it is a stylesheet link. Same family,
-       same weights that get used: 200 greeting, 300 chips, 400 headline
-       and field. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500&display=swap">
 
   <style>
-    /* ── Tokens, lifted from css/common.css ────────────────────────── */
+    /* ── Tokens, lifted from css/common.css and css/more.css ───────── */
     :root {
       --color: #111;
       --background: #E3E5E6;
@@ -135,12 +113,14 @@
       --send: #FFFFFFEE;
       --blur-filter: blur(10px) saturate(180%);
 
+      --bg-more: #262624;
+      --text-on-dark: #F5F4EF;
+      --text-on-dark-2: #C2C0B6;
+
       --border-radius-round: max(100vw, 100vh);
 
       --safearea-top: env(safe-area-inset-top, 0px);
       --safearea-bottom: env(safe-area-inset-bottom, 0px);
-      --safearea-left: env(safe-area-inset-left, 0px);
-      --safearea-right: env(safe-area-inset-right, 0px);
 
       --padding: min(max(2.4169dvw, 16px), 24px);
       --safearea-padding-top: calc(var(--safearea-top) + var(--padding));
@@ -150,84 +130,33 @@
       --main-max-width: calc(100dvw - 2 * var(--padding));
       --chat-form-height: min(max(6.2840dvw, 48px), 56px);
 
-      /* ── The portrait, lifted from css/common.css ───────────────── */
+      /* ── The portrait ───────────────────────────────────────────── */
 
-      /* How much of the screen Safari's floating bar is sitting over.
-         No unit reports it and no inset describes it — measured on the
-         device it came out one toolbar tall, and 100lvh - 100svh is the
-         only expression of that the browser will give you. Falls back to
-         0 where the units do not exist, which costs nothing. */
+      /* How much of the screen Safari's floating bar sits over. No unit
+         reports it and no inset describes it; measured on the device it
+         came out one toolbar tall, and 100lvh - 100svh is the only
+         expression of that the browser will give you. */
       --chrome-slack: 0px;
 
-      /* The largest the viewport ever gets, plus another slack.
-         
-         This is css/common.css verbatim, and it is here now because the
-         page WAS cut off at the bottom without it. Measured on the
-         device: by every number the browser reports, 100lvh is the
-         bottom of the screen; it is not. iOS paints a further toolbar's
-         worth below it, behind its own floating bar, and the inset that
-         is supposed to describe that region reads 0.
-         
-         The shell below stays 100dvh — that is the arrangement being
-         tested and it does not change. This number is only for the
-         photograph, which has to reach into a strip nothing can measure. */
+      /* The largest the viewport ever gets, plus another slack. The
+         first screen is this tall so that whatever follows it starts
+         below the bottom of the screen in every toolbar state —
+         including the floating kind the page paints behind. */
       --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
-      /* The cut's own geometry, kept because the sink is derived from it
-         and the sink changes how big the photograph is drawn. There is no
-         cut here and no section for one to open onto, so --cut-rest is 0
-         rather than the measured value JS writes on the real page. */
-      --cut: 56px;              /* --cut-mobile; 120px over 900 */
+      /* The cut's geometry. There is no diagonal here yet, but the sink
+         is derived from it and the sink is what lets the photograph hang
+         below the first screen, where the second page covers its cropped
+         bottom edge instead of the fold cutting across it. */
+      --cut: 56px;
       --cut-pivot: 0.8;
       --cut-rest: 0px;
-
-      /* How far the portrait sinks below the first screen, so the diagonal
-         passes UNDER its hard bottom edge instead of across it. The photo
-         is cropped at the shoe, and anchored to the fold that flat edge
-         reads as a cut of its own. Kept here even without a diagonal,
-         because it is also what pushes the photograph's own bottom edge
-         off the screen — which is exactly the thing that went wrong in
-         ?solo. */
       --portrait-sink: calc(var(--cut-rest) + var(--cut) * var(--cut-pivot));
 
-      /* 74.2vw is the mock's width — he is 0.36 of the window across in it,
-         and at 0.485 of the crop that needs 0.742 of the window. The other
-         term is the mock's height. On the mock's own aspect the height
-         binds; on a tall narrow window the width binds instead and keeps
-         him off the headline rather than letting a tall window inflate
-         him. 0.858 is how much of the crop is him, measured off the file. */
       --portrait-crop: min(74.2vw, calc(0.9324 * var(--hero-height) + var(--portrait-sink) / 0.858));
-      /* He is 77.5% of the crop's width, and the crop is 0.6260 as wide as
-         it is tall (1252/2000) — so 0.485 of its height. */
       --portrait-width: calc(0.485 * var(--portrait-crop));
-      /* What the headline and the icon row need at the top of a narrow
-         screen. svh, not dvh: this sets how far down he starts, and a
-         value that tracks the toolbar makes him drift up as you scroll. */
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
-
-      /* How far below the ROOT'S BOX his bottom edge lands.
-         
-         Measured from 100vh now, not from 100dvh, which is Will's
-         hypothesis and the one variable none of the four attempts
-         actually changed:
-         
-           "try again with the picture down on test and one modif to make
-            the picture appear. That is probably the difference between
-            vh and dvh"
-         
-         It holds together. A canvas background is POSITIONED against the
-         root's box even though it PAINTS across the whole canvas, and
-         the root's box here was 100dvh — so every version of this, at
-         every overhang, was being measured from the dynamic viewport,
-         which is the one thing that stops at the fold. The real page's
-         .hero is 100lvh plus the chrome slack, a vh-shaped box, and the
-         real page is the one that paints under the bar.
-         
-         So the root goes to 100vh below and this is measured off it:
-         bottom edge at --hero-height + sink, which is the same place
-         .hero::before puts it. Picture down, as asked. */
-      --portrait-overhang: calc(var(--hero-height) + var(--portrait-sink) - 100vh);
     }
 
     @supports (height: 1lvh) and (height: 1svh) {
@@ -236,140 +165,73 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── The shell ─────────────────────────────────────────────────── */
-    /* THE ONE MODIFICATION under test.
-       
-       The root is 100vh; body stays 100dvh. On iOS those are different
-       numbers — 100vh is the LARGE viewport, the one you get with the
-       toolbar retracted, so the root's box reaches under Safari's bar
-       while the shell that holds the layout does not.
-       
-       Only the root changes, and the root does not hold any of the
-       layout: body carries the flex column, the spacer and the bar, and
-       it is still 100dvh, so the keyboard arrangement that works is
-       untouched. What the root's box decides is where the canvas
-       background is positioned from — and that is the thing that has
-       been measured off the dynamic viewport in all four attempts so
-       far.
-       
-       What this might cost: the root's box is now taller than the
-       viewport, which is scrollable overflow, and `overflow: hidden` is
-       a scroll container that refuses the finger but not Safari's own
-       scroll-into-view. If the page starts jumping on focus, that is
-       what it is, and it is the thing to report. */
-    html {
+    /* ── The page ──────────────────────────────────────────────────── */
+    /* A page now, not a screen: it scrolls, because there is a second
+       page under the first one. No height and no overflow here — that is
+       what lets Safari float its bar rather than dock it. */
+    html, body {
       width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* And back to the dynamic viewport the moment anything is focused.
-       
-       Will, on the three screenshots of the vh version: "that was the
-       issue it looks like that when the first page is not at dvh, then
-       the keyboard does extra move up." Which is the whole problem in
-       one sentence — the root's box being taller than the viewport IS
-       scrollable room, and Safari spends it bringing the field into
-       view.
-       
-       So vh and dvh are not a choice between the picture and the
-       keyboard. They are wanted at different moments: tall at rest, so
-       the background is positioned from a box that reaches under
-       Safari's bar; dvh while typing, so there is nothing to scroll.
-       
-       The real page switches on an attribute set from the tap. This page
-       has no script and does not need one: :has() on the root is the
-       same switch in CSS.
-       
-       :active is in there as well as :focus, and it is the part that
-       might decide this. Safari works out where to scroll AS it opens
-       the keyboard, so a switch that lands on the focus event may land
-       after the decision — which is the whole reason the real page
-       intercepts pointerdown rather than focus. :active matches while
-       the finger is still down, before the focus, so it is that same
-       interception with no script in it.
-       
-       If this does not overshoot, the real page can drop its keyboard JS
-       entirely and the night reduces to two rules. If it does, the
-       timing is the thing that beat us, not the units. */
-    html:has(#chat-input:focus, #chat-input:active) {
-      height: 100dvh;
-    }
-
-    body {
-      width: 100%;
-      height: 100dvh;
-      overflow: hidden;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      /*
-       * He is the page's BACKGROUND, not a box on it, and that is the
-       * whole trick.
-       *
-       * The root here has no background of its own, so body's propagates
-       * to the canvas — and the canvas background's painting area is not
-       * the element's box, it is the entire canvas. It is already the
-       * thing painting the grey strip under Safari's floating bar, which
-       * is the only proof needed that something CAN paint there.
-       *
-       * Positioning is still done against the root's box, which is the
-       * dynamic viewport, so the bottom edge is pushed past it by the
-       * overhang — and the part of the image that falls outside that box
-       * still paints, because the painting area does not end where the
-       * positioning area does.
-       *
-       * Three things were tried before this, and each failed for its own
-       * reason, so none of them should come back:
-       *
-       *   absolute inside body — body is `overflow: hidden`, which clips
-       *   its descendants to its own box, and its box is exactly 100dvh.
-       *   His shoe was cut off at the fold.
-       *
-       *   overflow: clip on the shell instead of hidden — `hidden` is a
-       *   scroll container that refuses the finger but not a function
-       *   call, and the caller is Safari moving a focused field into
-       *   view. Measured: scrollTo(500) took the page to 85. `clip`
-       *   should not be a scroll container at all and in Chromium on the
-       *   root it still went to 85.
-       *
-       *   position: fixed — escapes body's clip and adds nothing
-       *   scrollable, and iOS clips fixed boxes to the LAYOUT viewport,
-       *   which is innerHeight. So he stopped dead at 100dvh again, a
-       *   little lower than before and no better. Will: "Bottom still
-       *   opaque."
-       *
-       * In-flow content does reach that strip — the dark section was
-       * measured there, visible, 40px below every number the browser
-       * reports as the bottom of the screen. The canvas background
-       * reaches it too, and unlike in-flow content it cannot be scrolled,
-       * cannot be clipped, and costs no box at all.
-       */
-      background: var(--background)
-                  url("assets/background.webp") no-repeat
-                  right calc(100% + var(--portrait-overhang))
-                  / auto var(--portrait-height);
+      background: var(--background);
       color: var(--color);
       font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-weight: 300;
       line-height: 1.5;
+    }
+
+    /* ── The first screen ──────────────────────────────────────────── */
+    /* Exactly --hero-height, which is deliberately LARGER than the
+       viewport. The box is static on purpose: a box that changes size
+       mid-scroll moves everything in it, and that was the "weird
+       animation" at the bottom of the real page.
+       
+       The content then ends where the DYNAMIC viewport ends, via the
+       padding below, so the bar stays above the chrome rather than
+       behind it. */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: var(--hero-height);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       padding: 0 var(--padding);
       padding-top: var(--safearea-padding-top);
-      padding-bottom: var(--safearea-padding-bottom);
+      padding-bottom: calc(var(--safearea-padding-bottom) + var(--hero-height) - 100dvh);
+
+      /* Sideways only: the photograph's overhang is wider than the
+         column on a narrow window and would otherwise put a horizontal
+         scrollbar on the page. clip rather than hidden, because hidden
+         on one axis makes the other a scroll container. */
+      overflow-x: clip;
     }
 
-    /* The spacer. This is the piece that makes the whole arrangement
-       work: when the shell shrinks, this is what gives, and the bar is
-       carried down rather than squeezed. Copied from css/chat-content.css
-       including the odd-looking padding/margin pair — padding-top 24 with
-       margin-bottom -24 — which is there so the scroll box has a gutter
-       without the gutter costing layout height. */
+    /* The photograph. Taller than the first screen by the sink, so its
+       cropped bottom edge falls below the fold and the second page
+       covers it rather than the fold cutting across it. */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% + var(--portrait-sink));
+      background: url("assets/background.webp") no-repeat right bottom
+                  / auto var(--portrait-height);
+    }
+
+    /* The spacer that centres the column on a wide screen. */
+    .hero::after {
+      content: "";
+      flex: 0 0 0;
+      min-height: 0;
+    }
+
+    /* ── The spacer that absorbs the shrink ────────────────────────── */
     main {
+      position: relative;
+      z-index: 1;
       width: var(--main-width);
       max-width: var(--main-max-width);
       min-height: 0;
@@ -383,12 +245,9 @@
       margin-bottom: -24px;
       padding-bottom: 48px;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
     }
 
-    /* Vertical centring by auto margins rather than justify-content, so
-       that an overflowing child still starts at the top instead of being
-       cut off at both ends. */
     main::before,
     main::after { content: ""; margin: auto; }
 
@@ -404,8 +263,6 @@
       height: 100%;
       justify-content: center;
       align-items: center;
-      /* 80% ink. The headline is the loudest thing on the screen and at
-         full strength it was louder than it needed to be. */
       color: rgb(from var(--color) r g b / 0.8);
       font-size: var(--span-size);
       text-align: center;
@@ -434,23 +291,12 @@
 
     #welcome b { font-weight: 500; }
 
-    /*
-     * "start?" in a serif italic against the Poppins of the rest of the
-     * line — the one word the question turns on, and the only type
-     * contrast on the page.
-     *
-     * 1.24em is an optical match, not a nominal one. Measured off the
-     * canvas at 100px: Poppins has an x-height of 54.8 and Times italic
-     * 44.19, so Times set at the same nominal size reads as a step DOWN.
-     * 54.8 / 44.19 = 1.24 puts the x-heights level, which is the right
-     * target for a word with no capital in it. (Cap-heights would want
-     * only 1.05.)
-     *
-     * The stack ends in the generic `serif` on purpose: Times New Roman
-     * ships on macOS and Windows but not on Android or most Linux, where
-     * `serif` resolves to Noto Serif — a different face, but still a
-     * serif italic against a sans, which is the whole point.
-     */
+    /* 1.24em is an optical match, not a nominal one: Poppins has an
+       x-height of 54.8 at 100px and Times italic 44.19, so Times at the
+       same nominal size reads as a step DOWN. 54.8 / 44.19 = 1.24 puts
+       the x-heights level, which is the right target for a word with no
+       capital in it. The stack ends in generic serif because Times New
+       Roman is not on Android or most Linux. */
     #welcome h1 .accent {
       font-family: "Times New Roman", Times, serif;
       font-style: italic;
@@ -473,11 +319,11 @@
     /* ── The bar, and the chips that travel with it ────────────────── */
     #chat-input-container {
       position: relative;
+      z-index: 1;
       width: var(--main-width);
       max-width: var(--main-max-width);
       min-height: var(--chat-form-height);
       flex-shrink: 0;
-      z-index: 999;
     }
 
     #chat-input-form {
@@ -503,24 +349,22 @@
       cursor: text;
 
       margin: 0;
-      /* 8px of form padding leaves the text against the rim of a bar
-         this wide; 20 on the leading edge is simply the inset now. */
+      /* 8px of form padding leaves the text against the rim of a bar this
+         wide; 20 on the leading edge is simply the inset. */
       padding: 0 8px 0 20px;
       border: 0;
 
-      /* Written out longhand rather than as a `font:` shorthand. `font:
-         ... inherit` is invalid — inherit cannot stand in for the family
-         — so the whole declaration is dropped and the field falls back to
-         the UA default, which measured 13.33px. In the page built to test
-         the zoom. Caught by reading the computed value rather than the
-         source. */
+      /* Longhand, not a `font:` shorthand: `font: ... inherit` is
+         invalid — inherit cannot stand in for the family — so the whole
+         declaration is dropped and the field falls back to the UA
+         default, which measured 13.33px. In the page built to test the
+         zoom. */
       font-family: inherit;
       font-weight: 400;
-      /* 16px, and it cannot go below it: iOS Safari zooms the whole page
-         in when you focus a field under 16px, which moved the portrait,
-         ran the bar off both edges, and put every visualViewport number
-         in zoomed units. 16 exactly, not larger, because the bar's height
-         is built around this line box. */
+      /* 16px, and it cannot go below it: iOS zooms the whole page in when
+         you focus a field under 16px, which moved the portrait, ran the
+         bar off both edges, and put every visualViewport number in
+         zoomed units. */
       font-size: 16px;
       line-height: 1.5;
       align-self: center;
@@ -547,20 +391,11 @@
       cursor: pointer;
     }
 
-    /* The row is one line and scrolls rather than wraps — the labels are
-       topics rather than questions precisely so they fit, and a row that
-       goes to three lines stops reading as a row of options.
-
-       `safe center`: with plain `center` a row wider than its box
-       overflows equally both ways and the left end becomes unreachable,
-       because you cannot scroll to negative. `safe` falls back to
-       flex-start exactly when that would happen.
-
-       The width/translate pair pulls the row back out to the viewport
-       from inside the 512px container, so it can be wider than the bar
-       when the labels need it. `translate` rather than `transform`
-       because on the real page transform is already spoken for by the
-       entry animation. */
+    /* One line, scrolling rather than wrapping. `safe center` matters:
+       with plain `center` a row wider than its box overflows equally both
+       ways and the left end becomes unreachable, because you cannot
+       scroll to negative. The width/translate pair pulls the row back out
+       to the viewport from inside the 512px container. */
     #starter-chips {
       display: flex;
       flex-wrap: nowrap;
@@ -579,10 +414,9 @@
 
     #starter-chips::-webkit-scrollbar { display: none; }
 
-    /* On the real page scripts/starter-chips.js sets [overflowing] from
-       the scroll position, so the fade is never on an edge with nothing
-       behind it. There is no script here, so the end fade is written on
-       the element in the markup and simply stays there. */
+    /* The real page sets [overflowing] from the scroll position so the
+       fade is never on an edge with nothing behind it. No script here, so
+       the end fade is written on the element in the markup. */
     #starter-chips[overflowing="end"] {
       mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
     }
@@ -591,21 +425,13 @@
       flex: 0 0 auto;
       white-space: nowrap;
       font-family: inherit;
-      /* 0.9em — 12.6px against the 14px body. These sit under a headline
-         and a bar, four across, and at full size the row carried more
-         weight than either. */
       font-size: 0.9em;
       text-align: left;
-      /* 300, not the 400 a <button> inherits from the user agent: the
-         body is 300 and the headline is 400, so a 400 chip was the
-         heaviest text on a screen that is mostly whitespace, and four of
-         them read as a toolbar rather than as suggestions.
-
-         Held back to 72% so the row settles under the headline instead of
-         competing with it. Over the page background that is about 11:1,
-         miles clear of the 4.5:1 floor — and the phone block below puts
-         it back to full strength, because there the chips sit on the
-         portrait and a chip over the navy suit measured 4.9:1. */
+      /* 300, not the 400 a <button> inherits: the body is 300 and the
+         headline is 400, so a 400 chip was the heaviest text on a screen
+         that is mostly whitespace. Held to 72% so the row settles under
+         the headline; full strength under 900px, where the chips sit on
+         the portrait and one over the navy suit measured 4.9:1. */
       font-weight: 300;
       color: rgb(from var(--color) r g b / 0.72);
       text-decoration: none;
@@ -624,92 +450,144 @@
       gap: 6px;
     }
 
-    /* ── Phone ─────────────────────────────────────────────────────── */
-    /* ── The opening state, on a wide screen ──────────────────────── */
+    /* ── The second page ───────────────────────────────────────────── */
     /*
-     * On the real page the bar sits in the middle under the headline until
-     * the first question moves it to the bottom, and the move is animated
-     * through flex-grow so it glides rather than jumps. There is no first
-     * question here, so this is only the half that holds still — but
-     * without it the control looked nothing like the page it is a control
-     * for on a desktop screen.
+     * No diagonal yet. That is the next thing to add, and adding it on
+     * its own is the point: if the cut breaks something, it will be
+     * unambiguous which thing broke it.
      *
-     * The spacer is body::after because body is this page's shell; on the
-     * real page it is .hero::after, for the same reason one level down.
+     * z-index 1 so it paints OVER the photograph's overhang. That is how
+     * the cropped bottom edge is hidden — not by clipping the picture,
+     * which was tried and put a hard line across the fold, but by
+     * covering it with the page that follows.
+     *
+     * position: relative is what makes that z-index mean anything.
      */
-    body::after {
-      content: "";
-      flex: 0 0 0;
-      min-height: 0;
+    #more {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 100svh;
+      background: var(--bg-more);
+      color: var(--text-on-dark);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+
+      padding: 64px var(--padding);
+      padding-bottom: calc(64px + var(--safearea-bottom));
     }
 
+    #more h2 {
+      font-size: min(max(3.6254vw, 24px), 28px);
+      font-weight: 400;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+
+    #more p {
+      color: var(--text-on-dark-2);
+      max-width: 640px;
+      margin-inline: auto;
+    }
+
+    /* ── While the keyboard is up ──────────────────────────────────── */
+    /*
+     * The same three rules as css/more.css, on the same selector, with no
+     * script on either side.
+     *
+     * :focus is the state the old JS interception was racing — Safari
+     * works out where to scroll a focused field AS it opens the keyboard,
+     * so a page still two screens tall at that moment gets scrolled for
+     * two screens. :active matches while the finger is still down, which
+     * is the moment the old pointerdown handler fired, without taking the
+     * focus away from the browser and handing it back.
+     *
+     * On the root as well as on body, and `hidden` rather than `clip`:
+     * the viewport takes its overflow from the root when the root is not
+     * visible and from body otherwise, and whichever one it is taken FROM
+     * is then treated as visible itself. On body alone it clipped
+     * nothing — it handed the clip to the viewport and left body's own
+     * box open.
+     *
+     * (hover: none) because on a desktop there is no keyboard to make
+     * room for and focusing the field must not take the second page away.
+     */
+    @media (hover: none) {
+      html:has(#chat-input:focus, #chat-input:active),
+      html:has(#chat-input:focus, #chat-input:active) body {
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      html:has(#chat-input:focus, #chat-input:active) #more,
+      html:has(#chat-input:focus, #chat-input:active) .chip--more {
+        display: none !important;
+      }
+
+      html:has(#chat-input:focus, #chat-input:active) .hero {
+        height: 100dvh;
+        padding-bottom: var(--safearea-padding-bottom);
+      }
+    }
+
+    /* ── The opening state, on a wide screen ───────────────────────── */
     @media only screen and (min-width: 901px) {
-      /* 120px, not 56: the cut is deeper on a wide screen, so the sink is
-         too, and the photograph is drawn to match. */
+      /* The cut is deeper on a wide screen, so the sink is too. */
       :root { --cut: 120px; }
 
-      /* On a wide enough screen he stands to the right and the writing
-         keeps out of his way, which is how the design was drawn: headline,
-         bar and chips in the space beside him, not across him. Padding the
-         shell by his width makes that automatic — the column is centred by
-         flexbox, and flexbox is now centring it in what is left. */
-      body {
+      /* He stands to the right and the writing keeps out of his way.
+         Padding the first screen by his width makes that automatic: the
+         column is centred by flexbox, and flexbox is now centring it in
+         what is left. */
+      .hero {
         padding-left: var(--padding);
         padding-right: calc(var(--padding) + var(--portrait-width));
       }
 
-      /* The max-width override is as load-bearing as the padding.
-         --main-width is max(512px, 40%) and --main-max-width is measured
-         off the VIEWPORT, which knows nothing about the space reserved for
-         him — so without this a 512px bar ignores the narrowed column and
-         runs under him anyway. */
+      /* As load-bearing as the padding: --main-max-width is measured off
+         the VIEWPORT, which knows nothing about the space reserved for
+         him, so without this a 512px bar runs under him anyway. */
       main, #chat-input-container, #starter-chips { max-width: 100%; }
 
       /* Half the slack above the bar, half below: the bar lands in the
          middle. */
-      body::after { flex-grow: 1; }
+      .hero::after { flex-grow: 1; }
 
-      /* Centre the whole left column, not just the bar. main carries
-         `flex: 1`, which is a basis of ZERO — so main and the spacer grew
-         from nothing by the same amount and came out the same height,
+      /* main is flex: 1, a basis of ZERO, so main and the spacer grew
+         from nothing by the same amount and came out the same height —
          which centres the BAR and leaves the headline hanging above the
-         middle with nothing to balance it. A basis of auto makes main
-         start at the height of its content and grow from there, so it ends
-         up taller than the spacer by exactly the headline block. */
+         middle. A basis of auto makes main start at its content height
+         and grow from there. */
       main {
         flex-basis: auto;
-        /* main's own top padding would otherwise land entirely above the
-           headline and push the group down by that much. */
         padding-top: 0;
       }
 
-      /* main centres its children with `margin: auto` on both pseudos, so
-         main's extra height lands half above and half below the headline
-         and the group drifts up. Releasing the trailing one leaves the
-         leading auto margin to take all the slack, which puts the headline
-         at the bottom of main — directly above the bar. */
+      /* main centres its children with margin: auto on both pseudos, so
+         its extra height lands half above and half below the headline.
+         Releasing the trailing one puts the headline at the bottom of
+         main, directly above the bar. */
       main::after { margin: 0; }
 
       #welcome {
-        /* Content height, so main's auto basis means something. */
         height: auto;
         justify-content: flex-end;
-        /* The only gap between the headline and the bar. At 4px they read
-           as one stack rather than as a heading and a control. */
         padding-bottom: 32px;
       }
     }
 
+    /* ── Phone ─────────────────────────────────────────────────────── */
     @media only screen and (max-width: 900px) {
-      /* At crop height he is taller than the phone is wide, so he fills the
-         screen and the headline, the chips and the bar all sit on top of
-         him. Sizing him to what is left under the headline instead keeps
-         the top of the screen clear and puts the chips and the bar over his
-         legs, which is the glass doing its job rather than a collision.
-         
-         The sink is ADDED rather than spent pushing him down: the bottom is
-         nailed to the lowest point the cut ever reaches, so it cannot move,
-         and a taller draw raises his head by the difference. */
+      /* At crop height he is taller than the phone is wide, so he fills
+         the screen and the headline, the chips and the bar sit on top of
+         him. Sizing him to what is left under the headline keeps the top
+         clear and puts the chips and the bar over his legs. The sink is
+         ADDED rather than spent pushing him down: the bottom is nailed to
+         the lowest point the cut reaches, so a taller draw raises his
+         head by the difference. */
       :root {
         --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
       }
@@ -722,12 +600,8 @@
       #chat-input-container { display: flex; flex-direction: column; }
       #starter-chips { order: -1; margin: 0 0 14px 50%; }
 
-      /* Full strength here. On the real page these sit ON the portrait
-         and which chip you can read depends on what is behind it; the
-         held-back ink is there to stop four chips competing with the
-         headline, and over the suit there is no headline nearby to
-         compete with. Kept even though this page has no portrait, so the
-         two screens match. */
+      /* Full strength here: the chips sit ON the portrait and which one
+         you can read depends on what is behind it. */
       .starter-chip { color: var(--color); }
       .starter-chip.liquid-glass {
         background: rgb(from var(--liquid-glass-background) r g b / 0.5);
@@ -745,48 +619,66 @@
 </head>
 <body>
 
-  <main id="content">
-    <div id="welcome">
-      <div>
-        <!-- A <p>, not an <h2>: it reads as a line above the title, and
-             as an h2 it put a level two ahead of the level one for anyone
-             moving through the page by heading. -->
-        <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
-        <h1>Where should we <span class="accent">start?</span></h1>
+  <div class="hero">
+    <main id="content">
+      <div id="welcome">
+        <div>
+          <!-- A <p>, not an <h2>: it reads as a line above the title, and
+               as an h2 it put a level two ahead of the level one for
+               anyone moving through the page by heading. -->
+          <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
+          <h1>Where should we <span class="accent">start?</span></h1>
+        </div>
+      </div>
+    </main>
+
+    <div id="chat-input-container">
+      <form id="chat-input-form" class="liquid-glass" onsubmit="return false">
+        <textarea id="chat-input" placeholder="Ask me anything…" rows="1"
+                  autocomplete="off" autocorrect="off" autocapitalize="off"
+                  spellcheck="false"></textarea>
+        <button id="send" type="submit" aria-label="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- The four real starters (server/config.js STARTERS) and the More
+           chip, hard-coded. On the real page scripts/starter-chips.js
+           fetches them and holds More across the rebuild. -->
+      <div id="starter-chips" aria-label="Suggested questions" overflowing="end">
+        <button class="starter-chip liquid-glass" type="button">A time I failed</button>
+        <button class="starter-chip liquid-glass" type="button">A time I disagreed</button>
+        <button class="starter-chip liquid-glass" type="button">A call under pressure</button>
+        <button class="starter-chip liquid-glass" type="button">My biggest obstacle</button>
+        <a class="starter-chip chip--more liquid-glass" href="#more">
+          More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+          </svg>
+        </a>
       </div>
     </div>
-  </main>
-
-  <div id="chat-input-container">
-    <form id="chat-input-form" class="liquid-glass" onsubmit="return false">
-      <textarea id="chat-input" placeholder="Ask me anything…" rows="1"
-                autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false"></textarea>
-      <button id="send" type="submit" aria-label="Send">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
-        </svg>
-      </button>
-    </form>
-
-    <!-- The four real starters (server/config.js STARTERS) and the More
-         chip, hard-coded. On the real page scripts/starter-chips.js
-         fetches them and holds More across the rebuild. -->
-    <div id="starter-chips" aria-label="Suggested questions" overflowing="end">
-      <button class="starter-chip liquid-glass" type="button">A time I failed</button>
-      <button class="starter-chip liquid-glass" type="button">A time I disagreed</button>
-      <button class="starter-chip liquid-glass" type="button">A call under pressure</button>
-      <button class="starter-chip liquid-glass" type="button">My biggest obstacle</button>
-      <a class="starter-chip chip--more liquid-glass" href="#">
-        More
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
-        </svg>
-      </a>
-    </div>
   </div>
+
+  <!-- The second page. Plain for now: a dark screen with something in it,
+       and no diagonal between it and the first. -->
+  <section id="more">
+    <h2>The second page</h2>
+    <p>
+      Nothing here yet beyond enough text to make this a real screen. What
+      matters is that it exists: a page with something below the fold is a
+      page that scrolls, and Safari floats its bottom bar over a page that
+      scrolls rather than docking it above one that does not.
+    </p>
+    <p>
+      That single fact explains the photograph reaching under the bar here
+      and being cut off when this page was one screen tall.
+    </p>
+  </section>
 
 </body>
 </html>
