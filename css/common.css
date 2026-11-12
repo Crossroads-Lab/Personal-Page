@@ -140,13 +140,19 @@
   /* Where the cut rests before anyone scrolls, measured DOWN from the
    * bottom of the first screen.
    *
-   *     where the screen ends  -  where the first screen ends
+   *     the glass  -  the smallest the viewport ever gets
    *
-   * That is the whole formula. Anything above the bottom of the glass
-   * can be painted, so the cut has to be at or below it; the first
-   * screen ends at --hero-height; the difference is how far down to put
-   * it. No coefficient, no offset, no inset term — screen.height is the
-   * glass and already counts every notch on it.
+   * Which is the most the browser's own furniture can ever occupy.
+   * 100svh is the viewport with every toolbar out; screen.height is the
+   * whole display; the difference is the chrome at its largest. Nothing
+   * can be painted below that and still be seen, so a cut resting there
+   * is a cut that cannot leak in any toolbar state.
+   *
+   * It was screen.height - --hero-height for one round, which is the
+   * tempting pair and the wrong one: the first screen is already 100lvh
+   * tall, so subtracting it measures the gap from the WRONG end and came
+   * out at 80 on a device where the leak needed 96. Measured against the
+   * chrome rather than against the layout.
    *
    * 0 on a desktop, where nothing paints past the viewport. */
   --cut-rest: 0px;
@@ -309,12 +315,12 @@ input[type=number] {
 }
 
 /* A phone or a tablet: the chrome floats over the page, so the cut has to
-   start at the bottom of the glass rather than the bottom of the
-   viewport. max() only to stop a browser that is not full-screen — a
-   desktop window, a tablet in split view — from reporting a negative. */
+   rest below the most of the screen it can ever cover. max() only to stop
+   a browser that is not full-screen — a desktop window, a tablet in split
+   view — from reporting a negative. */
 @media (hover: none) {
   :root {
-    --cut-rest: max(0px, calc(var(--screen-height) - var(--hero-height)));
+    --cut-rest: max(0px, calc(var(--screen-height) - 100svh));
   }
 }
 }
