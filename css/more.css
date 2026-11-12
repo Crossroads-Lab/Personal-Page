@@ -388,23 +388,30 @@
   /*
    * Snap between the two pages.
    *
-   * proximity, not mandatory: the second page has real content and is
-   * taller than a screen on most phones, and mandatory would fight a
-   * reader every time they stopped between its only two snap points.
-   * proximity snaps when the scroll ENDS near one and leaves the rest
-   * alone, which is exactly the boundary we care about.
+   * mandatory, and scroll-snap-stop: always — test.html's declarations
+   * verbatim, which is what they should have been from the start.
    *
-   * scroll-snap-stop was `always` for one round and had to come out.
-   * It forbids passing a snap point within a single gesture, which is
-   * exactly right on test.html — two screens, one swipe each, paged
-   * physics — and exactly wrong here, where the second page is 2359px of
-   * cards somebody is trying to read. Every flick from the first screen
-   * was being clamped at the boundary instead of flying, and a flick
-   * that cannot fly feels like a drag. Will: "the scroll feels like I am
-   * dragging the page."
+   * I argued twice for proximity here, on the grounds that the second
+   * page is 2359px of cards and mandatory would yank a reader back to
+   * the top every time they stopped. That is wrong, and the spec says
+   * so: when a snap area is LARGER than the snapport, the snapport may
+   * rest anywhere inside it. .more is nearly three screens tall, so once
+   * you are in it mandatory does not fight you at all. Measured, after
+   * being asserted twice without being:
    *
-   * Without it the momentum is the platform's own again, and proximity
-   * still catches the boundary when the scroll comes to rest near it.
+   *     to 60   -> 0      snaps back to the first page
+   *     to 500  -> 890    commits to the second
+   *     to 1200 -> 1200   free
+   *     to 1600 -> 1600   free
+   *     to 2000 -> 2000   free
+   *
+   * And proximity was the actual cause of the bad feel rather than the
+   * cure for it. `scroll-snap-stop: always` with `proximity` is the
+   * worst pairing available: the stop clamps the fling at the boundary
+   * while proximity declines to commit to a page, so a swipe is caught
+   * and then left nowhere. Will: "the scroll feels like I am dragging
+   * the page." Removing the stop fixed the clamp and lost the paging;
+   * mandatory is what makes the stop mean something.
    *
    * The second page's snap position is moved DOWN past the cut by a
    * negative scroll-margin, to the diagonal's lowest point — otherwise
@@ -412,12 +419,13 @@
    * the first page in the corner.
    */
   body {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
 
   .hero,
   .more {
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .more {
