@@ -127,47 +127,38 @@
    * position. Everything about the diagonal is expressed against it. */
   --cut-progress: 0;
 
-  /* The whole display, in CSS pixels. screen.height, set from JS
-   * (scripts/more.js) because no CSS unit reports it. It already
-   * includes the status bar, the notch and the home indicator — it is
-   * the glass, not a viewport. */
-  --screen-height: 0px;
-
-  /* How far down the glass the viewport STARTS. window.screenY, set from
-   * JS alongside --screen-height, because this is the other half of the
-   * sum and CSS reports it even less than it reports the first.
-   *
-   * It is not zero: measured off a screenshot of Will's phone, the page's
-   * own origin sits 62 points down a 956-point display, below the status
-   * bar. Taking screen.height as if the viewport began at the top of the
-   * glass therefore credits the browser with 62 points of furniture at
-   * the bottom that are actually at the top. */
-  --viewport-top: 0px;
-
   /* How tall the first screen is. Written once here because two things
    * need it: .hero itself, and the sum below. */
   --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
   /* Where the cut rests before anyone scrolls, measured DOWN from the
-   * bottom of the first screen. Which is to say: where the bottom edge
-   * of the glass is, once you have already drawn the first screen.
+   * bottom of the hero — negative, because it rests ABOVE it.
    *
-   *     screen.height - --viewport-top - --hero-height
+   *     100lvh  -  --hero-height
    *
-   * Three terms, each one a thing you can point at. The display, where
-   * the page starts on it, and how much page there already is. What is
-   * left over is the strip of glass below the first screen, and the cut
-   * lies along the bottom of it.
+   * 100lvh is the last row of pixels the page ever gets on the first
+   * screen: the viewport with every retractable toolbar retracted, which
+   * is the biggest it is ever allowed to be. Nothing below it is page.
+   * So that is the edge of the phone, as far as anything here can paint,
+   * and the cut lies along it. The hero deliberately overshoots it (see
+   * --hero-height) so the portrait is not cropped by the fold; this
+   * subtracts the overshoot back off.
    *
-   * It was screen.height - 100svh for one round, which is 160 on Will's
-   * phone against a true 18. That sum assumes every point of glass the
-   * viewport does not occupy is BELOW the viewport, and on a phone with
-   * a status bar most of it is above: 62 of the 120 on his. The cut came
-   * to rest a hundred points lower than the edge it was aiming at, which
-   * is what he meant by "the edge of the phone you calculated is too
-   * low".
+   * Two wrong answers came before it, both reached by starting from
+   * screen.height:
    *
-   * 0 on a desktop, where nothing paints past the viewport. */
+   *   screen.height - 100svh         160 on Will's phone
+   *   screen.height - screenY - hero   18, and needs a JS reading
+   *
+   * Both were trying to find the bottom of the GLASS, which is 58 points
+   * below the bottom of the page on his device and covered by Safari's
+   * own bar. There is nothing to put there. The page stops at 100lvh and
+   * so does the cut, and the sum is one subtraction between two things
+   * CSS already knows.
+   *
+   * 0 until the @supports below confirms lvh, because an unsupported
+   * unit makes the whole custom property invalid rather than falling
+   * back, and every property built on it dies with it. */
   --cut-rest: 0px;
 
   /* The height the artwork is actually drawn at, extension included.
@@ -311,23 +302,8 @@ input[type=number] {
 @supports (height: 1lvh) and (height: 1svh) {
   :root {
     --chrome-slack: calc(100lvh - 100svh);
+    --cut-rest: calc(100lvh - var(--hero-height));
   }
-}
-
-/* A phone or a tablet: the chrome floats over the page, so the cut rests
-   on the bottom edge of the glass rather than on the bottom of the
-   viewport. max() only to stop a browser that is not full-screen — a
-   desktop window, a tablet in split view — from reporting a negative,
-   and to degrade safely to 0 if window.screenY comes back as 0 on some
-   browser, which costs a slightly low cut and never a visible one. */
-@media (hover: none) {
-  :root {
-    --cut-rest: max(
-      0px,
-      calc(var(--screen-height) - var(--viewport-top) - var(--hero-height))
-    );
-  }
-}
 }
 
 /* 

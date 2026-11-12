@@ -47,6 +47,7 @@ const render = () => {
   const ends = (getComputedStyle(more ?? document.body).clipPath.match(/([\d.]+)px/g) || [])
     .slice(1, 3)
     .map(parseFloat);
+  const [leftEnd = 0] = ends;
   const clipTop = more && ends.length ? Math.min(...ends) : 0;
   const leak = moreRect
     ? Math.round(window.innerHeight - (moreRect.top + clipTop))
@@ -61,17 +62,18 @@ const render = () => {
     ["100dvh", px("100dvh")],
     ["safe-area-bottom", px("env(safe-area-inset-bottom, 0px)")],
     ["safe-area-top", px("env(safe-area-inset-top, 0px)")],
-    // The number the whole resting position now turns on. If this comes
-    // back 0 on a phone, window.screenY is not reporting and --cut-rest
-    // falls back to resting too low rather than too high.
+    // Kept only as evidence for why the glass is not what the cut aims
+    // at: screen.height runs well past 100lvh, and the difference is
+    // split between the status bar above the page and Safari's bar
+    // below it, neither of which the page can paint on.
     ["window.screenY", Math.round(window.screenY ?? 0)],
-    ["--viewport-top", px("var(--viewport-top)")],
-    // Where the bottom edge of the glass is, in page coordinates. The
-    // cut at rest should be sitting exactly here.
-    ["glass bottom, in viewport", Math.round((window.screen?.height ?? 0) - (window.screenY ?? 0))],
     ["--chrome-slack", px("var(--chrome-slack)")],
     ["--hero-height", px("var(--hero-height)")],
-    ["--cut-rest", px("var(--cut-rest)")],
+    // NOT px("var(--cut-rest)") — it is negative now, and a probe div
+    // clamps a negative height to 0, which would print a reassuring lie.
+    // The hinge is the left end of the clip path and it does not move,
+    // so where it sits IS the resting position. It should equal 100lvh.
+    ["cut hinge, page y", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) : "?"],
     ["--cut-progress", getComputedStyle(more ?? document.body).getPropertyValue("--cut-progress").trim() || "0"],
     ["hero bottom", heroRect ? Math.round(heroRect.bottom) : "?"],
     ["bar bottom", bar ? Math.round(bar.getBoundingClientRect().bottom) : "?"],
