@@ -275,107 +275,82 @@
 
 /* ── While the keyboard is up ─────────────────────────────────────────── */
 
-/* Out of the document, not just out of sight: the point is that Safari
-   has nothing to scroll into view under the bar, and visibility or
-   opacity would leave the box there for it to find. The attribute is set
-   from the tap in scripts/chat-input-form.js. */
-body[keyboard] #more,
-body[keyboard] .chip--more,
-body[keyboard] .more-chevron {
-  display: none !important;
+/*
+ * No script. Will: "no trick to capture the input and redispatch it for
+ * now. Let's keep things simple."
+ *
+ * There was one, and it was not frivolous: Safari works out where to
+ * scroll a focused field AS it opens the keyboard, so a page that is
+ * still two screens tall at that moment gets scrolled for two screens
+ * and the bar ends up a third of the way up. The trick took the focus on
+ * pointerdown, shortened the page, and handed the focus back — all
+ * inside the one gesture, because iOS will not open a keyboard for a
+ * focus() that has left it.
+ *
+ * :has() does the same job as a selector. :focus is the state the trick
+ * was racing; :active matches while the finger is still down, which is
+ * the same moment pointerdown fired, without taking anything away from
+ * the browser or giving it back. If :active turns out not to land on
+ * iOS — it has historically wanted a touch listener before it applies —
+ * :focus still catches it, one beat later.
+ *
+ * (hover: none) around the lot, because on a desktop there is no
+ * keyboard to make room for and focusing the field must not take the
+ * second page away or freeze the scroll.
+ *
+ * test.html carries the same switch on the same selector, which is the
+ * point: the control and the page now differ in the photograph and the
+ * section below the fold, and in nothing about how they behave.
+ */
+@media (hover: none) {
+  /*
+   * One viewport, and nothing to scroll.
+   *
+   * On the ROOT as well as on body, and `hidden` rather than `clip`.
+   * Both halves matter, and the reason is overflow propagation: the
+   * viewport takes its overflow from the root when the root is not
+   * `visible` and from body otherwise, and whichever element it is taken
+   * FROM is then treated as `visible` itself. So putting it on body
+   * alone clipped nothing — it handed the clip to the viewport and left
+   * body's own box open, with .hero::before hanging --portrait-sink
+   * below it. The document stayed taller than the visual viewport with
+   * the field near the bottom of it, which is the shape Safari
+   * overshoots. Will: "it does display below the search bar (yaaay) but
+   * move the first page way high than necessary on input focus."
+   */
+  html:has(#chat-input:focus, #chat-input:active),
+  html:has(#chat-input:focus, #chat-input:active) body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Out of the document, not just out of sight: the point is that Safari
+     has nothing to scroll into view under the bar, and visibility or
+     opacity would leave the box there for it to find. Will: "we should
+     never see or have access to the second page on mobile when the input
+     is focused." */
+  html:has(#chat-input:focus, #chat-input:active) #more,
+  html:has(#chat-input:focus, #chat-input:active) .chip--more,
+  html:has(#chat-input:focus, #chat-input:active) .more-chevron {
+    display: none !important;
+  }
+
+  /* And the first screen is the viewport too.
+     
+     At rest this box is --hero-height, which is deliberately LARGER than
+     the viewport so that whatever follows it starts below the bottom of
+     the screen in every toolbar state — see css/index.css. While typing
+     there is nothing following it, because #more is out of the document,
+     so the box can be the viewport itself. The padding at rest exists to
+     hold the content inside the small viewport while the box stays
+     large; the box IS the viewport now, so the only thing left to clear
+     is the notch. */
+  html:has(#chat-input:focus, #chat-input:active) .hero {
+    height: 100dvh;
+    padding-bottom: var(--safearea-padding-bottom);
+  }
 }
 
-/* And then the first screen becomes test.html.
-   
-   That page is a headline, an input, and no script of any kind:
-   
-     html, body { height: 100dvh; overflow: hidden }
-     body       { display: flex; flex-direction: column }
-     the bar    { last child, flex-shrink: 0 }
-   
-   Will tested it on his phone and the bar rides onto the keys. These two
-   rules are that arrangement, applied to the real first screen for as
-   long as someone is typing — the structure already matches, main#content
-   is flex: 1 and the bar is the last child, so there is nothing to build,
-   only a height to pin.
-   
-   I do not know which of two mechanisms carries it, and this works under
-   both, which is why it is written this way rather than cleverer:
-   
-     If 100dvh follows the keyboard, the shell shrinks, main#content
-     absorbs it, and the bar comes up with the bottom of the shell.
-   
-     If it does not — and the spec says the keyboard resizes only the
-     VISUAL viewport unless interactive-widget says otherwise — then the
-     page is exactly one layout viewport tall with the bar at the bottom
-     of it and nothing to scroll, so Safari slides the visual viewport to
-     bring the focused field into view and the bar arrives on the keys
-     that way. Which is what test.html is, so it is what test.html proved.
-   
-   Either way the requirement is the same and it is the only requirement:
-   one viewport, unscrollable, bar at the bottom.
-   
-   overflow on body rather than on html because the viewport takes its
-   overflow from body when html's is visible, and that is what actually
-   freezes the document. clip rather than hidden so that neither axis
-   becomes a scroll container.
-   
-   The height override is the reason --hero-height steps aside here. At
-   rest the box has to be the LARGEST the viewport ever gets, so that
-   whatever follows it starts below the bottom of the screen in every
-   toolbar state — see css/index.css. While typing there is nothing
-   following it, because #more is out of the document, so the box can be
-   the viewport itself.
-   
-   What is NOT here any more, and this is the point of the commit: the bar
-   pinned to the keyboard. position: fixed, bottom: var(--keyboard), a
-   measured innerHeight minus (offsetTop + height), a provisional 42svh
-   for the gap before the keys arrived, a translateX to undo the centring,
-   transition: none so it arrived with the keyboard rather than catching
-   up to it. It worked — confirmed on the device as ?solo&pin — and all of
-   it was a hand-rolled version of the two rules below. */
-/* On the ROOT as well as on body, and `hidden` rather than `clip`. Both
-   halves of that matter, and the reason is overflow propagation.
-   
-   The viewport takes its overflow from the root when the root is not
-   `visible`, and otherwise from body — and whichever element it is taken
-   FROM is then treated as `visible` itself. So `body[keyboard] {
-   overflow: clip }` on its own did not clip body at all: it handed the
-   clip to the viewport and left body's own box open. The page was still
-   a box taller than the visual viewport with a field near the bottom of
-   it, which is exactly the shape Safari scrolls too far to correct.
-   Will: "it does display below the search bar (yaaay) but move the first
-   page way high than necessary on input focus."
-   
-   With the root carrying it, the root's value goes to the viewport, the
-   root is the one treated as visible, and body's `hidden` then applies
-   to body's own box the ordinary way. The document is one viewport, the
-   box is one viewport, and there is nothing for Safari to scroll.
-   
-   This is test.html's shell exactly — `html, body { height: 100dvh;
-   overflow: hidden }` — which is the one arrangement of the three that
-   behaves on the device. ?solo was the other shape (a body taller than
-   the window) and it failed the same way, which is what identified the
-   shell rather than the markup as the thing that mattered.
-   
-   The portrait is clipped at the fold by this, and that is fine: the
-   edge lands either exactly where the keyboard starts, or well behind
-   it, depending on whether dvh follows the keyboard. Neither is
-   visible. */
-html[keyboard],
-body[keyboard] {
-  height: 100dvh;
-  overflow: hidden;
-}
-
-body[keyboard] .hero {
-  height: 100dvh;
-  /* And without the slack the box no longer carries. The padding at rest
-     is safe-area + --hero-height - 100dvh, which exists to hold the
-     content inside the small viewport while the BOX stays large; the box
-     is the viewport now, so the only thing left to clear is the notch. */
-  padding-bottom: var(--safearea-padding-bottom);
-}
 
 /* ── The book card: cover beside the text rather than above it ────────── */
 

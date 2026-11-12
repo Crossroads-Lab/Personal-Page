@@ -292,7 +292,7 @@
        If this does not overshoot, the real page can drop its keyboard JS
        entirely and the night reduces to two rules. If it does, the
        timing is the thing that beat us, not the units. */
-    html:has(:focus, #chat-input:active) {
+    html:has(#chat-input:focus, #chat-input:active) {
       height: 100dvh;
     }
 
