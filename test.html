@@ -86,13 +86,26 @@
 
       /* ── The portrait, lifted from css/common.css ───────────────── */
 
-      /* On the real page this is 100lvh + the chrome slack + the bottom
-         inset: deliberately LARGER than the viewport, so that the dark
-         section below it starts past the bottom of the screen in every
-         toolbar state. There is nothing below this page, so here it is
-         simply the viewport, and the shell stays the 100dvh that was
-         proved to work. The one number this page cannot reproduce. */
-      --hero-height: 100dvh;
+      /* How much of the screen Safari's floating bar is sitting over.
+         No unit reports it and no inset describes it — measured on the
+         device it came out one toolbar tall, and 100lvh - 100svh is the
+         only expression of that the browser will give you. Falls back to
+         0 where the units do not exist, which costs nothing. */
+      --chrome-slack: 0px;
+
+      /* The largest the viewport ever gets, plus another slack.
+         
+         This is css/common.css verbatim, and it is here now because the
+         page WAS cut off at the bottom without it. Measured on the
+         device: by every number the browser reports, 100lvh is the
+         bottom of the screen; it is not. iOS paints a further toolbar's
+         worth below it, behind its own floating bar, and the inset that
+         is supposed to describe that region reads 0.
+         
+         The shell below stays 100dvh — that is the arrangement being
+         tested and it does not change. This number is only for the
+         photograph, which has to reach into a strip nothing can measure. */
+      --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
       /* The cut's own geometry, kept because the sink is derived from it
          and the sink changes how big the photograph is drawn. There is no
@@ -126,6 +139,10 @@
          value that tracks the toolbar makes him drift up as you scroll. */
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
+    }
+
+    @supports (height: 1lvh) and (height: 1svh) {
+      :root { --chrome-slack: calc(100lvh - 100svh); }
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -270,11 +287,45 @@
      */
     body::before {
       content: "";
-      position: absolute;
+      /* fixed, not absolute, and this took three tries to get right.
+         
+         absolute put him inside body, and body is `overflow: hidden` —
+         which clips its descendants to ITS OWN box, and its box is
+         exactly 100dvh. So the overhang that is meant to carry him into
+         the strip under Safari's floating bar was thrown away at the
+         fold, and what showed there instead was the page background with
+         his shoe cut off above it. Which is what Will photographed.
+         
+         Making the shell `overflow: clip` instead was the obvious repair
+         and it is not enough. `hidden` is a scroll container that refuses
+         the finger but not a function call, and the function that wants
+         to call it is Safari, moving a focused field into view as the
+         keyboard opens: measured here, with him hanging 85px past the
+         fold, scrollTo(500) took the page — and the bar — to 85. `clip`
+         should fix that by not being a scroll container at all, and in
+         Chromium on the root it still scrolled to 85.
+         
+         fixed settles both at once. A fixed box is not laid out inside
+         body, so body's overflow does not clip it and it adds nothing to
+         what could be scrolled — the page goes back to being exactly one
+         screen with nothing to scroll by any means, and he is clipped
+         only by the viewport, which is the thing that paints past 100dvh
+         in the first place.
+         
+         The cost is that he no longer travels with the content: when
+         Safari slides the visual viewport to make room for the keyboard,
+         the text slides and he does not. He is a backdrop, so that reads
+         as the photograph staying still behind the page. If it reads
+         wrong on the device, that is the thing to report. */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% + var(--portrait-sink));
+      /* --hero-height, not 100%. 100% is the shell, which is the dynamic
+         viewport; this has to reach past it into the strip Safari paints
+         and nothing reports. Same box as .hero::before on the real page,
+         to the pixel. */
+      height: calc(var(--hero-height) + var(--portrait-sink));
       background: url("assets/background.webp") no-repeat right bottom
                   / auto var(--portrait-height) scroll;
       /* Behind everything. The real page gets this from the stacking order
