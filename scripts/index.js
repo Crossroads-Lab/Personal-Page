@@ -4,4 +4,8 @@ import "./quick-links.js?v=b0563e18";
 import "./more.js?v=3429abc9";
 import "./file-drop.js?v=dcf1269e";
 
+// ?viewport prints what the viewport units actually resolve to on the
+// device in hand. Nothing loads it otherwise. See scripts/viewport-probe.js.
+if (location.search.includes("viewport")) import("./viewport-probe.js");
+
 requestAnimationFrame(() => document.body.removeAttribute("loading"));

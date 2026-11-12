@@ -40,8 +40,15 @@
      Both units are static. 100dvh was what this used to be, and because
      dvh tracks the toolbar sliding away, the whole first screen resized
      mid-scroll and everything in it moved — the "weird animation" at the
-     bottom of the page. */
-  height: 100lvh;
+     bottom of the page.
+     
+     Plus the bottom safe-area inset. With viewport-fit=cover the page
+     paints into the home-indicator strip, and the viewport units do not
+     reliably reach into it — so the box stopped above that strip and the
+     thing filling it was whatever came next, which is the dark section.
+     That is the wedge that kept appearing at the very bottom of the
+     screen. 0 everywhere there is no notch. */
+  height: calc(100lvh + env(safe-area-inset-bottom, 0px));
 
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */

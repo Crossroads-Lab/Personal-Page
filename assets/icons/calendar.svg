@@ -1,8 +1,8 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- A calendar: outlined page, solid header band, one day marked.
+<!-- A calendar: the header band, the page, one day marked. Solid, and
+     full-bleed across the 24 box like linkedin.svg.
      Opacity normalised to 1 — the row's own 0.72 is the only dimming that
      should be there (css/chat-content.css). -->
-<rect x="1" y="1" width="22" height="22" rx="4" stroke="black" stroke-width="2"/>
 <path fill="black" d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V6H0V5Z"/>
-<rect x="6" y="10.6" width="4.8" height="4.8" rx="1" fill="black"/>
+<path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M19 24H5C2.23858 24 0 21.7614 0 19V7.5H24V19C24 21.7614 21.7614 24 19 24ZM9.8 10.6H7C6.44772 10.6 6 11.0477 6 11.6V14.4C6 14.9523 6.44771 15.4 7 15.4H9.8C10.3523 15.4 10.8 14.9523 10.8 14.4V11.6C10.8 11.0477 10.3523 10.6 9.8 10.6Z"/>
 </svg>
