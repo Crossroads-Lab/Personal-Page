@@ -54,49 +54,53 @@
     ===================================================================
     One page. No script.
 
-    Will, after the second page went in and the keyboard started
-    overshooting again: "Go back to no second page. One page only, my pic
-    up like it is now. The full page on dvh."
+    The structure Will asked for:
 
-    So everything here is 100dvh and nothing else:
+      <body>            height: 100dvh          the page
+        <main>          height: 100%            the first page, whole
+          #content      flex: 1                 text, and where answers go
+          <form>        margin-top: auto        pushed to the bottom
+            chips
+            the input row
+        </main>
 
-      html, body { height: 100dvh; overflow: hidden }
-      body       { display: flex; flex-direction: column }
-      main       { flex: 1 }                 absorbs the shrink
-      the bar    { last child, flex-shrink: 0 }
-      the photo  { absolute, the whole shell, anchored bottom right }
+    body is the viewport and nothing else — no layout of its own. main is
+    the macro container and is the same height as body, so "the first
+    page" is one element you can point at rather than a set of siblings
+    that happen to add up.
 
-    THREE THINGS GO AWAY WITH THE SECOND PAGE, and it is worth writing
-    down why, because each was built for a problem that only exists when
-    the page scrolls.
+    #content is flex: 1, which is what makes the whole thing work: it has
+    no height of its own, it takes whatever is left once the form has
+    taken what it needs. So when the shell shrinks — the toolbar moving,
+    the keyboard arriving — #content is what gives, and the form is
+    carried down rather than squeezed or pushed off the bottom. If
+    #content were 100% instead, it would fill main on its own and the
+    form would sit below the fold.
 
-    --hero-height and --chrome-slack. The first screen was 100lvh plus a
-    toolbar, deliberately taller than the viewport, so the dark section
-    started below the bottom of the screen in every toolbar state. There
-    is no dark section. The page is the viewport.
+    The chips moved INSIDE the form, with the input row beside them. The
+    glass moved with the input row rather than staying on the form, since
+    the form is now a container for two things and only one of them is a
+    pill.
 
-    --portrait-sink. The photograph hung below the first screen so its
-    cropped bottom edge was covered by the page that followed rather than
-    cut across by the fold. Nothing follows. It ends at the bottom.
+    WHY THERE IS NOTHING ELSE HERE. Three pieces went out with the second
+    page, and each existed only because the page scrolled:
 
-    The scrollable page itself, and with it the floating bar. Safari
-    floats its bottom bar over a page that scrolls and DOCKS it above one
-    that does not. Docked, it has its own backdrop and the page ends
-    cleanly above it — which is the solid notch, obtained by not fighting
-    for the strip rather than by painting it.
+      --hero-height and --chrome-slack, which made the first screen
+      taller than the viewport so the dark section started below the
+      bottom of the screen in every toolbar state.
 
-    Every repair that failed tonight failed against that one fact: a
-    taller absolute box, overflow: clip, position: fixed, the canvas
-    background, html at 100vh. On a non-scrolling page that line really
-    is the bottom of the viewport, and nothing a page can draw gets past
-    it. With one page there is nothing to want down there.
+      --portrait-sink, which hung the photograph below the first screen
+      so its cropped bottom edge was covered by the page that followed.
 
-    No :has() switch either. It took the second page out of the document
-    and locked the scroll; there is no second page and nothing to scroll.
-    The shell is dvh, so if dvh follows the keyboard the bar comes with
-    it, and if it does not the page is one viewport with the field at the
-    bottom and Safari slides the visual viewport to show it. Both land in
-    the same place.
+      the :has() switch, which took the second page out of the document
+      and locked the scroll.
+
+    And the floating bar went with them. Safari floats its bottom bar
+    over a page that SCROLLS and docks it above one that does not; docked
+    it has its own backdrop and the page ends cleanly above it. That is
+    the solid notch, got by not fighting for the strip rather than by
+    painting it — and every repair that failed tonight failed against
+    that one fact.
     ===================================================================
   -->
 
@@ -133,27 +137,25 @@
       /* 74.2vw is the mock's width: he is 0.36 of the window across in
          it, and at 0.485 of the crop that needs 0.742 of the window. The
          other term is the mock's height. On the mock's own aspect the
-         height binds; on a tall narrow window the width binds instead and
-         keeps him off the headline rather than letting a tall window
-         inflate him.
-         
-         Measured against 100dvh, not --hero-height. There is no second
-         page to start below the bottom of the screen, so the page is the
-         viewport and so is he. */
+         height binds; on a tall narrow window the width binds instead
+         and keeps him off the headline rather than letting a tall window
+         inflate him. Measured off 100dvh, because the page is the
+         viewport now. */
       --portrait-crop: min(74.2vw, calc(0.9324 * 100dvh));
-      /* He is 77.5% of the crop's width and the crop is 0.6260 as wide as
-         it is tall (1252/2000), so 0.485 of its height. */
+      /* He is 77.5% of the crop's width and the crop is 0.6260 as wide
+         as it is tall (1252/2000), so 0.485 of its height. */
       --portrait-width: calc(0.485 * var(--portrait-crop));
-      /* What the headline and the icon row need at the top of a narrow
-         screen. svh, not dvh: this sets how far down he starts and a
-         value that tracks the toolbar makes him drift. */
+      /* What the headline needs at the top of a narrow screen. svh, not
+         dvh: this sets how far down he starts, and a value that tracks
+         the toolbar makes him drift. */
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── The shell ─────────────────────────────────────────────────── */
+    /* ── The page ──────────────────────────────────────────────────── */
+    /* The viewport, and no layout of its own: main does the arranging. */
     html, body {
       width: 100%;
       height: 100dvh;
@@ -161,10 +163,7 @@
     }
 
     body {
-      position: relative;      /* so the photograph anchors to the shell */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;      /* so the photograph anchors to the page */
 
       background: var(--background);
       color: var(--color);
@@ -178,15 +177,15 @@
     }
 
     /*
-     * The photograph: the whole shell, anchored bottom right.
+     * The photograph: the whole page, anchored bottom right.
      *
      * No overhang and nothing to hide it under, so there is nothing for
-     * body's overflow to clip. His bottom edge is the bottom of the page,
-     * and below the page is Safari's docked bar on its own backdrop.
+     * body's overflow to clip. His bottom edge is the bottom of the
+     * page, and below the page is Safari's docked bar on its own
+     * backdrop.
      *
-     * position: absolute takes him out of the flex column, so the
-     * arrangement under test — main absorbs the shrink, the bar rides the
-     * bottom — is untouched by his being here.
+     * position: absolute keeps him out of the layout entirely, so the
+     * arrangement under test is untouched by his being here.
      */
     body::before {
       content: "";
@@ -197,35 +196,52 @@
       z-index: 0;
     }
 
-    /* The spacer that centres the column on a wide screen. */
-    body::after {
+    /* ── The first page, whole ─────────────────────────────────────── */
+    main {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      width: var(--main-width);
+      max-width: var(--main-max-width);
+      margin-inline: auto;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* The spacer that centres the column on a wide screen: half the
+       slack above the form and half below, so the form lands in the
+       middle rather than at the bottom. Zero on a phone. */
+    main::after {
       content: "";
       flex: 0 0 0;
       min-height: 0;
     }
 
-    /* ── The spacer that absorbs the shrink ────────────────────────── */
-    main {
-      position: relative;
-      z-index: 1;
-      width: var(--main-width);
-      max-width: var(--main-max-width);
+    /* ── The content, and what gives when the page shrinks ─────────── */
+    /*
+     * flex: 1 and no height of its own. This is the piece the whole
+     * arrangement rests on: it takes whatever is left once the form has
+     * taken what it needs, so a shrinking shell comes out of here and
+     * the form is carried down rather than squeezed or pushed off.
+     *
+     * min-height: 0 because a flex item's default min-height is auto,
+     * which refuses to shrink below its content — and refusing is
+     * exactly what must not happen.
+     */
+    #content {
+      flex: 1;
       min-height: 0;
-
       display: flex;
       flex-direction: column;
-      flex: 1;
-      gap: 8px;
-
-      padding-top: 24px;
-      margin-bottom: -24px;
-      padding-bottom: 48px;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      overflow: hidden;
     }
 
-    main::before,
-    main::after { content: ""; margin: auto; }
+    /* Vertical centring by auto margins rather than justify-content, so
+       that an overflowing child still starts at the top instead of being
+       cut off at both ends. */
+    #content::before,
+    #content::after { content: ""; margin: auto; }
 
     /* ── The headline ──────────────────────────────────────────────── */
     #welcome {
@@ -236,7 +252,6 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 100%;
       justify-content: center;
       align-items: center;
       color: rgb(from var(--color) r g b / 0.8);
@@ -292,20 +307,28 @@
       -webkit-box-shadow: var(--shadow);
     }
 
-    /* ── The bar, and the chips that travel with it ────────────────── */
-    #chat-input-container {
-      position: relative;
-      z-index: 1;
-      width: var(--main-width);
-      max-width: var(--main-max-width);
-      min-height: var(--chat-form-height);
+    /* ── The form: the chips and the input ─────────────────────────── */
+    /*
+     * margin-top: auto as well as flex-shrink: 0, so it is pinned to the
+     * bottom of main whatever #content does — including an empty
+     * #content, where flex: 1 has nothing to grow from.
+     *
+     * The form is a column holding two things: a row of chips and the
+     * input row. The glass is on the input row rather than on the form,
+     * because only one of the two is a pill.
+     */
+    #chat-input-form {
       flex-shrink: 0;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
     }
 
-    #chat-input-form {
+    #chat-input-row {
       display: grid;
       grid-template-columns: auto 1fr auto;
       grid-template-rows: auto;
+      min-height: var(--chat-form-height);
       border-radius: calc(0.5 * var(--chat-form-height) + 4px);
       padding: 8px;
     }
@@ -325,8 +348,8 @@
       cursor: text;
 
       margin: 0;
-      /* 8px of form padding leaves the text against the rim of a bar this
-         wide; 20 on the leading edge is simply the inset. */
+      /* 8px of form padding leaves the text against the rim of a bar
+         this wide; 20 on the leading edge is simply the inset. */
       padding: 0 8px 0 20px;
       border: 0;
 
@@ -337,9 +360,9 @@
          zoom. */
       font-family: inherit;
       font-weight: 400;
-      /* 16px, and it cannot go below it: iOS zooms the whole page in when
-         you focus a field under 16px, which moved the portrait, ran the
-         bar off both edges, and put every visualViewport number in
+      /* 16px, and it cannot go below it: iOS zooms the whole page in
+         when you focus a field under 16px, which moved the portrait, ran
+         the bar off both edges, and put every visualViewport number in
          zoomed units. */
       font-size: 16px;
       line-height: 1.5;
@@ -368,10 +391,10 @@
     }
 
     /* One line, scrolling rather than wrapping. `safe center` matters:
-       with plain `center` a row wider than its box overflows equally both
-       ways and the left end becomes unreachable, because you cannot
-       scroll to negative. The width/translate pair pulls the row back out
-       to the viewport from inside the 512px container. */
+       with plain `center` a row wider than its box overflows equally
+       both ways and the left end becomes unreachable, because you cannot
+       scroll to negative. The width/translate pair lets the row be wider
+       than the column when the labels need it. */
     #starter-chips {
       display: flex;
       flex-wrap: nowrap;
@@ -391,8 +414,8 @@
     #starter-chips::-webkit-scrollbar { display: none; }
 
     /* The real page sets [overflowing] from the scroll position so the
-       fade is never on an edge with nothing behind it. No script here, so
-       the end fade is written on the element in the markup. */
+       fade is never on an edge with nothing behind it. No script here,
+       so the end fade is written on the element in the markup. */
     #starter-chips[overflowing="end"] {
       mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
     }
@@ -422,9 +445,9 @@
     /* ── The opening state, on a wide screen ───────────────────────── */
     @media only screen and (min-width: 901px) {
       /* He stands to the right and the writing keeps out of his way.
-         Padding the shell by his width makes that automatic: the column
-         is centred by flexbox, and flexbox is now centring it in what is
-         left. */
+         Padding the page by his width makes that automatic: main is
+         centred by its auto margins, and those are now centring it in
+         what is left. */
       body {
         padding-left: var(--padding);
         padding-right: calc(var(--padding) + var(--portrait-width));
@@ -432,59 +455,48 @@
 
       /* As load-bearing as the padding: --main-max-width is measured off
          the VIEWPORT, which knows nothing about the space reserved for
-         him, so without this a 512px bar runs under him anyway. */
-      main, #chat-input-container, #starter-chips { max-width: 100%; }
+         him, so without this a 512px form runs under him anyway. */
+      main, #starter-chips { max-width: 100%; }
 
-      /* Half the slack above the bar, half below: the bar lands in the
-         middle. */
-      body::after { flex-grow: 1; }
+      /* Half the slack above the form and half below, so it lands in the
+         middle rather than at the bottom. */
+      main::after { flex-grow: 1; }
 
-      /* main is flex: 1, a basis of ZERO, so main and the spacer grew
-         from nothing by the same amount and came out the same height —
-         which centres the BAR and leaves the headline hanging above the
-         middle. A basis of auto makes main start at its content height
-         and grow from there. */
-      main {
-        flex-basis: auto;
-        padding-top: 0;
-      }
+      /* And the headline sits at the BOTTOM of the content box, directly
+         above the form, rather than centred in a box that is now much
+         taller than it. Releasing the trailing auto margin leaves the
+         leading one to take all the slack. */
+      #content::after { margin: 0; }
 
-      /* main centres its children with margin: auto on both pseudos, so
-         its extra height lands half above and half below the headline.
-         Releasing the trailing one puts the headline at the bottom of
-         main, directly above the bar. */
-      main::after { margin: 0; }
-
-      #welcome {
-        height: auto;
-        justify-content: flex-end;
-        padding-bottom: 32px;
-      }
+      #welcome { padding-bottom: 32px; }
     }
 
     /* ── Phone ─────────────────────────────────────────────────────── */
     @media only screen and (max-width: 900px) {
       /* At crop height he is taller than the phone is wide, so he fills
-         the screen and the headline, the chips and the bar sit on top of
-         him. Sizing him to what is left under the headline keeps the top
-         clear and puts the chips and the bar over his legs.
+         the screen and the headline, the chips and the form sit on top
+         of him. Sizing him to what is left under the headline keeps the
+         top clear and puts the chips and the form over his legs.
          
-         No sink added any more: the sink bought height by hanging him
-         below the first screen, and there is nothing below the first
-         screen to hang into. This is where Will wanted him — "my pic up
-         like it is now" — which is his head at --portrait-top rather
-         than two chrome slacks under it. */
+         No sink: that bought height by hanging him below the first
+         screen, and there is nothing below it to hang into. This is
+         where Will asked him to stay — head at --portrait-top. */
       :root {
         --portrait-height: calc(100svh - var(--portrait-top));
       }
 
-      #welcome { justify-content: flex-start; }
+      /* The headline goes to the top of the content box rather than the
+         middle of it. */
+      #content::before { margin: 0; }
       #welcome > div:first-of-type { gap: 8px; }
+      #content { padding-top: 48px; }
 
-      /* The bar is already at the bottom on a phone, so the chips go
-         above it rather than off the end of the screen. */
-      #chat-input-container { display: flex; flex-direction: column; }
-      #starter-chips { order: -1; margin: 0 0 14px 50%; }
+      /* The form is already at the bottom on a phone, so the chips go
+         ABOVE the input rather than below it. */
+      #starter-chips {
+        order: -1;
+        margin: 0 0 14px 50%;
+      }
 
       /* Full strength here: the chips sit ON the portrait and which one
          you can read depends on what is behind it. */
@@ -496,7 +508,7 @@
     }
 
     @media only screen and (max-width: 512px) {
-      #chat-input-form.liquid-glass {
+      #chat-input-row.liquid-glass {
         background: rgb(from var(--liquid-glass-background) r g b / 0.5);
         --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
       }
@@ -505,40 +517,46 @@
 </head>
 <body>
 
-  <main id="content">
-    <div id="welcome">
-      <div>
-        <!-- A <p>, not an <h2>: it reads as a line above the title, and
-             as an h2 it put a level two ahead of the level one for anyone
-             moving through the page by heading. -->
-        <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
-        <h1>Where should we <span class="accent">start?</span></h1>
+  <main>
+    <!-- The text, and where an answer would render. flex: 1, so this is
+         what gives when the page shrinks. -->
+    <div id="content">
+      <div id="welcome">
+        <div>
+          <!-- A <p>, not an <h2>: it reads as a line above the title,
+               and as an h2 it put a level two ahead of the level one for
+               anyone moving through the page by heading. -->
+          <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
+          <h1>Where should we <span class="accent">start?</span></h1>
+        </div>
       </div>
     </div>
-  </main>
 
-  <div id="chat-input-container">
-    <form id="chat-input-form" class="liquid-glass" onsubmit="return false">
-      <textarea id="chat-input" placeholder="Ask me anything…" rows="1"
-                autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false"></textarea>
-      <button id="send" type="submit" aria-label="Send">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
-        </svg>
-      </button>
+    <!-- Pushed to the bottom of main, holding the chips and the input. -->
+    <form id="chat-input-form" onsubmit="return false">
+      <div id="chat-input-row" class="liquid-glass">
+        <textarea id="chat-input" placeholder="Ask me anything…" rows="1"
+                  autocomplete="off" autocorrect="off" autocapitalize="off"
+                  spellcheck="false"></textarea>
+        <button id="send" type="submit" aria-label="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </div>
+      <!-- The four real starters (server/config.js STARTERS), hard-coded.
+           AFTER the input row in the DOM, which is what puts them below
+           the bar on a wide screen; order: -1 under 900px lifts them
+           above it, where the bar is already at the bottom. -->
+      <div id="starter-chips" aria-label="Suggested questions" overflowing="end">
+        <button class="starter-chip liquid-glass" type="button">A time I failed</button>
+        <button class="starter-chip liquid-glass" type="button">A time I disagreed</button>
+        <button class="starter-chip liquid-glass" type="button">A call under pressure</button>
+        <button class="starter-chip liquid-glass" type="button">My biggest obstacle</button>
+      </div>
     </form>
-
-    <!-- The four real starters (server/config.js STARTERS), hard-coded.
-         No More chip: there is nothing for it to lead to. -->
-    <div id="starter-chips" aria-label="Suggested questions" overflowing="end">
-      <button class="starter-chip liquid-glass" type="button">A time I failed</button>
-      <button class="starter-chip liquid-glass" type="button">A time I disagreed</button>
-      <button class="starter-chip liquid-glass" type="button">A call under pressure</button>
-      <button class="starter-chip liquid-glass" type="button">My biggest obstacle</button>
-    </div>
-  </div>
+  </main>
 
 </body>
 </html>
