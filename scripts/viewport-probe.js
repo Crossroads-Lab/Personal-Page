@@ -35,10 +35,10 @@ const render = () => {
   // The question the whole thing turns on: is the DARK above the bottom of
   // what the visitor can see?
   //
-  // Not the section's box top — that is deliberately above the fold now,
-  // because the box is pulled up by --cut-rise and the clip path decides
-  // where the dark actually starts inside it. Reading the box made the
-  // probe report an 87px leak on a screen with no dark on it at all.
+  // Not the section's box top — the clip path decides where the dark
+  // actually starts inside it, and the two are half a slope apart.
+  // Reading the box made the probe report an 87px leak on a screen with
+  // no dark on it at all.
   // Measure the clipped edge, which is the thing with a colour.
   const clipTop = more
     ? parseFloat((getComputedStyle(more).clipPath.match(/([\d.]+)px/g) || [])[1] ?? 0)

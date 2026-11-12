@@ -63,34 +63,34 @@
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
-  /* The cut arrives by tilting, and how far it has tilted is the scroll
-     position — not a threshold that trips somewhere.
+  /* The line pivots about its own middle. The section does not move.
      
-     ONLY the clip-path changes per frame. The first version animated
-     margin-top, which is a layout property: every scroll event reflowed
-     this section and everything in it, and the tilt juddered. The box now
-     sits permanently at its final height — pulled up by --cut-rise — and
-     the clip path alone decides where the dark begins inside it.
+     At --cut-progress 0 both ends sit at half the slope, so the edge is
+     LEVEL. As the page scrolls the left end drops and the right end
+     lifts by the same amount, until at 1 they are the full --cut apart.
+     A rotation, not a slide: the boundary between the two sections stays
+     where it is in the page and only its angle changes.
      
-       at progress 0   top edge --cut-rest below the fold, and LEVEL,
-                       which is the one shape that cannot look wrong
-                       down in the strip a phone paints past its viewport
-       at progress 1   top edge --cut-rise ABOVE the fold, full slope
+     It travelled as well as tilted for one round — 160px below the fold
+     up to 127 above it — and that was the thing that read as wrong. A
+     boundary that creeps up the page as you scroll past it is not a
+     boundary.
      
-     A margin rather than a taller .hero, for the reason that cost an
-     hour earlier: the portrait is anchored to the bottom of the hero's
-     box, so growing that box moves him down the screen with it.
+     The margin is a constant, so nothing relayouts per frame; only the
+     clip path moves, and only inside this element. Half the slope is
+     subtracted from it so the LEVEL line at rest lands exactly
+     --cut-rest below the first screen, which is where it has to be to
+     stay out of the strip a phone paints past its viewport.
      
      No transition. The scroll IS the timeline — a transition on top of
      it would only add lag between the finger and the line. */
-  margin-top: calc(-1 * var(--cut-rise));
+  --cut-half: calc(var(--cut-desktop) / 2);
 
-  /* Where the top edge sits inside the box, at the right-hand end. */
-  --cut-top: calc((var(--cut-rest) + var(--cut-rise)) * (1 - var(--cut-progress)));
+  margin-top: calc(var(--cut-rest) - var(--cut-half));
 
   clip-path: polygon(
-    0 calc(var(--cut-top) + var(--cut-desktop) * var(--cut-progress)),
-    100% var(--cut-top),
+    0 calc(var(--cut-half) + var(--cut-half) * var(--cut-progress)),
+    100% calc(var(--cut-half) - var(--cut-half) * var(--cut-progress)),
     100% 100%,
     0 100%
   );
@@ -98,9 +98,9 @@
   /* Tells the compositor this is the thing that moves. */
   will-change: clip-path;
 
-  /* Clears the rise the box was pulled up by, plus the steepest the line
-     ever gets — or the first card's corner is cut off with it. */
-  padding-top: calc(var(--cut-rise) + var(--cut-desktop));
+  /* The steepest the line ever gets, or the first card's corner is cut
+     off with it. */
+  padding-top: var(--cut-desktop);
 }
 
 .more-inner {
@@ -442,13 +442,15 @@ body:not([chat-started]) .quick-link[href$="#more"] {
 @media only screen and (max-width: 767px) {
 
   .more {
+    --cut-half: calc(var(--cut-mobile) / 2);
+
     clip-path: polygon(
-      0 calc(var(--cut-top) + var(--cut-mobile) * var(--cut-progress)),
-      100% var(--cut-top),
+      0 calc(var(--cut-half) + var(--cut-half) * var(--cut-progress)),
+      100% calc(var(--cut-half) - var(--cut-half) * var(--cut-progress)),
       100% 100%,
       0 100%
     );
-    padding-top: calc(var(--cut-rise) + var(--cut-mobile) + 40px);
+    padding-top: calc(var(--cut-mobile) + 40px);
   }
 
   .more-inner {

@@ -157,19 +157,6 @@
    * 0 on a desktop, where nothing paints past the viewport. */
   --cut-rest: 0px;
 
-  /* And where it ends up once the page has moved: above the fold, biting
-   * into the bottom of the first screen. Relative to the viewport rather
-   * than a pixel count, so it is the same gesture on every phone.
-   *
-   * 16, not 8. The resting position has a hard floor — the cut cannot
-   * start less than (screen height minus viewport) below the fold or it
-   * is inside the strip the screen paints, which on Will's phone is
-   * 160px. That floor is not negotiable, so the only way to get the dark
-   * on screen sooner is to climb out of it faster. Rising twice as far
-   * over a shorter travel does that: 137px of scroll before the dark
-   * appeared, 71 now. */
-  --cut-rise: 16svh;
-
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
      overrides it (css/index.css) and a sink computed from a different
