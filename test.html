@@ -117,6 +117,10 @@
       --liquid-glass-background: white;
       --liquid-glass-border-color: var(--liquid-glass-background);
       --send: #FFFFFFEE;
+
+      --bg-more: #262624;
+      --text-on-dark: #F5F4EF;
+      --text-on-dark-2: #C2C0B6;
       --blur-filter: blur(10px) saturate(180%);
 
       --border-radius-round: max(100vw, 100vh);
@@ -155,11 +159,40 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* ── The page ──────────────────────────────────────────────────── */
-    /* The viewport, and no layout of its own: main does the arranging. */
-    html, body {
+    /*
+     * Will: "if the body is of size dvh, with vertical scrolling
+     * allowed, then it should not leak."
+     *
+     * Right, and the reason it works is worth being exact about. Safari
+     * floats its bottom bar over a scrollable DOCUMENT and docks it
+     * above one that is not — and a docked bar has its own backdrop, so
+     * the page ends cleanly above it and nothing of page two can show
+     * through. The trick is to have a second page without the document
+     * being the thing that scrolls.
+     *
+     * So body is the scroller and the document is not. Two pages live
+     * inside a box that is exactly one viewport tall, and the box
+     * scrolls; the document never does.
+     *
+     * The root is what makes that true, and leaving it out would undo
+     * the whole thing: overflow on body PROPAGATES to the viewport when
+     * the root is `visible`, which would make the document the scroller
+     * and float the bar again. Giving the root its own `overflow:
+     * hidden` keeps the propagation from happening, and body's auto then
+     * applies to body's own box the ordinary way.
+     */
+    html {
       width: 100%;
       height: 100dvh;
       overflow: hidden;
+    }
+
+    body {
+      width: 100%;
+      height: 100dvh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior-y: contain;
     }
 
     /* No padding and no position: body is the viewport and the colour
@@ -473,6 +506,66 @@
       max-width: 100%;
     }
 
+    /* ── The second page ───────────────────────────────────────────── */
+    /* Exactly one viewport, below the first, inside the scroller. No
+       diagonal between them yet — that is the next thing to add, and
+       adding it alone is the point. */
+    #more {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100dvh;
+      background: var(--bg-more);
+      color: var(--text-on-dark);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+
+      padding: 64px var(--padding);
+      padding-bottom: calc(64px + var(--safearea-bottom));
+    }
+
+    #more h2 {
+      font-size: min(max(3.6254vw, 24px), 28px);
+      font-weight: 400;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+
+    #more p {
+      color: var(--text-on-dark-2);
+      max-width: 640px;
+      margin-inline: auto;
+    }
+
+    /* ── While the keyboard is up ──────────────────────────────────── */
+    /*
+     * The same rules as css/more.css, on the same selector, no script.
+     *
+     * :focus is the state the old JS interception was racing — Safari
+     * works out where to scroll a focused field AS it opens the
+     * keyboard. :active matches while the finger is still down, which is
+     * the moment the old pointerdown handler fired, without taking the
+     * focus away from the browser and handing it back.
+     *
+     * body's scrolling is the thing being switched off here. It is what
+     * lets the second page exist at rest, and it is exactly what Safari
+     * would spend bringing the field into view — so for the duration of
+     * the keyboard the box stops being a scroller and the second page
+     * leaves the document.
+     */
+    @media (hover: none) {
+      html:has(#chat-input:focus, #chat-input:active) body {
+        overflow: hidden;
+      }
+
+      html:has(#chat-input:focus, #chat-input:active) #more {
+        display: none !important;
+      }
+    }
+
     /* ── The opening state, on a wide screen ───────────────────────── */
     @media only screen and (min-width: 901px) {
       /* He stands to the right and the writing keeps out of his way.
@@ -588,6 +681,21 @@
       </div>
     </form>
   </main>
+
+  <!-- The second page: one viewport, inside body's scroller rather than
+       below a scrolling document. -->
+  <section id="more">
+    <h2>The second page</h2>
+    <p>
+      One viewport tall, sitting inside body rather than below a
+      scrolling document. body is the scroller; the document is not.
+    </p>
+    <p>
+      Which is the whole point: Safari docks its bottom bar above a page
+      that does not scroll, and a docked bar has its own backdrop — so
+      nothing of this page can show under it.
+    </p>
+  </section>
 
 </body>
 </html>
