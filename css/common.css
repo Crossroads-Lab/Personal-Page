@@ -82,10 +82,24 @@
      
      0.7976 of a viewport, at 0.858 of the crop, needs a crop of 0.9296
      of it: 93.0vh. 59.5vw is the same crop at 1280 wide, so the two
-     terms meet exactly on the mock's own aspect and neither one
-     overshoots it. The subject comes out 654 tall against the mock's
-     654. */
-  --portrait-crop: max(59.5vw, 93.0vh);
+     terms meet exactly on the mock's own aspect. The subject comes out
+     654 tall against the mock's 654.
+     
+     min, not max. max was inherited from when both numbers were small
+     enough that it rarely bit, and at these it bites immediately: on a
+     2000x881 window a vw term of 59.5 is 1190 against 93vh's 819, max
+     takes the 1190 and draws him 1021 tall in an 881 window — head off
+     the top of the screen. He is bounded by the height AND the width,
+     which is what min says.
+     
+     The two terms then mean different things and are measured
+     separately. 93.0vh is the mock's height. 74.2vw is the mock's
+     WIDTH: he is 0.36 of the window across in it, and at 0.485 of the
+     crop that needs 0.742 of the window. On the mock's own aspect the
+     height binds and the width never comes into it; on a tall narrow
+     window the width binds instead and keeps him off the headline
+     rather than letting a tall window inflate him. */
+  --portrait-crop: min(74.2vw, 93.0vh);
   --portrait-subject: calc(0.858 * var(--portrait-crop));
   /* How wide he lands. He is 77.5% of the crop's width, and the crop is
      0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
