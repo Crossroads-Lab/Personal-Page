@@ -139,6 +139,13 @@
          value that tracks the toolbar makes him drift up as you scroll. */
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
+
+      /* How far below the shell his bottom edge has to land.
+         
+         The shell is 100dvh. He has to finish at --hero-height + sink,
+         which is past it by the chrome slack twice over plus the sink —
+         out in the strip that iOS paints and nothing measures. */
+      --portrait-overhang: calc(var(--hero-height) + var(--portrait-sink) - 100dvh);
     }
 
     @supports (height: 1lvh) and (height: 1svh) {
@@ -155,12 +162,56 @@
     }
 
     body {
-      position: relative;      /* so the portrait anchors to the shell */
       display: flex;
       flex-direction: column;
       align-items: center;
 
-      background: var(--background);
+      /*
+       * He is the page's BACKGROUND, not a box on it, and that is the
+       * whole trick.
+       *
+       * The root here has no background of its own, so body's propagates
+       * to the canvas — and the canvas background's painting area is not
+       * the element's box, it is the entire canvas. It is already the
+       * thing painting the grey strip under Safari's floating bar, which
+       * is the only proof needed that something CAN paint there.
+       *
+       * Positioning is still done against the root's box, which is the
+       * dynamic viewport, so the bottom edge is pushed past it by the
+       * overhang — and the part of the image that falls outside that box
+       * still paints, because the painting area does not end where the
+       * positioning area does.
+       *
+       * Three things were tried before this, and each failed for its own
+       * reason, so none of them should come back:
+       *
+       *   absolute inside body — body is `overflow: hidden`, which clips
+       *   its descendants to its own box, and its box is exactly 100dvh.
+       *   His shoe was cut off at the fold.
+       *
+       *   overflow: clip on the shell instead of hidden — `hidden` is a
+       *   scroll container that refuses the finger but not a function
+       *   call, and the caller is Safari moving a focused field into
+       *   view. Measured: scrollTo(500) took the page to 85. `clip`
+       *   should not be a scroll container at all and in Chromium on the
+       *   root it still went to 85.
+       *
+       *   position: fixed — escapes body's clip and adds nothing
+       *   scrollable, and iOS clips fixed boxes to the LAYOUT viewport,
+       *   which is innerHeight. So he stopped dead at 100dvh again, a
+       *   little lower than before and no better. Will: "Bottom still
+       *   opaque."
+       *
+       * In-flow content does reach that strip — the dark section was
+       * measured there, visible, 40px below every number the browser
+       * reports as the bottom of the screen. The canvas background
+       * reaches it too, and unlike in-flow content it cannot be scrolled,
+       * cannot be clipped, and costs no box at all.
+       */
+      background: var(--background)
+                  url("assets/background.webp") no-repeat
+                  right calc(100% + var(--portrait-overhang))
+                  / auto var(--portrait-height);
       color: var(--color);
       font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-weight: 300;
@@ -264,77 +315,6 @@
       font-style: italic;
       font-size: 1.24em;
     }
-
-    /* ── The portrait ──────────────────────────────────────────────── */
-    /*
-     * On the real page this is .hero::before. Here the shell IS the first
-     * screen, so it hangs off body.
-     *
-     * position: absolute matters twice over: it anchors him to the shell
-     * rather than to the flow, and it takes him OUT of the flex column, so
-     * the arrangement being tested — main absorbs the shrink, the bar rides
-     * the bottom — is untouched by his being here at all. If this page
-     * stops behaving once he is on it, that is a fact about the
-     * photograph and not about the layout.
-     *
-     * The box is taller than the screen by exactly the sink, so his own
-     * cropped bottom edge falls below the fold and gets clipped by the
-     * shell instead of drawing a hard line across it. Sliding the
-     * background down inside a box that still ended at the fold was the
-     * version that did not work: the bottom of the image falls outside the
-     * painting area and is simply not drawn, which puts that hard edge AT
-     * the fold.
-     */
-    body::before {
-      content: "";
-      /* fixed, not absolute, and this took three tries to get right.
-         
-         absolute put him inside body, and body is `overflow: hidden` —
-         which clips its descendants to ITS OWN box, and its box is
-         exactly 100dvh. So the overhang that is meant to carry him into
-         the strip under Safari's floating bar was thrown away at the
-         fold, and what showed there instead was the page background with
-         his shoe cut off above it. Which is what Will photographed.
-         
-         Making the shell `overflow: clip` instead was the obvious repair
-         and it is not enough. `hidden` is a scroll container that refuses
-         the finger but not a function call, and the function that wants
-         to call it is Safari, moving a focused field into view as the
-         keyboard opens: measured here, with him hanging 85px past the
-         fold, scrollTo(500) took the page — and the bar — to 85. `clip`
-         should fix that by not being a scroll container at all, and in
-         Chromium on the root it still scrolled to 85.
-         
-         fixed settles both at once. A fixed box is not laid out inside
-         body, so body's overflow does not clip it and it adds nothing to
-         what could be scrolled — the page goes back to being exactly one
-         screen with nothing to scroll by any means, and he is clipped
-         only by the viewport, which is the thing that paints past 100dvh
-         in the first place.
-         
-         The cost is that he no longer travels with the content: when
-         Safari slides the visual viewport to make room for the keyboard,
-         the text slides and he does not. He is a backdrop, so that reads
-         as the photograph staying still behind the page. If it reads
-         wrong on the device, that is the thing to report. */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      /* --hero-height, not 100%. 100% is the shell, which is the dynamic
-         viewport; this has to reach past it into the strip Safari paints
-         and nothing reports. Same box as .hero::before on the real page,
-         to the pixel. */
-      height: calc(var(--hero-height) + var(--portrait-sink));
-      background: url("assets/background.webp") no-repeat right bottom
-                  / auto var(--portrait-height) scroll;
-      /* Behind everything. The real page gets this from the stacking order
-         of .hero's children; here it has to be said. */
-      z-index: 0;
-    }
-
-    /* And everything else in front of him, for the same reason. */
-    main, #chat-input-container { position: relative; z-index: 1; }
 
     /* ── The material ──────────────────────────────────────────────── */
     .liquid-glass {
