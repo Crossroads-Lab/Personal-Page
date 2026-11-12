@@ -107,10 +107,18 @@ addEventListener("orientationchange", measureScreenSlack);
  * starts horizontal and below the first screen, and tilts into its
  * diagonal as the page moves, at exactly the rate the finger moves.
  *
- * Half a viewport to complete, so it is the same gesture on a small
- * phone and a large desktop rather than the same number of pixels.
+ * 18% of a viewport to complete — a thumb's worth, not half a screen.
+ *
+ * It was half a viewport, which made the whole arrival feel like it
+ * started from way too low: the cut has a hard resting floor (see
+ * --cut-rest) and a slow climb out of it means a long scroll looking at
+ * nothing. Measured against Will's numbers, the dark used to appear
+ * after 137px of scroll and now appears after 71.
+ *
+ * Relative to the viewport rather than a pixel count, so it is the same
+ * gesture on a small phone and a large desktop.
  */
-const travel = () => Math.max(1, window.innerHeight * 0.5);
+const travel = () => Math.max(1, window.innerHeight * 0.18);
 
 let last = -1;
 
