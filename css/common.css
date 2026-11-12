@@ -122,6 +122,24 @@
    * and every property built on it goes with it. */
   --chrome-slack: 0px;
 
+  /* Extra box below the first screen, on touch devices only.
+   *
+   * Everything measurable has been measured and the sliver survived it:
+   * 100lvh was not the bottom of the screen, and neither was 100lvh plus
+   * one toolbar. Rather than keep adding a toolbar at a time against a
+   * number no API reports, this overshoots by more than any chrome can
+   * be, once.
+   *
+   * It costs nothing but where the diagonal begins. The content still
+   * ends at 100svh — the padding grows with it — and the portrait sits a
+   * fixed distance past the cut whatever this is, so the only visible
+   * effect is a little more plain background between the fold and the
+   * slope on a phone. That is a far better trade than a dark wedge under
+   * the address bar.
+   *
+   * 0 on anything with a pointer, so the desktop geometry is untouched. */
+  --chrome-overscan: 0px;
+
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
      overrides it (css/index.css) and a sink computed from a different
@@ -261,6 +279,14 @@ input[type=number] {
 @supports (height: 1lvh) and (height: 1svh) {
   :root {
     --chrome-slack: calc(100lvh - 100svh);
+  }
+}
+
+/* A phone or a tablet: the browser's own furniture floats over the page
+   and the page paints behind it by an amount nothing will tell you. */
+@media (hover: none) {
+  :root {
+    --chrome-overscan: 96px;
   }
 }
 
