@@ -334,9 +334,38 @@ body[keyboard] .more-chevron {
    transition: none so it arrived with the keyboard rather than catching
    up to it. It worked — confirmed on the device as ?solo&pin — and all of
    it was a hand-rolled version of the two rules below. */
+/* On the ROOT as well as on body, and `hidden` rather than `clip`. Both
+   halves of that matter, and the reason is overflow propagation.
+   
+   The viewport takes its overflow from the root when the root is not
+   `visible`, and otherwise from body — and whichever element it is taken
+   FROM is then treated as `visible` itself. So `body[keyboard] {
+   overflow: clip }` on its own did not clip body at all: it handed the
+   clip to the viewport and left body's own box open. The page was still
+   a box taller than the visual viewport with a field near the bottom of
+   it, which is exactly the shape Safari scrolls too far to correct.
+   Will: "it does display below the search bar (yaaay) but move the first
+   page way high than necessary on input focus."
+   
+   With the root carrying it, the root's value goes to the viewport, the
+   root is the one treated as visible, and body's `hidden` then applies
+   to body's own box the ordinary way. The document is one viewport, the
+   box is one viewport, and there is nothing for Safari to scroll.
+   
+   This is test.html's shell exactly — `html, body { height: 100dvh;
+   overflow: hidden }` — which is the one arrangement of the three that
+   behaves on the device. ?solo was the other shape (a body taller than
+   the window) and it failed the same way, which is what identified the
+   shell rather than the markup as the thing that mattered.
+   
+   The portrait is clipped at the fold by this, and that is fine: the
+   edge lands either exactly where the keyboard starts, or well behind
+   it, depending on whether dvh follows the keyboard. Neither is
+   visible. */
+html[keyboard],
 body[keyboard] {
   height: 100dvh;
-  overflow: clip;
+  overflow: hidden;
 }
 
 body[keyboard] .hero {

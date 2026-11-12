@@ -731,11 +731,23 @@ const FLOATING_CHROME = matchMedia("(hover: none)");
  * letting go of the tap.
  */
 const clearTheDeck = () => {
+  /* Both elements, because the scroll lock needs the ROOT: the viewport
+     takes its overflow from the root when the root is not visible and
+     from body otherwise, and whichever one it takes it from is then
+     treated as visible itself. Marking only body handed the clip to the
+     viewport and left body's own box open, so the page stayed a box
+     taller than the visual viewport with the field near the bottom of
+     it — the shape Safari overshoots when it scrolls the field into
+     view. See the comment on the rule in css/more.css. */
+  document.documentElement.setAttribute("keyboard", "");
   document.body.setAttribute("keyboard", "");
   void document.body.offsetHeight;
 };
 
-const wholePageBack = () => document.body.removeAttribute("keyboard");
+const wholePageBack = () => {
+  document.documentElement.removeAttribute("keyboard");
+  document.body.removeAttribute("keyboard");
+};
 
 if (input && !SOLO_PAGE) {
   /* The tap: the earliest moment there is, before Safari has focused

@@ -109,8 +109,7 @@ if (SOLO) {
      crash. */
   const lock = document.createElement("style");
   lock.textContent = [
-    "html, body { overflow: clip !important; }",
-    "body { height: var(--screen-height, 100lvh) !important; }",
+    "html, body { height: 100dvh !important; overflow: hidden !important; }",
   ].join("\n");
   document.head.appendChild(lock);
 }
