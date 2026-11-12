@@ -338,41 +338,19 @@
  * end of the suggestion row, and a chevron in the gap under the input bar.
  */
 
-/* Held back at rest so there is somewhere to go.
+/* The same material as every other chip in the row.
  *
- * At full --bg-more it was the darkest thing on a pale screen and sat in
- * the suggestion row like a button someone had already pressed. A step
- * lighter reads as one of the chips; the hover takes it the rest of the
- * way down and lifts the shadow with it, so the cue arrives under the
- * pointer rather than shouting from across the page. */
+ * It was dark — first at full --bg-more, then a step lighter with a hover
+ * that took it the rest of the way. Both read as a different KIND of
+ * control sitting among the suggestions, which it is not: it is one more
+ * thing you can press, and the arrow already says where it goes. The glass
+ * and the hover come from .starter-chip.liquid-glass like the others; only
+ * the arrow and the weight are set here. */
 .chip--more {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #4A4A46 !important;
-  color: rgb(from var(--text-on-dark) r g b / 0.88) !important;
-  font-weight: 500;
   text-decoration: none;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.10);
-  transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .chip--more:hover,
-  .chip--more:focus-visible {
-    background: var(--bg-more) !important;
-    color: var(--text-on-dark) !important;
-    box-shadow: 0 3px 12px rgb(0 0 0 / 0.20);
-  }
-}
-
-/* No hover on a phone, so it settles at the darker, more definite end
-   rather than sitting at a resting state that never resolves. */
-@media not all and (hover: hover) {
-  .chip--more {
-    background: var(--bg-more) !important;
-    color: var(--text-on-dark) !important;
-  }
 }
 
 /* The icon row's own More, and it only exists after the first question.

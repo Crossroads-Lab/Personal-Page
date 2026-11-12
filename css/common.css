@@ -110,19 +110,24 @@
      the generated floor on screen — too far, and the artwork's own bottom
      edge would come up past the cut.
      
-     0.4 is where it sits. He rises 35 to 48px depending on the width —
-     clearly higher, with the floor and the chair base reading beneath him
-     the way they do in the mock — and what is left of the sink still
-     clears the slope by 13px at the tightest width rather than by 4.
+     It is 0, and it has to stay 0 until the artwork below him is real.
      
-     That margin matters more than it looks. It rests on a measurement of
-     where the photograph's content starts across its bottom edge (33.5%
-     in from the left, sampled from the artwork), and a few pixels of slack
-     is what absorbs being slightly wrong about that. 0.5 lifted him nine
-     pixels further and spent all of it.
+     0.4 was tried and reverted. The extension is clamped and blurred, not
+     generated — it continues the vertical structure at the bottom edge,
+     which is convincing enough to hide UNDER the cut and nowhere else.
+     Lifting him puts those pixels on screen directly beneath his shoes,
+     and the chair base dissolves into vertical streaks the moment anyone
+     looks at it. The measurements were all fine; the pixels were not.
      
-     This is the number to turn. */
-  --portrait-lift: 0.4;
+     The extension still earns its place at 0: his feet reach the bottom
+     of the screen instead of being cropped flat by the cut, and nothing
+     synthesized is ever above the fold.
+     
+     Raise this only once design/v2/SPEC.md section 2 has been done for
+     real — a generative expand, 350px, in an image tool. Then 0.4 lifts
+     him 35 to 48px and the sink still clears the slope by 13px at the
+     tightest width. */
+  --portrait-lift: 0;
 
   /* The displayed height of the added strip: height x extra / (1 + extra). */
   --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
