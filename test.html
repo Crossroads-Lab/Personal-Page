@@ -72,6 +72,33 @@
     carries the same two rules for the real page while someone is
     typing, written so it is correct either way.
 
+    THE ONE THING THIS PAGE CANNOT MATCH, and it is worth writing down
+    because three separate repairs were spent on it:
+
+    The photograph is cut off at the bottom here and is not cut off on
+    the real page. That is not the picture, the box, or the clip. It is
+    that the real page SCROLLS and this one does not. Safari floats its
+    bottom bar over a scrollable page — which is why the real page paints
+    under it — and docks the bar on a page that does not scroll, where it
+    gets its own backdrop and the page genuinely ends above it.
+
+    So the line everything stopped at really is the bottom of the
+    viewport here, and nothing a page can draw gets past it. Tried and
+    failed, in order: a taller absolute box (clipped by body's overflow
+    at 100dvh), overflow: clip on the shell instead of hidden (`hidden`
+    is a scroll container that refuses the finger but not Safari's own
+    scroll-into-view — scrollTo(500) moved it to 85), position: fixed
+    (iOS clips fixed boxes to the layout viewport), and the canvas
+    background (painting area is the whole canvas, and it changed
+    nothing, which is what proved the line is the viewport).
+
+    This page has to be exactly one screen with nothing to scroll — that
+    is what makes it a keyboard control — so it cannot also have the
+    floating bar. The cut is expected. It does not reach the real page:
+    at rest that page scrolls and the portrait paints under the bar, and
+    while typing body goes to height: 100dvh and overflow: clip, where
+    the bar docks but its edge lands exactly where the keyboard starts.
+
     Everything below is copied from the real stylesheets rather than
     re-invented, so a difference in behaviour is a difference in the
     page and not in the CSS. Where a rule needed JS to earn its keep —
