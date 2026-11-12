@@ -284,10 +284,20 @@ input[type=number] {
   }
 }
 
-/* A phone or a tablet: the browser's own furniture floats over the page
-   and the page paints behind it by an amount nothing will tell you. */
+/* A phone or a tablet, AND only while the page is at rest.
+ *
+ * The overscan exists for one moment: scroll position zero, where the
+ * browser paints past its own reported viewport and the diagonal leaks
+ * into that strip. The instant anyone scrolls, the strip is gone and all
+ * the overscan does is hold the cut a hundred and twelve pixels further
+ * down than it belongs — which reads as a long stretch of nothing between
+ * him and the dark.
+ *
+ * So it is only on at the top. scripts/more.js carries the class, and the
+ * swap happens while the diagonal is still below the fold, so nothing
+ * visibly moves. */
 @media (hover: none) {
-  :root {
+  body.at-top {
     /* Tuned against four screenshots from the device, which is the only
        instrument that has worked on this:
        

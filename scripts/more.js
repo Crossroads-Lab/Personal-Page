@@ -70,6 +70,42 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
+ * At the top, or not.
+ *
+ * --chrome-overscan holds the diagonal below the strip a phone paints
+ * past its own viewport (css/common.css). That strip only exists at
+ * scroll zero: once the page moves, the overscan is a hundred-odd pixels
+ * of nothing between the portrait and the dark.
+ *
+ * Four pixels of tolerance, because a phone does not always come to rest
+ * at exactly zero. The class flips while the diagonal is still well below
+ * the fold, so the cut never moves anywhere anyone can see it.
+ */
+const TOP = 6;
+
+/* A sliver pinned to the top of the document. While any of it is on
+   screen the page is at rest; the moment it leaves, it is not.
+   
+   An observer rather than a scroll listener because a scroll listener is
+   not guaranteed to run: measured in a browser pane that had been hidden,
+   scrollY went from 0 to 200 and the scroll event fired zero times.
+   IntersectionObserver reports from the compositor and does not care. The
+   listener is kept as well — between them, one of the two always fires. */
+const sentinel = document.createElement("div");
+sentinel.setAttribute("aria-hidden", "true");
+sentinel.style.cssText =
+  `position:absolute;top:0;left:0;width:1px;height:${TOP}px;pointer-events:none;visibility:hidden`;
+document.body.prepend(sentinel);
+
+const markTop = (atTop = window.scrollY <= TOP) =>
+  document.body.classList.toggle("at-top", atTop);
+
+markTop();
+new IntersectionObserver(([entry]) => markTop(entry.isIntersecting)).observe(sentinel);
+addEventListener("scroll", () => markTop(), { passive: true });
+addEventListener("resize", () => markTop());
+
+/*
  * When the cues are worth showing.
  *
  * Two ways they stop being worth it: the cards are already on screen, or
