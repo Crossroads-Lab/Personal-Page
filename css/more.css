@@ -84,13 +84,6 @@
 .more {
   position: relative;
   z-index: 1;
-  /* Both cues point at this section, and the browser would put its box
-     top at the top of the window — which is above the cut, so you arrive
-     looking at the diagonal from underneath with the hero still on
-     screen. A negative scroll margin carries the landing down past the
-     lowest point the line ever reaches, which is the left end at full
-     tilt, --cut below the box top. */
-  scroll-margin-top: calc(-1 * (var(--cut) + var(--cut-rest) + env(safe-area-inset-top, 0px)));
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
@@ -313,6 +306,12 @@ body[keyboard] {
 
 .card--book .book-cover {
   flex: none;
+  /* The card is align-items: stretch so the text column can reach the
+     bottom of this cover. An <img> is a flex item too, and stretch beats
+     its own height: auto — so the cover came out drawn to the full
+     height of the card, a tall thin version of the book. It keeps its
+     own height. */
+  align-self: flex-start;
   width: 150px;
   /* The <img> carries width/height attributes so the card reserves the
      right box before the file lands. Those attributes are also what the

@@ -239,3 +239,56 @@ new MutationObserver(sync).observe(document.body, {
 });
 
 sync();
+
+// --------------------------------------------------------------------------
+// Where "More" lands
+//
+// Both cues are plain anchors to #more, and the browser puts the top of
+// that box at the top of the window. The box starts ABOVE the cut — the
+// diagonal is drawn inside it — so you arrive looking up at the line
+// with the hero still on screen.
+//
+// A negative scroll-margin was the first answer and it kept coming up
+// short: the margin is a stylesheet value, resolved against --cut-rest,
+// which JS writes after the page has loaded and rewrites on every
+// resize. Whatever it happened to be at the moment of the tap is what
+// you got.
+//
+// So measure it at the tap instead. The lowest point the line ever
+// reaches is --cut below the section's box top — the left end at full
+// tilt, which is where it will be by the time the scroll finishes.
+// Nothing above that is worth arriving at.
+// --------------------------------------------------------------------------
+
+/** Resolve a CSS length — var(), env(), svh, any of it — to pixels. */
+const resolve = (value) => {
+  const probe = document.createElement("div");
+  probe.style.cssText = `position:absolute;visibility:hidden;height:${value}`;
+  document.body.appendChild(probe);
+  const px = parseFloat(getComputedStyle(probe).height) || 0;
+  probe.remove();
+  return px;
+};
+
+const landing = () => {
+  if (!more) return 0;
+  const boxTop = more.getBoundingClientRect().top + window.scrollY;
+  // Plus the top inset, so the status bar is not sitting over the first
+  // thing you were brought here to read. 0 where it is not reported,
+  // which costs nothing: the cut is already clear by then.
+  return Math.round(boxTop + resolve("var(--cut)") + resolve("env(safe-area-inset-top, 0px)"));
+};
+
+for (const cue of document.querySelectorAll('a[href="#more"]')) {
+  cue.addEventListener("click", (event) => {
+    if (!more) return;
+    event.preventDefault();
+    window.scrollTo({ top: landing(), behavior: REDUCED.matches ? "instant" : "smooth" });
+    // Same lesson as toTop(): smooth is a request, not a promise.
+    setTimeout(() => {
+      if (Math.abs(window.scrollY - landing()) > 4) {
+        window.scrollTo({ top: landing(), behavior: "instant" });
+      }
+    }, REDUCED.matches ? 0 : SCROLL_MS);
+  });
+}
