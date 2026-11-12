@@ -1,10 +1,17 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- A calendar: the header band, the page, one day marked.
-     Full-bleed across the 24 box like linkedin.svg.
-
-     Opacity normalised to 1. It arrived at 0.85, and the row already dims
-     every icon to 0.72 (css/chat-content.css) — two dimmings is what made
-     the paper plane read lighter than its neighbours. -->
-<path fill="black" d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V6H0V5Z"/>
-<path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M19 24H5C2.23858 24 0 21.7614 0 19V7.5H24V19C24 21.7614 21.7614 24 19 24ZM9.8 10.6H7C6.44772 10.6 6 11.0477 6 11.6V14.4C6 14.9523 6.44771 15.4 7 15.4H9.8C10.3523 15.4 10.8 14.9523 10.8 14.4V11.6C10.8 11.0477 10.3523 10.6 9.8 10.6Z"/>
+<!-- A calendar, outlined: two rings, the page, a plus.
+     Opacity normalised to 1 — the row's own 0.72 is the only dimming
+     that should be there (css/chat-content.css). -->
+<g clip-path="url(#calendar-clip)">
+  <path d="M7 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M17 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+  <mask id="calendar-page" fill="white">
+    <path d="M0 6C0 3.23858 2.23858 1 5 1H19C21.7614 1 24 3.23858 24 6V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V6Z"/>
+  </mask>
+  <path d="M5 24H19C21.7614 24 24 21.7614 24 19V6C24 3.23858 21.7614 1 19 1H5C2.23858 1 0 3.23858 0 6V19C0 21.7614 2.23858 24 5 24Z" stroke="black" stroke-width="3" mask="url(#calendar-page)"/>
+  <path d="M16 13H12M12 13H8M12 13V9M12 13V17" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<defs>
+  <clipPath id="calendar-clip"><rect width="24" height="24" rx="5" fill="white"/></clipPath>
+</defs>
 </svg>

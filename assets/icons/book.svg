@@ -1,4 +1,12 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Scaled to the row.
+     Measured by rasterising every icon at 240px and taking the extent of
+     its ink: linkedin, share and calendar fill the whole 24 box, this one
+     was drawn 18x21 inside it. At the 16px the row renders that is a
+     visibly smaller mark sitting in the same circle. The transform grows
+     it about its own centre until the heights match; the aspect is left
+     alone, so it ends up 20.6 x 24 rather than stretched to square. -->
+<g transform="translate(12 12) scale(1.14286) translate(-12 -12)">
 <!-- A closed book: the spine down the left, the cover beside it, one line
      where a title would be.
 
@@ -8,4 +16,5 @@
      which at the 16px the row renders at made it both the smallest and the
      palest thing in the line — it read as a different family. -->
 <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M5.5 1.5H18.5C19.8807 1.5 21 2.61929 21 4V20C21 21.3807 19.8807 22.5 18.5 22.5H5.5C4.11929 22.5 3 21.3807 3 20V4C3 2.61929 4.11929 1.5 5.5 1.5ZM6.5 1.5V22.5H8V1.5H6.5ZM11.4 7.2C10.9582 7.2 10.6 7.55817 10.6 8C10.6 8.44183 10.9582 8.8 11.4 8.8H16.6C17.0418 8.8 17.4 8.44183 17.4 8C17.4 7.55817 17.0418 7.2 16.6 7.2H11.4Z"/>
+</g>
 </svg>
