@@ -1,6 +1,6 @@
 "use strict"
 
-import { askAsChip } from "./chat-input-form.js?v=f2ae148c";
+import { askAsChip } from "./chat-input-form.js?v=3b4600ae";
 
 // --------------------------------------------------------------------------
 // The second screen
@@ -18,7 +18,29 @@ import { askAsChip } from "./chat-input-form.js?v=f2ae148c";
 // is, in everything but where it was pressed.
 // --------------------------------------------------------------------------
 
-const more = document.getElementById("more");
+/*
+ * ?solo — the first screen and nothing else.
+ *
+ * Will: "Please produce a version with no second page at all. None. And
+ * let's take baby steps from there."
+ *
+ * The second section is removed from the document at load, along with
+ * both cues, and none of the cut, the scroll-to-More or the keyboard
+ * machinery is wired up. What is left is the hero, the bar, and
+ * whatever Safari does with them on its own — a floor to measure from,
+ * with nothing of mine in the way.
+ *
+ * Add one thing at a time from here.
+ */
+const SOLO = location.search.includes("solo");
+
+if (SOLO) {
+  for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
+    node.remove();
+  }
+}
+
+const more = SOLO ? null : document.getElementById("more");
 const cues = () => document.querySelectorAll(".chip--more, .more-chevron");
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)");

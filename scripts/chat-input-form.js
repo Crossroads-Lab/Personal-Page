@@ -802,7 +802,7 @@ const clearTheDeck = () => {
  * the answer from before. A timer would only narrow that window and
  * would be a guess at how long to wait; asking at the tap closes it.
  */
-if (keyboard && input) {
+if (keyboard && input && !location.search.includes("solo")) {
   /*
    * A tap: the earliest possible moment, before Safari has focused
    * anything. preventDefault stops it focusing the field itself, the
@@ -843,7 +843,7 @@ if (keyboard && input) {
   });
 }
 
-if (keyboard && input) {
+if (keyboard && input && !location.search.includes("solo")) {
   keyboard.addEventListener("resize", syncKeyboard);
   input.addEventListener("focus", syncKeyboard);
   /* Clear it on the way out, then measure again once the keys have
