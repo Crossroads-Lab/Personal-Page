@@ -83,6 +83,49 @@
       --main-width: max(512px, 40%);
       --main-max-width: calc(100dvw - 2 * var(--padding));
       --chat-form-height: min(max(6.2840dvw, 48px), 56px);
+
+      /* ── The portrait, lifted from css/common.css ───────────────── */
+
+      /* On the real page this is 100lvh + the chrome slack + the bottom
+         inset: deliberately LARGER than the viewport, so that the dark
+         section below it starts past the bottom of the screen in every
+         toolbar state. There is nothing below this page, so here it is
+         simply the viewport, and the shell stays the 100dvh that was
+         proved to work. The one number this page cannot reproduce. */
+      --hero-height: 100dvh;
+
+      /* The cut's own geometry, kept because the sink is derived from it
+         and the sink changes how big the photograph is drawn. There is no
+         cut here and no section for one to open onto, so --cut-rest is 0
+         rather than the measured value JS writes on the real page. */
+      --cut: 56px;              /* --cut-mobile; 120px over 900 */
+      --cut-pivot: 0.8;
+      --cut-rest: 0px;
+
+      /* How far the portrait sinks below the first screen, so the diagonal
+         passes UNDER its hard bottom edge instead of across it. The photo
+         is cropped at the shoe, and anchored to the fold that flat edge
+         reads as a cut of its own. Kept here even without a diagonal,
+         because it is also what pushes the photograph's own bottom edge
+         off the screen — which is exactly the thing that went wrong in
+         ?solo. */
+      --portrait-sink: calc(var(--cut-rest) + var(--cut) * var(--cut-pivot));
+
+      /* 74.2vw is the mock's width — he is 0.36 of the window across in it,
+         and at 0.485 of the crop that needs 0.742 of the window. The other
+         term is the mock's height. On the mock's own aspect the height
+         binds; on a tall narrow window the width binds instead and keeps
+         him off the headline rather than letting a tall window inflate
+         him. 0.858 is how much of the crop is him, measured off the file. */
+      --portrait-crop: min(74.2vw, calc(0.9324 * var(--hero-height) + var(--portrait-sink) / 0.858));
+      /* He is 77.5% of the crop's width, and the crop is 0.6260 as wide as
+         it is tall (1252/2000) — so 0.485 of its height. */
+      --portrait-width: calc(0.485 * var(--portrait-crop));
+      /* What the headline and the icon row need at the top of a narrow
+         screen. svh, not dvh: this sets how far down he starts, and a
+         value that tracks the toolbar makes him drift up as you scroll. */
+      --portrait-top: clamp(224px, 35svh, 300px);
+      --portrait-height: var(--portrait-crop);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -95,6 +138,7 @@
     }
 
     body {
+      position: relative;      /* so the portrait anchors to the shell */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -203,6 +247,43 @@
       font-style: italic;
       font-size: 1.24em;
     }
+
+    /* ── The portrait ──────────────────────────────────────────────── */
+    /*
+     * On the real page this is .hero::before. Here the shell IS the first
+     * screen, so it hangs off body.
+     *
+     * position: absolute matters twice over: it anchors him to the shell
+     * rather than to the flow, and it takes him OUT of the flex column, so
+     * the arrangement being tested — main absorbs the shrink, the bar rides
+     * the bottom — is untouched by his being here at all. If this page
+     * stops behaving once he is on it, that is a fact about the
+     * photograph and not about the layout.
+     *
+     * The box is taller than the screen by exactly the sink, so his own
+     * cropped bottom edge falls below the fold and gets clipped by the
+     * shell instead of drawing a hard line across it. Sliding the
+     * background down inside a box that still ended at the fold was the
+     * version that did not work: the bottom of the image falls outside the
+     * painting area and is simply not drawn, which puts that hard edge AT
+     * the fold.
+     */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% + var(--portrait-sink));
+      background: url("assets/background.webp") no-repeat right bottom
+                  / auto var(--portrait-height) scroll;
+      /* Behind everything. The real page gets this from the stacking order
+         of .hero's children; here it has to be said. */
+      z-index: 0;
+    }
+
+    /* And everything else in front of him, for the same reason. */
+    main, #chat-input-container { position: relative; z-index: 1; }
 
     /* ── The material ──────────────────────────────────────────────── */
     .liquid-glass {
@@ -391,6 +472,27 @@
     }
 
     @media only screen and (min-width: 901px) {
+      /* 120px, not 56: the cut is deeper on a wide screen, so the sink is
+         too, and the photograph is drawn to match. */
+      :root { --cut: 120px; }
+
+      /* On a wide enough screen he stands to the right and the writing
+         keeps out of his way, which is how the design was drawn: headline,
+         bar and chips in the space beside him, not across him. Padding the
+         shell by his width makes that automatic — the column is centred by
+         flexbox, and flexbox is now centring it in what is left. */
+      body {
+        padding-left: var(--padding);
+        padding-right: calc(var(--padding) + var(--portrait-width));
+      }
+
+      /* The max-width override is as load-bearing as the padding.
+         --main-width is max(512px, 40%) and --main-max-width is measured
+         off the VIEWPORT, which knows nothing about the space reserved for
+         him — so without this a 512px bar ignores the narrowed column and
+         runs under him anyway. */
+      main, #chat-input-container, #starter-chips { max-width: 100%; }
+
       /* Half the slack above the bar, half below: the bar lands in the
          middle. */
       body::after { flex-grow: 1; }
@@ -427,6 +529,19 @@
     }
 
     @media only screen and (max-width: 900px) {
+      /* At crop height he is taller than the phone is wide, so he fills the
+         screen and the headline, the chips and the bar all sit on top of
+         him. Sizing him to what is left under the headline instead keeps
+         the top of the screen clear and puts the chips and the bar over his
+         legs, which is the glass doing its job rather than a collision.
+         
+         The sink is ADDED rather than spent pushing him down: the bottom is
+         nailed to the lowest point the cut ever reaches, so it cannot move,
+         and a taller draw raises his head by the difference. */
+      :root {
+        --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
+      }
+
       #welcome { justify-content: flex-start; }
       #welcome > div:first-of-type { gap: 8px; }
 
