@@ -72,10 +72,27 @@
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
-  /* Twice the slack: the box grew by one above 100lvh, and the content
-     still has to end at 100svh so the input bar stays above the chrome.
-     lvh + slack - 2*slack = lvh - slack = svh. */
-  padding-bottom: calc(var(--safearea-padding-bottom) + 2 * var(--chrome-slack));
+  /* The content ends where the DYNAMIC viewport ends.
+   
+     This is ask-nereus-client's arrangement, which has no keyboard code
+     at all and does not need any: its shell is 100dvh, the bar is the
+     last item in it, so when the browser gives back less room the shell
+     shrinks and the bar comes with it. dvh is whatever you have right
+     now — toolbar out, toolbar away, and, where the browser resizes for
+     it, keyboard up.
+     
+     The BOX stays --hero-height, which is static on purpose: the
+     diagonal rests against the bottom of this box, and a box that
+     changed size mid-scroll is what made the cut move around in the
+     first place. Only the padding is dynamic, so only the CONTENT
+     follows the viewport. The cut does not move.
+     
+     It was 2 * --chrome-slack, which is the same number by a longer
+     road: hero is lvh + slack, so hero - dvh is 2*slack with the
+     toolbar out and 1*slack with it away — exactly what the old pair of
+     rules worked out to. The difference is that this one keeps tracking
+     after the toolbar has finished moving. */
+  padding-bottom: calc(var(--safearea-padding-bottom) + var(--hero-height) - 100dvh);
 
   /* The portrait hangs below the first screen so the cut can hide its
      bottom edge; clipping sideways keeps the phone layout's overhang from
