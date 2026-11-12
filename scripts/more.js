@@ -48,22 +48,30 @@ if (SOLO) {
      under the status bar and make the baseline something other than one
      screen.
      
-     clip on the ROOT only. It cannot be scrolled by any means, so the
-     hero's overhang can go on hanging without adding anything that
-     matters — there is nothing left to scroll it into view.
+     Two things at once, and they fought each other for two rounds.
      
-     Clipping the hero as well was the first version and it cut the
-     overhang off at the fold, which left a band of bare page between
-     the bottom of the photograph and the bottom of the glass: "still
-     small bottom band before focus". That overhang is the only thing
-     that covers the strip iOS paints past the viewport, and in ?solo
-     there is no dark section behind it to do the job instead.
+     The clip stops the page scrolling. But clip on a box clips what
+     overflows it, and the body box ends at the hero — so it cut off
+     .hero::before, whose overhang is the only thing covering the strip
+     iOS paints past the viewport. Measured off Will's screenshot: the
+     page stopped 17 points short of the bottom of the glass and those
+     17 points were bare background. "Still small bottom gray bar in
+     solo", twice, because I moved the clip around instead of asking
+     what it was clipping.
      
-     The hero keeps its own size either way — shrinking it would move
-     the portrait and the bar, and then this would be a baseline for a
-     page that does not exist. */
+     So the body is given the height of the GLASS. Now the box the clip
+     applies to reaches the bottom of the display, the overhang paints
+     all the way into the strip, and there is still nothing to scroll.
+     
+     --screen-height is screen.height, set by measurePage below, which
+     runs in ?solo like everything else that is not the cut. 100lvh if
+     it is somehow not there, which is the old behaviour rather than a
+     crash. */
   const lock = document.createElement("style");
-  lock.textContent = "html, body { overflow: clip !important; }";
+  lock.textContent = [
+    "html, body { overflow: clip !important; }",
+    "body { height: var(--screen-height, 100lvh) !important; }",
+  ].join("\n");
   document.head.appendChild(lock);
 }
 
