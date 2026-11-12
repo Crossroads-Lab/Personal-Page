@@ -127,18 +127,28 @@
    * position. Everything about the diagonal is expressed against it. */
   --cut-progress: 0;
 
-  /* Where the cut's high point rests before anyone scrolls, measured
-   * DOWN from the bottom of the first screen.
+  /* The whole display, in CSS pixels. screen.height, set from JS
+   * (scripts/more.js) because no CSS unit reports it. It already
+   * includes the status bar, the notch and the home indicator — it is
+   * the glass, not a viewport. */
+  --screen-height: 0px;
+
+  /* How tall the first screen is. Written once here because two things
+   * need it: .hero itself, and the sum below. */
+  --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
+
+  /* Where the cut rests before anyone scrolls, measured DOWN from the
+   * bottom of the first screen.
    *
-   * It has to clear the strip a phone paints past the viewport it
-   * reports — the strip its floating chrome sits over, which no CSS unit
-   * describes. --screen-slack is that strip, measured in JS from
-   * screen.height (see scripts/more.js); the safe-area inset covers a
-   * home indicator where one is reported; 16px is slop.
+   *     where the screen ends  -  where the first screen ends
    *
-   * Nothing to clear on a desktop, so it rests at 0 — exactly at the
-   * fold, the way the v2 mock draws it. */
-  --screen-slack: 0px;
+   * That is the whole formula. Anything above the bottom of the glass
+   * can be painted, so the cut has to be at or below it; the first
+   * screen ends at --hero-height; the difference is how far down to put
+   * it. No coefficient, no offset, no inset term — screen.height is the
+   * glass and already counts every notch on it.
+   *
+   * 0 on a desktop, where nothing paints past the viewport. */
   --cut-rest: 0px;
 
   /* And where it ends up once the page has moved: above the fold, biting
@@ -299,29 +309,12 @@ input[type=number] {
 }
 
 /* A phone or a tablet: the chrome floats over the page, so the cut has to
-   start below everything the screen can paint.
-   
-   Every term is measured, nothing is a number somebody liked:
-   
-     --screen-slack          screen.height - innerHeight, from JS. The
-                             display minus the viewport: the strip the
-                             browser's own furniture sits over.
-     100lvh - 100svh         the same gap as CSS reports it. It reads 0
-                             against a floating toolbar, which is why it
-                             is not trusted alone — but it is right when
-                             the chrome resizes the viewport instead, so
-                             the larger of the two is the honest answer.
-     safe-area-inset-bottom  the home indicator, where one is reported.
-     2svh                    slop, as a share of the screen rather than a
-                             pixel count, so it scales with the device.
-*/
+   start at the bottom of the glass rather than the bottom of the
+   viewport. max() only to stop a browser that is not full-screen — a
+   desktop window, a tablet in split view — from reporting a negative. */
 @media (hover: none) {
   :root {
-    --cut-rest: calc(
-      max(var(--screen-slack), 100lvh - 100svh)
-      + env(safe-area-inset-bottom, 0px)
-      + 2svh
-    );
+    --cut-rest: max(0px, calc(var(--screen-height) - var(--hero-height)));
   }
 }
 }

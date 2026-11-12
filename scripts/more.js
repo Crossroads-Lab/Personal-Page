@@ -70,32 +70,26 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
- * How much taller the SCREEN is than the viewport the browser reports.
+ * The height of the display, in CSS pixels.
  *
- * This is the number the whole cut problem turns on, and no CSS unit
- * exposes it. A phone browser paints into the strip its own floating
- * chrome sits over: innerHeight stops short of it, 100lvh stops short of
- * it, and env(safe-area-inset-bottom) read 0 on the device where it was
- * happening. screen.height does not stop short of it — it is the whole
- * display.
+ * This is the one number the cut needs and the one no CSS unit reports.
+ * innerHeight stops at the viewport, 100lvh stops at the viewport with
+ * the chrome retracted, and env(safe-area-inset-bottom) read 0 on the
+ * device where this was going wrong. screen.height is the glass: status
+ * bar, notch, home indicator and all.
  *
- * Measured rather than assumed, so a notch, a home indicator, a taller
- * phone or a landscape rotation all come out in the wash. Capped at 40%
- * of the screen because a browser that is NOT full-screen (a desktop
- * window, a tablet in split view) would otherwise report the whole
- * desktop and push the diagonal into the next county; css/common.css
- * only consumes it on (hover: none) anyway, so the cap is a second belt.
+ * css/common.css subtracts the height of the first screen from it, and
+ * that difference is where the cut rests. Nothing else is needed.
+ *
+ * Re-read on rotation, where width and height swap.
  */
-const measureScreenSlack = () => {
-  const screenHeight = window.screen?.height ?? 0;
-  const slack = Math.max(0, Math.round(screenHeight - window.innerHeight));
-  const capped = Math.min(slack, Math.round(screenHeight * 0.4));
-  document.documentElement.style.setProperty("--screen-slack", `${capped}px`);
-};
+const measureScreen = () =>
+  document.documentElement.style.setProperty(
+    "--screen-height", `${Math.round(window.screen?.height ?? 0)}px`,
+  );
 
-measureScreenSlack();
-addEventListener("resize", measureScreenSlack);
-addEventListener("orientationchange", measureScreenSlack);
+measureScreen();
+addEventListener("orientationchange", measureScreen);
 
 /*
  * How far through its arrival the cut is, as a number from 0 to 1.
@@ -152,7 +146,7 @@ const paintProgress = () => {
 
 paintProgress();
 addEventListener("scroll", paintProgress, { passive: true });
-addEventListener("resize", () => { measureScreenSlack(); paintProgress(); });
+addEventListener("resize", () => { measureScreen(); paintProgress(); });
 
 /*
  * When the cues are worth showing.

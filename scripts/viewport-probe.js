@@ -37,6 +37,7 @@ const render = () => {
   const leak = moreRect ? Math.round(window.innerHeight - moreRect.top) : null;
 
   return [
+    ["screen.height", Math.round(window.screen?.height ?? 0)],
     ["innerHeight", window.innerHeight],
     ["visualViewport", Math.round(window.visualViewport?.height ?? 0)],
     ["100svh", px("100svh")],
@@ -44,6 +45,9 @@ const render = () => {
     ["100dvh", px("100dvh")],
     ["safe-area-bottom", px("env(safe-area-inset-bottom, 0px)")],
     ["--chrome-slack", px("var(--chrome-slack)")],
+    ["--hero-height", px("var(--hero-height)")],
+    ["--cut-rest", px("var(--cut-rest)")],
+    ["--cut-progress", getComputedStyle(more ?? document.body).getPropertyValue("--cut-progress").trim() || "0"],
     ["hero bottom", heroRect ? Math.round(heroRect.bottom) : "?"],
     ["bar bottom", bar ? Math.round(bar.getBoundingClientRect().bottom) : "?"],
     ["#more top", moreRect ? Math.round(moreRect.top) : "?"],
