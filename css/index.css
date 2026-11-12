@@ -246,8 +246,23 @@
  * =====================================================
  * Layout changes for screens 740px and smaller
  */
+/* The photograph recedes once there is an answer to read.
+   
+   scripts/content.js sets [blured] on the body when a reply is on
+   screen, and takes it off again when the transcript is cleared.
+   
+   The selector is `body[blured] .hero::before`, and it was
+   `body[blured]:before` — body's OWN pseudo-element, which has never
+   held the photograph. The portrait moved to .hero when the dark section
+   arrived and this rule did not follow it, so the blur has been dead
+   since then rather than since the rebuild. Will: "the blur in the pic
+   is missing on mobile during chat."
+   
+   Both layers blur together on a phone, the fade under the bar included,
+   which is what you want — a sharp gradient over a soft photograph would
+   read as a seam. */
 @media only screen and (max-width: 1180px) {
-  body[blured]:before {
+  body[blured] .hero::before {
     filter: blur(20px);
     opacity: 0.5;
   }
