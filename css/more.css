@@ -603,26 +603,13 @@
 
 .paper:last-of-type { margin-bottom: 6px; }
 
-/* The affordance, since a touch screen has no hover to discover it with.
-   The arrow is a pseudo-element rather than a character in the markup,
-   so it cannot be selected or read out as "right arrow" by a screen
-   reader that is already announcing the link. */
-.papers-more {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--badge-text);
-}
-
-.papers-more::after {
-  content: " →";
-  display: inline-block;
-}
-
+/* The only affordance left is the hover, and that is fine: the primary
+   button under this card goes to the same place and says so in words.
+   Will: "all 30 + on Google scholar is useless because of the view on
+   Google scholar button." The list stays a link because it costs
+   nothing and a reader who tries it is right. */
 @media (hover: hover) and (pointer: fine) {
   .papers:hover .paper { color: var(--text-on-dark); }
-  .papers:hover .papers-more::after { transform: translateX(3px); }
 }
 
 .papers:focus-visible {
@@ -638,9 +625,13 @@
    the card below the papers in the reading order. The names carry it
    now; the words around them stay quiet so the names are what the eye
    lands on. */
+/* Under the stats now, and sized to sit with them rather than under
+   them — 16px against the 13px it was, with the names heavier again.
+   Margin-top pulls it up toward the PhD line it belongs to; the rule
+   below it provides the gap on the other side. */
 .previously {
-  margin: 0;
-  font-size: 14px;
+  margin: -4px 0 0;
+  font-size: 16px;
   color: var(--text-on-dark-2);
 }
 
