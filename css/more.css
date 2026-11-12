@@ -375,6 +375,17 @@
   }
 }
 
+/* The icon row's own More, and it only exists after the first question.
+ *
+ * Before then the row sits directly under the headline with the More chip
+ * a few pixels below it and the chevron below that — three ways to say the
+ * same thing in one glance. Afterwards the chip and the chevron are both
+ * gone and this is the only one left, which is the whole reason it is in
+ * the row rather than beside them. */
+body:not([chat-started]) .quick-link[href$="#more"] {
+  display: none;
+}
+
 .more-chevron {
   position: absolute;
   left: 50%;
