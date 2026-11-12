@@ -825,7 +825,30 @@
        * between them, and it only shows at rest on page two.
        */
       body { scroll-snap-type: y mandatory; }
-      main, #more { scroll-snap-align: start; }
+      main, #more {
+        scroll-snap-align: start;
+        /*
+         * Will: "everything looks good except the end of snaping anim,
+         * still too slow."
+         *
+         * There is no CSS property for the easing of a snap — the curve
+         * after a fling belongs to the platform's scroll animator. But
+         * scroll-snap-stop changes which animator runs. Without it iOS
+         * does a normal fling, lets it decelerate wherever it likes, and
+         * THEN animates to the nearest snap point, and it is that second
+         * animation, tacked on after the first has already died away,
+         * that reads as the slow tail. `always` forbids passing a snap
+         * point in a single gesture, which puts the container on the
+         * paged physics — one page per swipe, decelerating onto the
+         * destination rather than past it and back.
+         *
+         * If this still crawls, the curve really is Safari's and the
+         * only remaining lever is doing the snap in JavaScript with our
+         * own duration. Which would cost this page the one property that
+         * makes it a control.
+         */
+        scroll-snap-stop: always;
+      }
 
       /*
        * And page two's snap point is moved down past the cut.
