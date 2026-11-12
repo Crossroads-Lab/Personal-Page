@@ -197,22 +197,28 @@
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
 
-      /* How far below the shell his bottom edge lands.
+      /* How far below the ROOT'S BOX his bottom edge lands.
          
-         The sink, and nothing more. It was --hero-height + sink - 100dvh
-         for a while, which is the sink plus the chrome slack twice over,
-         on the theory that he had to reach into the strip under Safari's
-         bar. He cannot — on a page that does not scroll Safari docks the
-         bar and the page ends above it, which is the long comment at the
-         top of this file — so all that extra reach bought was him sitting
-         about 80px lower on the phone for no gain.
+         Measured from 100vh now, not from 100dvh, which is Will's
+         hypothesis and the one variable none of the four attempts
+         actually changed:
          
-         Will, once the cut was understood rather than fixed: "anyways, I
-         can live with it. move the picture back up."
+           "try again with the picture down on test and one modif to make
+            the picture appear. That is probably the difference between
+            vh and dvh"
          
-         So the bottom edge is back at 100dvh + sink, where it was when he
-         first looked at it, and the head comes back up by the difference. */
-      --portrait-overhang: var(--portrait-sink);
+         It holds together. A canvas background is POSITIONED against the
+         root's box even though it PAINTS across the whole canvas, and
+         the root's box here was 100dvh — so every version of this, at
+         every overhang, was being measured from the dynamic viewport,
+         which is the one thing that stops at the fold. The real page's
+         .hero is 100lvh plus the chrome slack, a vh-shaped box, and the
+         real page is the one that paints under the bar.
+         
+         So the root goes to 100vh below and this is measured off it:
+         bottom edge at --hero-height + sink, which is the same place
+         .hero::before puts it. Picture down, as asked. */
+      --portrait-overhang: calc(var(--hero-height) + var(--portrait-sink) - 100vh);
     }
 
     @supports (height: 1lvh) and (height: 1svh) {
@@ -222,7 +228,33 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* ── The shell ─────────────────────────────────────────────────── */
-    html, body {
+    /* THE ONE MODIFICATION under test.
+       
+       The root is 100vh; body stays 100dvh. On iOS those are different
+       numbers — 100vh is the LARGE viewport, the one you get with the
+       toolbar retracted, so the root's box reaches under Safari's bar
+       while the shell that holds the layout does not.
+       
+       Only the root changes, and the root does not hold any of the
+       layout: body carries the flex column, the spacer and the bar, and
+       it is still 100dvh, so the keyboard arrangement that works is
+       untouched. What the root's box decides is where the canvas
+       background is positioned from — and that is the thing that has
+       been measured off the dynamic viewport in all four attempts so
+       far.
+       
+       What this might cost: the root's box is now taller than the
+       viewport, which is scrollable overflow, and `overflow: hidden` is
+       a scroll container that refuses the finger but not Safari's own
+       scroll-into-view. If the page starts jumping on focus, that is
+       what it is, and it is the thing to report. */
+    html {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body {
       width: 100%;
       height: 100dvh;
       overflow: hidden;
