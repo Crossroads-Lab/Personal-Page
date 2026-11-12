@@ -96,6 +96,26 @@
      downward by 350px, and the extra content — leg, chair base, floor,
      shadow — is what should be hidden under the cut instead of 6-10% of the
      figure. When that asset lands, set this back to 0. */
+  /* How much taller the window can get than it currently is.
+   *
+   * On a phone browser the toolbars retract as you scroll, so there are
+   * two viewport heights: 100dvh, what is visible right now, and 100lvh,
+   * what it becomes once the chrome is out of the way. The page paints
+   * into that difference — behind Safari's bottom bar — even though dvh
+   * stops short of it, and what got painted there was the next element
+   * down. Which is the dark section. The cut was visible on an iPhone
+   * before anybody scrolled.
+   *
+   * On a desktop the two are equal and this is 0, so nothing below is
+   * conditional on a device.
+   *
+   * Declared 0 first and raised behind @supports, because an unsupported
+   * unit does not make a custom property fall back — it makes it invalid,
+   * and every property built on it goes with it. --portrait-sink is built
+   * on it, so getting that wrong would not have cost a margin, it would
+   * have cost the portrait's box. */
+  --viewport-slack: 0px;
+
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
      overrides it (css/index.css) and a sink computed from a different
@@ -128,8 +148,12 @@
   --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
 
   /* Sinking by the whole strip hides all of it. Lifting gives some of it
-     back, and takes him up by the same amount. */
-  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)));
+     back, and takes him up by the same amount.
+     
+     Plus the viewport slack: the cut starts that much lower on a phone
+     (see .more in css/more.css), so the artwork has to reach that much
+     further down or its own bottom edge surfaces in the gap. */
+  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)) + var(--viewport-slack));
 
   /* How much taller the artwork is than the framing --portrait-crop
      describes: 326 rows added to 2000, continuing the floor, the chair
@@ -227,6 +251,12 @@ input[type=number] {
    bare `html { scroll-behavior: smooth }`. */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+}
+
+@supports (height: 1lvh) and (height: 1dvh) {
+  :root {
+    --viewport-slack: calc(100lvh - 100dvh);
+  }
 }
 
 /* 
