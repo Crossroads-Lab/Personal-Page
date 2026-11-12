@@ -285,13 +285,30 @@ body[keyboard] .more-chevron {
   display: none !important;
 }
 
-/* And the height back. Removing the section leaves a phone with barely
-   more than one screen of document, and Safari cannot scroll the bar
-   above the keys if there is nowhere to scroll to. This is exactly what
-   the keys are covering, so the page can give the bar the same lift it
-   would have had. */
+/* The bar goes to the keyboard rather than the page going to the bar.
+   
+   Padding the page by the keyboard's height was the first answer and it
+   left exactly what it added: a band of empty page between the bottom
+   of the photograph and the keys, with the bar still stranded halfway
+   up. Will: "Gone but the space remains."
+   
+   Pinning it is the thing that was actually wanted. The bar sits on the
+   keys, nothing has to scroll to put it there, and the page is frozen
+   so that nothing does. Everything the visitor needs is then on screen
+   at once: the top of the first screen, the bar, the keyboard.
+   
+   The container holds the chips as well as the field, so they travel
+   with it and stay where they are relative to it. */
 body[keyboard] {
-  padding-bottom: var(--keyboard, 0px);
+  overflow: clip;
+}
+
+body[keyboard] #chat-input-container {
+  position: fixed;
+  left: 50%;
+  bottom: var(--keyboard, 0px);
+  transform: translateX(-50%);
+  margin: 0;
 }
 
 /* ── The book card: cover beside the text rather than above it ────────── */
