@@ -102,10 +102,34 @@
      number than the one on screen is wrong by exactly the difference. */
   --portrait-height: calc(var(--portrait-crop) * (1 + var(--portrait-extra)));
 
-  /* The displayed height of the added strip: height x extra / (1 + extra).
-     Sinking the artwork by exactly this puts the whole extension below the
-     first screen and leaves the photograph itself ending at the fold. */
-  --portrait-sink: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
+  /* How far he rises, as a fraction of the extension.
+     
+     0 keeps him exactly where he was before the artwork grew, with the
+     whole generated strip below the fold and his shoes at the very bottom
+     of the screen. 1 would lift him by the full extension and put all of
+     the generated floor on screen — too far, and the artwork's own bottom
+     edge would come up past the cut.
+     
+     0.4 is where it sits. He rises 35 to 48px depending on the width —
+     clearly higher, with the floor and the chair base reading beneath him
+     the way they do in the mock — and what is left of the sink still
+     clears the slope by 13px at the tightest width rather than by 4.
+     
+     That margin matters more than it looks. It rests on a measurement of
+     where the photograph's content starts across its bottom edge (33.5%
+     in from the left, sampled from the artwork), and a few pixels of slack
+     is what absorbs being slightly wrong about that. 0.5 lifted him nine
+     pixels further and spent all of it.
+     
+     This is the number to turn. */
+  --portrait-lift: 0.4;
+
+  /* The displayed height of the added strip: height x extra / (1 + extra). */
+  --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
+
+  /* Sinking by the whole strip hides all of it. Lifting gives some of it
+     back, and takes him up by the same amount. */
+  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)));
 
   /* How much taller the artwork is than the framing --portrait-crop
      describes: 326 rows added to 2000, continuing the floor, the chair
