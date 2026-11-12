@@ -15,25 +15,79 @@
     ===================================================================
     A control.
 
-    One headline, one input. No script of any kind, no portrait, no
-    chips, no second section, no cut. Everything that has been blamed
-    tonight is absent, so whatever this does is the browser.
+    Still no script of any kind, and still no portrait — those are the
+    two things that make it a control, and they have not changed. What
+    HAS been added is the type and the chips, because a bar that behaves
+    on a bare page and misbehaves on the real one is only useful if the
+    difference between the two is small enough to name. It now is: the
+    real first screen minus the photograph and minus every line of JS.
 
-    The layout is ask-nereus-client's, which is the thing we are testing:
+    The layout is ask-nereus-client's, which is the thing being tested:
 
       html, body { height: 100dvh; overflow: hidden }
       body       { display: flex; flex-direction: column }
-      the bar    { flex-shrink: 0 }
+      main       { flex: 1 }            <- absorbs the shrink
+      the bar    { last child, flex-shrink: 0 }
 
-    dvh is the dynamic viewport — whatever the browser is giving you at
-    that moment. If it follows the keyboard, the bar rides down to sit on
-    the keys and nothing else is needed. If it does not, the bar stays
-    where it was and the keys cover it, and that is the answer.
+    dvh is the dynamic viewport. If it follows the keyboard, main gives
+    up the room and the bar rides down onto the keys. If it does not —
+    and the spec says the keyboard resizes only the VISUAL viewport
+    unless interactive-widget says otherwise — then this page is exactly
+    one layout viewport tall with the bar at the bottom and nothing to
+    scroll, so Safari slides the visual viewport to bring the field into
+    view and the bar arrives on the keys that way instead.
+
+    Which of those two it is, this page cannot tell you. What it can
+    tell you, and did, is that the arrangement works. css/more.css now
+    carries the same two rules for the real page while someone is
+    typing, written so it is correct either way.
+
+    Everything below is copied from the real stylesheets rather than
+    re-invented, so a difference in behaviour is a difference in the
+    page and not in the CSS. Where a rule needed JS to earn its keep —
+    the chip row's overflow fade, the stagger on entry, the focus
+    states — it is either hard-coded or left out, and said so.
     ===================================================================
   -->
+
+  <!-- Poppins, plain. The real page defers it behind an onload handler;
+       there is no script here, so it is a stylesheet link. Same family,
+       same weights that get used: 200 greeting, 300 chips, 400 headline
+       and field. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500&display=swap">
+
   <style>
+    /* ── Tokens, lifted from css/common.css ────────────────────────── */
+    :root {
+      --color: #111;
+      --background: #E3E5E6;
+      --liquid-glass-background: white;
+      --liquid-glass-border-color: var(--liquid-glass-background);
+      --send: #FFFFFFEE;
+      --blur-filter: blur(10px) saturate(180%);
+
+      --border-radius-round: max(100vw, 100vh);
+
+      --safearea-top: env(safe-area-inset-top, 0px);
+      --safearea-bottom: env(safe-area-inset-bottom, 0px);
+      --safearea-left: env(safe-area-inset-left, 0px);
+      --safearea-right: env(safe-area-inset-right, 0px);
+
+      --padding: min(max(2.4169dvw, 16px), 24px);
+      --safearea-padding-top: calc(var(--safearea-top) + var(--padding));
+      --safearea-padding-bottom: calc(var(--safearea-bottom) + var(--padding));
+
+      --main-width: max(512px, 40%);
+      --main-max-width: calc(100dvw - 2 * var(--padding));
+      --chat-form-height: min(max(6.2840dvw, 48px), 56px);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── The shell ─────────────────────────────────────────────────── */
     html, body {
       width: 100%;
       height: 100dvh;
@@ -44,98 +98,408 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
 
-      background: #E3E5E6;
-      color: #2b2b2b;
-      font: 300 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--background);
+      color: var(--color);
+      font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
 
-      padding: 24px 16px;
-      padding-top: calc(24px + env(safe-area-inset-top, 0px));
-      padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      padding: 0 var(--padding);
+      padding-top: var(--safearea-padding-top);
+      padding-bottom: var(--safearea-padding-bottom);
     }
 
-    /* The headline, at the top. Nothing else up here. */
-    header {
-      flex-shrink: 0;
-      text-align: center;
-      padding-top: 48px;
-    }
+    /* The spacer. This is the piece that makes the whole arrangement
+       work: when the shell shrinks, this is what gives, and the bar is
+       carried down rather than squeezed. Copied from css/chat-content.css
+       including the odd-looking padding/margin pair — padding-top 24 with
+       margin-bottom -24 — which is there so the scroll box has a gutter
+       without the gutter costing layout height. */
+    main {
+      width: var(--main-width);
+      max-width: var(--main-max-width);
+      min-height: 0;
 
-    header p { font-size: 18px; opacity: 0.75; }
-    header h1 { font-size: 32px; font-weight: 600; margin-top: 8px; }
-
-    /* The gap between them is the thing under test: it is whatever is
-       left over, so when the shell shrinks, this is what gives. */
-    main { flex: 1; }
-
-    /* The bar, at the bottom, last item in the shell, never shrinks —
-       exactly how ask-nereus-client carries its own. */
-    form {
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 640px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      flex: 1;
       gap: 8px;
 
-      background: #fff;
-      border-radius: 999px;
-      padding: 10px 10px 10px 20px;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
+      padding-top: 24px;
+      margin-bottom: -24px;
+      padding-bottom: 48px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    input {
-      flex: 1;
-      border: 0;
-      outline: 0;
-      background: none;
-      /* 16px exactly. Anything under it and iOS zooms the page on focus,
-         which was a full round of this tonight.
-         
-         Written out rather than as a font shorthand: `font: ... inherit`
-         is invalid — inherit cannot stand in for the family there — so
-         the whole declaration is dropped and the field falls back to the
-         UA default, which measured 13.33px. In the page built to test
-         the zoom. Caught before it shipped, by reading the computed
-         value rather than the source. */
-      font-family: inherit;
+    /* Vertical centring by auto margins rather than justify-content, so
+       that an overflowing child still starts at the top instead of being
+       cut off at both ends. */
+    main::before,
+    main::after { content: ""; margin: auto; }
+
+    /* ── The headline ──────────────────────────────────────────────── */
+    #welcome {
+      --h1-size: min(max(3.6254vw, 28px), 32px);
+      --h2-size: min(max(2.2961vw, 18px), 20px);
+      --span-size: min(max(1.8127vw, 14px), 16px);
+
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      /* 80% ink. The headline is the loudest thing on the screen and at
+         full strength it was louder than it needed to be. */
+      color: rgb(from var(--color) r g b / 0.8);
+      font-size: var(--span-size);
+      text-align: center;
+    }
+
+    #welcome > div:first-of-type {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #welcome .greeting,
+    #welcome h1 {
+      font-weight: 400;
+      margin: 0;
+      padding: 0;
+      margin-inline: auto;
+    }
+
+    #welcome h1 { font-size: var(--h1-size); }
+
+    #welcome .greeting {
+      font-weight: 200;
+      font-size: var(--h2-size);
+    }
+
+    #welcome b { font-weight: 500; }
+
+    /*
+     * "start?" in a serif italic against the Poppins of the rest of the
+     * line — the one word the question turns on, and the only type
+     * contrast on the page.
+     *
+     * 1.24em is an optical match, not a nominal one. Measured off the
+     * canvas at 100px: Poppins has an x-height of 54.8 and Times italic
+     * 44.19, so Times set at the same nominal size reads as a step DOWN.
+     * 54.8 / 44.19 = 1.24 puts the x-heights level, which is the right
+     * target for a word with no capital in it. (Cap-heights would want
+     * only 1.05.)
+     *
+     * The stack ends in the generic `serif` on purpose: Times New Roman
+     * ships on macOS and Windows but not on Android or most Linux, where
+     * `serif` resolves to Noto Serif — a different face, but still a
+     * serif italic against a sans, which is the whole point.
+     */
+    #welcome h1 .accent {
+      font-family: "Times New Roman", Times, serif;
       font-style: italic;
-      font-weight: 300;
+      font-size: 1.24em;
+    }
+
+    /* ── The material ──────────────────────────────────────────────── */
+    .liquid-glass {
+      background: rgb(from var(--liquid-glass-background) r g b / 0.05);
+      backdrop-filter: var(--blur-filter);
+      -webkit-backdrop-filter: var(--blur-filter);
+      --shadow1: inset -8px -8px 20px rgb(from var(--liquid-glass-border-color) r g b / 0.3);
+      --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.1);
+      --shadow3: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow: var(--shadow1), var(--shadow2), var(--shadow3);
+      box-shadow: var(--shadow);
+      -webkit-box-shadow: var(--shadow);
+    }
+
+    /* ── The bar, and the chips that travel with it ────────────────── */
+    #chat-input-container {
+      position: relative;
+      width: var(--main-width);
+      max-width: var(--main-max-width);
+      min-height: var(--chat-form-height);
+      flex-shrink: 0;
+      z-index: 999;
+    }
+
+    #chat-input-form {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto;
+      border-radius: calc(0.5 * var(--chat-form-height) + 4px);
+      padding: 8px;
+    }
+
+    #chat-input {
+      grid-column: 2;
+      grid-row: 1;
+      width: 100%;
+      max-height: 30svh;
+      resize: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: inherit;
+      background: none;
+      outline: none;
+      box-shadow: none;
+      cursor: text;
+
+      margin: 0;
+      /* 8px of form padding leaves the text against the rim of a bar
+         this wide; 20 on the leading edge is simply the inset now. */
+      padding: 0 8px 0 20px;
+      border: 0;
+
+      /* Written out longhand rather than as a `font:` shorthand. `font:
+         ... inherit` is invalid — inherit cannot stand in for the family
+         — so the whole declaration is dropped and the field falls back to
+         the UA default, which measured 13.33px. In the page built to test
+         the zoom. Caught by reading the computed value rather than the
+         source. */
+      font-family: inherit;
+      font-weight: 400;
+      /* 16px, and it cannot go below it: iOS Safari zooms the whole page
+         in when you focus a field under 16px, which moved the portrait,
+         ran the bar off both edges, and put every visualViewport number
+         in zoomed units. 16 exactly, not larger, because the bar's height
+         is built around this line box. */
       font-size: 16px;
       line-height: 1.5;
-      color: inherit;
+      align-self: center;
     }
 
-    input::placeholder { color: #8a8d8f; }
+    #chat-input::placeholder {
+      color: inherit;
+      font-style: italic;
+      opacity: 0.7;
+    }
 
-    button {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
+    #send {
+      grid-column: 3;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(var(--chat-form-height) - 16px);
+      aspect-ratio: 1 / 1;
       border: 0;
-      border-radius: 50%;
-      background: #ECEEEF;
-      color: #2b2b2b;
-      font-size: 16px;
+      border-radius: var(--border-radius-round);
+      background: var(--send);
+      color: var(--color);
       cursor: pointer;
+    }
+
+    /* The row is one line and scrolls rather than wraps — the labels are
+       topics rather than questions precisely so they fit, and a row that
+       goes to three lines stops reading as a row of options.
+
+       `safe center`: with plain `center` a row wider than its box
+       overflows equally both ways and the left end becomes unreachable,
+       because you cannot scroll to negative. `safe` falls back to
+       flex-start exactly when that would happen.
+
+       The width/translate pair pulls the row back out to the viewport
+       from inside the 512px container, so it can be wider than the bar
+       when the labels need it. `translate` rather than `transform`
+       because on the real page transform is already spoken for by the
+       entry animation. */
+    #starter-chips {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: safe center;
+      gap: 8px;
+      width: max-content;
+      max-width: var(--main-max-width);
+      margin: 14px 0 0 50%;
+      translate: -50% 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      padding: 2px 0;
+      touch-action: pan-x;
+    }
+
+    #starter-chips::-webkit-scrollbar { display: none; }
+
+    /* On the real page scripts/starter-chips.js sets [overflowing] from
+       the scroll position, so the fade is never on an edge with nothing
+       behind it. There is no script here, so the end fade is written on
+       the element in the markup and simply stays there. */
+    #starter-chips[overflowing="end"] {
+      mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+    }
+
+    .starter-chip {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-family: inherit;
+      /* 0.9em — 12.6px against the 14px body. These sit under a headline
+         and a bar, four across, and at full size the row carried more
+         weight than either. */
+      font-size: 0.9em;
+      text-align: left;
+      /* 300, not the 400 a <button> inherits from the user agent: the
+         body is 300 and the headline is 400, so a 400 chip was the
+         heaviest text on a screen that is mostly whitespace, and four of
+         them read as a toolbar rather than as suggestions.
+
+         Held back to 72% so the row settles under the headline instead of
+         competing with it. Over the page background that is about 11:1,
+         miles clear of the 4.5:1 floor — and the phone block below puts
+         it back to full strength, because there the chips sit on the
+         portrait and a chip over the navy suit measured 4.9:1. */
+      font-weight: 300;
+      color: rgb(from var(--color) r g b / 0.72);
+      text-decoration: none;
+
+      -webkit-tap-highlight-color: transparent;
+      border: 0;
+      border-radius: var(--border-radius-round);
+      padding: 9px 16px;
+      cursor: pointer;
+      max-width: 100%;
+    }
+
+    .chip--more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Phone ─────────────────────────────────────────────────────── */
+    /* ── The opening state, on a wide screen ──────────────────────── */
+    /*
+     * On the real page the bar sits in the middle under the headline until
+     * the first question moves it to the bottom, and the move is animated
+     * through flex-grow so it glides rather than jumps. There is no first
+     * question here, so this is only the half that holds still — but
+     * without it the control looked nothing like the page it is a control
+     * for on a desktop screen.
+     *
+     * The spacer is body::after because body is this page's shell; on the
+     * real page it is .hero::after, for the same reason one level down.
+     */
+    body::after {
+      content: "";
+      flex: 0 0 0;
+      min-height: 0;
+    }
+
+    @media only screen and (min-width: 901px) {
+      /* Half the slack above the bar, half below: the bar lands in the
+         middle. */
+      body::after { flex-grow: 1; }
+
+      /* Centre the whole left column, not just the bar. main carries
+         `flex: 1`, which is a basis of ZERO — so main and the spacer grew
+         from nothing by the same amount and came out the same height,
+         which centres the BAR and leaves the headline hanging above the
+         middle with nothing to balance it. A basis of auto makes main
+         start at the height of its content and grow from there, so it ends
+         up taller than the spacer by exactly the headline block. */
+      main {
+        flex-basis: auto;
+        /* main's own top padding would otherwise land entirely above the
+           headline and push the group down by that much. */
+        padding-top: 0;
+      }
+
+      /* main centres its children with `margin: auto` on both pseudos, so
+         main's extra height lands half above and half below the headline
+         and the group drifts up. Releasing the trailing one leaves the
+         leading auto margin to take all the slack, which puts the headline
+         at the bottom of main — directly above the bar. */
+      main::after { margin: 0; }
+
+      #welcome {
+        /* Content height, so main's auto basis means something. */
+        height: auto;
+        justify-content: flex-end;
+        /* The only gap between the headline and the bar. At 4px they read
+           as one stack rather than as a heading and a control. */
+        padding-bottom: 32px;
+      }
+    }
+
+    @media only screen and (max-width: 900px) {
+      #welcome { justify-content: flex-start; }
+      #welcome > div:first-of-type { gap: 8px; }
+
+      /* The bar is already at the bottom on a phone, so the chips go
+         above it rather than off the end of the screen. */
+      #chat-input-container { display: flex; flex-direction: column; }
+      #starter-chips { order: -1; margin: 0 0 14px 50%; }
+
+      /* Full strength here. On the real page these sit ON the portrait
+         and which chip you can read depends on what is behind it; the
+         held-back ink is there to stop four chips competing with the
+         headline, and over the suit there is no headline nearby to
+         compete with. Kept even though this page has no portrait, so the
+         two screens match. */
+      .starter-chip { color: var(--color); }
+      .starter-chip.liquid-glass {
+        background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+        --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+      }
+    }
+
+    @media only screen and (max-width: 512px) {
+      #chat-input-form.liquid-glass {
+        background: rgb(from var(--liquid-glass-background) r g b / 0.5);
+        --shadow2: inset 0 0 0 1px rgb(from var(--liquid-glass-border-color) r g b / 0.4);
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <p>Hi, I'm <strong>William</strong> Brendel</p>
-    <h1>Where should we start?</h1>
-  </header>
+  <main id="content">
+    <div id="welcome">
+      <div>
+        <!-- A <p>, not an <h2>: it reads as a line above the title, and
+             as an h2 it put a level two ahead of the level one for anyone
+             moving through the page by heading. -->
+        <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
+        <h1>Where should we <span class="accent">start?</span></h1>
+      </div>
+    </div>
+  </main>
 
-  <main></main>
+  <div id="chat-input-container">
+    <form id="chat-input-form" class="liquid-glass" onsubmit="return false">
+      <textarea id="chat-input" placeholder="Ask me anything…" rows="1"
+                autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false"></textarea>
+      <button id="send" type="submit" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+        </svg>
+      </button>
+    </form>
 
-  <form onsubmit="return false">
-    <input type="text" placeholder="Ask me anything…" autocomplete="off"
-           autocorrect="off" autocapitalize="off" spellcheck="false">
-    <button type="submit" aria-label="Send">↑</button>
-  </form>
+    <!-- The four real starters (server/config.js STARTERS) and the More
+         chip, hard-coded. On the real page scripts/starter-chips.js
+         fetches them and holds More across the rebuild. -->
+    <div id="starter-chips" aria-label="Suggested questions" overflowing="end">
+      <button class="starter-chip liquid-glass" type="button">A time I failed</button>
+      <button class="starter-chip liquid-glass" type="button">A time I disagreed</button>
+      <button class="starter-chip liquid-glass" type="button">A call under pressure</button>
+      <button class="starter-chip liquid-glass" type="button">My biggest obstacle</button>
+      <a class="starter-chip chip--more liquid-glass" href="#">
+        More
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 
 </body>
 </html>
