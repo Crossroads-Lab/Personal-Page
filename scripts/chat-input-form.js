@@ -741,10 +741,26 @@ const syncKeyboard = () => {
  */
 const PROVISIONAL_KEYBOARD = "42svh";
 
-/** Take the section out and give the page the keyboard's height back. */
+/**
+ * Take the section out, and make sure the page has actually CHANGED
+ * before anyone asks it a question about itself.
+ *
+ * Setting the attribute only marks style dirty. Nothing says layout has
+ * been recomputed by the time focus() goes out a line later, and if it
+ * has not, Safari works out where to scroll against the page that still
+ * had the second section in it — which is the whole bug this was written
+ * to avoid, reappearing one step further in.
+ *
+ * Reading offsetHeight forces style and layout to flush, synchronously,
+ * now. Will's instinct was a timeout, which would also let the render
+ * happen; the reason not to is that a timeout leaves the user gesture,
+ * and iOS will not open a keyboard for a focus() that is outside one. So
+ * the page is made to catch up without letting go of the tap.
+ */
 const clearTheDeck = () => {
   document.body.style.setProperty("--keyboard", PROVISIONAL_KEYBOARD);
   document.body.setAttribute("keyboard", "");
+  void document.body.offsetHeight;
 };
 
 /*
