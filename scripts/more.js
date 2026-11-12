@@ -38,6 +38,24 @@ if (SOLO) {
   for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
     node.remove();
   }
+
+  /* And nothing to scroll.
+   
+     Taking the section out still left a page taller than the window:
+     the hero is 100lvh plus the chrome slack, and .hero::before hangs
+     --portrait-sink below that again. Will: "You can still scroll on
+     solo." Forty points of it, which is enough to drift the headline
+     under the status bar and make the baseline something other than one
+     screen.
+     
+     clip on the root, which cannot be scrolled by any means, and on the
+     hero so its overhang stops adding height. The hero keeps its own
+     size — shrinking it would move the portrait and the bar, and then
+     this would be a baseline for a page that does not exist. */
+  const lock = document.createElement("style");
+  lock.textContent =
+    "html, body { overflow: clip !important; } .hero { overflow: clip !important; }";
+  document.head.appendChild(lock);
 }
 
 const more = SOLO ? null : document.getElementById("more");
