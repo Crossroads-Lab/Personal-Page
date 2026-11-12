@@ -683,6 +683,19 @@ const resetForm = () => {
 
 const keyboard = window.visualViewport;
 
+/*
+ *   /?solo        the barebone: no second page, nothing to scroll, and
+ *                 none of the keyboard code below
+ *   /?solo&pin    the barebone plus the pinned bar, and nothing else
+ *   /             everything
+ *
+ * Declared here rather than beside the blocks that read them: a const
+ * is hoisted into a dead zone, not to the top, so a listener registered
+ * above its declaration throws on the way in rather than reading false.
+ */
+const SOLO_PAGE = location.search.includes("solo");
+const PIN_ONLY = location.search.includes("pin");
+
 /* A device whose chrome floats over the page, which is the only kind
    that has a software keyboard to get out of the way of. */
 const FLOATING_CHROME = matchMedia("(hover: none)");
@@ -790,7 +803,7 @@ const clearTheDeck = () => {
  * the answer from before. A timer would only narrow that window and
  * would be a guess at how long to wait; asking at the tap closes it.
  */
-if (keyboard && input && !location.search.includes("solo")) {
+if (keyboard && input && !SOLO_PAGE) {
   /*
    * A tap: the earliest possible moment, before Safari has focused
    * anything. preventDefault stops it focusing the field itself, the
@@ -832,16 +845,19 @@ if (keyboard && input && !location.search.includes("solo")) {
 }
 
 /*
- * This half runs in ?solo too — it is step one of putting the pieces
- * back one at a time.
+ * ?solo is the barebone and stays that way: no keyboard code at all, so
+ * whatever the page does there is the browser.
  *
- * All it does is measure what the keys cover and mark the body, which
- * pins the bar to the top of the keyboard and freezes the page. No
- * section to remove in ?solo, and no rearranging before the focus: just
- * the answer to one question, which is whether the page still shifts
- * when nothing is asked to scroll.
+ * ?pin adds this one piece back on top of it — measure what the keys
+ * cover, mark the body, which pins the bar to the keyboard and freezes
+ * the page. Nothing else: no section to remove, no rearranging before
+ * the focus, the tap still Safari's.
+ *
+ *   /?solo        the floor
+ *   /?solo&pin    the floor plus the pinned bar
+ *   /             everything
  */
-if (keyboard && input) {
+if (keyboard && input && (!SOLO_PAGE || PIN_ONLY)) {
   keyboard.addEventListener("resize", syncKeyboard);
   input.addEventListener("focus", syncKeyboard);
   /* Clear it on the way out, then measure again once the keys have
