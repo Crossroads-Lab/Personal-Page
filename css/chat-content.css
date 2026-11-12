@@ -702,6 +702,22 @@ body[answer-ready] #chat-tools {
   /* Lines up with the column below it rather than with the page. */
   margin: 0 auto 4px;
   flex-shrink: 0;
+
+  /* position and z-index, or neither button can be pressed.
+     
+     .hero::before is the photograph at z-index: 0, absolutely positioned
+     across the whole first screen. A statically positioned sibling paints
+     BENEATH a positioned one at z-index 0, so the portrait layer sat on
+     top of this row and swallowed every tap — elementFromPoint at both
+     button centres returned .hero itself. <main> and
+     #chat-input-container both carry exactly this pair for exactly this
+     reason; the toolbar was the one thing that did not.
+     
+     Worth noting how it hid: a synthetic .click() dispatches straight at
+     the element and never consults hit-testing, so the first round of
+     tests passed while the real thing did nothing under a finger. */
+  position: relative;
+  z-index: 1;
 }
 
 .chat-tool {
@@ -715,9 +731,10 @@ body[answer-ready] #chat-tools {
   border-radius: 50%;
   background: none;
   cursor: pointer;
-  /* Quiet. At 0.38 they read as available rather than as instructions —
-     the answer is the thing on this screen worth looking at. */
-  color: rgb(from var(--color) r g b / 0.38);
+  /* Quiet, but legible. 0.38 was quiet to the point of invisible — Will:
+     "they are too faded." Discreet is the brief; a control you have to
+     hunt for is not discreet, it is hidden. */
+  color: rgb(from var(--color) r g b / 0.62);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -735,7 +752,21 @@ body[answer-ready] #chat-tools {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .chat-tool:hover { color: rgb(from var(--color) r g b / 0.75); }
+  .chat-tool:hover { color: rgb(from var(--color) r g b / 0.95); }
+}
+
+/* The fast-read icon is the thing it does: a bold B and a plain R, which
+   is a word with its head emboldened. An SVG of a lightning bolt said
+   "fast" and nothing about reading. */
+.chat-tool .br {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.chat-tool .br b {
+  font-weight: 700;
 }
 
 /*
