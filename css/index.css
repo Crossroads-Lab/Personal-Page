@@ -2,7 +2,7 @@
 @import "./common.css?v=738aa84c";
 @import "./chat-input.css?v=0f43470e";
 @import "./chat-content.css?v=7e51fc58";
-@import "./more.css?v=9066fd56";
+@import "./more.css?v=c2efb781";
 
 /* 
  * =====================================================
@@ -63,7 +63,7 @@
      
      The inset stays in the sum: 0 here, non-zero elsewhere, costs
      nothing. */
-  height: calc(100lvh + var(--chrome-slack) + var(--chrome-overscan) + env(safe-area-inset-bottom, 0px));
+  height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
@@ -72,11 +72,10 @@
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
-  /* Twice the slack plus the overscan: the box grew above 100lvh by one
-     slack and one overscan, and the content still has to end at 100svh so
-     the input bar stays above the chrome. Whatever the box gains below,
-     the padding gives back, so growing the box never moves the bar. */
-  padding-bottom: calc(var(--safearea-padding-bottom) + 2 * var(--chrome-slack) + var(--chrome-overscan));
+  /* Twice the slack: the box grew by one above 100lvh, and the content
+     still has to end at 100svh so the input bar stays above the chrome.
+     lvh + slack - 2*slack = lvh - slack = svh. */
+  padding-bottom: calc(var(--safearea-padding-bottom) + 2 * var(--chrome-slack));
 
   /* The portrait hangs below the first screen so the cut can hide its
      bottom edge; clipping sideways keeps the phone layout's overhang from

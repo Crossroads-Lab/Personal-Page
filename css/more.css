@@ -63,10 +63,25 @@
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
-  clip-path: polygon(0 var(--cut-desktop), 100% 0, 100% 100%, 0 100%);
+  /* The slope starts one overscan below this section's own top edge, and
+     the area above it is clipped away — so what fills that strip is the
+     page background, not the dark.
+     
+     This is where the overscan belongs. It was on .hero's height for one
+     round, which pushed the whole first screen down: the portrait is
+     anchored to the bottom of that box, so growing it by 136px moved him
+     136px down the screen and his legs ran off the bottom. The box is
+     back to where it was and nothing in the first screen has moved. The
+     only thing that moves is the diagonal. */
+  clip-path: polygon(
+    0 calc(var(--cut-desktop) + var(--chrome-overscan)),
+    100% var(--chrome-overscan),
+    100% 100%,
+    0 100%
+  );
   /* The content has to clear the slope, or the first card's corner is cut
      off along with the background. */
-  padding-top: var(--cut-desktop);
+  padding-top: calc(var(--cut-desktop) + var(--chrome-overscan));
 }
 
 .more-inner {
@@ -408,8 +423,13 @@ body:not([chat-started]) .quick-link[href$="#more"] {
 @media only screen and (max-width: 767px) {
 
   .more {
-    clip-path: polygon(0 var(--cut-mobile), 100% 0, 100% 100%, 0 100%);
-    padding-top: calc(var(--cut-mobile) + 40px);
+    clip-path: polygon(
+      0 calc(var(--cut-mobile) + var(--chrome-overscan)),
+      100% var(--chrome-overscan),
+      100% 100%,
+      0 100%
+    );
+    padding-top: calc(var(--cut-mobile) + var(--chrome-overscan) + 40px);
   }
 
   .more-inner {
