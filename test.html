@@ -177,21 +177,6 @@
          never visible. */
       --portrait-sink: calc(var(--cut) * var(--cut-pivot) + 1px);
 
-      /* How far the form lifts as the cut swings.
-         
-         Will: "That also mean maybe moving up the form as well with the
-         animation?" The diagonal's RIGHT end is the one that rises, by
-         --cut-lead, and it rises into the strip the form sits in — at
-         full swing it crosses about 5px above the form's bottom edge on
-         that side. Lifting the form over the same range keeps the two
-         apart and reads as the form stepping aside for the page coming
-         up underneath it.
-         
-         A whole --cut rather than the --cut-lead it strictly needs: the
-         point is to be seen moving, and 11px is not. One token, so it is
-         one number to change. */
-      --form-lift: var(--cut);
-
       /* ── The portrait ───────────────────────────────────────────── */
 
       /* 74.2vw is the mock's width: he is 0.36 of the window across in
@@ -665,27 +650,14 @@
       }
     }
 
-    /* The form steps aside over exactly the same range, so the two
-       movements are one gesture rather than two.
-       
-       `translate` rather than `transform`: the chips row already uses
-       transform's territory elsewhere, and the two properties overwrite
-       each other where they overlap. This also stays off layout — a
-       translate is composited, so the lift costs no reflow. */
-    @keyframes form-lift {
-      from { translate: 0 0; }
-      to   { translate: 0 calc(0px - var(--form-lift)); }
-    }
-
+    /* The form does NOT move with this. It was lifted over the same
+       range for a round — the diagonal's right end rises into the strip
+       the form sits in, crossing about 5px above its bottom edge — and
+       Will's answer was that there is no need. The cut swings; nothing
+       else does. */
     @supports (animation-timeline: scroll()) {
       #more {
         animation: cut-swing linear both;
-        animation-timeline: scroll(nearest block);
-        animation-range: 0 var(--cut-travel);
-      }
-
-      #chat-input-form {
-        animation: form-lift linear both;
         animation-timeline: scroll(nearest block);
         animation-range: 0 var(--cut-travel);
       }
@@ -727,17 +699,6 @@
 
       html:has(#chat-input:focus, #chat-input:active) #more {
         display: none !important;
-      }
-
-      /* body stops being a scroll container above, which leaves
-         scroll(nearest block) with nothing to bind to — and an animation
-         on a timeline that has gone inactive holds wherever it was
-         rather than resetting. So the lift is taken off explicitly, or a
-         form lifted mid-scroll would stay lifted for the whole time the
-         keyboard is up. */
-      html:has(#chat-input:focus, #chat-input:active) #chat-input-form {
-        animation: none;
-        translate: 0 0;
       }
     }
 
