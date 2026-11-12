@@ -70,19 +70,6 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
- * At the top, or not.
- *
- * --cut-offset puts the diagonal below the fold at rest, far enough to
- * clear the strip a phone paints past its own viewport (css/common.css),
- * and above the fold once the page moves — because that strip only
- * exists at scroll zero, and holding the cut down there afterwards is a
- * hundred-odd pixels of nothing between the portrait and the dark.
- *
- * Four pixels of tolerance, because a phone does not always come to rest
- * at exactly zero. The class flips while the diagonal is still well below
- * the fold, so the cut never moves anywhere anyone can see it.
- */
-/*
  * How much taller the SCREEN is than the viewport the browser reports.
  *
  * This is the number the whole cut problem turns on, and no CSS unit
@@ -125,24 +112,32 @@ addEventListener("orientationchange", measureScreenSlack);
  */
 const travel = () => Math.max(1, window.innerHeight * 0.5);
 
-let pending = false;
+let last = -1;
+
+/*
+ * Written straight out of the scroll handler, NOT deferred to a frame.
+ *
+ * The first version coalesced with requestAnimationFrame, which is the
+ * usual advice and is wrong here. On iOS the scroll runs on the
+ * compositor and rAF callbacks are not serviced while a flick is in
+ * flight — so the property only moved once the scroll came to rest, and
+ * the line did not tilt, it arrived already tilted. The same thing shows
+ * up in a backgrounded tab: measured in a hidden browser pane, scrollY
+ * went 0 to 200 and not one frame callback ran.
+ *
+ * What it costs is a single custom-property write per scroll event. The
+ * guard below drops the ones too small to see, so a flick writes tens of
+ * times, not hundreds.
+ */
 const paintProgress = () => {
-  pending = false;
   const progress = Math.min(1, Math.max(0, window.scrollY / travel()));
+  if (Math.abs(progress - last) < 0.004 && progress !== 0 && progress !== 1) return;
+  last = progress;
   document.documentElement.style.setProperty("--cut-progress", progress.toFixed(4));
 };
 
-/* Coalesced to one write per frame. A scroll fires far more often than
-   the screen refreshes, and this writes a custom property that relayouts
-   a full-width section. */
-const onScroll = () => {
-  if (pending) return;
-  pending = true;
-  requestAnimationFrame(paintProgress);
-};
-
 paintProgress();
-addEventListener("scroll", onScroll, { passive: true });
+addEventListener("scroll", paintProgress, { passive: true });
 addEventListener("resize", () => { measureScreenSlack(); paintProgress(); });
 
 /*
