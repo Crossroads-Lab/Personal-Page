@@ -254,6 +254,39 @@
       overflow: hidden;
     }
 
+    /* And back to the dynamic viewport the moment anything is focused.
+       
+       Will, on the three screenshots of the vh version: "that was the
+       issue it looks like that when the first page is not at dvh, then
+       the keyboard does extra move up." Which is the whole problem in
+       one sentence — the root's box being taller than the viewport IS
+       scrollable room, and Safari spends it bringing the field into
+       view.
+       
+       So vh and dvh are not a choice between the picture and the
+       keyboard. They are wanted at different moments: tall at rest, so
+       the background is positioned from a box that reaches under
+       Safari's bar; dvh while typing, so there is nothing to scroll.
+       
+       The real page switches on an attribute set from the tap. This page
+       has no script and does not need one: :has() on the root is the
+       same switch in CSS.
+       
+       :active is in there as well as :focus, and it is the part that
+       might decide this. Safari works out where to scroll AS it opens
+       the keyboard, so a switch that lands on the focus event may land
+       after the decision — which is the whole reason the real page
+       intercepts pointerdown rather than focus. :active matches while
+       the finger is still down, before the focus, so it is that same
+       interception with no script in it.
+       
+       If this does not overshoot, the real page can drop its keyboard JS
+       entirely and the night reduces to two rules. If it does, the
+       timing is the thing that beat us, not the units. */
+    html:has(:focus, #chat-input:active) {
+      height: 100dvh;
+    }
+
     body {
       width: 100%;
       height: 100dvh;
