@@ -741,13 +741,48 @@ const syncKeyboard = () => {
  */
 const PROVISIONAL_KEYBOARD = "42svh";
 
+/** Take the section out and give the page the keyboard's height back. */
+const clearTheDeck = () => {
+  document.body.style.setProperty("--keyboard", PROVISIONAL_KEYBOARD);
+  document.body.setAttribute("keyboard", "");
+};
+
 if (keyboard && input && FLOATING_CHROME.matches) {
+  /*
+   * A tap: the earliest possible moment, before Safari has focused
+   * anything. preventDefault stops it focusing the field itself, the
+   * page changes, and focus() goes out from inside the same gesture,
+   * which is what iOS requires before it will open a keyboard.
+   */
   input.addEventListener("pointerdown", (event) => {
     if (document.activeElement === input) return;
     event.preventDefault();
-    document.body.style.setProperty("--keyboard", PROVISIONAL_KEYBOARD);
-    document.body.setAttribute("keyboard", "");
+    clearTheDeck();
     input.focus();
+  });
+
+  /*
+   * And the focus event itself, for every other way in — a tap Safari
+   * routes through touchend rather than pointerdown, the Next button on
+   * the keyboard's own accessory bar, a programmatic focus, a tap that
+   * landed on the form around the field rather than on it.
+   *
+   * Intercept, rearrange, re-dispatch. Blurring first matters: a focus
+   * that has already been accepted is a focus Safari has already decided
+   * where to scroll for, so handing it back and taking it again is what
+   * makes the second focus see the short page. The guard stops that from
+   * being a loop, and the deck being already clear means the pointerdown
+   * path above does not pay for any of this.
+   */
+  let rearranging = false;
+
+  input.addEventListener("focus", () => {
+    if (rearranging || document.body.hasAttribute("keyboard")) return;
+    rearranging = true;
+    input.blur();
+    clearTheDeck();
+    input.focus();
+    rearranging = false;
   });
 }
 
