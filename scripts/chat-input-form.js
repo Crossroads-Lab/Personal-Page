@@ -632,3 +632,70 @@ const resetForm = () => {
   // Clear file state.
   form.setAttribute("empty", "");
 }
+
+// --------------------------------------------------------------------------
+// Keeping the bar on top of the keyboard
+//
+// With the keyboard up, Will's phone put the input bar roughly a third of
+// the way up the screen and filled the space between it and the keys with
+// the dark second section: the diagonal, MORE ABOUT ME and the book card,
+// all stacked in a gap nobody asked for.
+//
+// Nothing was broken. The bar sits at the bottom of the hero in normal
+// flow, and iOS answers a focus by scrolling the page until the focused
+// element is somewhere inside what is left of the screen. "Somewhere
+// inside" is all it promises. It scrolled 560px, which put the bar in
+// view and also put a screenful of the next section in view underneath it.
+//
+// The keyboard does not change the LAYOUT viewport on iOS — innerHeight,
+// 100lvh and 100svh are all exactly what they were — so no amount of CSS
+// can see it. visualViewport can: it is the part of the layout viewport
+// still visible, and its height drops by the height of the keys.
+//
+// So: after the keyboard has settled, nudge the scroll until the bottom
+// of the bar's margin box meets the top of the keyboard. Both directions,
+// because the correction here is upward — the page had scrolled too far,
+// not too little.
+// --------------------------------------------------------------------------
+
+const viewport = window.visualViewport;
+
+/**
+ * How much of the layout viewport something is covering from the bottom.
+ *
+ * 0 on a desktop and on a phone with no keyboard, which is the guard: with
+ * nothing covering the bottom there is no keyboard to sit above, and the
+ * same arithmetic would happily drag the page around for no reason.
+ */
+const covered = () =>
+  viewport ? window.innerHeight - (viewport.offsetTop + viewport.height) : 0;
+
+const sitAboveKeyboard = () => {
+  if (!form || covered() <= 0) return;
+  if (document.activeElement !== input) return;
+
+  const bar = document.getElementById("chat-input-container");
+  if (!bar) return;
+
+  // The margin box, not the border box. That bottom margin is the gap the
+  // bar is designed to keep from the edge, and it is the same gap it
+  // should keep from the keys.
+  const gap = parseFloat(getComputedStyle(bar).marginBottom) || 0;
+  const delta = Math.round(
+    bar.getBoundingClientRect().bottom + gap - (viewport.offsetTop + viewport.height),
+  );
+
+  if (Math.abs(delta) > 1) window.scrollBy(0, delta);
+};
+
+if (viewport && input) {
+  // The resize IS the keyboard arriving, and it is the only honest signal
+  // that it has finished arriving. A timer started from the focus event
+  // would be a guess at an animation length that is not ours.
+  viewport.addEventListener("resize", sitAboveKeyboard);
+
+  // And once more a beat later: iOS does its own scroll-into-view after
+  // the resize, so correcting only on the resize corrects a position the
+  // browser is about to overwrite.
+  input.addEventListener("focus", () => setTimeout(sitAboveKeyboard, 300));
+}
