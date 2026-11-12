@@ -2,99 +2,52 @@
  * =====================================================
  * THE WAIT
  * =====================================================
- * A question takes one to three seconds. The dot has always pulsed; what it
- * could not say was whether anything was still happening or how long it had
- * been. The label now carries a light across it, and past a second the wait
- * puts a number on itself — the difference between "working" and "stuck"
- * should not be a guess.
+ * A question takes one to three seconds. What the control has to say is
+ * whether anything is still happening and how long it has been — so it says
+ * both, in words and in a number, and in nothing else.
+ *
+ * THERE IS NO ANIMATION HERE AND THAT IS THE POINT. There used to be a
+ * pulsing dot and a light sweeping left to right across the letters, and
+ * both are gone. Will: "I don't like the thinking animation, maybe changing
+ * text with no animation like Claude is better."
+ *
+ * The argument for taking them out, beyond taste: a sweep looks identical at
+ * one second and at thirty, so it cannot tell you the difference between
+ * working and stuck, which is the only question anyone is asking while they
+ * wait. Text that changes is motion that means something — it moves when the
+ * state moves and holds still when it does not.
+ *
+ * Which also retires the prefers-reduced-motion block that used to sit at
+ * the bottom of this file. Nothing here moves, so there is nothing to
+ * reduce.
  */
 
 .thinking-loader {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  vertical-align: middle;
-  gap: 3px;
+  /* No gap. The separator carries its own spaces — " · " — because that is
+     what was asked for and because a flex gap plus spaces would double it. */
+  gap: 0;
 }
 
-.thinking-loader b {
-  font-size: 24px !important;
-  margin-bottom: 3.5px;
-  animation: thinking-loader-pulse 1.5s infinite ease-in-out;
-}
-
-@keyframes thinking-loader-pulse {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
-}
-
-/* A light travelling left to right across the words.
+/* The seconds, first in the row.
  *
- * The gradient is painted on the text itself (background-clip) rather than
- * on a box behind it, so what moves is the colour of the letters and
- * nothing around them shifts. The band is narrow and the two ends are the
- * same muted grey, so the loop has no seam where it wraps. */
-.thinking-label {
-  background-image: linear-gradient(
-    100deg,
-    rgb(from var(--color) r g b / 0.38) 0%,
-    rgb(from var(--color) r g b / 0.38) 40%,
-    rgb(from var(--color) r g b / 0.92) 50%,
-    rgb(from var(--color) r g b / 0.38) 60%,
-    rgb(from var(--color) r g b / 0.38) 100%
-  );
-  background-size: 250% 100%;
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: thinking-sweep 2.2s linear infinite;
-}
-
-/* 0% to 100%, and nothing outside it.
- *
- * With a background wider than its box, a position percentage places the
- * image's edge against the matching edge of the box: 0% is its left edge
- * against the left, 100% its right against the right. Every value between
- * covers the box completely. Values outside it do not — and since this is
- * no-repeat, the uncovered letters have no paint at all and disappear.
- * Sweeping 125% to -125% made "Thinking…" lose its first half for most of
- * every cycle. 100% to 0% carries the light the same way across and keeps
- * the word on screen throughout. */
-@keyframes thinking-sweep {
-  from { background-position: 100% 0; }
-  to   { background-position: 0% 0; }
-}
-
-/* The seconds. Quieter than the label and tabular, so the row does not jog
-   sideways when 9s becomes 10s. */
+ * tabular-nums so the line does not jog sideways when 9s becomes 10s: the
+ * label sits to the RIGHT of this number now, so any change in its width
+ * moves every word after it. That mattered less when the number was last. */
 .thinking-elapsed {
-  margin-left: 2px;
   font-variant-numeric: tabular-nums;
-  opacity: 0.45;
+  color: rgb(from var(--color) r g b / 0.45);
 }
 
-/* Motion is the whole point of this control, so it is not removed outright
-   — but the sweep and the pulse both stop, and the label settles at the
-   weight the sweep passes through. The seconds keep counting, which is the
-   part that actually carries the information. */
-@media (prefers-reduced-motion: reduce) {
-  .thinking-loader b,
-  .thinking-label {
-    animation: none;
-  }
+.thinking-separator {
+  color: rgb(from var(--color) r g b / 0.3);
+  /* The spaces inside this element are significant — collapsing them would
+     butt the dot against the number and the word. */
+  white-space: pre;
+}
 
-  .thinking-label {
-    color: rgb(from var(--color) r g b / 0.7);
-  }
+.thinking-label {
+  color: rgb(from var(--color) r g b / 0.7);
 }

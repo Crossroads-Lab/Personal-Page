@@ -1,7 +1,7 @@
 "use strict"
 
 import { content, displayTextContent } from "./content.js?v=e554789c";
-import { createThinkingNode } from "./createThinkingNode.js?v=f4f70c32";
+import { createThinkingNode } from "./createThinkingNode.js?v=5d4dca8b";
 import { ask } from "./api.js?v=091fa826";
 
 // --------------------------------------------------------------------------
