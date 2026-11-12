@@ -36,13 +36,18 @@ const render = () => {
   // what the visitor can see?
   //
   // Not the section's box top — the clip path decides where the dark
-  // actually starts inside it, and the two are half a slope apart.
+  // actually starts inside it, and the two are a whole slope apart.
   // Reading the box made the probe report an 87px leak on a screen with
   // no dark on it at all.
-  // Measure the clipped edge, which is the thing with a colour.
-  const clipTop = more
-    ? parseFloat((getComputedStyle(more).clipPath.match(/([\d.]+)px/g) || [])[1] ?? 0)
-    : 0;
+  //
+  // Both ends, then the higher of the two: the line is hinged at the
+  // left and swings its right end up, so the first dark pixel to cross
+  // the fold is the right one. Taking the left end alone would miss a
+  // leak by the full --cut.
+  const ends = (getComputedStyle(more ?? document.body).clipPath.match(/([\d.]+)px/g) || [])
+    .slice(1, 3)
+    .map(parseFloat);
+  const clipTop = more && ends.length ? Math.min(...ends) : 0;
   const leak = moreRect
     ? Math.round(window.innerHeight - (moreRect.top + clipTop))
     : null;

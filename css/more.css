@@ -63,34 +63,33 @@
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
-  /* The line pivots about its own middle. The section does not move.
+  /* The line is hinged at the LEFT edge of the screen and swings up.
      
-     At --cut-progress 0 both ends sit at half the slope, so the edge is
-     LEVEL. As the page scrolls the left end drops and the right end
-     lifts by the same amount, until at 1 they are the full --cut apart.
-     A rotation, not a slide: the boundary between the two sections stays
-     where it is in the page and only its angle changes.
+     At --cut-progress 0 it lies flat, --cut-rest below the bottom of
+     the first screen. As the page scrolls the left end does not move at
+     all — it is the hinge — and the right end rises, until at 1 it is
+     the full --cut above it.
      
-     It travelled as well as tilted for one round — 160px below the fold
-     up to 127 above it — and that was the thing that read as wrong. A
-     boundary that creeps up the page as you scroll past it is not a
-     boundary.
+     Two earlier versions got this wrong in the same way: both let the
+     line change its POSITION as well as its angle. The first slid the
+     whole section up 287px while it tilted; the second pivoted about
+     the midpoint, which drops the left end as the right end lifts. Both
+     read as a boundary sliding around the page, which is not something
+     a boundary does. Here one point is nailed down and everything else
+     is the consequence of the swing.
      
-     The margin is a constant, so nothing relayouts per frame; only the
-     clip path moves, and only inside this element. Half the slope is
-     subtracted from it so the LEVEL line at rest lands exactly
-     --cut-rest below the first screen, which is where it has to be to
-     stay out of the strip a phone paints past its viewport.
+     The box top sits a full --cut above the hinge, so the right end has
+     room to rise into it without the margin ever changing. The margin
+     being constant is also why this does not judder: no layout per
+     frame, only a clip path, and only inside this element.
      
      No transition. The scroll IS the timeline — a transition on top of
      it would only add lag between the finger and the line. */
-  --cut-half: calc(var(--cut-desktop) / 2);
-
-  margin-top: calc(var(--cut-rest) - var(--cut-half));
+  margin-top: calc(var(--cut-rest) - var(--cut-desktop));
 
   clip-path: polygon(
-    0 calc(var(--cut-half) + var(--cut-half) * var(--cut-progress)),
-    100% calc(var(--cut-half) - var(--cut-half) * var(--cut-progress)),
+    0 var(--cut-desktop),
+    100% calc(var(--cut-desktop) * (1 - var(--cut-progress))),
     100% 100%,
     0 100%
   );
@@ -98,8 +97,8 @@
   /* Tells the compositor this is the thing that moves. */
   will-change: clip-path;
 
-  /* The steepest the line ever gets, or the first card's corner is cut
-     off with it. */
+  /* Clears the hinge, which is the lowest the edge ever gets — or the
+     first card's corner is cut off with it. */
   padding-top: var(--cut-desktop);
 }
 
@@ -442,11 +441,11 @@ body:not([chat-started]) .quick-link[href$="#more"] {
 @media only screen and (max-width: 767px) {
 
   .more {
-    --cut-half: calc(var(--cut-mobile) / 2);
+    margin-top: calc(var(--cut-rest) - var(--cut-mobile));
 
     clip-path: polygon(
-      0 calc(var(--cut-half) + var(--cut-half) * var(--cut-progress)),
-      100% calc(var(--cut-half) - var(--cut-half) * var(--cut-progress)),
+      0 var(--cut-mobile),
+      100% calc(var(--cut-mobile) * (1 - var(--cut-progress))),
       100% 100%,
       0 100%
     );
