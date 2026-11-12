@@ -42,13 +42,28 @@
      mid-scroll and everything in it moved — the "weird animation" at the
      bottom of the page.
      
-     Plus the bottom safe-area inset. With viewport-fit=cover the page
-     paints into the home-indicator strip, and the viewport units do not
-     reliably reach into it — so the box stopped above that strip and the
-     thing filling it was whatever came next, which is the dark section.
-     That is the wedge that kept appearing at the very bottom of the
-     screen. 0 everywhere there is no notch. */
-  height: calc(100lvh + env(safe-area-inset-bottom, 0px));
+     Plus ANOTHER slack, which is the part no unit will tell you.
+     
+     Measured on the device (?viewport, see scripts/viewport-probe.js):
+     
+       innerHeight 796   100svh 796   100lvh 836
+       safe-area-inset-bottom 0
+       hero bottom 836   #more top 836
+     
+     By every number the browser reports, the dark section starts 40px
+     BELOW the bottom of the viewport. It was still visible. So the screen
+     paints past 100lvh, and the inset that is supposed to describe that
+     region reads 0 — which is why adding it changed nothing.
+     
+     The leak measured one toolbar tall, so the box reaches one toolbar
+     past lvh. That is extrapolation from a measurement rather than a rule
+     from a spec, and it is written down here because the next person will
+     reasonably assume 100lvh is the bottom of the screen. It is not, on
+     an iPhone with the bottom address bar.
+     
+     The inset stays in the sum: 0 here, non-zero elsewhere, costs
+     nothing. */
+  height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
@@ -57,7 +72,10 @@
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
-  padding-bottom: calc(var(--safearea-padding-bottom) + var(--chrome-slack));
+  /* Twice the slack: the box grew by one above 100lvh, and the content
+     still has to end at 100svh so the input bar stays above the chrome.
+     lvh + slack - 2*slack = lvh - slack = svh. */
+  padding-bottom: calc(var(--safearea-padding-bottom) + 2 * var(--chrome-slack));
 
   /* The portrait hangs below the first screen so the cut can hide its
      bottom edge; clipping sideways keeps the phone layout's overhang from
