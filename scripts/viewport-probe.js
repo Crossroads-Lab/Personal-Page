@@ -53,6 +53,24 @@ const render = () => {
     ? Math.round(window.innerHeight - (moreRect.top + clipTop))
     : null;
 
+  // The two candidate edges, printed side by side, because this is the
+  // argument the whole cut has been about.
+  //
+  //   page bottom   100lvh. The last row of pixels the page is ever
+  //                 given. The hinge rests here.
+  //   glass bottom  the display, less the status bar above the page.
+  //                 61 points lower on Will's phone, and every one of
+  //                 them is Safari's own bar — nothing can be drawn on
+  //                 them, which is the whole reason the hinge does not
+  //                 aim there.
+  //
+  // If safe-area-top reads 0 the second number is meaningless and says
+  // so by being 120 too low, which is also the answer to whether the
+  // safe-area variables could have rescued the screen.height sums.
+  const safeTop = px("env(safe-area-inset-top, 0px)");
+  const pageBottom = px("100lvh");
+  const glassBottom = Math.round((window.screen?.height ?? 0) - safeTop);
+
   return [
     ["screen.height", Math.round(window.screen?.height ?? 0)],
     ["innerHeight", window.innerHeight],
@@ -61,7 +79,7 @@ const render = () => {
     ["100lvh", px("100lvh")],
     ["100dvh", px("100dvh")],
     ["safe-area-bottom", px("env(safe-area-inset-bottom, 0px)")],
-    ["safe-area-top", px("env(safe-area-inset-top, 0px)")],
+    ["safe-area-top", safeTop],
     // Kept only as evidence for why the glass is not what the cut aims
     // at: screen.height runs well past 100lvh, and the difference is
     // split between the status bar above the page and Safari's bar
@@ -73,7 +91,10 @@ const render = () => {
     // clamps a negative height to 0, which would print a reassuring lie.
     // The hinge is the left end of the clip path and it does not move,
     // so where it sits IS the resting position. It should equal 100lvh.
+    ["page bottom  (100lvh)", pageBottom],
+    ["glass bottom (safe)", glassBottom],
     ["cut hinge, page y", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) : "?"],
+    ["hinge - page bottom", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) - pageBottom : "?"],
     ["--cut-progress", getComputedStyle(more ?? document.body).getPropertyValue("--cut-progress").trim() || "0"],
     ["hero bottom", heroRect ? Math.round(heroRect.bottom) : "?"],
     ["bar bottom", bar ? Math.round(bar.getBoundingClientRect().bottom) : "?"],
