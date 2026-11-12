@@ -177,6 +177,21 @@
          never visible. */
       --portrait-sink: calc(var(--cut) * var(--cut-pivot) + 1px);
 
+      /* How far the form lifts as the cut swings.
+         
+         Will: "That also mean maybe moving up the form as well with the
+         animation?" The diagonal's RIGHT end is the one that rises, by
+         --cut-lead, and it rises into the strip the form sits in — at
+         full swing it crosses about 5px above the form's bottom edge on
+         that side. Lifting the form over the same range keeps the two
+         apart and reads as the form stepping aside for the page coming
+         up underneath it.
+         
+         A whole --cut rather than the --cut-lead it strictly needs: the
+         point is to be seen moving, and 11px is not. One token, so it is
+         one number to change. */
+      --form-lift: var(--cut);
+
       /* ── The portrait ───────────────────────────────────────────── */
 
       /* 74.2vw is the mock's width: he is 0.36 of the window across in
@@ -186,7 +201,20 @@
          and keeps him off the headline rather than letting a tall window
          inflate him. Measured off 100dvh, because the page is the
          viewport now. */
-      --portrait-crop: min(74.2vw, calc(0.9324 * 100dvh));
+      /* The sink goes INSIDE the crop, divided back out by the 0.858 of
+         the crop that is him. That is the real page's formula and it is
+         the only construction that gets both numbers right at once:
+         
+           subject  = 0.858 * crop  = 0.800 * 100dvh + sink
+           his head = bottom - subject = 0.200 * 100dvh
+         
+         So his head lands at the mock's 0.200, the part of him from
+         there to the fold is the mock's 0.800, and the sink is the extra
+         below the fold that the diagonal cuts across. Adding the sink to
+         the HEIGHT instead, which is what a phone wants, made him 0.892
+         of the screen here; leaving it out altogether dropped his head
+         to 0.352. Measured both. */
+      --portrait-crop: min(74.2vw, calc(0.9324 * 100dvh + var(--portrait-sink) / 0.858));
       /* He is 77.5% of the crop's width and the crop is 0.6260 as wide
          as it is tall (1252/2000), so 0.485 of its height. */
       --portrait-width: calc(0.485 * var(--portrait-crop));
@@ -194,6 +222,10 @@
          dvh: this sets how far down he starts, and a value that tracks
          the toolbar makes him drift. */
       --portrait-top: clamp(224px, 35svh, 300px);
+      /* How much lower than the sink he hangs. Zero on a phone, where
+         --portrait-top already places him; set on a wide screen below.
+         One number, so there is one number to change. */
+      --portrait-drop: 0px;
       /* The sink is ADDED rather than spent pushing him down. Anchoring
          the artwork a sink lower would drop his head by the same amount;
          a draw that much taller puts it back exactly where it was. */
@@ -237,7 +269,17 @@
       overflow-y: auto;
       overflow-x: hidden;
       overscroll-behavior-y: contain;
+
+      /* No scrollbar. body being the scroller means a desktop browser
+         draws one, and it lands over the right edge of the photograph,
+         which is where he is. iOS uses a fading overlay and never showed
+         it, so this is a desktop-only blemish — but it is a blemish, and
+         there is no navigational information in a bar that says "two
+         screens". */
+      scrollbar-width: none;
     }
+
+    body::-webkit-scrollbar { display: none; }
 
     /* No padding and no position: body is the viewport and the colour
        under everything, and that is all. The gutters moved into main so
@@ -306,7 +348,7 @@
          overhang is covered by the second page at rest and costs no
          extra scroll, since the second page reaches further down than it
          does. */
-      inset: 0 0 calc(0px - var(--portrait-sink)) 0;
+      inset: 0 0 calc(0px - var(--portrait-sink) - var(--portrait-drop)) 0;
       background: url("assets/background.webp") no-repeat right bottom
                   / auto var(--portrait-height);
       z-index: 0;
@@ -623,9 +665,27 @@
       }
     }
 
+    /* The form steps aside over exactly the same range, so the two
+       movements are one gesture rather than two.
+       
+       `translate` rather than `transform`: the chips row already uses
+       transform's territory elsewhere, and the two properties overwrite
+       each other where they overlap. This also stays off layout — a
+       translate is composited, so the lift costs no reflow. */
+    @keyframes form-lift {
+      from { translate: 0 0; }
+      to   { translate: 0 calc(0px - var(--form-lift)); }
+    }
+
     @supports (animation-timeline: scroll()) {
       #more {
         animation: cut-swing linear both;
+        animation-timeline: scroll(nearest block);
+        animation-range: 0 var(--cut-travel);
+      }
+
+      #chat-input-form {
+        animation: form-lift linear both;
         animation-timeline: scroll(nearest block);
         animation-range: 0 var(--cut-travel);
       }
@@ -668,6 +728,17 @@
       html:has(#chat-input:focus, #chat-input:active) #more {
         display: none !important;
       }
+
+      /* body stops being a scroll container above, which leaves
+         scroll(nearest block) with nothing to bind to — and an animation
+         on a timeline that has gone inactive holds wherever it was
+         rather than resetting. So the lift is taken off explicitly, or a
+         form lifted mid-scroll would stay lifted for the whole time the
+         keyboard is up. */
+      html:has(#chat-input:focus, #chat-input:active) #chat-input-form {
+        animation: none;
+        translate: 0 0;
+      }
     }
 
     /* ── The opening state, on a wide screen ───────────────────────── */
@@ -685,6 +756,26 @@
          the VIEWPORT, which knows nothing about the space reserved for
          him, so without this a 512px form runs under him anyway. */
       #content, #chat-input-form, #starter-chips { max-width: 100%; }
+
+      /*
+       * He is the crop, and the crop already carries the sink — see the
+       * formula up in :root. Adding it a second time here is what a
+       * phone wants, where --portrait-top fixes his head and the extra
+       * height is how it stays fixed; on a wide screen it made him 0.892
+       * of the screen against the mock's 0.798.
+       */
+      :root {
+        --portrait-height: var(--portrait-crop);
+
+        /* And then lowered past the mock, because Will: "on desktop, the
+           picture is slightly too high." The formula above puts his head
+           at exactly 0.200 of the screen, which is where the v2 mock has
+           it; this takes him 40px below that, to about 0.244.
+           
+           THIS IS THE ONE TO TUNE — larger drops him further, smaller
+           raises him, 0 puts him back on the mock. */
+        --portrait-drop: 40px;
+      }
 
       /* Half the slack above the form and half below, so it lands in the
          middle rather than at the bottom. */
