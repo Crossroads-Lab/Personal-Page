@@ -1,7 +1,7 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=e4e9bcd8";
-@import "./chat-input.css?v=d7f181e6";
-@import "./chat-content.css?v=d69f2b7a";
+@import "./common.css?v=b7157581";
+@import "./chat-input.css?v=c2f44b32";
+@import "./chat-content.css?v=de3662c4";
 @import "./more.css?v=54634609";
 
 /* 
@@ -187,10 +187,33 @@
      generated strip sitting above the fold at 375, 390 and 768, and none
      at all at 1280 where the two formulas happen to agree. */
   :root {
-    /* Plus the sink, divided back out of the subject's share, so the
-       part that goes below the fold is extra picture rather than the
-       same picture pushed down. His head stays at --portrait-top. */
-    --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink) / 0.858);
+    /* As high as the picture goes without opening a gap underneath it.
+     
+       Will: "I made you a long enough picture to buy you some height on
+       mobile when there's a notch... if you need to push the picture up,
+       I bought you that space... as long as we don't see any bottom
+       gap."
+       
+       So the bottom is nailed to the lowest point the cut ever reaches
+       (--portrait-sink) and the only question left is how tall to draw
+       the file. Taller moves his head UP, because the bottom cannot
+       move, so the sink is added to the height rather than spent on
+       pushing him down: the picture grows downward into the notch strip
+       and his head rises by the difference.
+       
+       How far up is set by how much width there is to spend, and there
+       is very little. Two ceilings were tried and both were too much:
+       
+         head at the mobile mock's 0.1635   488px wide in a 414px window
+         head at --portrait-top, 0.35       408px wide
+       
+       Both put him across the headline and the icons — "Wtf is that big
+       picture????". The mock's portrait is a wider crop than Will's
+       file, 0.641 of its height across where his is 0.485, so the same
+       head height costs far more width here. Adding the sink plain,
+       with no division, buys about 60px of lift for about 60px of
+       width and stops there. */
+    --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
   }
 
   .hero:before {

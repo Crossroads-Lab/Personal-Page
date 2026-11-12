@@ -85,6 +85,10 @@
      terms meet exactly on the mock's own aspect. The subject comes out
      654 tall against the mock's 654.
      
+     Written against --hero-height rather than vh so it means the same
+     thing on a phone, where the first screen is taller than the window
+     by the chrome slack.
+     
      min, not max. max was inherited from when both numbers were small
      enough that it rarely bit, and at these it bites immediately: on a
      2000x881 window a vw term of 59.5 is 1190 against 93vh's 819, max
@@ -99,7 +103,7 @@
      height binds and the width never comes into it; on a tall narrow
      window the width binds instead and keeps him off the headline
      rather than letting a tall window inflate him. */
-  --portrait-crop: min(74.2vw, calc(93.0vh + var(--portrait-sink) / 0.858));
+  --portrait-crop: min(74.2vw, calc(0.9324 * var(--hero-height) + var(--portrait-sink) / 0.858));
   --portrait-subject: calc(0.858 * var(--portrait-crop));
   /* How wide he lands. He is 77.5% of the crop's width, and the crop is
      0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
