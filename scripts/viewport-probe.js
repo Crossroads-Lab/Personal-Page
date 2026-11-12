@@ -68,11 +68,14 @@ const render = () => {
   // so by being 120 too low, which is also the answer to whether the
   // safe-area variables could have rescued the screen.height sums.
   const safeTop = px("env(safe-area-inset-top, 0px)");
-  const pageBottom = px("100lvh");
+  const pageHeight = getComputedStyle(document.documentElement)
+    .getPropertyValue("--page-height").trim();
+  const pageBottom = pageHeight ? parseFloat(pageHeight) : px("100lvh");
   const glassBottom = Math.round((window.screen?.height ?? 0) - safeTop);
 
   return [
     ["screen.height", Math.round(window.screen?.height ?? 0)],
+    ["screen.availHeight", Math.round(window.screen?.availHeight ?? 0)],
     ["innerHeight", window.innerHeight],
     ["visualViewport", Math.round(window.visualViewport?.height ?? 0)],
     ["100svh", px("100svh")],
@@ -91,7 +94,8 @@ const render = () => {
     // clamps a negative height to 0, which would print a reassuring lie.
     // The hinge is the left end of the clip path and it does not move,
     // so where it sits IS the resting position. It should equal 100lvh.
-    ["page bottom  (100lvh)", pageBottom],
+    ["--page-height", pageHeight || "unset -> 100lvh"],
+    ["page bottom (used)", pageBottom],
     ["glass bottom (safe)", glassBottom],
     ["cut hinge, page y", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) : "?"],
     ["hinge - page bottom", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) - pageBottom : "?"],

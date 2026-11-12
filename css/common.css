@@ -131,30 +131,40 @@
    * need it: .hero itself, and the sum below. */
   --hero-height: calc(100lvh + var(--chrome-slack) + env(safe-area-inset-bottom, 0px));
 
-  /* Where the cut rests before anyone scrolls, measured DOWN from the
-   * bottom of the hero — negative, because it rests ABOVE it.
+  /* Where the cut rests before anyone scrolls, measured from the bottom
+   * of the hero.
    *
-   *     100lvh  -  --hero-height
+   *     --page-height  -  --hero-height
    *
-   * 100lvh is the last row of pixels the page ever gets on the first
-   * screen: the viewport with every retractable toolbar retracted, which
-   * is the biggest it is ever allowed to be. Nothing below it is page.
-   * So that is the edge of the phone, as far as anything here can paint,
-   * and the cut lies along it. The hero deliberately overshoots it (see
-   * --hero-height) so the portrait is not cropped by the fold; this
-   * subtracts the overshoot back off.
+   * --page-height is the last row of pixels the page actually PAINTS,
+   * which is not any viewport. Will's third screenshot is the proof: at
+   * rest, with the toolbar collapsed, the probe read innerHeight 836,
+   * 100lvh 836, dark edge 836, LEAK 0 — and there was dark on the glass
+   * below all of it, with MORE ABOUT ME legible in it. Measured off that
+   * screenshot the page runs from 62.5 points down the display to the
+   * very bottom of it. iOS Safari paints behind its own floating bar.
    *
-   * Two wrong answers came before it, both reached by starting from
-   * screen.height:
+   * So 100lvh is 57 points short of the bottom, which is the "slightly
+   * too high". The four answers before this one, on his phone, against a
+   * true 18:
    *
-   *   screen.height - 100svh         160 on Will's phone
-   *   screen.height - screenY - hero   18, and needs a JS reading
+   *   screen.height - 100svh              160   too low by 142
+   *   screen.height - screenY - hero       80   screenY reports 0
+   *   screen.height - safe-top - hero      80   safe-top reports 0
+   *   100lvh - hero                       -40   too high by 57
    *
-   * Both were trying to find the bottom of the GLASS, which is 58 points
-   * below the bottom of the page on his device and covered by Safari's
-   * own bar. There is nothing to put there. The page stops at 100lvh and
-   * so does the cut, and the sum is one subtraction between two things
-   * CSS already knows.
+   * screenY, safe-area-inset-top and safe-area-inset-bottom all read 0
+   * on his device, so none of them can supply the 62.5. screen.availHeight
+   * can: MDN defines it as the display less whatever the device reserves
+   * for itself, which is the status bar. scripts/more.js sets
+   * --page-height from it, and only when it reports something the glass
+   * does not.
+   *
+   * The 100lvh fallback is deliberate rather than defensive. If
+   * availHeight turns out to be another of the properties that reads 0
+   * here, nothing moves and the cut stays exactly where it is now —
+   * slightly too high, which is the error we already have, rather than
+   * the 60-point drop the screen.height sums would reintroduce.
    *
    * 0 until the @supports below confirms lvh, because an unsupported
    * unit makes the whole custom property invalid rather than falling
@@ -302,7 +312,7 @@ input[type=number] {
 @supports (height: 1lvh) and (height: 1svh) {
   :root {
     --chrome-slack: calc(100lvh - 100svh);
-    --cut-rest: calc(100lvh - var(--hero-height));
+    --cut-rest: calc(var(--page-height, 100lvh) - var(--hero-height));
   }
 }
 

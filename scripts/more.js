@@ -70,19 +70,58 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
- * Nothing here measures the screen any more.
+ * How far down the glass the page actually paints.
  *
- * Two versions of this file read window.screen.height, and one of them
- * also read window.screenY, to work out where the bottom edge of the
- * phone was so the cut could rest on it. Both were answering the wrong
- * question. The glass goes on past the page — 58 points past it on
- * Will's phone, behind Safari's own bar — and nothing can be painted
- * there, so there is no reason to aim at it. The page stops at 100lvh
- * and css/common.css rests the cut there with one CSS subtraction.
+ * Not a viewport. Will's screenshots show iOS Safari painting page
+ * content BELOW innerHeight, behind its own floating address bar: at
+ * rest, with innerHeight, 100lvh and the dark edge all reading 836,
+ * there was dark on the glass under all three. Measured off that
+ * screenshot the page occupies 62.5 to 956 on a 956-point display, so
+ * it paints 57 points further than any unit admits to.
  *
- * Which leaves this file doing what it should: the scroll.
+ * screen.availHeight is the one property that can say so. MDN: the
+ * display, less whatever the device or user agent reserves for itself —
+ * here, the status bar. Three others that looked like they should have
+ * worked all return 0 on his phone: window.screenY,
+ * env(safe-area-inset-top) and env(safe-area-inset-bottom), the last of
+ * which is a documented Safari bug when the toolbar is hidden.
+ *
+ * Three conditions before it is trusted, because the reports of this
+ * property on iOS are old and mixed:
+ *
+ *   the chrome floats      otherwise there is nothing to paint behind
+ *   avail < glass          it reserved something, so it is reporting
+ *   avail >= innerHeight   it is at least a whole viewport, so it is
+ *                          not the stale 20px-address-bar answer from
+ *                          the 2015 reports
+ *
+ * Fail any of them and the property is left unset, css/common.css falls
+ * back to 100lvh, and the cut stays where it is today rather than
+ * dropping 60 points on an unverified reading.
+ *
+ * Re-read on resize and rotation: the toolbar collapsing changes
+ * innerHeight, and a turn swaps width and height.
  */
+const FLOATING_CHROME = matchMedia("(hover: none)");
 
+const measurePage = () => {
+  const root = document.documentElement.style;
+  const glass = Math.round(window.screen?.height ?? 0);
+  const avail = Math.round(window.screen?.availHeight ?? 0);
+
+  if (FLOATING_CHROME.matches && avail > 0 && avail < glass && avail >= window.innerHeight) {
+    root.setProperty("--page-height", `${avail}px`);
+  } else {
+    root.removeProperty("--page-height");
+  }
+
+  /* For scripts/viewport-probe.js only. Nothing in the CSS reads these. */
+  root.setProperty("--screen-height", `${glass}px`);
+  root.setProperty("--avail-height", `${avail}px`);
+};
+
+measurePage();
+addEventListener("orientationchange", measurePage);
 
 /*
  * How far through its arrival the cut is, as a number from 0 to 1.
@@ -139,7 +178,7 @@ const paintProgress = () => {
 
 paintProgress();
 addEventListener("scroll", paintProgress, { passive: true });
-addEventListener("resize", paintProgress);
+addEventListener("resize", () => { measurePage(); paintProgress(); });
 
 /*
  * When the cues are worth showing.

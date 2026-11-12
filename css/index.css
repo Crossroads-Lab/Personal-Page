@@ -1,7 +1,7 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=d08c6136";
-@import "./chat-input.css?v=a2fd1abc";
-@import "./chat-content.css?v=f301dc19";
+@import "./common.css?v=d0d275b9";
+@import "./chat-input.css?v=9142434a";
+@import "./chat-content.css?v=36f561e5";
 @import "./more.css?v=35c5f5ee";
 
 /* 
