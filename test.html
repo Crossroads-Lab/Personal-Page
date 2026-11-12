@@ -136,6 +136,25 @@
       --main-max-width: calc(100dvw - 2 * var(--padding));
       --chat-form-height: min(max(6.2840dvw, 48px), 56px);
 
+      /* ── The diagonal cut ───────────────────────────────────────── */
+      /* How deep the slope gets, and where its hinge sits across the
+         page. 0.8 was measured off Will's own drawing: the line starts
+         level, and the point four fifths of the way across never moves
+         while the right end lifts and the left end drops. One point
+         nailed down and everything else the consequence of the swing —
+         a midpoint hinge read as the whole boundary sliding around the
+         page, which is not something a boundary does. */
+      --cut-desktop: 120px;
+      --cut-mobile: 56px;
+      --cut: var(--cut-desktop);
+      --cut-pivot: 0.8;
+      /* At rest both ends sit here, so the line is level. */
+      --cut-lead: calc(var(--cut) * (1 - var(--cut-pivot)));
+      /* 18% of a viewport of scrolling, as on the real page — relative
+         to the viewport rather than a pixel count, so it is the same
+         gesture on a small phone and a large desktop. */
+      --cut-travel: calc(0.18 * 100dvh);
+
       /* ── The portrait ───────────────────────────────────────────── */
 
       /* 74.2vw is the mock's width: he is 0.36 of the window across in
@@ -524,7 +543,62 @@
       gap: 16px;
 
       padding: 64px var(--padding);
+      /* Clears the hinge, which is the lowest the edge ever gets, or the
+         first line of text is cut off with it. */
+      padding-top: calc(64px + var(--cut));
       padding-bottom: calc(64px + var(--safearea-bottom));
+
+      /* Pulled up by the lead so that at rest the level line lands
+         exactly on the bottom of the first page — which is also where
+         the photograph ends, so opening the cut reveals the last sliver
+         of him on the right rather than bare background.
+         
+         The margin never changes. That is deliberate: nothing about this
+         animation is layout, only a clip path, and only inside this one
+         element. A margin that moved per frame is what made an earlier
+         version judder. */
+      margin-top: calc(0px - var(--cut-lead));
+
+      /* Progress 0: both ends level at --cut-lead. This is also the
+         fallback — a browser with no scroll-driven animations gets a
+         straight edge rather than a broken one. */
+      clip-path: polygon(0 var(--cut-lead), 100% var(--cut-lead),
+                         100% 100%, 0 100%);
+      will-change: clip-path;
+    }
+
+    /*
+     * The swing, with no script.
+     *
+     * The real page writes --cut-progress from a scroll handler, because
+     * it was built before this existed. Here the scroll IS the timeline:
+     * scroll(nearest block) binds to body, which is the scroller, and
+     * the animation plays across the first 18dvh of it.
+     *
+     * linear, and `both` so it holds the open position past the end of
+     * the range rather than snapping back. No transition on top of it —
+     * the finger is the clock, and a transition would only add lag
+     * between the two.
+     */
+    @keyframes cut-swing {
+      from {
+        clip-path: polygon(0 var(--cut-lead), 100% var(--cut-lead),
+                           100% 100%, 0 100%);
+      }
+      to {
+        /* Left end down by the pivot's share, right end all the way up
+           to the top of the box. */
+        clip-path: polygon(0 calc(var(--cut-lead) + var(--cut) * var(--cut-pivot)),
+                           100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    @supports (animation-timeline: scroll()) {
+      #more {
+        animation: cut-swing linear both;
+        animation-timeline: scroll(nearest block);
+        animation-range: 0 var(--cut-travel);
+      }
     }
 
     #more h2 {
@@ -607,6 +681,7 @@
          where Will asked him to stay — head at --portrait-top. */
       :root {
         --portrait-height: calc(100svh - var(--portrait-top));
+        --cut: var(--cut-mobile);
       }
 
       /* The headline goes to the top of the content box rather than the
