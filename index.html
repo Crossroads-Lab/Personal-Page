@@ -15,9 +15,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Android/Chrome: Dark Mode notch color -->
-    <meta name="theme-color" content="#E4E6E7" media="(prefers-color-scheme: dark)">
+    <!-- #E3E5E6, the same as --background in css/common.css.
+         
+         It was #E4E6E7 — one step off on every channel — and that is the
+         seam. theme-color is what Safari tints its chrome with, including
+         the strip the bottom bar floats on, so a theme-color that is not
+         the page colour is a join between two greys that are nearly but
+         not quite the same. Will: "we could keep the bottom notch uniform
+         color." If it is going to be flat it should at least be the same
+         flat. -->
+    <meta name="theme-color" content="#E3E5E6" media="(prefers-color-scheme: dark)">
     <!-- Android/Chrome: Light Mode notch color -->
-    <meta name="theme-color" content="#E4E6E7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#E3E5E6" media="(prefers-color-scheme: light)">
 
     <!-- Fonts -->
     <!-- Preconnect to Google Fonts for faster loading -->
