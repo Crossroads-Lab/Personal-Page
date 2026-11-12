@@ -700,6 +700,35 @@
       html:has(#chat-input:focus, #chat-input:active) #more {
         display: none !important;
       }
+
+      /*
+       * And the first page is PINNED, which is the part that took a bug
+       * report to find.
+       *
+       * Will: "If I focus the input while the page scrolled a bit up,
+       * new space is introduced above the keyboard and unfocusing does
+       * not scroll the first page all the way back."
+       *
+       * Both halves are the scroll position still being live when the
+       * layout collapses. Taking #more out of the document shrinks
+       * body's scrollable content to one viewport, which CLAMPS
+       * body.scrollTop to 0 — so the first page jumps by however far it
+       * had been scrolled, at the same moment Safari is deciding how far
+       * to slide the visual viewport for a field it measured BEFORE the
+       * jump. The two disagree by exactly the scroll offset, and the
+       * difference shows up as dead space above the keyboard. Then on
+       * the way out the page is left wherever that left it.
+       *
+       * position: fixed makes the question not arise. The first page is
+       * anchored to the layout viewport rather than to a scroll offset,
+       * so the form is at the same place whether the page was at the top
+       * or half way down, and body has nothing in flow left to be
+       * scrolled at all. Unfocusing returns to a page that never moved.
+       */
+      html:has(#chat-input:focus, #chat-input:active) main {
+        position: fixed;
+        inset: 0;
+      }
     }
 
     /* ── The opening state, on a wide screen ───────────────────────── */
