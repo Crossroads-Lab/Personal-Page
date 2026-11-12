@@ -458,6 +458,21 @@
     scroll-margin-top: var(--padding);
   }
 
+  /* Except the first one. Will: "for the top card, the about me anchor is
+     enough."
+     
+     .more already snaps to the top of the section, where the heading is,
+     and the first card begins about a hundred points below that — so the
+     two sit close enough that the second reads as a stutter rather than
+     as a stop. One anchor for the top of the page, and the cards start
+     counting from the second.
+     
+     :first-of-type against <article>, not .card--book, so reordering the
+     cards cannot quietly reintroduce it. */
+  .more-inner > article:first-of-type {
+    scroll-snap-align: none;
+  }
+
   /*
    * One viewport, and nothing to scroll.
    *
@@ -476,6 +491,7 @@
      opacity would leave the box there for it to find. Will: "we should
      never see or have access to the second page on mobile when the input
      is focused." */
+  html:has(#chat-input:focus, #chat-input:active) #more,
   html:has(#chat-input:focus, #chat-input:active) #more,
   html:has(#chat-input:focus, #chat-input:active) .chip--more,
   html:has(#chat-input:focus, #chat-input:active) .more-chevron {
@@ -741,6 +757,64 @@
  * the row rather than beside them. */
 body:not([chat-started]) .quick-link[href$="#more"] {
   display: none;
+}
+
+/* ── Back to the top, above the heading ──────────────────────────────── */
+/*
+ * Same visual language as .more-chevron on the first screen, pointing the
+ * other way: a quiet circle that is an offer rather than an instruction.
+ *
+ * It FADES IN as the first page leaves, which is the whole point — a
+ * permanent "back to top" on a two-page site is clutter, and one that
+ * appears exactly when there is something to go back to is a cue. The
+ * timeline is body's own scroll, so no script and no scroll handler.
+ *
+ * The range runs from half a viewport to nine tenths of one: it starts
+ * appearing once the first screen is meaningfully gone and is fully there
+ * by the time the fold arrives. `both` holds it visible past the end of
+ * the range rather than fading out again deeper in the page.
+ *
+ * Outside @supports it has no opacity of its own and is simply visible,
+ * which is the right fallback: a browser without scroll-driven animations
+ * gets a plain link rather than an invisible one.
+ */
+@keyframes to-top-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.to-top {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  color: var(--text-on-dark-2);
+  background: rgb(255 255 255 / 0.06);
+  text-decoration: none;
+}
+
+.to-top:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .to-top:hover {
+    color: var(--text-on-dark);
+    background: rgb(255 255 255 / 0.12);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .to-top {
+    animation: to-top-fade linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: calc(0.5 * 100dvh) calc(0.9 * 100dvh);
+  }
 }
 
 .more-chevron {

@@ -52,7 +52,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=0dc4b75c" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=df16fde1" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=46e7c89b" type="module" defer></script>
@@ -349,6 +349,23 @@
     -->
     <section class="more" id="more" aria-labelledby="more-title">
       <div class="more-inner">
+        <!-- Back up, above the heading.
+             
+             Will: "maybe add a little chevron up above about me, when the
+             first page page is almost gone, fading style." So it fades in
+             on the way down rather than being there from the start — it is
+             only an offer once the thing it offers to return to has gone.
+             
+             href="#top" is .hero's id. The document does not scroll, body
+             does, so a fragment jump scrolls the nearest scrollable
+             ancestor, which is body — and scroll-behavior: smooth is
+             already set on it. No script. -->
+        <a class="to-top" href="#top" aria-label="Back to the top">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15"/>
+          </svg>
+        </a>
         <h2 id="more-title" class="more-label">More about me</h2>
 
         <!-- 1. The book -->
