@@ -42,6 +42,30 @@
   /* How far the slope drops from the right edge of the fold to the left. */
   --cut-desktop: 120px;
   --cut-mobile: 56px;
+
+  /* One name for whichever of the two applies, so the geometry below is
+     written once instead of twice. The phone block at the bottom of this
+     file redefines it and nothing else about the cut needs restating. */
+  --cut: var(--cut-desktop);
+
+  /* Where along the width the line turns.
+   *
+   * 0.8, measured off Will's reference drawing rather than chosen: the
+   * tilted line in it crosses the level one at 80% of the panel's width,
+   * with the left end 24 points below and the right end 6 above on a
+   * 30-point slope. 24/30.
+   *
+   * So the right end lifts a little and the left end swings down a lot,
+   * which is what gives it the feel of a page turning rather than a
+   * wedge opening. It was 0 for a round — hinged on the left edge, the
+   * right end carrying the whole slope — which is the same line through
+   * different motion, and read wrong. */
+  --cut-pivot: 0.8;
+
+  /* How much of the slope is on the RIGHT of the pivot: the distance the
+     right end travels, and so how far the section's box has to start
+     above the resting line to have room for it. */
+  --cut-lead: calc(var(--cut) * (1 - var(--cut-pivot)));
 }
 
 /*
@@ -60,6 +84,13 @@
 .more {
   position: relative;
   z-index: 1;
+  /* Both cues point at this section, and the browser would put its box
+     top at the top of the window — which is above the cut, so you arrive
+     looking at the diagonal from underneath with the hero still on
+     screen. A negative scroll margin carries the landing down past the
+     lowest point the line ever reaches, which is the left end at full
+     tilt, --cut below the box top. */
+  scroll-margin-top: calc(-1 * var(--cut));
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
@@ -85,11 +116,15 @@
      
      No transition. The scroll IS the timeline — a transition on top of
      it would only add lag between the finger and the line. */
-  margin-top: calc(var(--cut-rest) - var(--cut-desktop));
+  margin-top: calc(var(--cut-rest) - var(--cut-lead));
 
+  /* At progress 0 both ends sit at --cut-lead, so the line is level and
+     lands exactly --cut-rest below the hero. From there the left end
+     descends by the pivot's share of the slope and the right end climbs
+     by the rest, and the point at --cut-pivot across never moves. */
   clip-path: polygon(
-    0 var(--cut-desktop),
-    100% calc(var(--cut-desktop) * (1 - var(--cut-progress))),
+    0 calc(var(--cut-lead) + var(--cut) * var(--cut-pivot) * var(--cut-progress)),
+    100% calc(var(--cut-lead) * (1 - var(--cut-progress))),
     100% 100%,
     0 100%
   );
@@ -99,7 +134,7 @@
 
   /* Clears the hinge, which is the lowest the edge ever gets — or the
      first card's corner is cut off with it. */
-  padding-top: var(--cut-desktop);
+  padding-top: var(--cut);
 }
 
 .more-inner {
@@ -440,16 +475,13 @@ body:not([chat-started]) .quick-link[href$="#more"] {
  */
 @media only screen and (max-width: 767px) {
 
-  .more {
-    margin-top: calc(var(--cut-rest) - var(--cut-mobile));
+  /* The slope only. Every other line of the geometry is shared. */
+  :root {
+    --cut: var(--cut-mobile);
+  }
 
-    clip-path: polygon(
-      0 var(--cut-mobile),
-      100% calc(var(--cut-mobile) * (1 - var(--cut-progress))),
-      100% 100%,
-      0 100%
-    );
-    padding-top: calc(var(--cut-mobile) + 40px);
+  .more {
+    padding-top: calc(var(--cut) + 40px);
   }
 
   .more-inner {

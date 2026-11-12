@@ -109,8 +109,30 @@ const measurePage = () => {
   const glass = Math.round(window.screen?.height ?? 0);
   const avail = Math.round(window.screen?.availHeight ?? 0);
 
-  if (FLOATING_CHROME.matches && avail > 0 && avail < glass && avail >= window.innerHeight) {
-    root.setProperty("--page-height", `${avail}px`);
+  /*
+   * On a phone the cut rests at the bottom of the GLASS, not the bottom
+   * of the first screen — Will: "for mobile, some extra notch space
+   * should be added".
+   *
+   * screen.height is the whole display: status bar, notch, home
+   * indicator and all. It is the furthest anything can possibly be from
+   * the top of the page, so a cut resting there cannot surface in the
+   * strip iOS paints behind its own floating bar, whatever that strip
+   * turns out to measure. That was never usable before, because the
+   * photograph ended at the hero's bottom edge and pushing the cut past
+   * it only exposed page background. The artwork now reaches 103 points
+   * below the hero (--portrait-extra), and the biggest gap measured on
+   * Will's devices is 80, so the picture covers the whole allowance.
+   *
+   * availHeight first, on the devices where it reports something the
+   * glass does not: it is the same quantity measured more precisely.
+   * Four of Will's phones' properties return 0 or the full screen, so in
+   * practice this is the glass.
+   */
+  if (FLOATING_CHROME.matches) {
+    const bottom = avail > 0 && avail < glass && avail >= window.innerHeight ? avail : glass;
+    if (bottom > 0) root.setProperty("--page-height", `${bottom}px`);
+    else root.removeProperty("--page-height");
   } else {
     root.removeProperty("--page-height");
   }

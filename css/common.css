@@ -327,7 +327,23 @@ input[type=number] {
 @supports (height: 1lvh) and (height: 1svh) {
   :root {
     --chrome-slack: calc(100lvh - 100svh);
-    --cut-rest: calc(var(--page-height, var(--hero-height)) - var(--hero-height));
+    /* The notch allowance, never more than the picture can cover.
+     
+       The first term is how far the glass runs past the first screen —
+       the strip iOS paints behind its own bar, which is where the cut
+       has to rest so nothing of it surfaces up there. The second is how
+       far the artwork actually reaches below the hero. Taking the
+       smaller means the photograph is always the thing behind the cut.
+       Drop the min() and on a tall enough screen the cut rests below
+       the picture's own bottom edge, which is the grey band again.
+     
+       The pivot's share of the slope comes off the second term, because
+       the left end swings that far BELOW the resting line at full tilt
+       and the picture has to be behind it there too. */
+    --cut-rest: max(0px, min(
+      max(0px, calc(var(--page-height, var(--hero-height)) - var(--hero-height))),
+      calc(var(--portrait-sink) - var(--cut) * var(--cut-pivot))
+    ));
   }
 }
 
