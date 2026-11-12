@@ -622,7 +622,26 @@
          animation is layout, only a clip path, and only inside this one
          element. A margin that moved per frame is what made an earlier
          version judder. */
-      margin-top: calc(0px - var(--cut-lead));
+      /*
+       * Plus a pixel, and the pixel is the point.
+       *
+       * Will: "there is a thin dark gray line visible on mobile from the
+       * second page creeping in the first page."
+       *
+       * At rest the clip's level line is --cut-lead below this box's
+       * top, and the box's top is --cut-lead above the fold, so the dark
+       * begins at exactly the fold. Exactly is the problem: --cut-lead
+       * is 11.2px, the box top lands on 832.8, and a clip-path edge is
+       * antialiased — so on a 3x screen the boundary has subpixel
+       * coverage to spare and some of it falls on the last row of the
+       * first page. A hairline of the second page, in the first.
+       *
+       * One pixel down and the dark starts one pixel BELOW the fold,
+       * where there is nothing to see it with. It costs nothing: the
+       * snap arithmetic is all relative to this box, so the snap point
+       * and the scroller's maximum move together and stay equal.
+       */
+      margin-top: calc(1px - var(--cut-lead));
 
       /* Progress 0: both ends level at --cut-lead. This is also the
          fallback — a browser with no scroll-driven animations gets a
