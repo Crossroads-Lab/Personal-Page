@@ -831,7 +831,17 @@ if (keyboard && input && !location.search.includes("solo")) {
   });
 }
 
-if (keyboard && input && !location.search.includes("solo")) {
+/*
+ * This half runs in ?solo too — it is step one of putting the pieces
+ * back one at a time.
+ *
+ * All it does is measure what the keys cover and mark the body, which
+ * pins the bar to the top of the keyboard and freezes the page. No
+ * section to remove in ?solo, and no rearranging before the focus: just
+ * the answer to one question, which is whether the page still shifts
+ * when nothing is asked to scroll.
+ */
+if (keyboard && input) {
   keyboard.addEventListener("resize", syncKeyboard);
   input.addEventListener("focus", syncKeyboard);
   /* Clear it on the way out, then measure again once the keys have
