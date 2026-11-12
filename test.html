@@ -8,6 +8,36 @@
     lock, because the 16px font below is what stops the focus zoom.
   -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!--
+    The three the real page carries and this one did not. Copied verbatim,
+    including the #E4E6E7 that is one step off the page's own #E3E5E6,
+    because the point of a control is that it differs in nothing.
+
+    What each actually does, since it matters for what to expect:
+
+    apple-mobile-web-app-capable — nothing at all in Safari. It only bites
+    when the page is launched from the Home Screen, where it runs
+    standalone. Worth knowing that this is the mode ask-nereus-client is
+    always in, and standalone is exactly where the whole problem does not
+    exist: the web view resizes for the keyboard and there is no floating
+    bar to paint behind.
+
+    apple-mobile-web-app-status-bar-style — standalone only as well. In
+    Safari it is inert, so black-translucent does not make anything
+    transparent here.
+
+    theme-color — this one does act in Safari: it tints the chrome, the
+    bottom bar included. It colours the BAR rather than the strip of page
+    under it, so it is not expected to fix the bottom; what it does do is
+    stop Safari sampling a colour of its own choosing, which is a real
+    difference between this page and the real one and is why it is here.
+  -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#E4E6E7" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#E4E6E7" media="(prefers-color-scheme: light)">
+
   <meta name="robots" content="noindex">
   <title>Keyboard test</title>
 
