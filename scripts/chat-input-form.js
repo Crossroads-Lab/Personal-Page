@@ -726,6 +726,16 @@ const syncKeyboard = () => {
      keyboard would collapse the padding at exactly the moment Safari is
      deciding how far it can scroll. */
   if (covered > 0) document.body.style.setProperty("--keyboard", `${covered}px`);
+
+  /* How far Safari has slid the VISUAL viewport down inside the layout
+     one. This is the shift Will sees in ?solo, where none of this code
+     runs: the page cannot scroll — the root is clipped — so what moves
+     is the visual viewport, and position: fixed does not follow it,
+     because fixed is relative to the LAYOUT viewport. Without this the
+     pinned bar slides away with everything else. */
+  document.body.style.setProperty(
+    "--keyboard-top", `${Math.max(0, Math.round(keyboard.offsetTop))}px`,
+  );
   document.body.toggleAttribute("keyboard", focused && FLOATING_CHROME.matches);
 };
 
@@ -859,6 +869,8 @@ if (keyboard && input && !SOLO_PAGE) {
  */
 if (keyboard && input && (!SOLO_PAGE || PIN_ONLY)) {
   keyboard.addEventListener("resize", syncKeyboard);
+  /* The visual viewport's own scroll is the event for that slide. */
+  keyboard.addEventListener("scroll", syncKeyboard);
   input.addEventListener("focus", syncKeyboard);
   /* Clear it on the way out, then measure again once the keys have
      finished leaving. The resize that fires when the keyboard closes

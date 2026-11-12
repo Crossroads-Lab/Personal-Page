@@ -307,8 +307,20 @@ body[keyboard] #chat-input-container {
   position: fixed;
   left: 50%;
   bottom: var(--keyboard, 0px);
+  /* No Y correction, and it is worth saying why not, because I added
+     one and it was wrong twice over.
+     
+     fixed pins to the LAYOUT viewport while Safari slides the VISUAL
+     one, so the bar looks like it needs the offset added back. It does
+     not: --keyboard is innerHeight minus (offsetTop + height), so the
+     slide is already inside it. bottom: var(--keyboard) puts the bar on
+     the visible bottom edge by itself. Adding the offset on top pushed
+     it 120 points PAST the keys — measured, with a faked 120px slide. */
   transform: translateX(-50%);
   margin: 0;
+  /* No easing on the follow: it has to arrive with the keyboard, not
+     catch up to it. */
+  transition: none;
 }
 
 /* ── The book card: cover beside the text rather than above it ────────── */
