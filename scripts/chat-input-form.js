@@ -683,6 +683,10 @@ const resetForm = () => {
 
 const keyboard = window.visualViewport;
 
+/* A device whose chrome floats over the page, which is the only kind
+   that has a software keyboard to get out of the way of. */
+const FLOATING_CHROME = matchMedia("(hover: none)");
+
 const syncKeyboard = () => {
   if (!keyboard || !input) return;
 
@@ -693,9 +697,48 @@ const syncKeyboard = () => {
   );
   const up = covered > 0 && document.activeElement === input;
 
-  document.body.style.setProperty("--keyboard", `${covered}px`);
-  document.body.toggleAttribute("keyboard", up);
+  /* Only overwrite the provisional height once there is a real one to
+     put in its place. Writing 0 into it between the gesture and the
+     keyboard would collapse the padding at exactly the moment Safari is
+     deciding how far it can scroll. */
+  if (covered > 0) document.body.style.setProperty("--keyboard", `${covered}px`);
+  if (up || covered === 0) document.body.toggleAttribute("keyboard", up);
 };
+
+/*
+ * Rearrange the page BEFORE the keyboard, not after it.
+ *
+ * Hiding #more on focus was too late. Safari works out where to scroll a
+ * focused field as it opens the keyboard, and by then the document it
+ * measured still had the whole second section in it — so it scrolled for
+ * a long page and left the bar a third of the way up with the cut
+ * underneath it. Will: "Zoom was fixed in your previous attempt, not the
+ * scrolling. Try my solution."
+ *
+ * His solution: take the focus, change the page, then give the focus
+ * back. preventDefault on pointerdown stops Safari focusing the field
+ * itself; the section comes out and the padding goes in; then focus() is
+ * called from inside the same gesture, which is what iOS requires before
+ * it will open a keyboard. Safari then measures the short page.
+ *
+ * The provisional height is the part that cannot be measured yet — the
+ * keyboard has not opened, so nothing knows how tall it is. 42svh is
+ * about what iOS uses in portrait, and it only has to be close: the
+ * resize below replaces it with the real number a frame or two later,
+ * and what it affects in between is how far Safari CAN scroll, not how
+ * far it does.
+ */
+const PROVISIONAL_KEYBOARD = "42svh";
+
+if (keyboard && input && FLOATING_CHROME.matches) {
+  input.addEventListener("pointerdown", (event) => {
+    if (document.activeElement === input) return;
+    event.preventDefault();
+    document.body.style.setProperty("--keyboard", PROVISIONAL_KEYBOARD);
+    document.body.setAttribute("keyboard", "");
+    input.focus();
+  });
+}
 
 if (keyboard && input) {
   keyboard.addEventListener("resize", syncKeyboard);
