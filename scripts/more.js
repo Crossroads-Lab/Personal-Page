@@ -48,13 +48,22 @@ if (SOLO) {
      under the status bar and make the baseline something other than one
      screen.
      
-     clip on the root, which cannot be scrolled by any means, and on the
-     hero so its overhang stops adding height. The hero keeps its own
-     size — shrinking it would move the portrait and the bar, and then
-     this would be a baseline for a page that does not exist. */
+     clip on the ROOT only. It cannot be scrolled by any means, so the
+     hero's overhang can go on hanging without adding anything that
+     matters — there is nothing left to scroll it into view.
+     
+     Clipping the hero as well was the first version and it cut the
+     overhang off at the fold, which left a band of bare page between
+     the bottom of the photograph and the bottom of the glass: "still
+     small bottom band before focus". That overhang is the only thing
+     that covers the strip iOS paints past the viewport, and in ?solo
+     there is no dark section behind it to do the job instead.
+     
+     The hero keeps its own size either way — shrinking it would move
+     the portrait and the bar, and then this would be a baseline for a
+     page that does not exist. */
   const lock = document.createElement("style");
-  lock.textContent =
-    "html, body { overflow: clip !important; } .hero { overflow: clip !important; }";
+  lock.textContent = "html, body { overflow: clip !important; }";
   document.head.appendChild(lock);
 }
 
