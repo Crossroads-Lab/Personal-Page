@@ -775,5 +775,18 @@ newChatButton?.addEventListener("click", () => {
   if (openingHTML !== null) content.innerHTML = openingHTML;
 
   resetForm();
-  input.focus({ preventScroll: true });
+
+  /* NO focus() here, and that was a real bug rather than a preference.
+   
+     Focusing the field summons the keyboard, which puts the page into the
+     typing state — .hero fixed, #more out, body frozen — at the exact
+     moment the reset's own transitions are still running. Safari then
+     slides the visual viewport against a layout that is still moving and
+     lands nowhere useful: Will's screenshot showed the first screen gone
+     entirely, just the photograph and the keyboard.
+   
+     Nobody asked for it either. "New chat" means put the opening screen
+     back; whether to type next is the visitor's decision, and on a phone
+     an unrequested keyboard is the single most intrusive thing a page can
+     do. */
 });

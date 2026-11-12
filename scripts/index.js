@@ -1,4 +1,4 @@
-import "./chat-input-form.js?v=3d810244";
+import "./chat-input-form.js?v=0b9fc10f";
 import "./starter-chips.js?v=4494eb2c";
 import "./quick-links.js?v=b0563e18";
 import "./more.js?v=71249732";
