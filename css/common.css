@@ -154,19 +154,21 @@
      the generated floor on screen — too far, and the artwork's own bottom
      edge would come up past the cut.
      
-     0.4: he rises 34 to 48px depending on the width, with the floor and
-     the reflection reading beneath him, and what is left of the sink
-     still clears the slope by 13px at the tightest width.
+     0.15 of a strip that is now 0.45 of the artwork — which is the same
+     ~36px on screen that 0.4 of the old 0.163 strip gave. He sits exactly
+     where he did; what changed is how far the artwork reaches below him.
+     
+     That reach is the point. The strip has to cover the gap between the
+     bottom of the first screen and however far a phone paints past it,
+     or his cropped edge surfaces there instead of the diagonal. On Will's
+     device that gap measured at least 96px and "borderline"; 52px of
+     reach was not going to survive it. It is 157px now.
      
      This was 0 for one round, because the first extension was blurred and
      putting it on screen was worse than cropping his feet. The extension
-     is sharp now, so the room is worth spending.
-     
-     Do not go past 0.5. The margin left over rests on a measurement of
-     where the photograph's content begins across its bottom edge (33.5%
-     in from the left, sampled from the artwork), and 0.5 spent all of it
-     — 4.5px at 768. */
-  --portrait-lift: 0.4;
+     is sharp now, so the room is worth spending — but only 35px of it,
+     which is as much generated floor as looks right under him. */
+  --portrait-lift: 0.15;
 
   /* The displayed height of the added strip: height x extra / (1 + extra). */
   --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
@@ -187,7 +189,7 @@
      the first screen and is what the cut eats, instead of his feet. Set
      this to 0 and put the unextended artwork back and everything returns
      to where it was. */
-  --portrait-extra: 0.163;
+  --portrait-extra: 0.45;
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
@@ -286,7 +288,11 @@ input[type=number] {
    and the page paints behind it by an amount nothing will tell you. */
 @media (hover: none) {
   :root {
-    --chrome-overscan: 96px;
+    /* 96 put the diagonal exactly at the edge of what the screen paints
+       — "borderline hidden" in Will's words, which is no margin at all.
+       144 is comfortably past it, and because it lives in the clip-path
+       rather than in any box, buying that margin moves nothing. */
+    --chrome-overscan: 144px;
   }
 }
 
