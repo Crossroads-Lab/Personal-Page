@@ -162,14 +162,34 @@
       overflow: hidden;
     }
 
+    /* No padding and no position: body is the viewport and the colour
+       under everything, and that is all. The gutters moved into main so
+       that main can be full-bleed — the photograph belongs to the first
+       page, and a first page inset by the page gutter would stop short
+       of the screen edges. */
     body {
-      position: relative;      /* so the photograph anchors to the page */
-
       background: var(--background);
       color: var(--color);
       font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-weight: 300;
       line-height: 1.5;
+    }
+
+    /* ── The first page, whole ─────────────────────────────────────── */
+    /* Full width now, with the gutters and the safe areas on it rather
+       than on body — so the photograph below can reach the screen edges
+       while the column inside is still inset.
+       
+       The column is no longer main's own width; #content and the form
+       carry it and are centred by align-items. */
+    main {
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       padding: 0 var(--padding);
       padding-top: var(--safearea-padding-top);
@@ -177,36 +197,37 @@
     }
 
     /*
-     * The photograph: the whole page, anchored bottom right.
+     * The photograph: the whole first page, anchored bottom right.
+     *
+     * Will: "The hero picture can live in the main background or as an
+     * absolute div with proper z index." It is the second of those, as a
+     * pseudo-element rather than a div so it costs no node. Not main's
+     * background, because main has padding and a background is painted
+     * inside the padding box — he would stop a gutter short of the
+     * screen edges. inset: 0 resolves against the padding box too but
+     * the padding box IS the whole element here, since there is no
+     * border, so an absolute layer reaches the edges and a background
+     * image would not.
      *
      * No overhang and nothing to hide it under, so there is nothing for
      * body's overflow to clip. His bottom edge is the bottom of the
      * page, and below the page is Safari's docked bar on its own
      * backdrop.
      *
-     * position: absolute keeps him out of the layout entirely, so the
-     * arrangement under test is untouched by his being here.
+     * z-index 0 against the 1 on #content and the form: he is behind the
+     * writing and in front of nothing. Negative would put him behind
+     * body's background, which is opaque, and he would vanish.
+     *
+     * position: absolute also keeps him out of the flex column, so the
+     * arrangement under test is untouched by his being here at all.
      */
-    body::before {
+    main::before {
       content: "";
       position: absolute;
       inset: 0;
       background: url("assets/background.webp") no-repeat right bottom
                   / auto var(--portrait-height);
       z-index: 0;
-    }
-
-    /* ── The first page, whole ─────────────────────────────────────── */
-    main {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      width: var(--main-width);
-      max-width: var(--main-max-width);
-      margin-inline: auto;
-
-      display: flex;
-      flex-direction: column;
     }
 
     /* The spacer that centres the column on a wide screen: half the
@@ -230,6 +251,11 @@
      * exactly what must not happen.
      */
     #content {
+      position: relative;
+      z-index: 1;
+      width: var(--main-width);
+      max-width: var(--main-max-width);
+
       flex: 1;
       min-height: 0;
       display: flex;
@@ -318,6 +344,11 @@
      * because only one of the two is a pill.
      */
     #chat-input-form {
+      position: relative;
+      z-index: 1;
+      width: var(--main-width);
+      max-width: var(--main-max-width);
+
       flex-shrink: 0;
       margin-top: auto;
       display: flex;
@@ -445,10 +476,10 @@
     /* ── The opening state, on a wide screen ───────────────────────── */
     @media only screen and (min-width: 901px) {
       /* He stands to the right and the writing keeps out of his way.
-         Padding the page by his width makes that automatic: main is
-         centred by its auto margins, and those are now centring it in
-         what is left. */
-      body {
+         Padding the first page by his width makes that automatic: the
+         column is centred by main's align-items, and that is now
+         centring it in what is left. */
+      main {
         padding-left: var(--padding);
         padding-right: calc(var(--padding) + var(--portrait-width));
       }
@@ -456,7 +487,7 @@
       /* As load-bearing as the padding: --main-max-width is measured off
          the VIEWPORT, which knows nothing about the space reserved for
          him, so without this a 512px form runs under him anyway. */
-      main, #starter-chips { max-width: 100%; }
+      #content, #chat-input-form, #starter-chips { max-width: 100%; }
 
       /* Half the slack above the form and half below, so it lands in the
          middle rather than at the bottom. */
