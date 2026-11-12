@@ -288,11 +288,23 @@ input[type=number] {
    and the page paints behind it by an amount nothing will tell you. */
 @media (hover: none) {
   :root {
-    /* 96 put the diagonal exactly at the edge of what the screen paints
-       — "borderline hidden" in Will's words, which is no margin at all.
-       144 is comfortably past it, and because it lives in the clip-path
-       rather than in any box, buying that margin moves nothing. */
-    --chrome-overscan: 144px;
+    /* Tuned against four screenshots from the device, which is the only
+       instrument that has worked on this:
+       
+         diagonal at  836   wedge clearly visible
+         diagonal at  876   a sliver still showing
+         diagonal at  972   "borderline hidden"
+         diagonal at 1020   hidden, but too far down
+       
+       So the screen paints to just under 972 — a hundred and seventy-six
+       pixels past the 796 the browser calls the bottom. The diagonal
+       cannot start before that without showing, however much one would
+       like it to start right below the fold.
+       
+       112 puts it at 988: sixteen past the point that was borderline,
+       thirty-two tighter than it was. That is as close to the fold as
+       this device allows. */
+    --chrome-overscan: 112px;
   }
 }
 
