@@ -280,6 +280,27 @@
   .btn--ghost:hover { border-color: var(--text-on-dark-3); background: rgb(255 255 255 / 0.06); }
 }
 
+/* ── While the keyboard is up ─────────────────────────────────────────── */
+
+/* Out of the document, not just out of sight: the point is that Safari
+   has nothing to scroll into view under the bar, and visibility or
+   opacity would leave the box there for it to find. scripts/
+   chat-input-form.js sets the attribute and measures --keyboard. */
+body[keyboard] #more,
+body[keyboard] .chip--more,
+body[keyboard] .more-chevron {
+  display: none !important;
+}
+
+/* And the height back. Removing the section leaves a phone with barely
+   more than one screen of document, and Safari cannot scroll the bar
+   above the keys if there is nowhere to scroll to. This is exactly what
+   the keys are covering, so the page can give the bar the same lift it
+   would have had. */
+body[keyboard] {
+  padding-bottom: var(--keyboard, 0px);
+}
+
 /* ── The book card: cover beside the text rather than above it ────────── */
 
 .card--book {

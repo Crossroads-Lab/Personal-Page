@@ -1,7 +1,7 @@
-import "./chat-input-form.js?v=214b731e";
-import "./starter-chips.js?v=d22d820a";
+import "./chat-input-form.js?v=ad0c0bd4";
+import "./starter-chips.js?v=e9d3e24f";
 import "./quick-links.js?v=b0563e18";
-import "./more.js?v=efa3de66";
+import "./more.js?v=9f344796";
 import "./file-drop.js?v=dcf1269e";
 
 // ?viewport prints what the viewport units actually resolve to on the

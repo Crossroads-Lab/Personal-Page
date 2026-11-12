@@ -658,3 +658,60 @@ const resetForm = () => {
 // result still reads wrong, the fix belongs in where the bar sits, not
 // in a second opinion about where the page should scroll.
 // --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// What is under the bar while the keyboard is up
+//
+// Will's idea, and the right half of the problem. iOS scrolls a focused
+// field into what is left of the screen; it does not promise anything
+// about what ends up underneath it, and what ended up underneath it here
+// was the diagonal and the top of the dark section. Nothing about where
+// the page scrolled was ever going to fix that — the section should not
+// be on screen while someone is typing a question.
+//
+// So: take it out of the document for the duration, and give the page
+// back the height the keyboard took so Safari can still lift the bar
+// clear of the keys. Without the second, removing the section SHORTENS
+// the document — on a phone to barely more than one screen — and Safari
+// cannot scroll far enough to get the bar above the keyboard at all.
+//
+// No focus capture. Blurring and refocusing to rearrange the page in
+// between is the kind of thing iOS answers by not opening the keyboard
+// at all, and it is not needed: hiding something below the bar does not
+// move the bar.
+// --------------------------------------------------------------------------
+
+const keyboard = window.visualViewport;
+
+const syncKeyboard = () => {
+  if (!keyboard || !input) return;
+
+  // What the keys are covering, in layout pixels. 0 on a desktop and on
+  // a phone with no keyboard up.
+  const covered = Math.max(
+    0, Math.round(window.innerHeight - (keyboard.offsetTop + keyboard.height)),
+  );
+  const up = covered > 0 && document.activeElement === input;
+
+  document.body.style.setProperty("--keyboard", `${covered}px`);
+  document.body.toggleAttribute("keyboard", up);
+};
+
+if (keyboard && input) {
+  keyboard.addEventListener("resize", syncKeyboard);
+  input.addEventListener("focus", syncKeyboard);
+  /* Clear it on the way out, then measure again once the keys have
+     finished leaving. The resize that fires when the keyboard closes
+     would sort it out on its own, but only on a device that sends one —
+     and a page stuck with #more hidden is a page missing its second
+     half, which is a worse failure than a late repaint. */
+  input.addEventListener("blur", () => {
+    document.body.removeAttribute("keyboard");
+    setTimeout(syncKeyboard, 300);
+  });
+
+  /* Belt and braces for the same reason: any tap outside the field. */
+  addEventListener("focusout", () => {
+    if (document.activeElement !== input) document.body.removeAttribute("keyboard");
+  });
+}
