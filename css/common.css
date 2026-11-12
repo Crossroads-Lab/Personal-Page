@@ -99,7 +99,7 @@
      height binds and the width never comes into it; on a tall narrow
      window the width binds instead and keeps him off the headline
      rather than letting a tall window inflate him. */
-  --portrait-crop: min(74.2vw, 93.0vh);
+  --portrait-crop: min(74.2vw, calc(93.0vh + var(--portrait-sink) / 0.858));
   --portrait-subject: calc(0.858 * var(--portrait-crop));
   /* How wide he lands. He is 77.5% of the crop's width, and the crop is
      0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
@@ -211,58 +211,28 @@
      number than the one on screen is wrong by exactly the difference. */
   --portrait-height: calc(var(--portrait-crop) * (1 + var(--portrait-extra)));
 
-  /* How far he rises, as a fraction of the extension.
-     
-     0. The real photograph ends exactly on the hero's bottom edge, which
-     is exactly where the cut's hinge is, and the whole generated strip
-     hangs below both.
-     
-     Anything above 0 pulls that strip UP into the first screen by the
-     same fraction, and then the fade is on screen. At 0.15 on a desktop
-     that was 27 points of it — the grey band Will caught, and the same
-     band in ?viewport2. It survived this long because the old extension
-     was a 900-row mirror whose top was still photograph; this one fades
-     to the floor tone within a few rows, so any of it on screen reads as
-     a band.
-     
-     If he should sit higher, that is --portrait-top's job: it moves him
-     without dragging the extension up with him. */
-  --portrait-lift: 0;
+  /* How far the artwork hangs below the first screen.
+   *
+   * Exactly the lowest point the cut ever reaches: its resting line plus
+   * the pivot's share of the slope, which is where the left end gets to
+   * at full tilt. So the photograph is behind the diagonal everywhere
+   * the diagonal goes, and stops one pixel later.
+   *
+   * It used to be a fraction of a GENERATED strip — rows mirrored off
+   * the bottom of the file and faded toward the floor tone. Will, on
+   * seeing it: "Why did you add so reflective bullshit? The picture is
+   * long enough." It is. The file runs from his head to below the chair
+   * base, and sinking it uses the photograph's own last inches instead
+   * of inventing new ones. Nothing is generated now and
+   * server/scripts/extend-portrait.py is not run on this artwork.
+   *
+   * The crop grows by the same amount (see --portrait-crop), so what
+   * sinks is the bottom of the picture and not the man: his head stays
+   * exactly where the mock puts it. */
+  --portrait-sink: calc(var(--cut-rest) + var(--cut) * var(--cut-pivot));
 
-  /* The displayed height of the added strip: height x extra / (1 + extra). */
-  --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
-
-  /* Sinking by the whole strip hides all of it. Lifting gives some of it
-     back, and takes him up by the same amount.
-     
-     The chrome slack is handled by the first screen's own box now, not
-     here — see .hero in css/index.css. */
-  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)));
-
-  /* How much taller the artwork is than the framing --portrait-crop
-     describes.
-     
-     400 rows added to Will's 2000, so 0.20.
-     
-     It was 0 for one round, on the reading that his own expand had made
-     the file the whole artwork. It had not: his expand widened the
-     frame, and the bottom edge still runs through the trouser leg. With
-     nothing hanging below the figure, the photograph ended exactly on
-     the hero's bottom edge — and iOS paints the page past the viewport,
-     down to the glass, so below that edge was a bare grey strip of page
-     background. Invisible on the real page, where the dark section
-     starts on that same line, and impossible to miss in ?viewport2,
-     where the section is hidden and there is nothing to fill it.
-     
-     0.20 rather than the old 0.45 because it only has to cover that
-     strip, not a whole design idea: on the tallest screen measured it
-     is 80 points, and 0.20 puts --portrait-sink at 88.
-     
-     --portrait-crop still means what it always meant — the height HE is
-     drawn at — so his size and position do not move. The extra hangs
-     below the first screen and is what the cut eats, instead of his
-     feet. */
-  --portrait-extra: 0.20;
+  /* Nothing is added to the file any more, so there is no extra. */
+  --portrait-extra: 0;
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
@@ -367,10 +337,7 @@ input[type=number] {
        The pivot's share of the slope comes off the second term, because
        the left end swings that far BELOW the resting line at full tilt
        and the picture has to be behind it there too. */
-    --cut-rest: max(0px, min(
-      max(0px, calc(var(--page-height, var(--hero-height)) - var(--hero-height))),
-      calc(var(--portrait-sink) - var(--cut) * var(--cut-pivot))
-    ));
+    --cut-rest: max(0px, calc(var(--page-height, var(--hero-height)) - var(--hero-height)));
   }
 }
 

@@ -90,7 +90,7 @@
      screen. A negative scroll margin carries the landing down past the
      lowest point the line ever reaches, which is the left end at full
      tilt, --cut below the box top. */
-  scroll-margin-top: calc(-1 * var(--cut));
+  scroll-margin-top: calc(-1 * (var(--cut) + var(--cut-rest) + env(safe-area-inset-top, 0px)));
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);

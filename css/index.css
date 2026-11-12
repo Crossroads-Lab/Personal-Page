@@ -1,8 +1,8 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=d7d2ee42";
-@import "./chat-input.css?v=ef259061";
-@import "./chat-content.css?v=9f4bb8b6";
-@import "./more.css?v=9cb866a2";
+@import "./common.css?v=e4e9bcd8";
+@import "./chat-input.css?v=d7f181e6";
+@import "./chat-content.css?v=d69f2b7a";
+@import "./more.css?v=54634609";
 
 /* 
  * =====================================================
@@ -187,7 +187,10 @@
      generated strip sitting above the fold at 375, 390 and 768, and none
      at all at 1280 where the two formulas happen to agree. */
   :root {
-    --portrait-height: calc((100svh - var(--portrait-top)) * (1 + var(--portrait-extra)));
+    /* Plus the sink, divided back out of the subject's share, so the
+       part that goes below the fold is extra picture rather than the
+       same picture pushed down. His head stays at --portrait-top. */
+    --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink) / 0.858);
   }
 
   .hero:before {
