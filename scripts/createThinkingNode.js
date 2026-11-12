@@ -13,8 +13,13 @@
 // changing text with no animation like Claude is better." He is right, and
 // the reason is that a sweep is motion that means nothing — it looks the
 // same at one second and at thirty, so it cannot tell you the difference,
-// which is the one thing the control exists to do. Text that changes is
-// motion that means something: it only moves when the state has moved.
+// which is the one thing the control exists to do.
+//
+// The words no longer claim to describe the real phases either. They did
+// for one commit — "Reading my notes…", "Finding the right part…" — which
+// sounds better and was a small lie: nothing here knows whether retrieval
+// has finished. The number is the honest signal and it is doing that job
+// alone; the words are there to show the page is alive.
 //
 // The counter starts at 1s rather than 0s. A number that appears instantly
 // and then sits at zero reads as stuck, which is the opposite of what it is
@@ -25,28 +30,56 @@
 const SHOW_ELAPSED_AFTER_MS = 1000;
 
 /**
- * What it says, and when it starts saying it.
+ * Claude's own list, which is what Will asked for: "for the think texts,
+ * just re-use Claude's list."
  *
- * Roughly tracking what is actually happening — the retrieval first, then
- * the writing — because a label that describes the real phases is worth
- * something and a random thesaurus of synonyms for "working" is not.
+ * Reproduced from Claude Code's interface rather than copied from a file
+ * — so it is close but not guaranteed exhaustive, and the order here is
+ * alphabetical rather than whatever Claude's is.
  *
- * The last one is the honest one. Past fifteen seconds something is wrong
- * or the question was very large, and "Still going…" says so without
- * claiming to know which.
+ * Two deliberate omissions. "Clauding" is Anthropic's own joke about
+ * itself and would be a non-sequitur on a page about Will. Anything that
+ * reads as an error rather than as work is out for the same reason.
+ *
+ * Some of these are whimsical and that is the point of the list — but
+ * this page is read by recruiters, so if "Honking" or "Schlepping" ever
+ * reads wrong here, cutting a line from this array is the whole edit.
  */
-const PHASES = [
-  { at:     0, text: "Thinking…" },
-  { at:  2000, text: "Reading my notes…" },
-  { at:  5000, text: "Finding the right part…" },
-  { at:  9000, text: "Putting it together…" },
-  { at: 15000, text: "Still going…" },
+const WORDS = [
+  "Accomplishing", "Actioning", "Baking", "Brewing", "Calculating",
+  "Cerebrating", "Churning", "Coalescing", "Cogitating", "Computing",
+  "Conjuring", "Considering", "Cooking", "Crafting", "Creating",
+  "Crunching", "Deliberating", "Determining", "Doing", "Effecting",
+  "Finagling", "Forging", "Forming", "Generating", "Hatching", "Herding",
+  "Honking", "Hustling", "Ideating", "Inferring", "Manifesting",
+  "Marinating", "Moseying", "Mulling", "Mustering", "Musing", "Noodling",
+  "Percolating", "Pondering", "Processing", "Puttering", "Reticulating",
+  "Ruminating", "Schlepping", "Shucking", "Simmering", "Smooshing",
+  "Spinning", "Stewing", "Synthesizing", "Thinking", "Transmuting",
+  "Vibing", "Working",
 ];
 
-const phaseFor = (ms) => {
-  let text = PHASES[0].text;
-  for (const phase of PHASES) if (ms >= phase.at) text = phase.text;
-  return text;
+/** How long each word holds before the next one. */
+const WORD_MS = 3000;
+
+/*
+ * The FIRST word is always "Thinking…", and the rest are random.
+ *
+ * Claude starts on a random one. This does not, because the first word is
+ * the one a stranger sees on their first question and a coin-flip between
+ * "Thinking" and "Schlepping" is a bad trade for a page someone is being
+ * assessed on. After that, the rotation is the whole charm of the list.
+ */
+const wordAt = (index, bag) => (index === 0 ? "Thinking" : bag[(index - 1) % bag.length]);
+
+/** Fisher-Yates, so the sequence differs per question rather than per load. */
+const shuffled = () => {
+  const bag = WORDS.filter(w => w !== "Thinking");
+  for (let i = bag.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [bag[i], bag[j]] = [bag[j], bag[i]];
+  }
+  return bag;
 };
 
 export const createThinkingNode = (text) => {
@@ -72,8 +105,9 @@ export const createThinkingNode = (text) => {
 
   const label = host.appendChild(document.createElement("span"));
   label.className = "thinking-label";
-  label.textContent = fixed ? text : PHASES[0].text;
+  label.textContent = fixed ? text : `${wordAt(0)}…`;
 
+  const bag = shuffled();
   const start = performance.now();
 
   // The node is thrown away by whoever clears #content, and nothing tells us
@@ -95,7 +129,7 @@ export const createThinkingNode = (text) => {
     }
 
     if (fixed) return;
-    const next = phaseFor(ms);
+    const next = `${wordAt(Math.floor(ms / WORD_MS), bag)}…`;
     if (label.textContent !== next) label.textContent = next;
   }, 250);
 

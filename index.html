@@ -52,10 +52,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=ade4933d" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=a2f7721c" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=d7ef432c" type="module" defer></script>
+    <script src="scripts/index.js?v=46e7c89b" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -375,7 +375,7 @@
               <a class="btn btn--primary" href="https://www.amazon.com/dp/1968318747"
                  target="_blank" rel="noopener" aria-label="Get it on Amazon"><span>Get it<span class="wide-only"> on Amazon</span></span></a>
               <button class="btn btn--ghost" type="button"
-                      data-ask="What is your chapter in The AI Transformation about?">Ask about this</button>
+                      data-ask="In The AI Transformation, what is your chapter about?">Ask about this</button>
             </div>
           </div>
         </article>
@@ -406,7 +406,7 @@
                  href="https://engineering.oregonstate.edu/all-stories/serendipity-and-oregon-state-led-william-brendels-career-ai"
                  target="_blank" rel="noopener">Read the story</a>
               <button class="btn btn--ghost" type="button"
-                      data-ask="How did Oregon State lead you into AI?">Ask about this</button>
+                      data-ask="Oregon State wrote that serendipity led you into AI — how did that actually happen?">Ask about this</button>
             </div>
           </article>
 
@@ -415,11 +415,29 @@
             <!-- The thumbnail is hot-linked from YouTube, which the spec allows.
                  No iframe until it is clicked: an embed on load costs a
                  third-party frame and a set of cookies on a page nobody has
-                 asked to watch anything on yet. -->
+                 asked to watch anything on yet.
+
+                 maxresdefault, not hqdefault. Will asked for a different
+                 frame and there is not one to be had: YouTube exposes four
+                 automatic stills and hq1 and hq3 are both the interviewer,
+                 while hqdefault and hq2 are byte-identical — the shot that
+                 was already here.
+
+                 So the same moment, better. hqdefault is 480x360 with the
+                 16:9 frame letterboxed inside it, so the black bars were
+                 baked into the file and the card was cropping or showing
+                 them. maxresdefault is 1280x720 of pure frame, and at that
+                 resolution the RE•WORK lanyard is legible, which is the
+                 one piece of context a still of a man laughing otherwise
+                 does not carry.
+
+                 A genuinely different frame means a screenshot from the
+                 video dropped into assets/ — this is the ceiling of what
+                 YouTube will hand over. -->
             <a class="card-media" href="https://www.youtube.com/watch?v=8_S0888ZWGw"
                target="_blank" rel="noopener" aria-label="Watch the RE•WORK interview on YouTube">
-              <img src="https://i.ytimg.com/vi/8_S0888ZWGw/hqdefault.jpg"
-                   alt="RE•WORK interview video thumbnail" loading="lazy" decoding="async">
+              <img src="https://i.ytimg.com/vi/8_S0888ZWGw/maxresdefault.jpg"
+                   alt="William Brendel being interviewed by RE•WORK at the Deep Learning Summit" loading="lazy" decoding="async">
             </a>
             <span class="card-label" style="--c: var(--label-amber)">Interview · RE•WORK · Oct 2018 · 22 min</span>
             <h3 class="card-title">Inside Snap Research: learning how to learn</h3>
@@ -432,7 +450,7 @@
               <a class="btn btn--primary" href="https://www.youtube.com/watch?v=8_S0888ZWGw"
                  target="_blank" rel="noopener" aria-label="Watch on YouTube"><span>Watch<span class="wide-only"> on YouTube</span></span></a>
               <button class="btn btn--ghost" type="button"
-                      data-ask="What did you work on at Snap Research?">Ask about this</button>
+                      data-ask="In the RE•WORK interview you talked about teaching machines to learn how to learn at Snap Research — what was that work?">Ask about this</button>
             </div>
           </article>
         </div>
@@ -443,6 +461,34 @@
           <h3 class="card-title">Research</h3>
           <!-- Every figure here is in the corpus (background/education_and_research.md),
                so the card and the chat cannot drift apart. -->
+          <!--
+            THE QUESTIONS NAME THE CARD THEY ARE ON.
+
+            Will: "the ask about this chip don't always land with the
+            context, but more the underlying stories. We should bridge the
+            gap. For example on the Toronto interview, if I click 'ask
+            about this' I expect to start with the context of the
+            interview."
+
+            Right, and the questions were the reason. "What did you work on
+            at Snap Research?" is a fine question and it is not the
+            question the card provokes — it throws away the interview, the
+            summit and the subject, and lands on the career section as
+            though the card had never been read.
+
+            The question text is also what appears as the visitor's own
+            message, so naming the artefact does two jobs at once: it
+            steers retrieval with the keywords that are actually on the
+            card, and the conversation visibly opens where the visitor
+            was.
+
+            What this does NOT do is give the corpus anything to say about
+            the artefacts themselves. There is no section about the
+            RE•WORK interview or the Oregon State piece — see
+            server/data/markdowns — so the answer is still about the
+            underlying work, in the context of the artefact. Closing that
+            properly means writing those sections.
+          -->
           <div class="stats">
             <div>
               <div class="stat-number">2,200+</div>
