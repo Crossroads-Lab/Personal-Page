@@ -63,25 +63,35 @@
   width: 100%;
   background: var(--bg-more);
   color: var(--text-on-dark);
-  /* Where the section starts, and therefore where the diagonal's high
-     point is: --cut-offset below the bottom of the first screen, or above
-     it when that is negative. See common.css for the two states.
+  /* The cut arrives by tilting, and how far it has tilted is the scroll
+     position — not a threshold that trips somewhere.
      
-     A margin rather than a taller .hero. The overscan lived on .hero's
-     height for one round, and the portrait is anchored to the bottom of
-     that box — so growing it by 136px moved him 136px down the screen and
-     his legs ran off the bottom. Nothing in the first screen moves now.
+     At --cut-progress 0 both ends of the slope are level, so the top
+     edge is HORIZONTAL and sitting --cut-rest below the first screen,
+     where nothing a phone paints can reach it. As the page moves the
+     left end drops to the full --cut and the whole section rises past
+     the fold, so the line tilts into its diagonal and bites into the
+     bottom of the first screen at the same time.
      
-     The transition is for the moment the two states swap. On a phone it
-     happens while the diagonal is still below the fold and is never seen;
-     on a desktop the cut is AT the fold at rest, so the rise is visible,
-     and 260ms turns a jump into the section arriving. */
-  margin-top: var(--cut-offset);
-  transition: margin-top 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+     A margin rather than a taller .hero, for the reason that cost an
+     hour earlier: the portrait is anchored to the bottom of the hero's
+     box, so growing that box moves him down the screen with it.
+     
+     No transition. The scroll IS the timeline — a transition on top of
+     it would only add lag between the finger and the line. */
+  margin-top: calc(
+    var(--cut-rest) - (var(--cut-rest) + var(--cut-rise)) * var(--cut-progress)
+  );
 
-  clip-path: polygon(0 var(--cut-desktop), 100% 0, 100% 100%, 0 100%);
-  /* The content has to clear the slope, or the first card's corner is cut
-     off along with the background. */
+  clip-path: polygon(
+    0 calc(var(--cut-desktop) * var(--cut-progress)),
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  /* The full slope, always: the content has to clear the steepest the
+     line ever gets, or the first card's corner is cut off with it. */
   padding-top: var(--cut-desktop);
 }
 
@@ -424,7 +434,12 @@ body:not([chat-started]) .quick-link[href$="#more"] {
 @media only screen and (max-width: 767px) {
 
   .more {
-    clip-path: polygon(0 var(--cut-mobile), 100% 0, 100% 100%, 0 100%);
+    clip-path: polygon(
+      0 calc(var(--cut-mobile) * var(--cut-progress)),
+      100% 0,
+      100% 100%,
+      0 100%
+    );
     padding-top: calc(var(--cut-mobile) + 40px);
   }
 
@@ -489,7 +504,6 @@ body:not([chat-started]) .quick-link[href$="#more"] {
  */
 @media (prefers-reduced-motion: reduce) {
   .more-chevron { animation: none; }
-  /* The cut still moves between its two states — it has to — but it
-     arrives rather than travels. */
-  .more { transition: none; }
+  /* Nothing to disable: the cut has no transition of its own. It is
+     tied to the scroll, which is the visitor's own movement. */
 }

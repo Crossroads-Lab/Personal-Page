@@ -122,26 +122,29 @@
    * and every property built on it goes with it. */
   --chrome-slack: 0px;
 
-  /* Where the diagonal's high point sits, relative to the bottom of the
-   * first screen. Positive is below it, negative is above.
+  /* How far through its arrival the cut is: 0 at the top of the page, 1
+   * once it has fully tilted. scripts/more.js drives it from the scroll
+   * position. Everything about the diagonal is expressed against it. */
+  --cut-progress: 0;
+
+  /* Where the cut's high point rests before anyone scrolls, measured
+   * DOWN from the bottom of the first screen.
    *
-   * Two states, because the constraints are different in each.
+   * It has to clear the strip a phone paints past the viewport it
+   * reports — the strip its floating chrome sits over, which no CSS unit
+   * describes. --screen-slack is that strip, measured in JS from
+   * screen.height (see scripts/more.js); the safe-area inset covers a
+   * home indicator where one is reported; 16px is slop.
    *
-   * At rest on a phone it has to be BELOW: the browser paints past its
-   * own reported viewport and anything in that strip is visible before
-   * anyone scrolls. Measured across four screenshots from the device,
-   * that strip reaches about 176px past the 796 it calls the bottom, and
-   * 112 is the tightest offset that clears it.
-   *
-   * Once scrolled, that strip does not exist and holding the cut down
-   * there is just a long stretch of nothing between him and the dark. So
-   * it comes up — past the fold, into the bottom of the first screen,
-   * which is where Will wants it.
-   *
-   * The two desktop values differ for the same reason: nothing leaks
-   * there, so at rest the cut sits exactly at the fold the way the mock
-   * draws it, and rises on scroll like everywhere else. */
-  --cut-offset: 0px;
+   * Nothing to clear on a desktop, so it rests at 0 — exactly at the
+   * fold, the way the v2 mock draws it. */
+  --screen-slack: 0px;
+  --cut-rest: 0px;
+
+  /* And where it ends up once the page has moved: above the fold, biting
+   * into the bottom of the first screen. Relative to the viewport rather
+   * than a pixel count, so it is the same gesture on every phone. */
+  --cut-rise: 8svh;
 
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
@@ -287,20 +290,12 @@ input[type=number] {
   }
 }
 
-/* At rest on a phone: below the fold, far enough to clear the strip the
-   browser paints past its own viewport. scripts/more.js carries the
-   class. */
+/* A phone or a tablet: the chrome floats over the page, so the cut has
+   to start below everything the screen can paint. */
 @media (hover: none) {
-  body.at-top {
-    --cut-offset: 112px;
+  :root {
+    --cut-rest: calc(var(--screen-slack) + env(safe-area-inset-bottom, 0px) + 16px);
   }
-}
-
-/* Scrolled, anywhere: above the fold. The dark is already biting into
-   the bottom of the first screen as it arrives, rather than waiting a
-   screen-and-a-bit for it. */
-body:not(.at-top) {
-  --cut-offset: -64px;
 }
 }
 

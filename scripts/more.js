@@ -82,31 +82,68 @@ for (const button of document.querySelectorAll("[data-ask]")) {
  * at exactly zero. The class flips while the diagonal is still well below
  * the fold, so the cut never moves anywhere anyone can see it.
  */
-const TOP = 6;
+/*
+ * How much taller the SCREEN is than the viewport the browser reports.
+ *
+ * This is the number the whole cut problem turns on, and no CSS unit
+ * exposes it. A phone browser paints into the strip its own floating
+ * chrome sits over: innerHeight stops short of it, 100lvh stops short of
+ * it, and env(safe-area-inset-bottom) read 0 on the device where it was
+ * happening. screen.height does not stop short of it — it is the whole
+ * display.
+ *
+ * Measured rather than assumed, so a notch, a home indicator, a taller
+ * phone or a landscape rotation all come out in the wash. Capped at 40%
+ * of the screen because a browser that is NOT full-screen (a desktop
+ * window, a tablet in split view) would otherwise report the whole
+ * desktop and push the diagonal into the next county; css/common.css
+ * only consumes it on (hover: none) anyway, so the cap is a second belt.
+ */
+const measureScreenSlack = () => {
+  const screenHeight = window.screen?.height ?? 0;
+  const slack = Math.max(0, Math.round(screenHeight - window.innerHeight));
+  const capped = Math.min(slack, Math.round(screenHeight * 0.4));
+  document.documentElement.style.setProperty("--screen-slack", `${capped}px`);
+};
 
-/* A sliver pinned to the top of the document. While any of it is on
-   screen the page is at rest; the moment it leaves, it is not.
-   
-   An observer rather than a scroll listener because a scroll listener is
-   not guaranteed to run: measured in a browser pane that had been hidden,
-   scrollY went from 0 to 200 and the scroll event fired zero times.
-   IntersectionObserver reports from the compositor and does not care. The
-   listener is kept as well — between them, one of the two always fires. */
-const sentinel = document.createElement("div");
-sentinel.setAttribute("aria-hidden", "true");
-sentinel.style.cssText =
-  `position:absolute;top:0;left:0;width:1px;height:${TOP}px;pointer-events:none;visibility:hidden`;
-document.body.prepend(sentinel);
+measureScreenSlack();
+addEventListener("resize", measureScreenSlack);
+addEventListener("orientationchange", measureScreenSlack);
 
-const markTop = (atTop = window.scrollY <= TOP) =>
-  document.body.classList.toggle("at-top", atTop);
+/*
+ * How far through its arrival the cut is, as a number from 0 to 1.
+ *
+ * This replaces a threshold. The cut used to sit in one of two places
+ * and swap between them, which meant picking a scroll position for the
+ * swap and hoping nobody was looking at the line when it happened. Tying
+ * it to the scroll instead means there is nothing to hide: the line
+ * starts horizontal and below the first screen, and tilts into its
+ * diagonal as the page moves, at exactly the rate the finger moves.
+ *
+ * Half a viewport to complete, so it is the same gesture on a small
+ * phone and a large desktop rather than the same number of pixels.
+ */
+const travel = () => Math.max(1, window.innerHeight * 0.5);
 
-// index.html ships the class, so this only ever corrects a page restored
-// mid-scroll — a reload that kept its position, or a back navigation.
-markTop();
-new IntersectionObserver(([entry]) => markTop(entry.isIntersecting)).observe(sentinel);
-addEventListener("scroll", () => markTop(), { passive: true });
-addEventListener("resize", () => markTop());
+let pending = false;
+const paintProgress = () => {
+  pending = false;
+  const progress = Math.min(1, Math.max(0, window.scrollY / travel()));
+  document.documentElement.style.setProperty("--cut-progress", progress.toFixed(4));
+};
+
+/* Coalesced to one write per frame. A scroll fires far more often than
+   the screen refreshes, and this writes a custom property that relayouts
+   a full-width section. */
+const onScroll = () => {
+  if (pending) return;
+  pending = true;
+  requestAnimationFrame(paintProgress);
+};
+
+paintProgress();
+addEventListener("scroll", onScroll, { passive: true });
+addEventListener("resize", () => { measureScreenSlack(); paintProgress(); });
 
 /*
  * When the cues are worth showing.
