@@ -433,6 +433,32 @@
   }
 
   /*
+   * The cards are snap points too, so the second page steps card by card
+   * instead of landing wherever a flick runs out. Will: "let's add some
+   * snap on second page cards to see the feel. Only on mobile."
+   *
+   * Phone only in the literal sense — this sits inside (hover: none) with
+   * everything else, and on a wide screen .more-row puts two of these
+   * side by side, where a vertical snap point on each would be nonsense.
+   *
+   * No scroll-snap-stop here, deliberately, where .hero and .more both
+   * have it. `always` means one swipe cannot pass a snap point, which is
+   * right for the two PAGES — a swipe is a page — and would be heavy
+   * across five cards, turning a flick through the section into five
+   * separate gestures. Without it a fling crosses as many cards as it
+   * likes and settles on one, which is the paging feel where it belongs
+   * and ordinary scrolling where it does not.
+   *
+   * The margin is the page gutter, so a card lands with the same air
+   * above it that it has beside it rather than flush against the top
+   * edge of the screen.
+   */
+  .more-inner .card {
+    scroll-snap-align: start;
+    scroll-margin-top: var(--padding);
+  }
+
+  /*
    * One viewport, and nothing to scroll.
    *
    * On BODY, which is the scroller — the root is already 100dvh and
