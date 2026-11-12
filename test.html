@@ -155,6 +155,28 @@
          gesture on a small phone and a large desktop. */
       --cut-travel: calc(0.18 * 100dvh);
 
+      /* How far the photograph hangs BELOW the first page.
+         
+         Will: "the picture show the cut. Meaning the cut should go
+         slightly above the picture to cover the page transition."
+         
+         The lowest the diagonal ever gets is its left end at full swing,
+         --cut * --cut-pivot below the bottom of the first page. With the
+         artwork ending exactly at that bottom, the wedge the cut opens
+         on the left was showing background rather than photograph — the
+         picture's own cropped edge, exposed.
+         
+         So the artwork reaches as far down as the cut does. It is hidden
+         at rest, because the second page paints over it (z-index), and
+         it is what the diagonal passes across once it swings.
+         
+         Plus a pixel. The exact value makes the cut TANGENT to the
+         bottom of the artwork at full swing, which is correct in
+         arithmetic and a hairline away from wrong once subpixel
+         rounding has its say. A pixel of overlap costs nothing and is
+         never visible. */
+      --portrait-sink: calc(var(--cut) * var(--cut-pivot) + 1px);
+
       /* ── The portrait ───────────────────────────────────────────── */
 
       /* 74.2vw is the mock's width: he is 0.36 of the window across in
@@ -172,7 +194,10 @@
          dvh: this sets how far down he starts, and a value that tracks
          the toolbar makes him drift. */
       --portrait-top: clamp(224px, 35svh, 300px);
-      --portrait-height: var(--portrait-crop);
+      /* The sink is ADDED rather than spent pushing him down. Anchoring
+         the artwork a sink lower would drop his head by the same amount;
+         a draw that much taller puts it back exactly where it was. */
+      --portrait-height: calc(var(--portrait-crop) + var(--portrait-sink));
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -276,7 +301,12 @@
     main::before {
       content: "";
       position: absolute;
-      inset: 0;
+      /* Below the first page by the sink, so the diagonal always passes
+         across the photograph rather than off the bottom of it. The
+         overhang is covered by the second page at rest and costs no
+         extra scroll, since the second page reaches further down than it
+         does. */
+      inset: 0 0 calc(0px - var(--portrait-sink)) 0;
       background: url("assets/background.webp") no-repeat right bottom
                   / auto var(--portrait-height);
       z-index: 0;
@@ -680,7 +710,7 @@
          screen, and there is nothing below it to hang into. This is
          where Will asked him to stay — head at --portrait-top. */
       :root {
-        --portrait-height: calc(100svh - var(--portrait-top));
+        --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
         --cut: var(--cut-mobile);
       }
 
