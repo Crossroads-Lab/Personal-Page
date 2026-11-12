@@ -12,9 +12,35 @@
 // can see. Three fixes were written against three different guesses about
 // which number was wrong. This prints all of them instead.
 //
-// Delete it once the first screen has been right on a real phone for a
+// ?viewport2 is the same panel with the whole second section taken out
+// of the document. Nothing below the hero, nothing pointing at it: the
+// first screen on its own, so what is at the bottom of the glass is the
+// page's own background and not the cut. If something dark still shows
+// down there in this mode, it was never the cut.
+//
+// Delete both once the first screen has been right on a real phone for a
 // while.
 // --------------------------------------------------------------------------
+
+/*
+ * ?viewport2 — hide everything below the fold.
+ *
+ * display: none rather than visibility or a colour, so the section is not
+ * laid out at all and cannot paint anywhere, including in the strip below
+ * the layout viewport that started this whole thread.
+ *
+ * The two cues go with it. They are first-screen furniture, not second-
+ * section content, but a chevron pointing at a section that is not there
+ * is its own kind of misleading.
+ */
+const SOLO = location.search.includes("viewport2");
+
+if (SOLO) {
+  const hide = document.createElement("style");
+  hide.textContent =
+    "#more, .chip--more, .more-chevron { display: none !important; }";
+  document.head.appendChild(hide);
+}
 
 const px = (value) => {
   const probe = document.createElement("div");
@@ -44,14 +70,19 @@ const render = () => {
   // left and swings its right end up, so the first dark pixel to cross
   // the fold is the right one. Taking the left end alone would miss a
   // leak by the full --cut.
+  // In ?viewport2 the section is display:none, so its rect is all zeros
+  // and its clip path is "none". Reading them would print a confident
+  // row of nonsense, so every cut row says so instead.
+  const shown = !!more && !!moreRect?.height;
+
   const ends = (getComputedStyle(more ?? document.body).clipPath.match(/([\d.]+)px/g) || [])
     .slice(1, 3)
     .map(parseFloat);
   const [leftEnd = 0] = ends;
-  const clipTop = more && ends.length ? Math.min(...ends) : 0;
-  const leak = moreRect
+  const clipTop = shown && ends.length ? Math.min(...ends) : 0;
+  const leak = shown
     ? Math.round(window.innerHeight - (moreRect.top + clipTop))
-    : null;
+    : "(no section)";
 
   // The two candidate edges, printed side by side, because this is the
   // argument the whole cut has been about.
@@ -97,13 +128,13 @@ const render = () => {
     ["--page-height", pageHeight || "unset -> 100lvh"],
     ["page bottom (used)", pageBottom],
     ["glass bottom (safe)", glassBottom],
-    ["cut hinge, page y", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) : "?"],
-    ["hinge - page bottom", moreRect ? Math.round(moreRect.top + scrollY + leftEnd) - pageBottom : "?"],
+    ["cut hinge, page y", shown ? Math.round(moreRect.top + scrollY + leftEnd) : "(no section)"],
+    ["hinge - page bottom", shown ? Math.round(moreRect.top + scrollY + leftEnd) - pageBottom : "(no section)"],
     ["--cut-progress", getComputedStyle(more ?? document.body).getPropertyValue("--cut-progress").trim() || "0"],
     ["hero bottom", heroRect ? Math.round(heroRect.bottom) : "?"],
     ["bar bottom", bar ? Math.round(bar.getBoundingClientRect().bottom) : "?"],
-    ["#more top", moreRect ? Math.round(moreRect.top) : "?"],
-    ["dark edge, in viewport", moreRect ? Math.round(moreRect.top + clipTop) : "?"],
+    ["#more top", shown ? Math.round(moreRect.top) : "(no section)"],
+    ["dark edge, in viewport", shown ? Math.round(moreRect.top + clipTop) : "(no section)"],
     ["LEAK (>0 is the bug)", leak],
     ["scrollY", Math.round(window.scrollY)],
   ];
@@ -129,3 +160,30 @@ addEventListener("scroll", paint, { passive: true });
 addEventListener("resize", paint);
 window.visualViewport?.addEventListener("resize", paint);
 window.visualViewport?.addEventListener("scroll", paint);
+
+/*
+ * And again, repeatedly, for the first couple of seconds.
+ *
+ * The one paint at import time was a lie on any page that was then left
+ * alone. This module runs while <body loading> is still set, before the
+ * fonts have swapped and before the portrait has decided how tall it is:
+ * caught it printing "hero bottom 32" on a hero that measured 812 a
+ * moment later, and "bar bottom 112" on a bar at 796. Every row was
+ * exactly 780 out, and nothing would have corrected them until the page
+ * was scrolled or turned. A probe that has to be nudged before it tells
+ * the truth is worse than no probe, because its numbers look as
+ * confident as the right ones.
+ *
+ * Bounded rather than an interval: eight repaints over two seconds, then
+ * it goes quiet and the event listeners above take over. A permanent
+ * timer would keep forcing layout four times a second, on the one page
+ * where we care how the scrolling feels.
+ */
+let settling = 0;
+const settle = setInterval(() => {
+  paint();
+  if (++settling >= 8) clearInterval(settle);
+}, 250);
+
+addEventListener("load", paint);
+document.fonts?.ready.then(paint);
