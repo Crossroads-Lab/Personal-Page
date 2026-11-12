@@ -1,23 +1,10 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- A calendar with a plus: the link books a slot, so the mark says add a
-     time rather than just "a calendar".
+<!-- A calendar: the header band, the page, one day marked.
+     Full-bleed across the 24 box like linkedin.svg.
 
-     Chosen over three other drafts by rendering all four at 16px against
-     the rest of the row. The two that pair a stroked outline with a filled
-     header read as a box with a dot at that size, and a fully outlined one
-     is line art among solid marks — which is what made the old book icon
-     look wrong. This one holds its shape small and carries the same weight
-     as linkedin.svg and resume.svg beside it.
-
-     Opacity normalised to 1: the source came at 0.85, and the row already
-     dims every icon to 0.72 (css/chat-content.css). Two dimmings would
-     have left this one visibly paler than its neighbours. -->
-<g clip-path="url(#calendar-clip)">
-  <path d="M7 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M17 0.75V3.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-  <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M9.25 1H14.75V3.75C14.75 4.99264 15.7574 6 17 6C18.2426 6 19.25 4.99264 19.25 3.75V1.00614C21.8953 1.1364 24 3.32241 24 6V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V6C0 3.32241 2.10472 1.1364 4.75 1.00614V3.75C4.75 4.99264 5.75736 6 7 6C8.24264 6 9.25 4.99264 9.25 3.75V1ZM12 8C12.5523 8 13 8.44772 13 9V12H16C16.5523 12 17 12.4477 17 13C17 13.5523 16.5523 14 16 14H13V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V14H8C7.44772 14 7 13.5523 7 13C7 12.4477 7.44772 12 8 12H11V9C11 8.44772 11.4477 8 12 8Z"/>
-</g>
-<defs>
-  <clipPath id="calendar-clip"><rect width="24" height="24" rx="5" fill="white"/></clipPath>
-</defs>
+     Opacity normalised to 1. It arrived at 0.85, and the row already dims
+     every icon to 0.72 (css/chat-content.css) — two dimmings is what made
+     the paper plane read lighter than its neighbours. -->
+<path fill="black" d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V6H0V5Z"/>
+<path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M19 24H5C2.23858 24 0 21.7614 0 19V7.5H24V19C24 21.7614 21.7614 24 19 24ZM9.8 10.6H7C6.44772 10.6 6 11.0477 6 11.6V14.4C6 14.9523 6.44771 15.4 7 15.4H9.8C10.3523 15.4 10.8 14.9523 10.8 14.4V11.6C10.8 11.0477 10.3523 10.6 9.8 10.6Z"/>
 </svg>
