@@ -795,6 +795,30 @@
         --cut: var(--cut-mobile);
       }
 
+      /*
+       * Snap between the two pages.
+       *
+       * Will: "maybe the trick on mobile is to add snap scroll between
+       * pages?" The focus bug it was offered for is already fixed a
+       * different way — main goes position: fixed while typing, so the
+       * scroll offset cannot disagree with Safari's slide — but this is
+       * worth having on its own account. Two full-screen pages are
+       * exactly what snapping is for, and it turns "never rest a bit
+       * scrolled" from merely harmless into impossible.
+       *
+       * On body, because body is the scroller. Phone only, as asked: a
+       * desktop window is a different gesture and a mandatory snap there
+       * fights the wheel.
+       *
+       * The second page's snap position is its own box top, which sits
+       * --cut-lead above the fold, so landing on it leaves a sliver of
+       * the diagonal at the very top with the first page behind it. That
+       * is the cut being what joins the two pages rather than a seam
+       * between them, and it only shows at rest on page two.
+       */
+      body { scroll-snap-type: y mandatory; }
+      main, #more { scroll-snap-align: start; }
+
       /* The headline goes to the top of the content box rather than the
          middle of it. */
       #content::before { margin: 0; }
