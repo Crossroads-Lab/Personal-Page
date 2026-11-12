@@ -284,7 +284,9 @@
 
 .card--book {
   flex-direction: row;
-  align-items: flex-start;
+  /* stretch, not flex-start: the text column has to be as tall as the
+     cover before anything inside it can be aligned to the bottom of it. */
+  align-items: stretch;
   gap: 24px;
 }
 
@@ -310,6 +312,19 @@
 }
 
 .card--book .card-title { font-size: 26px; }
+
+/* The badge keeps the top, everything else sits on the bottom.
+   
+   The cover is taller than the words beside it, and with the whole
+   column packed to the top that surplus ended up under the buttons —
+   the title crowding the badge at one end and the card breathing at the
+   other. An auto margin under the badge hands the surplus to the gap
+   where it reads as deliberate, and seats the last button level with
+   the bottom of the cover.
+   
+   Nothing happens on a phone, where the cover is 84px and the words are
+   the taller of the two: there is no surplus for the margin to take. */
+.card--book .badge { margin-bottom: auto; }
 
 .badge {
   align-self: flex-start;
