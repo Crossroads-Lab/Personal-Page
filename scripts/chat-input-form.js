@@ -695,14 +695,25 @@ const syncKeyboard = () => {
   const covered = Math.max(
     0, Math.round(window.innerHeight - (keyboard.offsetTop + keyboard.height)),
   );
-  const up = covered > 0 && document.activeElement === input;
+  /* The attribute follows the FOCUS, not the keyboard.
+   
+     It followed the keyboard for one round and that undid the whole
+     thing: syncKeyboard runs on the focus event, the keyboard has not
+     opened yet at that point, so covered is 0 — and the attribute that
+     pointerdown had just set to take the section out was removed again
+     before Safari ever measured the page. Will, on the screenshot of
+     the book card sitting behind the keys: "we should never see or have
+     access to the second page on mobile when the input is focused."
+     
+     Focused is the rule. Not focused and the keys are gone. */
+  const focused = document.activeElement === input;
 
   /* Only overwrite the provisional height once there is a real one to
      put in its place. Writing 0 into it between the gesture and the
      keyboard would collapse the padding at exactly the moment Safari is
      deciding how far it can scroll. */
   if (covered > 0) document.body.style.setProperty("--keyboard", `${covered}px`);
-  if (up || covered === 0) document.body.toggleAttribute("keyboard", up);
+  document.body.toggleAttribute("keyboard", focused && FLOATING_CHROME.matches);
 };
 
 /*
