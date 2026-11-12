@@ -817,6 +817,19 @@
         --portrait-fade: calc(var(--portrait-sink)
                             + var(--safearea-padding-bottom)
                             + 0.5 * var(--chat-form-height));
+
+        /* And how much of that band is FULLY solid before the fade
+           starts, measured from the same bottom edge.
+           
+           Will: "fade more, I don't really want to see the leg below the
+           bar." It was solid only up to the sink, which is the fold — so
+           by the bar's bottom edge the grey was down to about 60% and
+           his leg was still coming through at 40%. This is the sink plus
+           the gutter and safe area, which is exactly the bar's bottom
+           edge: solid everywhere below the bar, and the whole fade spent
+           between there and the middle of it. */
+        --portrait-solid: calc(var(--portrait-sink)
+                             + var(--safearea-padding-bottom));
       }
 
       /*
@@ -825,18 +838,17 @@
        * order, and it cannot drift out of alignment with what it is
        * fading.
        *
-       * Solid for the bottom --portrait-sink of the band, which is the
-       * part below the fold and invisible anyway — so the artwork is
-       * fully covered by the time it reaches the bottom of the screen,
-       * and the fade proper is spent on the visible stretch between
-       * there and the middle of the bar.
+       * Solid for the bottom --portrait-solid of the band, which reaches
+       * from below the fold up to the bar's bottom edge — so there is
+       * nothing of him under the bar at all, and the whole of the fade
+       * is spent between the bar's bottom and its middle.
        *
        * The bar's own backdrop-filter samples this rather than his leg,
        * so the glass comes out cleaner too.
        */
       main::before {
         background:
-          linear-gradient(to top, var(--background) var(--portrait-sink), transparent)
+          linear-gradient(to top, var(--background) var(--portrait-solid), transparent)
             no-repeat bottom / 100% var(--portrait-fade),
           url("assets/background.webp")
             no-repeat right bottom / auto var(--portrait-height);
