@@ -37,8 +37,23 @@ const SOLO = location.search.includes("viewport2");
 
 if (SOLO) {
   const hide = document.createElement("style");
-  hide.textContent =
-    "#more, .chip--more, .more-chevron { display: none !important; }";
+  hide.textContent = [
+    "#more, .chip--more, .more-chevron { display: none !important; }",
+    /* And the hero's own overhang.
+     *
+     * .hero::before is taller than the hero by --portrait-sink, so the
+     * portrait can hang below the fold rather than be cropped at it.
+     * That overhang is overflow, and with the dark section gone it is
+     * the last thing in the document: 202px of scroll on a page that
+     * should be exactly one screen tall, which is the "why so much
+     * space at the bottom". It is normally invisible, painted over by
+     * the section that is not here.
+     *
+     * clip rather than hidden, because hidden would make the hero a
+     * scroll container and eat the wheel — the same trap the cards fell
+     * into. Nothing above the hero's bottom edge changes. */
+    ".hero { overflow: clip !important; }",
+  ].join("\n");
   document.head.appendChild(hide);
 }
 
@@ -101,7 +116,7 @@ const render = () => {
   const safeTop = px("env(safe-area-inset-top, 0px)");
   const pageHeight = getComputedStyle(document.documentElement)
     .getPropertyValue("--page-height").trim();
-  const pageBottom = pageHeight ? parseFloat(pageHeight) : px("100lvh");
+  const pageBottom = pageHeight ? parseFloat(pageHeight) : px("var(--hero-height)");
   const glassBottom = Math.round((window.screen?.height ?? 0) - safeTop);
 
   return [
@@ -119,13 +134,25 @@ const render = () => {
     // split between the status bar above the page and Safari's bar
     // below it, neither of which the page can paint on.
     ["window.screenY", Math.round(window.screenY ?? 0)],
+    // Everything else that might know how far down the glass the page
+    // starts. Four properties have now answered 0 or "the whole screen";
+    // these are what is left before the only option is a table of device
+    // models, which is the ad-hoc answer this was meant to avoid.
+    ["window.outerHeight", Math.round(window.outerHeight ?? 0)],
+    ["screen.availTop", window.screen?.availTop ?? "undefined"],
+    ["docEl.clientHeight", document.documentElement.clientHeight],
+    // Does the page answer a hit test below the layout viewport? If it
+    // does, the bottom of the painted strip can be found by walking down
+    // until it stops, and no property is needed at all.
+    ["hit test at +30", document.elementFromPoint(20, window.innerHeight + 30)?.tagName ?? "null"],
+    ["hit test at +56", document.elementFromPoint(20, window.innerHeight + 56)?.tagName ?? "null"],
     ["--chrome-slack", px("var(--chrome-slack)")],
     ["--hero-height", px("var(--hero-height)")],
     // NOT px("var(--cut-rest)") — it is negative now, and a probe div
     // clamps a negative height to 0, which would print a reassuring lie.
     // The hinge is the left end of the clip path and it does not move,
     // so where it sits IS the resting position. It should equal 100lvh.
-    ["--page-height", pageHeight || "unset -> 100lvh"],
+    ["--page-height", pageHeight || "unset -> hero"],
     ["page bottom (used)", pageBottom],
     ["glass bottom (safe)", glassBottom],
     ["cut hinge, page y", shown ? Math.round(moreRect.top + scrollY + leftEnd) : "(no section)"],
