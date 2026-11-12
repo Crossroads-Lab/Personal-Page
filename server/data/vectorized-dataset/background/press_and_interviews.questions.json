@@ -1,0 +1,174 @@
+{
+  "documentId": "background|press_and_interviews",
+  "sections": [
+    {
+      "range": [
+        66,
+        179
+      ],
+      "questions": [
+        "What was your RE•WORK interview?",
+        "When did you do the RE•WORK interview?",
+        "Where was your RE•WORK interview?",
+        "Who interviewed you at the Deep Learning Summit?",
+        "How long was the RE•WORK interview, and was it on the record?"
+      ]
+    },
+    {
+      "range": [
+        182,
+        444
+      ],
+      "questions": [
+        "What was your RE•WORK interview about?",
+        "Which research topics did you get into in the RE•WORK interview?",
+        "What's the common thread running through your Snap Research work?",
+        "Why was the RE•WORK conversation worth having?"
+      ]
+    },
+    {
+      "range": [
+        447,
+        1013
+      ],
+      "questions": [
+        "How big was the R&D team you ran?",
+        "How many users did the products you shipped reach?",
+        "What areas of research did your group cover?",
+        "What happened with the privacy-preserving friend recommendations you built?",
+        "What did you do with Bitmoji chat recommendations?",
+        "What did you build to improve customer support productivity?"
+      ]
+    },
+    {
+      "range": [
+        1016,
+        1070
+      ],
+      "questions": [
+        "Where can I watch your RE•WORK interview?",
+        "Is there a recording of your RE•WORK interview?"
+      ]
+    },
+    {
+      "range": [
+        1125,
+        1207
+      ],
+      "questions": [
+        "Why do you care so much about learning how to learn?",
+        "What was the core challenge you were dealing with at Snap?",
+        "Where does your view on learning come from?"
+      ]
+    },
+    {
+      "range": [
+        1210,
+        1499
+      ],
+      "questions": [
+        "Why does learning how to learn matter so much to you?",
+        "How do you avoid starting from zero every time a new problem comes up?",
+        "Do you think the same idea applies to your team and company, not just your models?",
+        "What kind of scale are you talking about when you say one group can't hand-tune everything?"
+      ]
+    },
+    {
+      "range": [
+        1502,
+        1680
+      ],
+      "questions": [
+        "Why does learning how to learn matter so much to you?",
+        "What does research leadership really mean to you?",
+        "Do you come up with the ideas yourself as a research leader?",
+        "How do you build a research team that keeps producing ideas without you?",
+        "What do you want to be true about your team after you've moved on?"
+      ]
+    },
+    {
+      "range": [
+        1726,
+        1906
+      ],
+      "questions": [
+        "What's the Oregon State article about you?",
+        "Where was that piece about you published?",
+        "Why does the Oregon State article say serendipity led to your AI career?"
+      ]
+    },
+    {
+      "range": [
+        1909,
+        2264
+      ],
+      "questions": [
+        "Were you an exchange student at Oregon State?",
+        "How long did you end up staying at Oregon State?",
+        "Why did you pick Oregon State?",
+        "What did you originally want to do with your career?"
+      ]
+    },
+    {
+      "range": [
+        2267,
+        2452
+      ],
+      "questions": [
+        "What's that Oregon State article about you?",
+        "Why did you end up in AI?",
+        "How did you actually get into AI?",
+        "Why do you say the Oregon State article is a generous version of your story?"
+      ]
+    },
+    {
+      "range": [
+        2455,
+        2545
+      ],
+      "questions": [
+        "How do you feel about the Oregon State article being public?",
+        "What do you think about career stories that sound like they were all planned out?",
+        "Why does a career look so intentional when you tell it looking back?",
+        "Was your career actually planned, or did it just happen?"
+      ]
+    },
+    {
+      "range": [
+        2584,
+        2674
+      ],
+      "questions": [
+        "Are you open to speaking at events or doing interviews?",
+        "Have you done much public speaking?",
+        "Have you given back to the research community, beyond your own work?"
+      ]
+    },
+    {
+      "range": [
+        2677,
+        2932
+      ],
+      "questions": [
+        "What did you do for CVPR?",
+        "When were you Publication Chair at CVPR?",
+        "How many papers did you handle for CVPR?",
+        "What was your role at WACV?",
+        "When were you Publication Chair at WACV?",
+        "How many papers did you handle for WACV?",
+        "Do you do interviews?",
+        "Where can I find an interview with you?"
+      ]
+    },
+    {
+      "range": [
+        2935,
+        3036
+      ],
+      "questions": [
+        "Do you speak at events or come on as a guest for interviews?",
+        "How do I book you for a panel, podcast, or talk?"
+      ]
+    }
+  ]
+}
