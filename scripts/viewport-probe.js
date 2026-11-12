@@ -53,8 +53,28 @@ if (SOLO) {
      * scroll container and eat the wheel — the same trap the cards fell
      * into. Nothing above the hero's bottom edge changes. */
     ".hero { overflow: clip !important; }",
+    /* And no scrolling at all.
+     *
+     * Clipping the overhang got the desktop to exactly one screen, but
+     * not a phone: the hero is 100lvh plus the chrome slack, 876 against
+     * an 836 viewport, so there were still 40 points of scroll in it.
+     *
+     * clip on the root, which cannot be scrolled by any means, rather
+     * than hidden, which only stops the user and leaves a scroll
+     * container behind. The hero keeps its real height — shrinking it to
+     * the viewport would move the portrait and the bar, and then this
+     * view would be showing a page that does not exist. The last 40
+     * points are simply out of reach, which is what they are anyway.
+     */
+    "html, body { overflow: clip !important; }",
   ].join("\n");
   document.head.appendChild(hide);
+
+  /* iOS has been known to ignore overflow on the root. If it does, put
+     the page back at the top rather than argue about it. */
+  addEventListener("scroll", () => {
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  }, { passive: true });
 }
 
 const px = (value) => {
