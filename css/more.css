@@ -493,12 +493,24 @@
 
 .card--book .book-cover {
   flex: none;
-  /* The card is align-items: stretch so the text column can reach the
-     bottom of this cover. An <img> is a flex item too, and stretch beats
-     its own height: auto — so the cover came out drawn to the full
-     height of the card, a tall thin version of the book. It keeps its
-     own height. */
-  align-self: flex-start;
+  /* center, not stretch and not flex-start.
+   
+     stretch is what the card sets, and an <img> is a flex item too —
+     stretch beats its own height: auto, so the cover came out drawn to
+     the full height of the card, a tall thin version of the book. Any
+     other align-self value prevents that, so the choice between
+     flex-start and center is purely about where it sits.
+     
+     flex-start was fine while the two columns were the same height,
+     which they are on a wide screen: 224 and 224, measured. On a phone
+     the cover narrows to 84px and with it to 125 tall, while the text
+     column runs to 299 — so the cover sat 87px above the centre of the
+     words beside it. Will: "the book picture alignment should be center
+     aligned with the chip and text below. It look a bit far up no?"
+     
+     center is a no-op where the heights match and the fix where they do
+     not, so it is not conditioned on a breakpoint. */
+  align-self: center;
   width: 150px;
   /* The <img> carries width/height attributes so the card reserves the
      right box before the file lands. Those attributes are also what the
