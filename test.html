@@ -590,7 +590,15 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      height: 100dvh;
+      /* A viewport PLUS the cut.
+         
+         The box starts --cut-lead above the fold and the diagonal's
+         lowest point is --cut below its own top, so a box of exactly one
+         viewport cannot be scrolled far enough to get that lowest point
+         off the screen — the scroller runs out first and a wedge of the
+         first page stays in the top corner. The extra --cut is the room
+         to scroll past it. */
+      height: calc(100dvh + var(--cut));
       background: var(--bg-more);
       color: var(--text-on-dark);
 
@@ -818,6 +826,31 @@
        */
       body { scroll-snap-type: y mandatory; }
       main, #more { scroll-snap-align: start; }
+
+      /*
+       * And page two's snap point is moved down past the cut.
+       *
+       * Will: "The end of the scroll snap animation has a second order
+       * speed decrease and is a bit slow to move the remaining 10-20px
+       * in place. Also the second page does not snap at the right
+       * point."
+       *
+       * One cause, two symptoms. #more's box top sits --cut-lead above
+       * the fold, so snapping to its START edge landed at 833 — 11px
+       * short of a clean screen, which is the wrong point, AND 11px that
+       * the browser then had to travel on its own easing curve after the
+       * finger was long gone, which is the slow tail.
+       *
+       * A negative scroll-margin moves the snap area's top edge down
+       * into the box, so the snap position becomes box top + --cut: the
+       * diagonal's lowest point, exactly level with the top of the
+       * screen. With the extra --cut of height above, that is also the
+       * scroller's MAXIMUM — and so is 0 for the first page. Both snap
+       * points are now at the ends of the scroll range, where a flick
+       * decelerates to on its own, so there is nothing left for the
+       * browser to crawl.
+       */
+      #more { scroll-margin-top: calc(0px - var(--cut)); }
 
       /* The headline goes to the top of the content box rather than the
          middle of it. */
