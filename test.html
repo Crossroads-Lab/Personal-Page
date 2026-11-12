@@ -197,12 +197,22 @@
       --portrait-top: clamp(224px, 35svh, 300px);
       --portrait-height: var(--portrait-crop);
 
-      /* How far below the shell his bottom edge has to land.
+      /* How far below the shell his bottom edge lands.
          
-         The shell is 100dvh. He has to finish at --hero-height + sink,
-         which is past it by the chrome slack twice over plus the sink —
-         out in the strip that iOS paints and nothing measures. */
-      --portrait-overhang: calc(var(--hero-height) + var(--portrait-sink) - 100dvh);
+         The sink, and nothing more. It was --hero-height + sink - 100dvh
+         for a while, which is the sink plus the chrome slack twice over,
+         on the theory that he had to reach into the strip under Safari's
+         bar. He cannot — on a page that does not scroll Safari docks the
+         bar and the page ends above it, which is the long comment at the
+         top of this file — so all that extra reach bought was him sitting
+         about 80px lower on the phone for no gain.
+         
+         Will, once the cut was understood rather than fixed: "anyways, I
+         can live with it. move the picture back up."
+         
+         So the bottom edge is back at 100dvh + sink, where it was when he
+         first looked at it, and the head comes back up by the difference. */
+      --portrait-overhang: var(--portrait-sink);
     }
 
     @supports (height: 1lvh) and (height: 1svh) {
