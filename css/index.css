@@ -1,8 +1,8 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=9723fea2";
-@import "./chat-input.css?v=5d7d38c8";
-@import "./chat-content.css?v=3afb438e";
-@import "./more.css?v=874870af";
+@import "./common.css?v=89701a7d";
+@import "./chat-input.css?v=2d178a39";
+@import "./chat-content.css?v=6d523796";
+@import "./more.css?v=6209f3fe";
 
 /* 
  * =====================================================
@@ -82,7 +82,7 @@
    * bottom seats him on the floor, which is where 70% effectively had him. */
   /* `right bottom` of a box that now extends past the fold — see the height
      above. See --portrait-sink in common.css for why it extends. */
-  background: url("../assets/background.webp") no-repeat right bottom / auto var(--portrait-crop) scroll;
+  background: url("../assets/background.webp") no-repeat right bottom / auto var(--portrait-height) scroll;
 }
 
 /*
@@ -126,6 +126,18 @@
  * them would give a band of widths with half of it applied.
  */
 @media only screen and (max-width: 900px) {
+  /* On :root, not on .hero:before.
+     
+     --portrait-sink is declared on :root and computed FROM this, and a
+     custom property resolves against the element it is declared on — so
+     overriding the height down on the pseudo-element changed what was
+     drawn without changing what was sunk. Measured: 3 to 4px of the
+     generated strip sitting above the fold at 375, 390 and 768, and none
+     at all at 1280 where the two formulas happen to agree. */
+  :root {
+    --portrait-height: calc((100dvh - var(--portrait-top)) * (1 + var(--portrait-extra)));
+  }
+
   .hero:before {
     /* Bottom right of the SCREEN. The band I had here before — inset above
        the input furniture — stopped the overlap by lifting him off the
@@ -136,7 +148,7 @@
        taller. His head therefore clears them, and the chips and the bar
        pass over his legs the way the glass was always meant to. */
     background-position: right bottom;
-    background-size: auto calc(100dvh - var(--portrait-top));
+    background-size: auto var(--portrait-height);
   }
 }
 

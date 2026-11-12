@@ -428,9 +428,6 @@ body:not([chat-started]) .quick-link[href$="#more"] {
  * =====================================================
  */
 @media only screen and (max-width: 767px) {
-  /* The cut is shallower here but the photo is proportionally much wider,
-     so it reaches deeper into the slope: 55px at 375 against 35 at 1280. */
-  :root { --portrait-sink: 56px; }
 
   .more {
     clip-path: polygon(0 var(--cut-mobile), 100% 0, 100% 100%, 0 100%);

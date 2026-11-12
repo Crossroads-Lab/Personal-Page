@@ -96,7 +96,27 @@
      downward by 350px, and the extra content — leg, chair base, floor,
      shadow — is what should be hidden under the cut instead of 6-10% of the
      figure. When that asset lands, set this back to 0. */
-  --portrait-sink: 48px;
+  /* The height the artwork is actually drawn at, extension included.
+     Everything else derives from this one value, because the phone
+     overrides it (css/index.css) and a sink computed from a different
+     number than the one on screen is wrong by exactly the difference. */
+  --portrait-height: calc(var(--portrait-crop) * (1 + var(--portrait-extra)));
+
+  /* The displayed height of the added strip: height x extra / (1 + extra).
+     Sinking the artwork by exactly this puts the whole extension below the
+     first screen and leaves the photograph itself ending at the fold. */
+  --portrait-sink: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
+
+  /* How much taller the artwork is than the framing --portrait-crop
+     describes: 326 rows added to 2000, continuing the floor, the chair
+     base and the trouser leg below where the photograph was cropped.
+     
+     --portrait-crop still means what it always meant — the height HE is
+     drawn at — so his size and position do not move. The extra hangs below
+     the first screen and is what the cut eats, instead of his feet. Set
+     this to 0 and put the unextended artwork back and everything returns
+     to where it was. */
+  --portrait-extra: 0.163;
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
