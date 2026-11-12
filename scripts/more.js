@@ -72,10 +72,11 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 /*
  * At the top, or not.
  *
- * --chrome-overscan holds the diagonal below the strip a phone paints
- * past its own viewport (css/common.css). That strip only exists at
- * scroll zero: once the page moves, the overscan is a hundred-odd pixels
- * of nothing between the portrait and the dark.
+ * --cut-offset puts the diagonal below the fold at rest, far enough to
+ * clear the strip a phone paints past its own viewport (css/common.css),
+ * and above the fold once the page moves — because that strip only
+ * exists at scroll zero, and holding the cut down there afterwards is a
+ * hundred-odd pixels of nothing between the portrait and the dark.
  *
  * Four pixels of tolerance, because a phone does not always come to rest
  * at exactly zero. The class flips while the diagonal is still well below
@@ -100,6 +101,8 @@ document.body.prepend(sentinel);
 const markTop = (atTop = window.scrollY <= TOP) =>
   document.body.classList.toggle("at-top", atTop);
 
+// index.html ships the class, so this only ever corrects a page restored
+// mid-scroll — a reload that kept its position, or a back navigation.
 markTop();
 new IntersectionObserver(([entry]) => markTop(entry.isIntersecting)).observe(sentinel);
 addEventListener("scroll", () => markTop(), { passive: true });

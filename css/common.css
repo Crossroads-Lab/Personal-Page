@@ -122,23 +122,26 @@
    * and every property built on it goes with it. */
   --chrome-slack: 0px;
 
-  /* Extra box below the first screen, on touch devices only.
+  /* Where the diagonal's high point sits, relative to the bottom of the
+   * first screen. Positive is below it, negative is above.
    *
-   * Everything measurable has been measured and the sliver survived it:
-   * 100lvh was not the bottom of the screen, and neither was 100lvh plus
-   * one toolbar. Rather than keep adding a toolbar at a time against a
-   * number no API reports, this overshoots by more than any chrome can
-   * be, once.
+   * Two states, because the constraints are different in each.
    *
-   * It costs nothing but where the diagonal begins. The content still
-   * ends at 100svh — the padding grows with it — and the portrait sits a
-   * fixed distance past the cut whatever this is, so the only visible
-   * effect is a little more plain background between the fold and the
-   * slope on a phone. That is a far better trade than a dark wedge under
-   * the address bar.
+   * At rest on a phone it has to be BELOW: the browser paints past its
+   * own reported viewport and anything in that strip is visible before
+   * anyone scrolls. Measured across four screenshots from the device,
+   * that strip reaches about 176px past the 796 it calls the bottom, and
+   * 112 is the tightest offset that clears it.
    *
-   * 0 on anything with a pointer, so the desktop geometry is untouched. */
-  --chrome-overscan: 0px;
+   * Once scrolled, that strip does not exist and holding the cut down
+   * there is just a long stretch of nothing between him and the dark. So
+   * it comes up — past the fold, into the bottom of the first screen,
+   * which is where Will wants it.
+   *
+   * The two desktop values differ for the same reason: nothing leaks
+   * there, so at rest the cut sits exactly at the fold the way the mock
+   * draws it, and rises on scroll like everywhere else. */
+  --cut-offset: 0px;
 
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
@@ -284,38 +287,21 @@ input[type=number] {
   }
 }
 
-/* A phone or a tablet, AND only while the page is at rest.
- *
- * The overscan exists for one moment: scroll position zero, where the
- * browser paints past its own reported viewport and the diagonal leaks
- * into that strip. The instant anyone scrolls, the strip is gone and all
- * the overscan does is hold the cut a hundred and twelve pixels further
- * down than it belongs — which reads as a long stretch of nothing between
- * him and the dark.
- *
- * So it is only on at the top. scripts/more.js carries the class, and the
- * swap happens while the diagonal is still below the fold, so nothing
- * visibly moves. */
+/* At rest on a phone: below the fold, far enough to clear the strip the
+   browser paints past its own viewport. scripts/more.js carries the
+   class. */
 @media (hover: none) {
   body.at-top {
-    /* Tuned against four screenshots from the device, which is the only
-       instrument that has worked on this:
-       
-         diagonal at  836   wedge clearly visible
-         diagonal at  876   a sliver still showing
-         diagonal at  972   "borderline hidden"
-         diagonal at 1020   hidden, but too far down
-       
-       So the screen paints to just under 972 — a hundred and seventy-six
-       pixels past the 796 the browser calls the bottom. The diagonal
-       cannot start before that without showing, however much one would
-       like it to start right below the fold.
-       
-       112 puts it at 988: sixteen past the point that was borderline,
-       thirty-two tighter than it was. That is as close to the fold as
-       this device allows. */
-    --chrome-overscan: 112px;
+    --cut-offset: 112px;
   }
+}
+
+/* Scrolled, anywhere: above the fold. The dark is already biting into
+   the bottom of the first screen as it arrives, rather than waiting a
+   screen-and-a-bit for it. */
+body:not(.at-top) {
+  --cut-offset: -64px;
+}
 }
 
 /* 
