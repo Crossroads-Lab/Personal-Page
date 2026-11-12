@@ -3,4 +3,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.william-brendel.com/sitemap.xml
+# The apex, not www. CNAME points GitHub Pages at william-brendel.com and
+# there is no certificate for www.william-brendel.com — it fails TLS
+# outright. This line and sitemap.xml both pointed there, which meant the
+# sitemap Google was asked to fetch, and the only URL inside it, were
+# both addresses that do not resolve.
+Sitemap: https://william-brendel.com/sitemap.xml

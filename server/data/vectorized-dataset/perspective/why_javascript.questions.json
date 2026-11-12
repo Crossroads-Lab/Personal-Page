@@ -1,0 +1,291 @@
+{
+  "documentId": "perspective|why_javascript",
+  "sections": [
+    {
+      "range": [
+        91,
+        257
+      ],
+      "questions": [
+        "Why JavaScript instead of some other language for your work?",
+        "Why do you want one language across your whole stack?"
+      ]
+    },
+    {
+      "range": [
+        260,
+        642
+      ],
+      "questions": [
+        "Why not use a different language for your backend?",
+        "What ends up duplicated when the frontend and backend are in different languages?",
+        "What's the kind of production bug you've had to chase down because of mismatched client and server code?",
+        "What experience made you stop tolerating inconsistency between your frontend and backend?"
+      ]
+    },
+    {
+      "range": [
+        645,
+        943
+      ],
+      "questions": [
+        "Why do you insist on TypeScript instead of plain JavaScript?",
+        "Do you think JavaScript's bad reputation is deserved?",
+        "How do you keep a codebase maintainable with a big team over many years?",
+        "When does JavaScript start to become a problem?"
+      ]
+    },
+    {
+      "range": [
+        999,
+        1096
+      ],
+      "questions": [
+        "Is JavaScript really a serious choice for backend work?",
+        "Why do you say the criticism of JavaScript on the backend is wrong?"
+      ]
+    },
+    {
+      "range": [
+        1099,
+        1380
+      ],
+      "questions": [
+        "Why do you consider JavaScript a safe bet for serious backend work?",
+        "How old is the language you build in?",
+        "What standard governs the language you build in?",
+        "Does JavaScript written decades ago still run today?",
+        "Why does it matter to you that old code keeps working?",
+        "Why does old JavaScript keep working when so much tech breaks?"
+      ]
+    },
+    {
+      "range": [
+        1383,
+        1752
+      ],
+      "questions": [
+        "Do you think JavaScript is a liability for serious backend work?",
+        "Why does building in JavaScript create so much maintenance overhead?",
+        "How do you keep dependency churn from burying a project?",
+        "What's your bar for pulling in a third-party library?",
+        "How do you decide what to own versus what to rent in your stack?"
+      ]
+    },
+    {
+      "range": [
+        1817,
+        1867
+      ],
+      "questions": [
+        "What does using one language across the whole stack actually get you?",
+        "What's the benefit of a single language that people usually miss?"
+      ]
+    },
+    {
+      "range": [
+        1870,
+        2031
+      ],
+      "questions": [
+        "What do you actually get from using one language across the whole stack?",
+        "Why do you care so much about avoiding context switching?",
+        "How does one engineer move between frontend and backend work in a day?"
+      ]
+    },
+    {
+      "range": [
+        2034,
+        2239
+      ],
+      "questions": [
+        "What do you actually share between frontend and backend when you build in TypeScript?",
+        "How do you keep your frontend and backend data definitions from drifting apart?",
+        "Why do you import shared definitions instead of keeping two copies in sync?"
+      ]
+    },
+    {
+      "range": [
+        2242,
+        2638
+      ],
+      "questions": [
+        "Why does using one language across the whole stack matter so much to you for offline-first apps?",
+        "How does running the same library in the browser and on the server make offline-first work?",
+        "What goes wrong when the frontend and backend are written in different languages?",
+        "What logic do you actually run on the client in an offline-first app?"
+      ]
+    },
+    {
+      "range": [
+        2664,
+        2987
+      ],
+      "questions": [
+        "Why does hiring come into your choice of JavaScript and TypeScript?",
+        "What does the Stack Overflow survey say about JavaScript usage?",
+        "How does hiring for JavaScript compare to hiring for Go, Rust or Java?"
+      ]
+    },
+    {
+      "range": [
+        2990,
+        3379
+      ],
+      "questions": [
+        "What's the downside of hiring for a JavaScript stack?",
+        "Why is hiring JavaScript developers so hit-or-miss?",
+        "How do you vet JavaScript engineers when you hire?",
+        "Why doesn't choosing JavaScript actually make hiring easier?"
+      ]
+    },
+    {
+      "range": [
+        3431,
+        3479
+      ],
+      "questions": [
+        "Does the language you build in actually matter when using AI coding agents?"
+      ]
+    },
+    {
+      "range": [
+        3482,
+        3882
+      ],
+      "questions": [
+        "Is Python still better than JavaScript or TypeScript for AI coding agents?",
+        "Why do AI models perform better on Python?",
+        "What did Claude 3.7 Sonnet actually score on Python versus other languages?",
+        "What languages do developers actually use when coding with AI?",
+        "Does language choice even matter when AI agents write the code?"
+      ]
+    },
+    {
+      "range": [
+        3885,
+        4380
+      ],
+      "questions": [
+        "Does the Python vs JavaScript debate matter for AI coding agents?",
+        "Why is plain JavaScript a problem when an AI is writing the code?",
+        "How does TypeScript help an AI agent catch its own mistakes?",
+        "Is there data showing AI is pushing teams toward TypeScript?"
+      ]
+    },
+    {
+      "range": [
+        4383,
+        4494
+      ],
+      "questions": [
+        "What do you mean when you say a type system is a feedback loop?",
+        "Why do AI coding agents need type checking more than human developers do?"
+      ]
+    },
+    {
+      "range": [
+        4551,
+        4654
+      ],
+      "questions": [
+        "If our team is on Java or .NET, would you tell us to migrate to TypeScript?",
+        "Would you recommend a full rewrite after one conversation with a team?"
+      ]
+    },
+    {
+      "range": [
+        4657,
+        4923
+      ],
+      "questions": [
+        "What would you tell a Python team that's thinking about moving to Java or .NET?",
+        "Why not just rewrite a system in a cleaner language?",
+        "What comes back to bite you when you rewrite something that already works?",
+        "Why do you favor a system the team knows over a cleaner architecture?"
+      ]
+    },
+    {
+      "range": [
+        4949,
+        5113
+      ],
+      "questions": [
+        "Would you tell us to migrate off Python or Java?",
+        "When would you say leave our Python or Java system alone?",
+        "Why not just rewrite a stable Python or Java system in TypeScript?",
+        "Does it matter to you whether the people who built it are still around?"
+      ]
+    },
+    {
+      "range": [
+        5116,
+        5306
+      ],
+      "questions": [
+        "If we're on Python or Java, how would you approach migrating to TypeScript?",
+        "Which parts of our stack would you move to TypeScript first?",
+        "Why start the migration at the edges instead of the core?"
+      ]
+    },
+    {
+      "range": [
+        5309,
+        5481
+      ],
+      "questions": [
+        "What do you tell a team on Python, Java, or .NET that's thinking about moving to TypeScript?",
+        "How would you bring TypeScript into a team whose backend is already in another language?",
+        "Why not just rewrite our backend in TypeScript?"
+      ]
+    },
+    {
+      "range": [
+        5484,
+        5702
+      ],
+      "questions": [
+        "We're on Java or .NET. When would you tell us to migrate?",
+        "How do you decide whether our Java or .NET migration is worth doing?",
+        "Why do you call a migration vanity if we can't point to incidents?",
+        "What counts as a good enough reason to consolidate our Java or .NET core?"
+      ]
+    },
+    {
+      "range": [
+        5705,
+        5808
+      ],
+      "questions": [
+        "If we're on Python and thinking about moving to Java or .NET, what would you tell us?",
+        "Why wouldn't you push us to migrate everything onto one stack?"
+      ]
+    },
+    {
+      "range": [
+        5844,
+        6204
+      ],
+      "questions": [
+        "When would you not use JavaScript or TypeScript?",
+        "What language do you reach for on ML work?",
+        "Why Python over JavaScript for ML work?",
+        "What language do you pick for systems programming?",
+        "When does performance push you away from JavaScript?",
+        "Why does JavaScript struggle with very large-scale data processing?",
+        "At what scale does JavaScript stop being the right choice?"
+      ]
+    },
+    {
+      "range": [
+        6207,
+        6370
+      ],
+      "questions": [
+        "When would you not choose JavaScript or TypeScript?",
+        "Why would you go with a team's existing stack instead of TypeScript?",
+        "What's your rule of thumb for picking a language?"
+      ]
+    }
+  ]
+}

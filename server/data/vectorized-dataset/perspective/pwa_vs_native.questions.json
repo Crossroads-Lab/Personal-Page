@@ -1,0 +1,307 @@
+{
+  "documentId": "perspective|pwa_vs_native",
+  "sections": [
+    {
+      "range": [
+        99,
+        263
+      ],
+      "questions": [
+        "What's your problem with going native for most products?",
+        "What does going native actually cost a team?",
+        "When is a PWA the right call over native?"
+      ]
+    },
+    {
+      "range": [
+        266,
+        528
+      ],
+      "questions": [
+        "Are you against native apps?",
+        "Why not just build native?",
+        "How do you decide whether a product actually needs native?",
+        "When would you actually go native?",
+        "What do you save by not building native?"
+      ]
+    },
+    {
+      "range": [
+        563,
+        755
+      ],
+      "questions": [
+        "What does going PWA actually save you?",
+        "What does staffing a native product actually look like?",
+        "Why does building native get so complicated organizationally?"
+      ]
+    },
+    {
+      "range": [
+        758,
+        1187
+      ],
+      "questions": [
+        "Is a PWA team really cheaper per person than a native team?",
+        "Why are iOS and Android specialists so much pricier to hire?",
+        "What's the cost of going native that people forget to count?",
+        "Why does keeping native engineers current cost so much?",
+        "How does a native team keep up with Apple and Google changes?"
+      ]
+    },
+    {
+      "range": [
+        1190,
+        1342
+      ],
+      "questions": [
+        "What do you actually save by going PWA instead of native?",
+        "Why not just build separate native versions of each feature?",
+        "Who ends up doing the extra work when you go native?"
+      ]
+    },
+    {
+      "range": [
+        1412,
+        1534
+      ],
+      "questions": [
+        "If you could only make one case for PWAs over native apps, what would it be?",
+        "Why is the design-language argument the one you'd lead with?"
+      ]
+    },
+    {
+      "range": [
+        1537,
+        1838
+      ],
+      "questions": [
+        "What happens to a native app when Apple or Google overhauls the look of their OS?",
+        "Why does a native app look abandoned after Apple or Google changes their design language?",
+        "How do you bring a native app in line when Apple or Google redesigns their components?",
+        "How much work is it to adapt a native app when Apple and Google both redesign?"
+      ]
+    },
+    {
+      "range": [
+        1841,
+        2195
+      ],
+      "questions": [
+        "Why aren't you worried when Apple or Google redesign their UI?",
+        "How do you keep your apps up to date after a big iOS or Android redesign?",
+        "What does the native wrapper around your web apps actually do?"
+      ]
+    },
+    {
+      "range": [
+        2228,
+        2289
+      ],
+      "questions": [
+        "How is shipping a PWA different from shipping a native app?",
+        "When do you stop needing permission to ship?"
+      ]
+    },
+    {
+      "range": [
+        2292,
+        2630
+      ],
+      "questions": [
+        "What's the problem with shipping through the app stores?",
+        "When does app store review become a real problem?",
+        "How does releasing updates work with a PWA?",
+        "What kinds of changes can you push instantly with a PWA?",
+        "Why are PWAs easier to ship than native apps?"
+      ]
+    },
+    {
+      "range": [
+        2633,
+        2837
+      ],
+      "questions": [
+        "What do you actually gain from a PWA over native when it comes to releasing changes?",
+        "Why does deploy speed matter so much to you when something breaks in production?",
+        "When does the PWA release model pay off the most?"
+      ]
+    },
+    {
+      "range": [
+        2879,
+        3201
+      ],
+      "questions": [
+        "Do your PWAs feel worse than native apps?",
+        "What can't a PWA do as well as a native app?",
+        "When would you tell someone to go native instead of building a PWA?"
+      ]
+    },
+    {
+      "range": [
+        3204,
+        3545
+      ],
+      "questions": [
+        "What kinds of apps can the web handle just as well as native?",
+        "What do users actually notice when an app feels bad?",
+        "Why do some apps feel sluggish — is it the platform's fault?",
+        "Are native apps always smoother than web apps?"
+      ]
+    },
+    {
+      "range": [
+        3548,
+        3757
+      ],
+      "questions": [
+        "What's the hardest part of building a PWA that doesn't feel worse than native?",
+        "Why do so many PWAs feel worse than native apps?",
+        "How do you make a PWA hold up against a native app?"
+      ]
+    },
+    {
+      "range": [
+        3803,
+        3994
+      ],
+      "questions": [
+        "Does building PWAs actually make you faster than going native?",
+        "Are AI coding agents better with JavaScript and TypeScript than Swift or Kotlin?",
+        "Why do AI coding agents work better in TypeScript than in Swift?",
+        "Is the speed gap between PWAs and native getting bigger over time?"
+      ]
+    },
+    {
+      "range": [
+        3997,
+        4242
+      ],
+      "questions": [
+        "How does building a PWA make you faster than going native?",
+        "How long is your build-and-check loop on a PWA?",
+        "Why does it matter to you that there's no Xcode or simulator in the loop?"
+      ]
+    },
+    {
+      "range": [
+        4245,
+        4573
+      ],
+      "questions": [
+        "Do PWAs actually make you faster to build than native apps?",
+        "Why do you still test on real phones if you build for the web?",
+        "What do emulators get wrong that you only catch on a real phone?",
+        "How do you test a mobile web app before you ship it?"
+      ]
+    },
+    {
+      "range": [
+        4624,
+        4748
+      ],
+      "questions": [
+        "If we already have native apps, would you tell us to rewrite them as a PWA?",
+        "Why are you wary of throwing out shipping apps just to get a cleaner architecture?"
+      ]
+    },
+    {
+      "range": [
+        4773,
+        5086
+      ],
+      "questions": [
+        "We already have native apps. Would you tell us to rewrite them?",
+        "What should we actually count when working out what our native apps cost?",
+        "Why do you tell teams to measure what native costs them before deciding on a rewrite?",
+        "Why do features end up shipping late on one platform with native apps?"
+      ]
+    },
+    {
+      "range": [
+        5089,
+        5342
+      ],
+      "questions": [
+        "We already have native apps. How would you start moving toward web without rewriting everything?",
+        "What kind of feature would you build as a PWA first?",
+        "Where would the web piece actually live inside our existing apps?",
+        "Why not just rewrite our native apps as PWAs?",
+        "When is the right time to try web in an app that's already native?"
+      ]
+    },
+    {
+      "range": [
+        5345,
+        5575
+      ],
+      "questions": [
+        "We already have native apps, so how would you move us to a PWA?",
+        "Why not just do a full rewrite of our native apps as a PWA?",
+        "What do my users experience while you migrate us to a PWA?",
+        "What happens to our native code as the PWA grows?",
+        "Is there a hard cutover date when we switch from native to PWA?"
+      ]
+    },
+    {
+      "range": [
+        5578,
+        5804
+      ],
+      "questions": [
+        "We already have native apps. Would you tell us to rewrite them as a PWA?",
+        "When does native still beat a PWA?",
+        "Why not just go all-in on PWAs?"
+      ]
+    },
+    {
+      "range": [
+        5807,
+        5917
+      ],
+      "questions": [
+        "We already have native apps. Would you tell us to rewrite them as a PWA?",
+        "Why wait until a native codebase is nearly empty before retiring it?",
+        "When do you actually shut down a native codebase?"
+      ]
+    },
+    {
+      "range": [
+        5920,
+        6145
+      ],
+      "questions": [
+        "We already have native apps. Would you tell us to rewrite them as a PWA?",
+        "How would you actually move us off our native apps and onto a PWA?",
+        "Why do you push back when a team wants to rewrite everything?",
+        "How do you tell whether a technical proposal is a real plan or just someone's preference?"
+      ]
+    },
+    {
+      "range": [
+        6183,
+        6453
+      ],
+      "questions": [
+        "When would you pick native over a PWA?",
+        "Would you build a game or a graphics-heavy app as a PWA?",
+        "Would you go native if the app has to keep running in the background?",
+        "What kind of hardware access pushes you to go native?",
+        "What if a new platform capability only shows up on native first?"
+      ]
+    },
+    {
+      "range": [
+        6456,
+        6787
+      ],
+      "questions": [
+        "When would you tell a company to stay native even though you favor PWAs?",
+        "Why wouldn't you migrate a strong native team to a PWA if it saves process?",
+        "How do you handle it when the technical answer and the political answer point different ways?",
+        "What counts as the best architecture decision to you, if it isn't always the most efficient one?"
+      ]
+    }
+  ]
+}

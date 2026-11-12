@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T20:03:15.773Z",
+  "generatedAt": "2026-11-12T20:06:34.073Z",
   "documents": {
     "background|book": "f453fd56852a020e3e6972c6f894fc7505caa85846ebf41acc2b8ff0658bb363",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
@@ -54,6 +54,8 @@
     "stories|told_id_never_make_it": "7f3f8ea13d2db8793d8e2f02ebf59eb0f3ac577db5f54b76efaf57e628f6aeab",
     "stories|youtube_shipping_past_politics": "81ad666623d03a0acfbcfad9c6159a0cbfab2a2a24759ae20dc822eda60fb372",
     "background|this_page": "1d074f53a69498e6e1436f561a2be906ed69c3a82b3ddd92027a9f1a8da7c906",
-    "perspective|ai_slop": "065ca3f2d846dd683c8b502f5fbf7e7fd64b2bf570b0ee99f6328e47f0f7c211"
+    "perspective|ai_slop": "065ca3f2d846dd683c8b502f5fbf7e7fd64b2bf570b0ee99f6328e47f0f7c211",
+    "perspective|why_javascript": "ffae3b58425cb630eb4b809bf3be77be5c847bcea74327f2c9df41bb21747cc1",
+    "perspective|pwa_vs_native": "9794d9abc67b9f673fb4f60273580e8ab4b6ff64aa07c83325630068afcf831e"
   }
 }

@@ -61,48 +61,155 @@
     <link href="https://william-brendel.com/" rel="canonical">
 
     <!-- SEO | Generic -->
-    <meta name="description" content="I'm a Product Strategist & Machine Learning Expert">
+    <!-- The description is the one string a recruiter actually READS in a
+         results page, and it was "I'm a Product Strategist & Machine
+         Learning Expert" — 48 characters of job title with no evidence in
+         it. Google renders about 155. This one spends them on the things
+         a recruiter screens for: the credential, the span, the patent
+         count, the scale, and three company names they will recognise. -->
+    <meta name="description" content="William Brendel, PhD — AI engineering executive and three-time founder. 20+ years, 30+ patents, AI shipped to 480M+ daily users at Snap, Amazon and Google.">
+    <meta name="author" content="William Brendel">
     <meta name="image" content="https://william-brendel.com/assets/profile.webp">
-    
+
+    <!-- Apple touch icon, for a page added to the Home Screen. The favicon
+         is 588x588, comfortably over the 180 iOS wants. -->
+    <link href="assets/favicon.png" rel="apple-touch-icon">
+
     <!-- SEO | Open Graph meta tags -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="profile">
     <meta property="og:url" content="https://william-brendel.com/">
     <meta property="og:site_name" content="William Brendel">
-    <meta property="og:title" content="Product Strategist & Machine Learning Expert" />
-    <meta property="og:description" content="Book a session with William Brendel or download his resume." />
-    <meta property="og:image" content="https://william-brendel.com/assets/profile.webp" />
-    <meta property="og:image:alt" content="William Brendel's profile picture">
-     
+    <!-- The NAME leads. og:title was the job title alone, which in a
+         LinkedIn or Slack unfurl reads as an advert rather than as a
+         person — and the name is the thing someone is forwarding. -->
+    <meta property="og:title" content="William Brendel, PhD — Product Strategist &amp; Machine Learning Expert">
+    <meta property="og:description" content="William Brendel, PhD — AI engineering executive and three-time founder. 20+ years, 30+ patents, AI shipped to 480M+ daily users at Snap, Amazon and Google.">
+    <meta property="og:image" content="https://william-brendel.com/assets/profile.webp">
+    <meta property="og:image:type" content="image/webp">
+    <!-- Dimensions let a crawler lay the card out without fetching the
+         file first, which is the difference between an unfurl that
+         appears immediately and one that appears a second later. -->
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:image:alt" content="William Brendel">
+    <meta property="profile:first_name" content="William">
+    <meta property="profile:last_name" content="Brendel">
+
     <!-- SEO | Twitter/X card tags -->
     <!-- name=, not property=. Open Graph is RDFa and uses property; the
          Twitter card spec uses name. Most parsers forgive the mix, X's own
          validator is the one that does not. -->
-    <meta name="twitter:card" content="summary">
+    <!-- summary_large_image, not summary. The image is 1024x1024 and a
+         plain summary card renders it as a thumbnail the size of a
+         postage stamp beside the text. -->
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@iamnotanaibot">
-    <meta name="twitter:description" content="Book a session with William Brendel or download his resume.">
-    <meta name="twitter:title" content="Product Strategist & Machine Learning Expert">
+    <meta name="twitter:title" content="William Brendel, PhD — Product Strategist &amp; Machine Learning Expert">
+    <meta name="twitter:description" content="William Brendel, PhD — AI engineering executive and three-time founder. 20+ years, 30+ patents, AI shipped to 480M+ daily users at Snap, Amazon and Google.">
     <meta name="twitter:image" content="https://william-brendel.com/assets/profile.webp">
-    <meta name="twitter:image:alt" content="William Brendel's profile picture">
-    
+    <meta name="twitter:image:alt" content="William Brendel">
+
     <!-- Structured data -->
     <!-- This block had a trailing comma after "image", which is invalid JSON
          — so every consumer dropped the whole thing and the page shipped with
          no structured data at all rather than with slightly wrong structured
          data. Silent, because nothing renders it. -->
+    <!-- It is a @graph now: the page, the person, and the book, with the
+         book pointing back at the person as its author. The Person was
+         six fields — name, title, description, url, image, one sameAs —
+         which is enough to identify him and not enough to MATCH him.
+         knowsAbout is what a search engine reads when someone looks for
+         the skill rather than the name; alumniOf, hasCredential and
+         homeLocation are what a recruiter's own tooling filters on.
+         
+         Every value here is drawn from the corpus the page already
+         answers from (server/data/markdowns), so the structured data and
+         the chat cannot tell a visitor two different things.
+         
+         No email and no telephone, deliberately. Both exist in schema.org
+         and both would be scraped within a week. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "mainEntity": {
-          "@type": "Person",
-          "name": "William Brendel",
-          "jobTitle": "Product Strategist & Machine Learning Expert",
-          "description": "Product Strategist & Machine Learning Expert",
-          "url": "https://william-brendel.com/",
-          "image": "https://william-brendel.com/assets/profile.webp",
-          "sameAs": ["https://www.linkedin.com/in/william-brendel"]
-        }
+        "@graph": [
+          {
+            "@type": "ProfilePage",
+            "@id": "https://william-brendel.com/#page",
+            "url": "https://william-brendel.com/",
+            "name": "William Brendel, PhD in AI",
+            "mainEntity": { "@id": "https://william-brendel.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://william-brendel.com/#person",
+            "name": "William Brendel",
+            "givenName": "William",
+            "familyName": "Brendel",
+            "honorificSuffix": "PhD",
+            "jobTitle": "Product Strategist & Machine Learning Expert",
+            "description": "William Brendel, PhD — AI engineering executive and three-time founder. 20+ years, 30+ patents, AI shipped to 480M+ daily users at Snap, Amazon and Google.",
+            "url": "https://william-brendel.com/",
+            "image": "https://william-brendel.com/assets/profile.webp",
+            "homeLocation": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Reno",
+                "addressRegion": "NV",
+                "addressCountry": "US"
+              }
+            },
+            "alumniOf": [
+              {
+                "@type": "CollegeOrUniversity",
+                "name": "Oregon State University",
+                "sameAs": "https://oregonstate.edu/"
+              },
+              {
+                "@type": "CollegeOrUniversity",
+                "name": "CPE Lyon",
+                "sameAs": "https://www.cpe.fr/"
+              }
+            ],
+            "hasCredential": {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "degree",
+              "educationalLevel": "Doctorate",
+              "name": "PhD in Computer Science and Artificial Intelligence",
+              "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Oregon State University" }
+            },
+            "knowsAbout": [
+              "Artificial Intelligence",
+              "Machine Learning",
+              "Agentic AI",
+              "Large Language Models",
+              "Computer Vision",
+              "Natural Language Processing",
+              "Recommendation Systems",
+              "Distributed Systems",
+              "Platform Architecture",
+              "Engineering Leadership",
+              "Product Strategy",
+              "SOC 2 Type II",
+              "HIPAA Compliance"
+            ],
+            "sameAs": [
+              "https://www.linkedin.com/in/william-brendel",
+              "https://scholar.google.com/citations?user=mR3fVeIAAAAJ&hl=en",
+              "https://x.com/iamnotanaibot"
+            ]
+          },
+          {
+            "@type": "Book",
+            "@id": "https://william-brendel.com/#book",
+            "name": "The AI Transformation",
+            "about": "Thriving Within Civilization's Next Big Disruption",
+            "isbn": "9781968318741",
+            "sameAs": "https://www.amazon.com/dp/1968318747",
+            "contributor": { "@id": "https://william-brendel.com/#person" }
+          }
+        ]
       }
     </script>
   </head>
