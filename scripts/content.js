@@ -1,6 +1,7 @@
 "use strict"
 
 import { toFragment } from "./markdown.js?v=3ba58513";
+import { fastRead, fastReadOn } from "./bionic.js?v=50e4dccf";
 
 // --------------------------------------------------------------------------
 // Cached DOM references (queried once for performance & clarity)
@@ -85,6 +86,18 @@ export const onContentchange = () => {
 // is appended here are nodes, not markup.
 export const displayTextContent = (text, done, container = content, delay) => {
   const fragment = toFragment(text);
+
+  /* Fast read is applied to the FRAGMENT, before the walk below collects
+     its steps — which is what makes the typing animation respect it.
+     
+     Will: "if active, the text rendering animation should also take that
+     into account." Transforming afterwards would have the answer type in
+     plain text and then flicker into bold at the end, which is worse than
+     not offering it. This way the <b> elements are part of the structure
+     the loop materialises, so each word's bold head types first and its
+     tail follows, exactly as a reader would meet them. */
+  if (fastReadOn()) fastRead(fragment);
+
   userScrolling = false, scrollTop = 0;
 
   // Pacing is a property of how much there is to read, which is the words —

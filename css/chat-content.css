@@ -673,3 +673,79 @@ body[file-over] #file-drop {
   font-size: 1em;
   font-weight: 600;
 }
+
+/*
+ * =====================================================
+ * THE TOOLS ABOVE AN ANSWER
+ * =====================================================
+ * Two icons, one at each end of the column, and nothing else. Will: "the
+ * buttons at the top should be discreet, maybe only icons?"
+ *
+ * They exist only once there is an answer: body[answer-ready] is set by
+ * scripts/chat-input-form.js when the last character lands, and cleared
+ * the moment another question starts. Before that there is nothing to
+ * start again and nothing to re-render.
+ *
+ * display: none rather than opacity, so neither is reachable by tab while
+ * it is not there.
+ */
+#chat-tools {
+  display: none;
+}
+
+body[answer-ready] #chat-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--main-width);
+  max-width: var(--main-max-width);
+  /* Lines up with the column below it rather than with the page. */
+  margin: 0 auto 4px;
+  flex-shrink: 0;
+}
+
+.chat-tool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  /* Quiet. At 0.38 they read as available rather than as instructions —
+     the answer is the thing on this screen worth looking at. */
+  color: rgb(from var(--color) r g b / 0.38);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Pressed is a state, not a hover: the fast-read toggle has to look
+   different while it is ON, with nothing hovering it, on a phone that has
+   no hover at all. */
+.chat-tool[aria-pressed="true"] {
+  color: rgb(from var(--color) r g b / 0.9);
+  background: rgb(from var(--color) r g b / 0.07);
+}
+
+.chat-tool:focus-visible {
+  outline: 2px solid rgb(from var(--color) r g b / 0.4);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-tool:hover { color: rgb(from var(--color) r g b / 0.75); }
+}
+
+/*
+ * The bold half of a bionic word.
+ *
+ * 600, not bolder: against a 300 body this is already a wide gap, and the
+ * point is a fixation point rather than a shout. Inherited colour, so it
+ * does not fight the answer's own ink.
+ */
+b.bionic {
+  font-weight: 600;
+  color: inherit;
+}

@@ -1,6 +1,7 @@
 "use strict"
 
-import { content, displayTextContent } from "./content.js?v=e554789c";
+import { content, displayTextContent } from "./content.js?v=bc5dff6f";
+import { fastRead, plainRead, fastReadOn, rememberFastRead } from "./bionic.js?v=50e4dccf";
 import { createThinkingNode } from "./createThinkingNode.js?v=31debead";
 import { ask } from "./api.js?v=091fa826";
 
@@ -25,13 +26,30 @@ const stopThinking = () => (
   typeof stopDisplay === "function" && stopDisplay()
 );
 
+/**
+ * The opening screen's markup, kept so "new chat" can put it back.
+ *
+ * Captured on the FIRST question rather than at load, because
+ * scripts/quick-links.js fills the icon row from #destinations after this
+ * module runs — snapshot too early and the restored screen comes back with
+ * an empty row where the links were.
+ *
+ * null until then, which is also how we know not to capture twice: by the
+ * second question #content holds an answer, and saving that as the opening
+ * screen would make "new chat" restore the conversation it just cleared.
+ */
+let openingHTML = null;
+
 // Start thinking.
-const startThinking = text => (
+const startThinking = (text) => {
+  if (openingHTML === null) openingHTML = content.innerHTML;
   // Set the thinking state.
-  document.body.setAttribute("thinking", ""),
-  content.innerHTML = "",
-  content.appendChild(createThinkingNode(text))
-);
+  document.body.setAttribute("thinking", "");
+  // Whatever the tools were for is gone.
+  document.body.removeAttribute("answer-ready");
+  content.innerHTML = "";
+  content.appendChild(createThinkingNode(text));
+};
 
 // Check if thinking.
 const isThinking = () => document.body.hasAttribute("thinking");
@@ -170,6 +188,9 @@ let endDisplay = () => {
     block.removeAttribute("typing");
   }
   stopDisplay = null;
+  /* There is an answer on screen, so the tools above it have something to
+     act on. css/chat-content.css keeps them display: none until this. */
+  document.body.setAttribute("answer-ready", "");
 };
 
 /**
@@ -686,3 +707,73 @@ const resetForm = () => {
 // --keyboard-top, the provisional 42svh, the pinned bar, the blur and
 // re-focus, the layout flush, ?pin.
 // --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// The two tools above an answer
+//
+// Both appear only once body[answer-ready] is set, which endDisplay does when
+// the last character lands. Icons, no labels — Will: "the buttons at the top
+// should be discreet, maybe only icons?"
+// --------------------------------------------------------------------------
+
+const newChatButton = document.getElementById("new-chat");
+const fastReadButton = document.getElementById("fast-read");
+
+/** Where fast read applies: the answers, not the furniture around them. */
+const answerBlocks = () => content.querySelectorAll(".answer-block");
+
+const paintFastRead = (on) => {
+  if (!fastReadButton) return;
+  fastReadButton.setAttribute("aria-pressed", on ? "true" : "false");
+};
+
+// The remembered setting, restored before anything is asked, so the first
+// answer of a return visit types the way the last one read.
+paintFastRead(fastReadOn());
+
+fastReadButton?.addEventListener("click", () => {
+  const on = !fastReadOn();
+  rememberFastRead(on);
+  paintFastRead(on);
+
+  /* Applied to what is already on screen, as well as remembered for what
+     comes next. Toggling a reading mode that only affects the NEXT answer
+     is a setting, not a control — you would have to ask something else to
+     find out what it does. */
+  for (const block of answerBlocks()) (on ? fastRead : plainRead)(block);
+});
+
+/**
+ * Start again.
+ *
+ * Everything the conversation accumulated goes: the in-flight request, the
+ * transcript, this visit's history, and the three attributes that make the
+ * page look like a conversation rather than an opening screen. The chips
+ * come back on their own — chat-started is what was hiding them.
+ *
+ * history.length = 0 rather than a new array, because the array is closed
+ * over by remember() and by the submit handler; reassigning it here would
+ * leave both of them writing to the one nobody reads.
+ */
+newChatButton?.addEventListener("click", () => {
+  inFlight?.abort();
+  inFlight = null;
+
+  stopThinking();
+  history.length = 0;
+
+  document.body.removeAttribute("answer-ready");
+  document.body.removeAttribute("chat-started");
+  document.body.removeAttribute("blured");
+
+  /* The headline and the icon row back, not just the layout.
+     
+     stopThinking empties #content, and #content is where the opening
+     screen lives — so without this the page returns to the opening
+     ARRANGEMENT around an empty middle: chips and bar in the right
+     places, nothing above them. */
+  if (openingHTML !== null) content.innerHTML = openingHTML;
+
+  resetForm();
+  input.focus({ preventScroll: true });
+});
