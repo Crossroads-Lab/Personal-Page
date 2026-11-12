@@ -202,8 +202,20 @@
   scroll-behavior: smooth;                   /* Smooth scrolling for anchor links */
 }
 
-/* Allow auto overscroll behavior for elements that explicitly need it */
-*:not(.overscroll-behavior-auto) {
+/* Allow auto overscroll behavior for elements that explicitly need it.
+   
+   body and html are excluded, and for the same reason html had to be
+   excluded from the overflow reset below: `:not(.class)` contributes
+   (0,1,0), so this selector beat the `body { overscroll-behavior-y:
+   contain }` that the scroller is supposed to have, body resolved to
+   `none`, and the rubber-band at the ends of the page disappeared. Will:
+   "the scroll bounce and the scroll snap are not there in the final main
+   website."
+   
+   `none` was the right default when the DOCUMENT scrolled — it stopped
+   the whole page rubber-banding behind a fixed first screen. body is the
+   scroller now and the bounce belongs to it. */
+*:not(.overscroll-behavior-auto):not(body):not(html) {
   overscroll-behavior: none;  /* Prevent bounce scrolling on iOS/Android */
 }
 
