@@ -693,7 +693,7 @@ const keyboard = window.visualViewport;
  * is hoisted into a dead zone, not to the top, so a listener registered
  * above its declaration throws on the way in rather than reading false.
  */
-const SOLO_PAGE = location.search.includes("solo");
+const SOLO_PAGE = location.search.includes("solo") || location.search.includes("shell");
 const PIN_ONLY = location.search.includes("pin");
 
 /* A device whose chrome floats over the page, which is the only kind
@@ -813,7 +813,19 @@ const clearTheDeck = () => {
  * the answer from before. A timer would only narrow that window and
  * would be a guess at how long to wait; asking at the tap closes it.
  */
-if (keyboard && input && !SOLO_PAGE) {
+/*
+ * The rungs, so a URL says exactly which pieces are in play:
+ *
+ *   /?solo        the floor — no second page, nothing to scroll, none of
+ *                 this
+ *   /?solo&pin    the floor plus the pinned bar. Confirmed on the device:
+ *                 bar on the keys, no gap under it
+ *   /?pin         the whole page, pinned bar, and NO rearranging before
+ *                 the focus — the question being whether a frozen page
+ *                 still needs it
+ *   /             everything
+ */
+if (keyboard && input && !SOLO_PAGE && !PIN_ONLY) {
   /*
    * A tap: the earliest possible moment, before Safari has focused
    * anything. preventDefault stops it focusing the field itself, the

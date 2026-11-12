@@ -1,6 +1,6 @@
 "use strict"
 
-import { askAsChip } from "./chat-input-form.js?v=0c1e831d";
+import { askAsChip } from "./chat-input-form.js?v=04e20b52";
 
 // --------------------------------------------------------------------------
 // The second screen
@@ -33,6 +33,46 @@ import { askAsChip } from "./chat-input-form.js?v=0c1e831d";
  * Add one thing at a time from here.
  */
 const SOLO = location.search.includes("solo");
+
+/*
+ * ?shell — ask-nereus-client's layout, ported as-is.
+ *
+ * That app has no keyboard code at all and its bar behaves. Its whole
+ * recipe is three declarations:
+ *
+ *   html, body { width: 100dvw; height: 100dvh; }
+ *   body       { display: flex; flex-direction: column; overflow: hidden }
+ *   #chat-input-container { position: relative; flex-shrink: 0 }
+ *
+ * dvh is the DYNAMIC viewport: it is whatever the browser is giving you
+ * right now. The shell tracks it, the bar is the last item in the shell,
+ * so the bar tracks it too — for free.
+ *
+ * This page sizes its first screen in 100lvh plus the chrome slack
+ * instead: the LARGEST the viewport ever gets, held static on purpose so
+ * the diagonal cut has a fixed edge to rest below. That is the whole
+ * difference, and it is why none of the Nereus behaviour came along with
+ * the Nereus markup.
+ *
+ * So: the second page out, the hero sized in dvh, nothing else. If the
+ * bar sits on the keyboard here with no JS, then dvh follows the
+ * keyboard on this device and the fix is this, not any of tonight's
+ * machinery. If it does not move, dvh ignores the keyboard in Safari and
+ * only the pin can work.
+ */
+const SHELL = location.search.includes("shell");
+
+if (SHELL) {
+  for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
+    node.remove();
+  }
+  const shell = document.createElement("style");
+  shell.textContent = [
+    "html, body { height: 100dvh !important; overflow: hidden !important; }",
+    ".hero { height: 100dvh !important; padding-bottom: var(--safearea-padding-bottom) !important; }",
+  ].join("\n");
+  document.head.appendChild(shell);
+}
 
 if (SOLO) {
   for (const node of document.querySelectorAll("#more, .chip--more, .more-chevron")) {
@@ -75,7 +115,7 @@ if (SOLO) {
   document.head.appendChild(lock);
 }
 
-const more = SOLO ? null : document.getElementById("more");
+const more = SOLO || SHELL ? null : document.getElementById("more");
 const cues = () => document.querySelectorAll(".chip--more, .more-chevron");
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)");
