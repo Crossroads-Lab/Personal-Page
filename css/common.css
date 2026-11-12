@@ -75,7 +75,10 @@
    * his legs — that is the glass doing its job, not a collision.
    *
    * `clamp` keeps it sane between a short phone and a tall one. */
-  --portrait-top: clamp(224px, 35dvh, 300px);
+  /* svh, not dvh — this sets how far down the portrait starts, and a
+     value that tracks the toolbar makes him drift up the screen as you
+     scroll. */
+  --portrait-top: clamp(224px, 35svh, 300px);
 
   /* How far the portrait sinks below the first screen, so the diagonal cut
      passes UNDER its hard bottom edge instead of across it.
@@ -96,25 +99,28 @@
      downward by 350px, and the extra content — leg, chair base, floor,
      shadow — is what should be hidden under the cut instead of 6-10% of the
      figure. When that asset lands, set this back to 0. */
-  /* How much taller the window can get than it currently is.
+  /* How much of the screen a phone's browser chrome is sitting over.
    *
-   * On a phone browser the toolbars retract as you scroll, so there are
-   * two viewport heights: 100dvh, what is visible right now, and 100lvh,
-   * what it becomes once the chrome is out of the way. The page paints
-   * into that difference — behind Safari's bottom bar — even though dvh
-   * stops short of it, and what got painted there was the next element
-   * down. Which is the dark section. The cut was visible on an iPhone
-   * before anybody scrolled.
+   * 100svh is the viewport with the toolbars OUT; 100lvh is with them
+   * retracted. Both are static — they do not change while you scroll,
+   * which is the whole point of using them instead of dvh.
    *
-   * On a desktop the two are equal and this is 0, so nothing below is
+   * dvh was the first attempt and it was wrong twice over. It is the
+   * CURRENT height, so the first screen resized as Safari's toolbar slid
+   * away and everything inside it slid with it — the bottom of the page
+   * appeared to animate on every scroll. And `100lvh - 100dvh` measures
+   * nothing at all once the toolbar is the floating kind that the page
+   * paints behind: dvh already equals lvh there, the difference is zero,
+   * and the dark section was still showing through the strip under the
+   * bar.
+   *
+   * svh is the honest floor. 0 on a desktop, so nothing below is
    * conditional on a device.
    *
    * Declared 0 first and raised behind @supports, because an unsupported
    * unit does not make a custom property fall back — it makes it invalid,
-   * and every property built on it goes with it. --portrait-sink is built
-   * on it, so getting that wrong would not have cost a margin, it would
-   * have cost the portrait's box. */
-  --viewport-slack: 0px;
+   * and every property built on it goes with it. */
+  --chrome-slack: 0px;
 
   /* The height the artwork is actually drawn at, extension included.
      Everything else derives from this one value, because the phone
@@ -150,10 +156,9 @@
   /* Sinking by the whole strip hides all of it. Lifting gives some of it
      back, and takes him up by the same amount.
      
-     Plus the viewport slack: the cut starts that much lower on a phone
-     (see .more in css/more.css), so the artwork has to reach that much
-     further down or its own bottom edge surfaces in the gap. */
-  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)) + var(--viewport-slack));
+     The chrome slack is handled by the first screen's own box now, not
+     here — see .hero in css/index.css. */
+  --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)));
 
   /* How much taller the artwork is than the framing --portrait-crop
      describes: 326 rows added to 2000, continuing the floor, the chair
@@ -253,9 +258,9 @@ input[type=number] {
   html { scroll-behavior: smooth; }
 }
 
-@supports (height: 1lvh) and (height: 1dvh) {
+@supports (height: 1lvh) and (height: 1svh) {
   :root {
-    --viewport-slack: calc(100lvh - 100dvh);
+    --chrome-slack: calc(100lvh - 100svh);
   }
 }
 
@@ -277,8 +282,12 @@ body {
   /* min-height, not height. The page is taller than the window now — the
      first screen is .hero and the dark section follows it — so pinning the
      body to one viewport would clip everything below the fold. .hero keeps
-     the exact 100dvh the first screen needs (css/index.css). */
-  min-height: 100dvh;
+     the exact height the first screen needs (css/index.css).
+     
+     svh, not dvh: a dynamic floor on the document is one more thing that
+     resizes while a phone's toolbar slides away, and every resize of an
+     ancestor moves the first screen with it. */
+  min-height: 100svh;
 }
 
 body {
@@ -355,7 +364,10 @@ button, button:visited, button:active, button:disabled {
 main {
   flex-direction: column;
   flex-grow: 1;                   /* Take up remaining space */
-  max-height: 100dvh;             /* Limit to viewport height */
+  /* svh, not dvh. Same reason as the floor above: this is inside .hero,
+     whose content area is 100svh, and a cap that moves as the toolbar
+     retracts drags the transcript's height along with it. */
+  max-height: 100svh;
 }
 
 /* 

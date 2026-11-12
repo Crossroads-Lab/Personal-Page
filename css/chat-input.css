@@ -1,5 +1,5 @@
 /* Import base styles and variables from common.css */
-@import "./common.css?v=e2f42b1d";
+@import "./common.css?v=77892ade";
 
 /* 
  * =====================================================
@@ -59,7 +59,7 @@ body:not([thinking]) #chat-input-form.multiline #chat-input-right-buttons {
   grid-column: 2;
   grid-row: 2;
   width: 100%;
-  max-height: 30dvh;
+  max-height: 30svh;   /* svh: a dvh cap grows mid-scroll on a phone */
   resize: none;
   overflow-x: hidden;
   overflow-y: auto;

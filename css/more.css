@@ -61,11 +61,6 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  /* Start below the tallest the window can become, not below the current
-     one. See --viewport-slack in common.css: on a phone the page paints
-     behind the browser's bottom bar, and without this the top corner of
-     this section was what filled that strip. 0 on a desktop. */
-  margin-top: var(--viewport-slack);
   background: var(--bg-more);
   color: var(--text-on-dark);
   clip-path: polygon(0 var(--cut-desktop), 100% 0, 100% 100%, 0 100%);

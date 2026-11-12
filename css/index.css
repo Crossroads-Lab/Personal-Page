@@ -1,8 +1,8 @@
 /* Import base styles and variables from common.css and others */
-@import "./common.css?v=e2f42b1d";
-@import "./chat-input.css?v=6679111d";
-@import "./chat-content.css?v=f50f1b57";
-@import "./more.css?v=e5f1d127";
+@import "./common.css?v=77892ade";
+@import "./chat-input.css?v=a08c51be";
+@import "./chat-content.css?v=d38fd737";
+@import "./more.css?v=9066fd56";
 
 /* 
  * =====================================================
@@ -23,7 +23,25 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100dvh;
+
+  /* The BOX is the largest the viewport ever gets; the CONTENT sits in
+     the smallest.
+     
+     height is 100lvh so whatever follows this section starts below the
+     bottom of the screen in every toolbar state — including the floating
+     kind the page paints behind, which is what kept leaking the diagonal
+     cut through the strip under Safari's bar. The extra padding then
+     holds the headline, the chips and the input bar inside 100svh, so the
+     bar stays above the chrome rather than behind it.
+     
+     box-sizing is border-box here (common.css), so height includes the
+     padding and the content area comes out at exactly 100svh.
+     
+     Both units are static. 100dvh was what this used to be, and because
+     dvh tracks the toolbar sliding away, the whole first screen resized
+     mid-scroll and everything in it moved — the "weird animation" at the
+     bottom of the page. */
+  height: 100lvh;
 
   display: flex;              /* Horizontal layout: content */
   flex-direction: column;     /* Stack nav and main vertically */
@@ -32,7 +50,7 @@
   /* -------------------- Padding with Safe Areas -------------------- */
   padding: var(--safearea);
   padding-top: var(--safearea-padding-top);
-  padding-bottom: var(--safearea-padding-bottom);
+  padding-bottom: calc(var(--safearea-padding-bottom) + var(--chrome-slack));
 
   /* The portrait hangs below the first screen so the cut can hide its
      bottom edge; clipping sideways keeps the phone layout's overhang from
@@ -56,6 +74,15 @@
      — the one place the cut can never reach. Caught by walking the pixels
      of a 768px screenshot: the strongest edge in the column sat exactly on
      the fold rather than on the slope. */
+  /* The whole box plus the sink — 100% is the full 100lvh, so the artwork
+     reaches past the cut no matter how much of the screen the chrome is
+     sitting over.
+     
+     Subtracting the slack here was the obvious-looking version and it is
+     wrong: it ends the artwork at 100svh + sink while the cut starts at
+     100lvh, which exposes the photograph's own bottom edge by however
+     much the toolbar covers minus the sink. The strip it reaches into is
+     the one behind the toolbar, which nobody can see anyway. */
   height: calc(100% + var(--portrait-sink));
   /* Sized to land him exactly where `cover` on the OLD artwork put him.
    *
@@ -135,7 +162,7 @@
      generated strip sitting above the fold at 375, 390 and 768, and none
      at all at 1280 where the two formulas happen to agree. */
   :root {
-    --portrait-height: calc((100dvh - var(--portrait-top)) * (1 + var(--portrait-extra)));
+    --portrait-height: calc((100svh - var(--portrait-top)) * (1 + var(--portrait-extra)));
   }
 
   .hero:before {
