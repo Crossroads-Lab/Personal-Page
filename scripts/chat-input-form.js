@@ -747,7 +747,18 @@ const clearTheDeck = () => {
   document.body.setAttribute("keyboard", "");
 };
 
-if (keyboard && input && FLOATING_CHROME.matches) {
+/*
+ * Registered unconditionally, and the question is asked at the moment it
+ * matters rather than once at startup.
+ *
+ * FLOATING_CHROME.matches used to gate the registration itself, which
+ * meant the answer was frozen at module evaluation. Anything that became
+ * touch-capable afterwards — a browser pane switched into device mode, a
+ * tablet whose keyboard is detached, a convertible folded over — kept
+ * the answer from before. A timer would only narrow that window and
+ * would be a guess at how long to wait; asking at the tap closes it.
+ */
+if (keyboard && input) {
   /*
    * A tap: the earliest possible moment, before Safari has focused
    * anything. preventDefault stops it focusing the field itself, the
@@ -755,6 +766,7 @@ if (keyboard && input && FLOATING_CHROME.matches) {
    * which is what iOS requires before it will open a keyboard.
    */
   input.addEventListener("pointerdown", (event) => {
+    if (!FLOATING_CHROME.matches) return;
     if (document.activeElement === input) return;
     event.preventDefault();
     clearTheDeck();
@@ -777,6 +789,7 @@ if (keyboard && input && FLOATING_CHROME.matches) {
   let rearranging = false;
 
   input.addEventListener("focus", () => {
+    if (!FLOATING_CHROME.matches) return;
     if (rearranging || document.body.hasAttribute("keyboard")) return;
     rearranging = true;
     input.blur();

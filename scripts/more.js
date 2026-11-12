@@ -1,6 +1,6 @@
 "use strict"
 
-import { askAsChip } from "./chat-input-form.js?v=4d2d8d55";
+import { askAsChip } from "./chat-input-form.js?v=d3a01683";
 
 // --------------------------------------------------------------------------
 // The second screen
