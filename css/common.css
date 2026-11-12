@@ -221,16 +221,27 @@
   /* How much taller the artwork is than the framing --portrait-crop
      describes.
      
-     0, because the extension is now part of the photograph. Will did it
-     by hand in an image tool — which is what design/v2/SPEC.md asked for
-     all along, and what server/scripts/extend-portrait.py existed to
-     stand in for until someone did. The file is the whole artwork; there
-     is nothing for the code to add.
+     400 rows added to Will's 2000, so 0.20.
      
-     Everything downstream falls out of this on its own: --portrait-strip
-     and --portrait-sink both go to 0, and .hero::before stops being
-     taller than the hero it sits in. */
-  --portrait-extra: 0;
+     It was 0 for one round, on the reading that his own expand had made
+     the file the whole artwork. It had not: his expand widened the
+     frame, and the bottom edge still runs through the trouser leg. With
+     nothing hanging below the figure, the photograph ended exactly on
+     the hero's bottom edge — and iOS paints the page past the viewport,
+     down to the glass, so below that edge was a bare grey strip of page
+     background. Invisible on the real page, where the dark section
+     starts on that same line, and impossible to miss in ?viewport2,
+     where the section is hidden and there is nothing to fill it.
+     
+     0.20 rather than the old 0.45 because it only has to cover that
+     strip, not a whole design idea: on the tallest screen measured it
+     is 80 points, and 0.20 puts --portrait-sink at 88.
+     
+     --portrait-crop still means what it always meant — the height HE is
+     drawn at — so his size and position do not move. The extra hangs
+     below the first screen and is what the cut eats, instead of his
+     feet. */
+  --portrait-extra: 0.20;
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
