@@ -731,20 +731,43 @@ body[answer-ready] #chat-tools {
   border-radius: 50%;
   background: none;
   cursor: pointer;
-  /* Quiet, but legible. 0.38 was quiet to the point of invisible — Will:
-     "they are too faded." Discreet is the brief; a control you have to
-     hunt for is not discreet, it is hidden. */
-  color: rgb(from var(--color) r g b / 0.62);
+  /* The same ink as the icon row under the headline. Will: "they are too
+     faded", then "so same color as the social icons."
+     
+     .quick-link > img is --color at opacity 0.72, so this is 0.72 of the
+     same colour rather than a number that merely looks close. Two rows of
+     small marks on the same pale background should not be two different
+     greys, and tying them to one figure means they cannot drift apart
+     when either is next adjusted.
+     
+     It was 0.38, which was quiet to the point of invisible. */
+  color: rgb(from var(--color) r g b / 0.72);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Pressed is a state, not a hover: the fast-read toggle has to look
-   different while it is ON, with nothing hovering it, on a phone that has
-   no hover at all. */
+/* Pressed is a state, not a hover: the toggle has to look different while
+   it is ON, with nothing hovering it, on a phone that has no hover at
+   all.
+   
+   Will: "when BR (bionic Reading) is selected, a rounded edge square,
+   black background, white icon should show it's on."
+   
+   So the shape changes too, not just the shade. A circle that goes from
+   a faint tint to a slightly less faint tint is a difference you have to
+   look for; a circle that becomes a filled square is one you cannot
+   miss, and it survives being glanced at in sunlight on a phone.
+   
+   Only the fast-read button can reach this — new chat is an action, not
+   a toggle, and carries no aria-pressed at all. */
 .chat-tool[aria-pressed="true"] {
-  color: rgb(from var(--color) r g b / 0.9);
-  background: rgb(from var(--color) r g b / 0.07);
+  border-radius: 9px;
+  background: var(--color);
+  color: #FFFFFF;
 }
+
+/* The hover rule below is scoped away from the pressed state, or hovering
+   an ON toggle would paint the white glyph back to dark ink on a dark
+   fill and make it vanish. */
 
 .chat-tool:focus-visible {
   outline: 2px solid rgb(from var(--color) r g b / 0.4);
@@ -752,7 +775,9 @@ body[answer-ready] #chat-tools {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .chat-tool:hover { color: rgb(from var(--color) r g b / 0.95); }
+  .chat-tool:not([aria-pressed="true"]):hover {
+    color: rgb(from var(--color) r g b / 0.95);
+  }
 }
 
 /* The fast-read icon is the thing it does: a bold B and a plain R, which
