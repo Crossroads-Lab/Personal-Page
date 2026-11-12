@@ -32,9 +32,20 @@ const render = () => {
   const heroRect = hero?.getBoundingClientRect();
   const moreRect = more?.getBoundingClientRect();
 
-  // The question the whole thing turns on: is the dark section's top edge
-  // above the bottom of what the visitor can see?
-  const leak = moreRect ? Math.round(window.innerHeight - moreRect.top) : null;
+  // The question the whole thing turns on: is the DARK above the bottom of
+  // what the visitor can see?
+  //
+  // Not the section's box top — that is deliberately above the fold now,
+  // because the box is pulled up by --cut-rise and the clip path decides
+  // where the dark actually starts inside it. Reading the box made the
+  // probe report an 87px leak on a screen with no dark on it at all.
+  // Measure the clipped edge, which is the thing with a colour.
+  const clipTop = more
+    ? parseFloat((getComputedStyle(more).clipPath.match(/([\d.]+)px/g) || [])[1] ?? 0)
+    : 0;
+  const leak = moreRect
+    ? Math.round(window.innerHeight - (moreRect.top + clipTop))
+    : null;
 
   return [
     ["screen.height", Math.round(window.screen?.height ?? 0)],
@@ -51,6 +62,7 @@ const render = () => {
     ["hero bottom", heroRect ? Math.round(heroRect.bottom) : "?"],
     ["bar bottom", bar ? Math.round(bar.getBoundingClientRect().bottom) : "?"],
     ["#more top", moreRect ? Math.round(moreRect.top) : "?"],
+    ["dark edge, in viewport", moreRect ? Math.round(moreRect.top + clipTop) : "?"],
     ["LEAK (>0 is the bug)", leak],
     ["scrollY", Math.round(window.scrollY)],
   ];
