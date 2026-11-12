@@ -70,9 +70,22 @@
        subject width    0.7660 -> 0.7748 of the crop's WIDTH
        aspect           0.6945 -> 0.6260
      
-     41.5vw -> 45.3 and 62.4vh -> 61.3 are those two ratios divided back
-     out, so crop x subject is the same number of pixels it was. */
-  --portrait-crop: max(45.3vw, 61.3vh);
+     41.5vw -> 45.3 and 62.4vh -> 61.3 were those two ratios divided back
+     out, so crop x subject stayed the number of pixels it was.
+     
+     Then: not big enough, and it never had been. Measured against
+     design/v2/screenshots/desktop-1280-first-screen.png, which is the
+     mock the whole second version was drawn from — at 1280x820 he runs
+     from 0.200 down the screen to the very bottom of it, 0.7976 of the
+     height. Live he was 0.62 of it, and before the new photograph he
+     was 0.56. The difference had been there since v2 landed.
+     
+     0.7976 of a viewport, at 0.858 of the crop, needs a crop of 0.9296
+     of it: 93.0vh. 59.5vw is the same crop at 1280 wide, so the two
+     terms meet exactly on the mock's own aspect and neither one
+     overshoots it. The subject comes out 654 tall against the mock's
+     654. */
+  --portrait-crop: max(59.5vw, 93.0vh);
   --portrait-subject: calc(0.858 * var(--portrait-crop));
   /* How wide he lands. He is 77.5% of the crop's width, and the crop is
      0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
