@@ -801,6 +801,45 @@
       :root {
         --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
         --cut: var(--cut-mobile);
+
+        /* How tall the fade under him is, measured from the bottom of
+           the artwork — which is --portrait-sink below the fold.
+           
+           Will: "a fading band, from the gray to transparent, vertical
+           fading, solid at the bottom to fade the picture leg all the
+           way to mid height point of the input bar."
+           
+           So the top of the band is the middle of the input row: up
+           from the bottom of the artwork by the sink, then the gutter
+           and safe area the form sits on, then half the row's height.
+           Not the form's height — the form also carries the chips, and
+           he asked for the bar. */
+        --portrait-fade: calc(var(--portrait-sink)
+                            + var(--safearea-padding-bottom)
+                            + 0.5 * var(--chat-form-height));
+      }
+
+      /*
+       * The fade is a second background LAYER on the same element as the
+       * photograph, not a box of its own. No node, no z-index to keep in
+       * order, and it cannot drift out of alignment with what it is
+       * fading.
+       *
+       * Solid for the bottom --portrait-sink of the band, which is the
+       * part below the fold and invisible anyway — so the artwork is
+       * fully covered by the time it reaches the bottom of the screen,
+       * and the fade proper is spent on the visible stretch between
+       * there and the middle of the bar.
+       *
+       * The bar's own backdrop-filter samples this rather than his leg,
+       * so the glass comes out cleaner too.
+       */
+      main::before {
+        background:
+          linear-gradient(to top, var(--background) var(--portrait-sink), transparent)
+            no-repeat bottom / 100% var(--portrait-fade),
+          url("assets/background.webp")
+            no-repeat right bottom / auto var(--portrait-height);
       }
 
       /*
