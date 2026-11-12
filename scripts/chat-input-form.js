@@ -742,32 +742,20 @@ const syncKeyboard = () => {
 const PROVISIONAL_KEYBOARD = "42svh";
 
 /*
- * ?defer — dispatch the focus from a setTimeout(0) instead of inline.
+ * The focus goes out inline, and it was worth proving rather than
+ * asserting.
  *
- * The experiment Will asked for. My claim is that it loses the keyboard:
- * WebKit opens one for a programmatic focus() only during a user
- * gesture, and that activation does not survive a task boundary. I
- * cannot test that from here — there is no iOS in this environment — so
- * it is a claim, not a measurement, and this is how to settle it on the
- * phone.
+ * ?defer shipped for one round with setTimeout(0) around it, to settle
+ * whether a task boundary costs the keyboard on iOS. It does. On Will's
+ * phone the field took the focus — the chips faded, the section went
+ * out — and no keys appeared. The giveaway was the bar parked halfway up
+ * the screen: no keyboard means no visualViewport resize, so the
+ * provisional 42svh was never replaced by a real measurement.
  *
- *   william-brendel.com            inline focus, the default
- *   william-brendel.com/?defer     setTimeout(0), his version
- *
- * Tap the field on each. If ?defer puts the caret in the field and no
- * keyboard appears, the claim holds. If the keyboard comes up either
- * way, it does not, and the inline call is merely the cheaper of two
- * things that work.
- *
- * Delete this once it is answered.
+ * WebKit opens a keyboard for a programmatic focus() only during a user
+ * gesture, and that activation does not survive into a timer. Measured,
+ * not claimed.
  */
-const DEFER_FOCUS = location.search.includes("defer");
-
-/** Hand the focus to the field, inline or deferred. */
-const dispatchFocus = () => {
-  if (DEFER_FOCUS) setTimeout(() => input.focus(), 0);
-  else input.focus();
-};
 
 /**
  * Take the section out, and make sure the page has actually CHANGED
@@ -814,7 +802,7 @@ if (keyboard && input && !location.search.includes("solo")) {
     if (document.activeElement === input) return;
     event.preventDefault();
     clearTheDeck();
-    dispatchFocus();
+    input.focus();
   });
 
   /*
@@ -838,7 +826,7 @@ if (keyboard && input && !location.search.includes("solo")) {
     rearranging = true;
     input.blur();
     clearTheDeck();
-    dispatchFocus();
+    input.focus();
     rearranging = false;
   });
 }
