@@ -394,15 +394,17 @@
    * proximity snaps when the scroll ENDS near one and leaves the rest
    * alone, which is exactly the boundary we care about.
    *
-   * scroll-snap-stop: always is what makes it feel paged rather than
-   * flung-then-corrected. Without it iOS does an ordinary fling, lets it
-   * decelerate wherever it likes, and only THEN animates to the snap
-   * point — and that second animation, tacked on after the first has
-   * died away, is a slow tail you can watch. Will: "the end of the
-   * scroll snap animation has a second order speed decrease and is a bit
-   * slow to move the remaining 10-20px in place." `always` forbids
-   * passing a snap point within one gesture, which puts the container on
-   * the paged physics: one animation, ending where the thumb aimed.
+   * scroll-snap-stop was `always` for one round and had to come out.
+   * It forbids passing a snap point within a single gesture, which is
+   * exactly right on test.html — two screens, one swipe each, paged
+   * physics — and exactly wrong here, where the second page is 2359px of
+   * cards somebody is trying to read. Every flick from the first screen
+   * was being clamped at the boundary instead of flying, and a flick
+   * that cannot fly feels like a drag. Will: "the scroll feels like I am
+   * dragging the page."
+   *
+   * Without it the momentum is the platform's own again, and proximity
+   * still catches the boundary when the scroll comes to rest near it.
    *
    * The second page's snap position is moved DOWN past the cut by a
    * negative scroll-margin, to the diagonal's lowest point — otherwise
@@ -416,7 +418,6 @@
   .hero,
   .more {
     scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   .more {
