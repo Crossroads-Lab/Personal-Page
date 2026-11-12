@@ -82,7 +82,23 @@ body:not([thinking]) #chat-input-form.multiline #chat-input-right-buttons {
 
   /* Typography */
   font-weight: 400;
-  font-size: 14px;
+  /* 16px, and it cannot go below it.
+   
+     iOS Safari zooms the whole page in when you focus a text field whose
+     font-size is under 16px, to bring it up to readable size. It was
+     14px here, so tapping Ask me anything scaled the page: the portrait
+     jumped, the bar ran off both edges, and the first screen was
+     suddenly somewhere else. Will, on the third screenshot of it:
+     "still zoom and move to high."
+     
+     That zoom is also why the scroll correction underneath this kept
+     landing wrong — the visual viewport it measures against is the
+     ZOOMED one, so every number it reads is in different units from the
+     ones it writes.
+     
+     16 exactly, not larger, because the bar's height is built around
+     this line box. */
+  font-size: 16px;
   line-height: 1.5;
   
   /* Vertical alignment */

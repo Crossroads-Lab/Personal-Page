@@ -634,78 +634,27 @@ const resetForm = () => {
 }
 
 // --------------------------------------------------------------------------
-// Keeping the bar on top of the keyboard
+// The keyboard
 //
-// With the keyboard up, Will's phone put the input bar roughly a third of
-// the way up the screen and filled the space between it and the keys with
-// the dark second section: the diagonal, MORE ABOUT ME and the book card,
-// all stacked in a gap nobody asked for.
+// Nothing here any more, on purpose.
 //
-// Nothing was broken. The bar sits at the bottom of the hero in normal
-// flow, and iOS answers a focus by scrolling the page until the focused
-// element is somewhere inside what is left of the screen. "Somewhere
-// inside" is all it promises. It scrolled 560px, which put the bar in
-// view and also put a screenful of the next section in view underneath it.
+// There was a scroll correction: on the visual viewport's resize, nudge
+// the page until the bottom of the bar's margin box met the top of the
+// keyboard. It was written against a screenshot where iOS had left the
+// bar a third of the way up the screen with the dark section filling the
+// gap underneath it.
 //
-// The keyboard does not change the LAYOUT viewport on iOS — innerHeight,
-// 100lvh and 100svh are all exactly what they were — so no amount of CSS
-// can see it. visualViewport can: it is the part of the layout viewport
-// still visible, and its height drops by the height of the keys.
+// It never worked on the device, and the reason was not the correction.
+// #chat-input was 14px, and iOS Safari zooms the whole page in when you
+// focus a field under 16px. So the visual viewport the correction
+// measured against was the ZOOMED one — every number it read was in
+// different units from the ones it wrote — and each attempt moved the
+// page somewhere new. Three rounds of screenshots, all of them the same
+// bug wearing a different number.
 //
-// So: after the keyboard has settled, nudge the scroll until the bottom
-// of the bar's margin box meets the top of the keyboard. Both directions,
-// because the correction here is upward — the page had scrolled too far,
-// not too little.
+// The font-size is 16px now (css/chat-input.css) and there is no zoom to
+// correct for. Safari scrolls the focused field into what is left of the
+// screen on its own, which is what it was always trying to do. If the
+// result still reads wrong, the fix belongs in where the bar sits, not
+// in a second opinion about where the page should scroll.
 // --------------------------------------------------------------------------
-
-const viewport = window.visualViewport;
-
-/**
- * How much of the layout viewport something is covering from the bottom.
- *
- * 0 on a desktop and on a phone with no keyboard, which is the guard: with
- * nothing covering the bottom there is no keyboard to sit above, and the
- * same arithmetic would happily drag the page around for no reason.
- */
-const covered = () =>
-  viewport ? window.innerHeight - (viewport.offsetTop + viewport.height) : 0;
-
-const sitAboveKeyboard = () => {
-  if (!form || covered() <= 0) return;
-  if (document.activeElement !== input) return;
-
-  const bar = document.getElementById("chat-input-container");
-  if (!bar) return;
-
-  // The margin box, not the border box. That bottom margin is the gap the
-  // bar is designed to keep from the edge, and it is the same gap it
-  // should keep from the keys.
-  const gap = parseFloat(getComputedStyle(bar).marginBottom) || 0;
-  const delta = Math.round(
-    bar.getBoundingClientRect().bottom + gap - (viewport.offsetTop + viewport.height),
-  );
-
-  if (Math.abs(delta) > 1) window.scrollBy(0, delta);
-};
-
-if (viewport && input) {
-  // The resize IS the keyboard arriving.
-  viewport.addEventListener("resize", sitAboveKeyboard);
-
-  // And iOS keeps scrolling after it. One correction at 300ms was not
-  // enough: Will's screenshot had the bar 318 points clear of the keys
-  // with the cut and the dark section filling the gap, which is the
-  // browser's own scroll-into-view landing after mine and winning.
-  //
-  // Correcting repeatedly over the first second is the cheap answer —
-  // the guard below drops any pass where the page is already within a
-  // pixel, so what this costs when the browser behaves is four reads of
-  // a rect.
-  //
-  // Also on the visual viewport's own scroll, which is what fires when
-  // Safari moves the page under a keyboard that is already up.
-  viewport.addEventListener("scroll", sitAboveKeyboard);
-  input.addEventListener("focus", () => {
-    for (const ms of [150, 350, 600, 900]) setTimeout(sitAboveKeyboard, ms);
-  });
-}
