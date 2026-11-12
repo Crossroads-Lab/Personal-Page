@@ -186,27 +186,21 @@
 
   /* How far he rises, as a fraction of the extension.
      
-     0 keeps him exactly where he was before the artwork grew, with the
-     whole generated strip below the fold and his shoes at the very bottom
-     of the screen. 1 would lift him by the full extension and put all of
-     the generated floor on screen — too far, and the artwork's own bottom
-     edge would come up past the cut.
+     0. The real photograph ends exactly on the hero's bottom edge, which
+     is exactly where the cut's hinge is, and the whole generated strip
+     hangs below both.
      
-     0.15 of a strip that is now 0.45 of the artwork — which is the same
-     ~36px on screen that 0.4 of the old 0.163 strip gave. He sits exactly
-     where he did; what changed is how far the artwork reaches below him.
+     Anything above 0 pulls that strip UP into the first screen by the
+     same fraction, and then the fade is on screen. At 0.15 on a desktop
+     that was 27 points of it — the grey band Will caught, and the same
+     band in ?viewport2. It survived this long because the old extension
+     was a 900-row mirror whose top was still photograph; this one fades
+     to the floor tone within a few rows, so any of it on screen reads as
+     a band.
      
-     That reach is the point. The strip has to cover the gap between the
-     bottom of the first screen and however far a phone paints past it,
-     or his cropped edge surfaces there instead of the diagonal. On Will's
-     device that gap measured at least 96px and "borderline"; 52px of
-     reach was not going to survive it. It is 157px now.
-     
-     This was 0 for one round, because the first extension was blurred and
-     putting it on screen was worse than cropping his feet. The extension
-     is sharp now, so the room is worth spending — but only 35px of it,
-     which is as much generated floor as looks right under him. */
-  --portrait-lift: 0.15;
+     If he should sit higher, that is --portrait-top's job: it moves him
+     without dragging the extension up with him. */
+  --portrait-lift: 0;
 
   /* The displayed height of the added strip: height x extra / (1 + extra). */
   --portrait-strip: calc(var(--portrait-height) * var(--portrait-extra) / (1 + var(--portrait-extra)));
