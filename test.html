@@ -589,7 +589,47 @@
          the lowest point the cut reaches, so a taller draw raises his
          head by the difference. */
       :root {
-        --portrait-height: calc(100svh - var(--portrait-top) + var(--portrait-sink));
+        --portrait-height: calc(100svh - var(--portrait-top));
+      }
+
+      /*
+       * He ends at the bottom of the SMALL viewport, not below the first
+       * screen. Will: "my picture should be moved up, and all pages are
+       * dvh, and the notch should be solid gray."
+       *
+       * Those are one edit, not three. The box was --hero-height + sink,
+       * which runs past the bottom of the screen and into the strip
+       * Safari's bar floats over — so the strip showed the chair and his
+       * leg. Ending the artwork at 100svh puts his bottom edge at the top
+       * of that strip, which does both things at once: he rises by the
+       * two chrome slacks plus the sink, and what is left under the bar
+       * is the first screen's own background. Solid grey.
+       *
+       * svh and not dvh, and the difference matters here. dvh tracks the
+       * toolbar, so a box sized in it grows as the toolbar slides away
+       * and the photograph would resize and drift mid-scroll — the "weird
+       * animation" that made the first screen static in the first place.
+       * svh is the same viewport held still.
+       *
+       * The HERO's box is untouched and stays --hero-height. It has to:
+       * #more starts where the box ends, and a box that ended at the
+       * viewport would put the dark section under the bar instead of the
+       * grey. That is the one part of "all pages are dvh" that cannot be
+       * taken literally.
+       *
+       * What it costs, and it is worth watching for: the strip is only
+       * hidden while the bar is over it. Scroll a little, the toolbar
+       * retracts, and that same band — about two chrome slacks of grey
+       * between his shoes and the start of the second page — is on
+       * screen. It is the grey band from earlier tonight, moved rather
+       * than removed. Solid under the bar and a band when scrolling are
+       * the same pixels at different moments.
+       *
+       * Phone only. On a desktop there is no floating bar and no strip,
+       * and the overhang is what the diagonal is meant to cut across.
+       */
+      .hero::before {
+        height: 100svh;
       }
 
       #welcome { justify-content: flex-start; }
