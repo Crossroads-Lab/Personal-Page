@@ -60,11 +60,23 @@
    * and if the two were written out separately they would drift the first
    * time either changed. He fills 84% of the crop's height — measured off
    * the file, not estimated. */
-  --portrait-crop: max(41.5vw, 62.4vh);
-  --portrait-subject: calc(0.8425 * var(--portrait-crop));
-  /* How wide he lands. He is 76.2% of the crop's width, and the crop is
-     0.6945 as wide as it is tall (1389/2000) — so 0.529 of its height. */
-  --portrait-width: calc(0.529 * var(--portrait-crop));
+  /* Re-measured against the new file, which is framed wider and taller
+     than the old one: 1252x2000 rather than 1389x2000, with him a little
+     higher in it. The vw and vh terms were rescaled so he lands at the
+     same size on screen as before — the composition does not move
+     because the photograph changed, only the numbers that describe it:
+     
+       subject height   0.8420 -> 0.8580 of the crop
+       subject width    0.7660 -> 0.7748 of the crop's WIDTH
+       aspect           0.6945 -> 0.6260
+     
+     41.5vw -> 45.3 and 62.4vh -> 61.3 are those two ratios divided back
+     out, so crop x subject is the same number of pixels it was. */
+  --portrait-crop: max(45.3vw, 61.3vh);
+  --portrait-subject: calc(0.858 * var(--portrait-crop));
+  /* How wide he lands. He is 77.5% of the crop's width, and the crop is
+     0.6260 as wide as it is tall (1252/2000) — so 0.485 of its height. */
+  --portrait-width: calc(0.485 * var(--portrait-crop));
 
   /* What the headline and the icon row need at the top of a narrow screen.
    *
@@ -207,15 +219,18 @@
   --portrait-sink: calc(var(--portrait-strip) * (1 - var(--portrait-lift)));
 
   /* How much taller the artwork is than the framing --portrait-crop
-     describes: 326 rows added to 2000, continuing the floor, the chair
-     base and the trouser leg below where the photograph was cropped.
+     describes.
      
-     --portrait-crop still means what it always meant — the height HE is
-     drawn at — so his size and position do not move. The extra hangs below
-     the first screen and is what the cut eats, instead of his feet. Set
-     this to 0 and put the unextended artwork back and everything returns
-     to where it was. */
-  --portrait-extra: 0.45;
+     0, because the extension is now part of the photograph. Will did it
+     by hand in an image tool — which is what design/v2/SPEC.md asked for
+     all along, and what server/scripts/extend-portrait.py existed to
+     stand in for until someone did. The file is the whole artwork; there
+     is nothing for the code to add.
+     
+     Everything downstream falls out of this on its own: --portrait-strip
+     and --portrait-sink both go to 0, and .hero::before stops being
+     taller than the hero it sits in. */
+  --portrait-extra: 0;
 
   /* -------------------- Filters -------------------- */
   --icon-filter: invert(0);  /* Icon color filter (0 = no inversion for light mode) */
