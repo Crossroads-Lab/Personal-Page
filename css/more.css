@@ -277,50 +277,75 @@
 
 /* Out of the document, not just out of sight: the point is that Safari
    has nothing to scroll into view under the bar, and visibility or
-   opacity would leave the box there for it to find. scripts/
-   chat-input-form.js sets the attribute and measures --keyboard. */
+   opacity would leave the box there for it to find. The attribute is set
+   from the tap in scripts/chat-input-form.js. */
 body[keyboard] #more,
 body[keyboard] .chip--more,
 body[keyboard] .more-chevron {
   display: none !important;
 }
 
-/* The bar goes to the keyboard rather than the page going to the bar.
+/* And then the first screen becomes test.html.
    
-   Padding the page by the keyboard's height was the first answer and it
-   left exactly what it added: a band of empty page between the bottom
-   of the photograph and the keys, with the bar still stranded halfway
-   up. Will: "Gone but the space remains."
+   That page is a headline, an input, and no script of any kind:
    
-   Pinning it is the thing that was actually wanted. The bar sits on the
-   keys, nothing has to scroll to put it there, and the page is frozen
-   so that nothing does. Everything the visitor needs is then on screen
-   at once: the top of the first screen, the bar, the keyboard.
+     html, body { height: 100dvh; overflow: hidden }
+     body       { display: flex; flex-direction: column }
+     the bar    { last child, flex-shrink: 0 }
    
-   The container holds the chips as well as the field, so they travel
-   with it and stay where they are relative to it. */
+   Will tested it on his phone and the bar rides onto the keys. These two
+   rules are that arrangement, applied to the real first screen for as
+   long as someone is typing — the structure already matches, main#content
+   is flex: 1 and the bar is the last child, so there is nothing to build,
+   only a height to pin.
+   
+   I do not know which of two mechanisms carries it, and this works under
+   both, which is why it is written this way rather than cleverer:
+   
+     If 100dvh follows the keyboard, the shell shrinks, main#content
+     absorbs it, and the bar comes up with the bottom of the shell.
+   
+     If it does not — and the spec says the keyboard resizes only the
+     VISUAL viewport unless interactive-widget says otherwise — then the
+     page is exactly one layout viewport tall with the bar at the bottom
+     of it and nothing to scroll, so Safari slides the visual viewport to
+     bring the focused field into view and the bar arrives on the keys
+     that way. Which is what test.html is, so it is what test.html proved.
+   
+   Either way the requirement is the same and it is the only requirement:
+   one viewport, unscrollable, bar at the bottom.
+   
+   overflow on body rather than on html because the viewport takes its
+   overflow from body when html's is visible, and that is what actually
+   freezes the document. clip rather than hidden so that neither axis
+   becomes a scroll container.
+   
+   The height override is the reason --hero-height steps aside here. At
+   rest the box has to be the LARGEST the viewport ever gets, so that
+   whatever follows it starts below the bottom of the screen in every
+   toolbar state — see css/index.css. While typing there is nothing
+   following it, because #more is out of the document, so the box can be
+   the viewport itself.
+   
+   What is NOT here any more, and this is the point of the commit: the bar
+   pinned to the keyboard. position: fixed, bottom: var(--keyboard), a
+   measured innerHeight minus (offsetTop + height), a provisional 42svh
+   for the gap before the keys arrived, a translateX to undo the centring,
+   transition: none so it arrived with the keyboard rather than catching
+   up to it. It worked — confirmed on the device as ?solo&pin — and all of
+   it was a hand-rolled version of the two rules below. */
 body[keyboard] {
+  height: 100dvh;
   overflow: clip;
 }
 
-body[keyboard] #chat-input-container {
-  position: fixed;
-  left: 50%;
-  bottom: var(--keyboard, 0px);
-  /* No Y correction, and it is worth saying why not, because I added
-     one and it was wrong twice over.
-     
-     fixed pins to the LAYOUT viewport while Safari slides the VISUAL
-     one, so the bar looks like it needs the offset added back. It does
-     not: --keyboard is innerHeight minus (offsetTop + height), so the
-     slide is already inside it. bottom: var(--keyboard) puts the bar on
-     the visible bottom edge by itself. Adding the offset on top pushed
-     it 120 points PAST the keys — measured, with a faked 120px slide. */
-  transform: translateX(-50%);
-  margin: 0;
-  /* No easing on the follow: it has to arrive with the keyboard, not
-     catch up to it. */
-  transition: none;
+body[keyboard] .hero {
+  height: 100dvh;
+  /* And without the slack the box no longer carries. The padding at rest
+     is safe-area + --hero-height - 100dvh, which exists to hold the
+     content inside the small viewport while the BOX stays large; the box
+     is the viewport now, so the only thing left to clear is the notch. */
+  padding-bottom: var(--safearea-padding-bottom);
 }
 
 /* ── The book card: cover beside the text rather than above it ────────── */

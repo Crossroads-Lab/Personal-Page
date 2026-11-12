@@ -660,178 +660,87 @@ const resetForm = () => {
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
-// What is under the bar while the keyboard is up
+// While the keyboard is up
 //
-// Will's idea, and the right half of the problem. iOS scrolls a focused
-// field into what is left of the screen; it does not promise anything
-// about what ends up underneath it, and what ended up underneath it here
-// was the diagonal and the top of the dark section. Nothing about where
-// the page scrolled was ever going to fix that — the section should not
-// be on screen while someone is typing a question.
+// Two mechanisms were in here doing one job. One of them is gone.
 //
-// So: take it out of the document for the duration, and give the page
-// back the height the keyboard took so Safari can still lift the bar
-// clear of the keys. Without the second, removing the section SHORTENS
-// the document — on a phone to barely more than one screen — and Safari
-// cannot scroll far enough to get the bar above the keyboard at all.
+// WHERE THE BAR SITS is not in this file any more. It is the first
+// screen's padding-bottom, which ends the CONTENT where 100dvh ends (see
+// css/index.css), so the bar is the last thing inside the dynamic
+// viewport — and the dynamic viewport follows the keyboard.
 //
-// No focus capture. Blurring and refocusing to rearrange the page in
-// between is the kind of thing iOS answers by not opening the keyboard
-// at all, and it is not needed: hiding something below the bar does not
-// move the bar.
+// That last clause was the open question all night, and test.html settled
+// it: a headline, an input, a shell at 100dvh, and no script of any kind.
+// The bar rides down onto the keys there. Same arrangement as
+// ask-nereus-client, which has never carried a line of keyboard code and
+// does not need one.
+//
+// So the pinned bar is deleted — position: fixed, bottom: var(--keyboard),
+// the visualViewport resize and scroll listeners, the innerHeight minus
+// (offsetTop + height) arithmetic, --keyboard, --keyboard-top, the
+// provisional 42svh, the argument about whether to add offsetTop back.
+// All of it was a hand-rolled dvh, and it was measuring something the
+// browser was already telling us.
+//
+// WHAT IS LEFT is the half no unit can do: the second page must not be on
+// screen while someone is typing. Will, on the screenshot of the book
+// card sitting behind the keys — "we should never see or have access to
+// the second page on mobile when the input is focused." That is one
+// attribute on the body, which hides the section and freezes the page
+// (css/more.css). Nothing measured, nothing written back.
+//
+// It is set from the TAP rather than from the focus event, and that piece
+// of timing is the only reason there is any code here at all. Safari
+// decides where to scroll a focused field as it opens the keyboard; if
+// the section is still in the document at that moment, it scrolls for a
+// page half again as tall and leaves the bar a third of the way up with
+// the diagonal underneath it. So the page is shortened and frozen first,
+// inside the gesture, and focus() goes out from inside that same gesture
+// — iOS will not open a keyboard for a focus() that has left one, which
+// ?defer measured rather than assumed: the field took the focus, the
+// chips faded, the section went out, and no keys appeared.
 // --------------------------------------------------------------------------
 
-const keyboard = window.visualViewport;
-
-/*
- *   /?solo        the barebone: no second page, nothing to scroll, and
- *                 none of the keyboard code below
- *   /?solo&pin    the barebone plus the pinned bar, and nothing else
- *   /             everything
- *
- * Declared here rather than beside the blocks that read them: a const
- * is hoisted into a dead zone, not to the top, so a listener registered
- * above its declaration throws on the way in rather than reading false.
- */
+/* ?solo and ?shell are the barebone: none of this runs there, so
+   whatever those pages do is the browser and nothing of mine. */
 const SOLO_PAGE = location.search.includes("solo") || location.search.includes("shell");
-const PIN_ONLY = location.search.includes("pin");
 
 /* A device whose chrome floats over the page, which is the only kind
-   that has a software keyboard to get out of the way of. */
+   with a software keyboard to get out of the way of.
+   
+   Asked at the tap rather than at startup. matchMedia read once at module
+   evaluation freezes the answer, and anything that becomes touch-capable
+   afterwards — a browser pane switched into device mode, a tablet with
+   its keyboard detached, a convertible folded over — keeps the answer
+   from before. Two test runs came back as false negatives that way. */
 const FLOATING_CHROME = matchMedia("(hover: none)");
 
-const syncKeyboard = () => {
-  if (!keyboard || !input) return;
-
-  // What the keys are covering, in layout pixels. 0 on a desktop and on
-  // a phone with no keyboard up.
-  const covered = Math.max(
-    0, Math.round(window.innerHeight - (keyboard.offsetTop + keyboard.height)),
-  );
-  /* The attribute follows the FOCUS, not the keyboard.
-   
-     It followed the keyboard for one round and that undid the whole
-     thing: syncKeyboard runs on the focus event, the keyboard has not
-     opened yet at that point, so covered is 0 — and the attribute that
-     pointerdown had just set to take the section out was removed again
-     before Safari ever measured the page. Will, on the screenshot of
-     the book card sitting behind the keys: "we should never see or have
-     access to the second page on mobile when the input is focused."
-     
-     Focused is the rule. Not focused and the keys are gone. */
-  const focused = document.activeElement === input;
-
-  /* Only overwrite the provisional height once there is a real one to
-     put in its place. Writing 0 into it between the gesture and the
-     keyboard would collapse the padding at exactly the moment Safari is
-     deciding how far it can scroll. */
-  if (covered > 0) document.body.style.setProperty("--keyboard", `${covered}px`);
-
-  /* How far Safari has slid the VISUAL viewport down inside the layout
-     one. This is the shift Will sees in ?solo, where none of this code
-     runs: the page cannot scroll — the root is clipped — so what moves
-     is the visual viewport, and position: fixed does not follow it,
-     because fixed is relative to the LAYOUT viewport. Without this the
-     pinned bar slides away with everything else. */
-  document.body.style.setProperty(
-    "--keyboard-top", `${Math.max(0, Math.round(keyboard.offsetTop))}px`,
-  );
-  document.body.toggleAttribute("keyboard", focused && FLOATING_CHROME.matches);
-};
-
-/*
- * Rearrange the page BEFORE the keyboard, not after it.
- *
- * Hiding #more on focus was too late. Safari works out where to scroll a
- * focused field as it opens the keyboard, and by then the document it
- * measured still had the whole second section in it — so it scrolled for
- * a long page and left the bar a third of the way up with the cut
- * underneath it. Will: "Zoom was fixed in your previous attempt, not the
- * scrolling. Try my solution."
- *
- * His solution: take the focus, change the page, then give the focus
- * back. preventDefault on pointerdown stops Safari focusing the field
- * itself; the section comes out and the padding goes in; then focus() is
- * called from inside the same gesture, which is what iOS requires before
- * it will open a keyboard. Safari then measures the short page.
- *
- * The provisional height is the part that cannot be measured yet — the
- * keyboard has not opened, so nothing knows how tall it is. 42svh is
- * about what iOS uses in portrait, and it only has to be close: the
- * resize below replaces it with the real number a frame or two later,
- * and what it affects in between is how far Safari CAN scroll, not how
- * far it does.
- */
-const PROVISIONAL_KEYBOARD = "42svh";
-
-/*
- * The focus goes out inline, and it was worth proving rather than
- * asserting.
- *
- * ?defer shipped for one round with setTimeout(0) around it, to settle
- * whether a task boundary costs the keyboard on iOS. It does. On Will's
- * phone the field took the focus — the chips faded, the section went
- * out — and no keys appeared. The giveaway was the bar parked halfway up
- * the screen: no keyboard means no visualViewport resize, so the
- * provisional 42svh was never replaced by a real measurement.
- *
- * WebKit opens a keyboard for a programmatic focus() only during a user
- * gesture, and that activation does not survive into a timer. Measured,
- * not claimed.
- */
-
 /**
- * Take the section out, and make sure the page has actually CHANGED
- * before anyone asks it a question about itself.
+ * Shorten the page, and make sure it has actually CHANGED before
+ * anything asks it a question about itself.
  *
- * Setting the attribute only marks style dirty. Nothing says layout has
- * been recomputed by the time focus() goes out a line later, and if it
- * has not, Safari works out where to scroll against the page that still
- * had the second section in it — which is the whole bug this was written
- * to avoid, reappearing one step further in.
+ * Setting the attribute only marks style dirty. Nothing promises layout
+ * has been recomputed by the time focus() goes out a line later, and if
+ * it has not, Safari measures the page that still had the section in it —
+ * the exact bug this exists to avoid, one step further in.
  *
  * Reading offsetHeight forces style and layout to flush, synchronously,
- * now. Will's instinct was a timeout, which would also let the render
- * happen; the reason not to is that a timeout leaves the user gesture,
- * and iOS will not open a keyboard for a focus() that is outside one. So
- * the page is made to catch up without letting go of the tap.
+ * here. Will's instinct was a timeout, which would also let the render
+ * happen; the reason not to is that a timeout leaves the user gesture and
+ * takes the keyboard with it. So the page is made to catch up without
+ * letting go of the tap.
  */
 const clearTheDeck = () => {
-  document.body.style.setProperty("--keyboard", PROVISIONAL_KEYBOARD);
   document.body.setAttribute("keyboard", "");
   void document.body.offsetHeight;
 };
 
-/*
- * Registered unconditionally, and the question is asked at the moment it
- * matters rather than once at startup.
- *
- * FLOATING_CHROME.matches used to gate the registration itself, which
- * meant the answer was frozen at module evaluation. Anything that became
- * touch-capable afterwards — a browser pane switched into device mode, a
- * tablet whose keyboard is detached, a convertible folded over — kept
- * the answer from before. A timer would only narrow that window and
- * would be a guess at how long to wait; asking at the tap closes it.
- */
-/*
- * The rungs, so a URL says exactly which pieces are in play:
- *
- *   /?solo        the floor — no second page, nothing to scroll, none of
- *                 this
- *   /?solo&pin    the floor plus the pinned bar. Confirmed on the device:
- *                 bar on the keys, no gap under it
- *   /?pin         the whole page, pinned bar, and NO rearranging before
- *                 the focus — the question being whether a frozen page
- *                 still needs it
- *   /             everything
- */
-if (keyboard && input && !SOLO_PAGE && !PIN_ONLY) {
-  /*
-   * A tap: the earliest possible moment, before Safari has focused
-   * anything. preventDefault stops it focusing the field itself, the
-   * page changes, and focus() goes out from inside the same gesture,
-   * which is what iOS requires before it will open a keyboard.
-   */
+const wholePageBack = () => document.body.removeAttribute("keyboard");
+
+if (input && !SOLO_PAGE) {
+  /* The tap: the earliest moment there is, before Safari has focused
+     anything. preventDefault stops it focusing the field itself, the page
+     changes, and the focus goes out from inside the same gesture. */
   input.addEventListener("pointerdown", (event) => {
     if (!FLOATING_CHROME.matches) return;
     if (document.activeElement === input) return;
@@ -840,19 +749,17 @@ if (keyboard && input && !SOLO_PAGE && !PIN_ONLY) {
     input.focus();
   });
 
-  /*
-   * And the focus event itself, for every other way in — a tap Safari
-   * routes through touchend rather than pointerdown, the Next button on
-   * the keyboard's own accessory bar, a programmatic focus, a tap that
-   * landed on the form around the field rather than on it.
-   *
-   * Intercept, rearrange, re-dispatch. Blurring first matters: a focus
-   * that has already been accepted is a focus Safari has already decided
-   * where to scroll for, so handing it back and taking it again is what
-   * makes the second focus see the short page. The guard stops that from
-   * being a loop, and the deck being already clear means the pointerdown
-   * path above does not pay for any of this.
-   */
+  /* And the focus event itself, for every other way in: a tap Safari
+     routes through touchend rather than pointerdown, the Next button on
+     the keyboard's own accessory bar, a programmatic focus, a tap that
+     landed on the form around the field rather than on it.
+     
+     Intercept, shorten, re-dispatch. Blurring first is what matters: a
+     focus Safari has already accepted is a focus it has already decided
+     where to scroll for, so handing it back and taking it again is what
+     makes the second one see the short page. The guard stops that being
+     a loop, and a deck already clear means the pointerdown path above
+     pays for none of it. */
   let rearranging = false;
 
   input.addEventListener("focus", () => {
@@ -864,38 +771,12 @@ if (keyboard && input && !SOLO_PAGE && !PIN_ONLY) {
     input.focus();
     rearranging = false;
   });
-}
 
-/*
- * ?solo is the barebone and stays that way: no keyboard code at all, so
- * whatever the page does there is the browser.
- *
- * ?pin adds this one piece back on top of it — measure what the keys
- * cover, mark the body, which pins the bar to the keyboard and freezes
- * the page. Nothing else: no section to remove, no rearranging before
- * the focus, the tap still Safari's.
- *
- *   /?solo        the floor
- *   /?solo&pin    the floor plus the pinned bar
- *   /             everything
- */
-if (keyboard && input && (!SOLO_PAGE || PIN_ONLY)) {
-  keyboard.addEventListener("resize", syncKeyboard);
-  /* The visual viewport's own scroll is the event for that slide. */
-  keyboard.addEventListener("scroll", syncKeyboard);
-  input.addEventListener("focus", syncKeyboard);
-  /* Clear it on the way out, then measure again once the keys have
-     finished leaving. The resize that fires when the keyboard closes
-     would sort it out on its own, but only on a device that sends one —
-     and a page stuck with #more hidden is a page missing its second
-     half, which is a worse failure than a late repaint. */
-  input.addEventListener("blur", () => {
-    document.body.removeAttribute("keyboard");
-    setTimeout(syncKeyboard, 300);
-  });
-
-  /* Belt and braces for the same reason: any tap outside the field. */
+  /* A whole page again on the way out, from both events. A page left
+     with #more display: none is a page missing its second half, which is
+     a worse failure than anything this was protecting against. */
+  input.addEventListener("blur", wholePageBack);
   addEventListener("focusout", () => {
-    if (document.activeElement !== input) document.body.removeAttribute("keyboard");
+    if (document.activeElement !== input) wholePageBack();
   });
 }
