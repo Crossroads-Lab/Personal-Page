@@ -689,13 +689,23 @@ const sitAboveKeyboard = () => {
 };
 
 if (viewport && input) {
-  // The resize IS the keyboard arriving, and it is the only honest signal
-  // that it has finished arriving. A timer started from the focus event
-  // would be a guess at an animation length that is not ours.
+  // The resize IS the keyboard arriving.
   viewport.addEventListener("resize", sitAboveKeyboard);
 
-  // And once more a beat later: iOS does its own scroll-into-view after
-  // the resize, so correcting only on the resize corrects a position the
-  // browser is about to overwrite.
-  input.addEventListener("focus", () => setTimeout(sitAboveKeyboard, 300));
+  // And iOS keeps scrolling after it. One correction at 300ms was not
+  // enough: Will's screenshot had the bar 318 points clear of the keys
+  // with the cut and the dark section filling the gap, which is the
+  // browser's own scroll-into-view landing after mine and winning.
+  //
+  // Correcting repeatedly over the first second is the cheap answer —
+  // the guard below drops any pass where the page is already within a
+  // pixel, so what this costs when the browser behaves is four reads of
+  // a rect.
+  //
+  // Also on the visual viewport's own scroll, which is what fires when
+  // Safari moves the page under a keyboard that is already up.
+  viewport.addEventListener("scroll", sitAboveKeyboard);
+  input.addEventListener("focus", () => {
+    for (const ms of [150, 350, 600, 900]) setTimeout(sitAboveKeyboard, ms);
+  });
 }
