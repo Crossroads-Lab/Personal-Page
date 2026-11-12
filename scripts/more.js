@@ -70,23 +70,31 @@ for (const button of document.querySelectorAll("[data-ask]")) {
 }
 
 /*
- * The height of the display, in CSS pixels.
+ * Where the glass is, and where the page sits on it.
  *
- * This is the one number the cut needs and the one no CSS unit reports.
- * innerHeight stops at the viewport, 100lvh stops at the viewport with
- * the chrome retracted, and env(safe-area-inset-bottom) read 0 on the
- * device where this was going wrong. screen.height is the glass: status
- * bar, notch, home indicator and all.
+ * Two numbers, and no CSS unit reports either. innerHeight stops at the
+ * viewport, 100lvh stops at the viewport with the chrome retracted, and
+ * env(safe-area-inset-bottom) read 0 on the device where this was going
+ * wrong. screen.height is the whole display: status bar, notch, home
+ * indicator and all.
  *
- * css/common.css subtracts the height of the first screen from it, and
- * that difference is where the cut rests. Nothing else is needed.
+ * screenY is the half that was missing. The display is not the viewport
+ * with some chrome under it — there is chrome above it too, and on
+ * Will's phone it is most of the difference: a 956-point screen, an
+ * 836-point viewport, and 62 of the 120 points left over sit ABOVE the
+ * page, behind the status bar. Subtracting only screen.height - viewport
+ * credits all 120 to the bottom and rests the cut a hundred points below
+ * the edge it was aiming at.
  *
- * Re-read on rotation, where width and height swap.
+ * css/common.css does the subtraction. Both are re-read on rotation,
+ * where width and height swap, and on resize, where the toolbar
+ * collapsing moves the top of the page up the glass.
  */
-const measureScreen = () =>
-  document.documentElement.style.setProperty(
-    "--screen-height", `${Math.round(window.screen?.height ?? 0)}px`,
-  );
+const measureScreen = () => {
+  const root = document.documentElement.style;
+  root.setProperty("--screen-height", `${Math.round(window.screen?.height ?? 0)}px`);
+  root.setProperty("--viewport-top", `${Math.max(0, Math.round(window.screenY || 0))}px`);
+};
 
 measureScreen();
 addEventListener("orientationchange", measureScreen);

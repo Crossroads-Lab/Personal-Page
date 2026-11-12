@@ -60,6 +60,15 @@ const render = () => {
     ["100lvh", px("100lvh")],
     ["100dvh", px("100dvh")],
     ["safe-area-bottom", px("env(safe-area-inset-bottom, 0px)")],
+    ["safe-area-top", px("env(safe-area-inset-top, 0px)")],
+    // The number the whole resting position now turns on. If this comes
+    // back 0 on a phone, window.screenY is not reporting and --cut-rest
+    // falls back to resting too low rather than too high.
+    ["window.screenY", Math.round(window.screenY ?? 0)],
+    ["--viewport-top", px("var(--viewport-top)")],
+    // Where the bottom edge of the glass is, in page coordinates. The
+    // cut at rest should be sitting exactly here.
+    ["glass bottom, in viewport", Math.round((window.screen?.height ?? 0) - (window.screenY ?? 0))],
     ["--chrome-slack", px("var(--chrome-slack)")],
     ["--hero-height", px("var(--hero-height)")],
     ["--cut-rest", px("var(--cut-rest)")],
