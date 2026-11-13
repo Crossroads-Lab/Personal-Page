@@ -209,18 +209,6 @@ let endDisplay = () => {
   /* There is an answer on screen, so the tools above it have something to
      act on. css/chat-content.css keeps them display: none until this. */
   document.body.setAttribute("answer-ready", "");
-  /* And STICKY, never removed for the rest of the visit.
-   
-     answer-ready alone meant the row vanished on "new chat", taking the
-     fast-read toggle with it — so a visitor who had turned it on could
-     not turn it off again without asking another question first. The
-     setting persisted and the control did not, which is the worst of
-     both. Will: "and BR is not accessible anymore..."
-     
-     chat-used says "this visitor has asked something at least once", and
-     that stays true. The row stays with it; new chat hides itself when
-     there is nothing to clear. */
-  document.body.setAttribute("chat-used", "");
 };
 
 /**

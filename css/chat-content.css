@@ -689,29 +689,25 @@ body[file-over] #file-drop {
  * display: none rather than opacity, so neither is reachable by tab while
  * it is not there.
  */
-/* Nothing until the visitor has asked something — body[chat-used], set
-   once by endDisplay and never cleared for the rest of the visit.
+/* Nothing on the opening screen. Will, on a screenshot of the opening
+   screen with both icons still in the corner: "Top icon should disappear
+   when back to the beginning."
    
-   NOT body[answer-ready], which is what this was: that comes off again on
-   "new chat", and it took the fast-read toggle with it, so anyone who had
-   turned fast read ON could not turn it off without asking another
-   question. The setting outlived its own switch. */
+   So the row lives and dies with the answer — body[answer-ready], set by
+   endDisplay when the last character lands, cleared by the next question
+   and by "new chat". There is no answer to copy, re-render or leave
+   behind up there, so there are no controls either.
+   
+   This was briefly body[chat-used], a sticky flag, to keep the fast-read
+   toggle reachable after "new chat". That cost more than it bought: it
+   put two dead controls on the opening screen. The setting itself still
+   survives in localStorage, so fast read stays on across a new chat and
+   its switch comes back with the next answer. */
 #chat-tools {
   display: none;
 }
 
-/* New chat hides itself when there is no chat to leave. The row keeps its
-   shape because the toggle is pushed to its end by space-between either
-   way, so nothing moves when this appears and disappears. */
-#new-chat {
-  visibility: hidden;
-}
-
-body[chat-started] #new-chat {
-  visibility: visible;
-}
-
-body[chat-used] #chat-tools {
+body[answer-ready] #chat-tools {
   display: flex;
   justify-content: space-between;
   align-items: center;
