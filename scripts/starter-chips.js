@@ -23,7 +23,7 @@
 // --------------------------------------------------------------------------
 
 import { API_BASE } from "./api.js?v=091fa826";
-import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=a5a9bd04";
+import { showPreloaded, registerAnswers, askAsChip } from "./chat-input-form.js?v=2135184f";
 
 const container = document.getElementById("starter-chips");
 const chatContainer = document.getElementById("chat-input-container");
@@ -38,6 +38,15 @@ const FALLBACK = [
   { label: "Big tech",    q: "Why did you leave big tech?" },
   { label: "Core values", q: "What are your core values?" },
 ];
+
+/** The question behind the chip that was last pressed, if any. */
+let lastPressed = null;
+
+/** Every question this visit has already had answered from a chip. */
+const answered = new Set();
+
+/** What is on the row right now, so a refresh can prefer anything else. */
+let shown = [];
 
 /* A chip shows a topic, asks a sentence, and — where the backend sent one —
    already holds the answer. Anything that arrives as a bare string (an older
@@ -56,14 +65,37 @@ const normalise = (s) =>
     }
   : null;
 
-/** Three suggestions: the corpus's if we can get them, ours if we cannot. */
-const fetchStarters = async () => {
+/**
+ * One trip to /starters, or null.
+ *
+ * null rather than FALLBACK so the caller can tell "the network failed"
+ * from "here are three questions". On the first paint those are the same
+ * thing — show something — but on a refresh they are not: replacing a
+ * live row with the hardcoded three would be a visible downgrade caused
+ * by a request nobody asked for.
+ */
+const fetchOnce = async ({ redeal = false } = {}) => {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 4000);
-    const r = await fetch(`${API_BASE}/starters`, { signal: controller.signal });
+    /* /starters answers `cache-control: public, max-age=300`, which is
+       right for the first paint and wrong for every deal after it: the
+       endpoint picks three at random per request, so a cached copy is a
+       frozen row. Two parallel requests were being answered from the one
+       cache entry, and the "new" trio was the old trio for five minutes.
+   
+       no-store for the browser, a nonce for anything between here and the
+       origin that ignores it. Only on a redeal — the opening request still
+       wants the cache. */
+    const url = redeal
+      ? `${API_BASE}/starters?redeal=${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`
+      : `${API_BASE}/starters`;
+    const r = await fetch(url, {
+      signal: controller.signal,
+      ...(redeal ? { cache: "no-store" } : {}),
+    });
     clearTimeout(timer);
-    if (!r.ok) return FALLBACK;
+    if (!r.ok) return null;
     const { starters, sections, more } = await r.json();
 
     // The tree under the chips: every follow-up, and every follow-up of
@@ -73,11 +105,14 @@ const fetchStarters = async () => {
     registerAnswers(sections, more);
 
     const clean = (Array.isArray(starters) ? starters : []).map(normalise).filter(Boolean);
-    return clean.length ? clean.slice(0, 3) : FALLBACK;
+    return clean.length ? clean : null;
   } catch {
-    return FALLBACK;             // offline, blocked, slow: show something
+    return null;                 // offline, blocked, slow
   }
 };
+
+/** Three suggestions: the corpus's if we can get them, ours if we cannot. */
+const fetchStarters = async () => (await fetchOnce())?.slice(0, 3) ?? FALLBACK;
 
 const chip = (label, onClick) => {
   const b = document.createElement("button");
@@ -105,8 +140,15 @@ const ask = (question) => askAsChip(question);
  * short-circuits a starter it recognises anyway, so the visitor still gets
  * the same text, just one round trip later.
  */
-const press = ({ q, a, followUps, actions, covers }) =>
-  showPreloaded(q, a, followUps, actions, covers) || ask(q);
+const press = (starter) => {
+  const { q, a, followUps, actions, covers } = starter;
+  /* Remembered so "new chat" can put something else in its place. A
+     question the visitor has just had answered is the one suggestion on
+     the row we know they do not need. */
+  lastPressed = q;
+  answered.add(q);
+  return showPreloaded(q, a, followUps, actions, covers) || ask(q);
+};
 
 /**
  * Mark the row when it has more chips than fit, and say which way.
@@ -139,6 +181,7 @@ const render = (starters) => {
   // wave they leave on, rather than appearing fully formed the instant the
   // fetch lands — after a beat of empty space that reads as a glitch.
   container.setAttribute("entering", "");
+  shown = starters.map((starter) => starter.q);
   container.replaceChildren(
     ...starters.map((starter) => chip(starter.label, () => press(starter))),
   );
@@ -166,6 +209,77 @@ fetchStarters().then((starters) => {
   // width, so a row that fits before the swap can overflow after it.
   document.fonts?.ready.then(markOverflow);
 });
+
+/**
+ * A fresh row for a fresh chat.
+ *
+ * Will: "going back with new chat do not change the chip I just clicked on
+ * and replaced it with a new topic."
+ *
+ * The chips were never cleared because they do not live where the opening
+ * screen lives — #chat-input-container, not #content — so "new chat"
+ * restored the headline around a row that still offered the question the
+ * visitor had just read the answer to.
+ *
+ * /starters deals a random three from a larger pool on every request, so a
+ * new row costs one trip and no model. Two trips in parallel rather than
+ * one, because a single deal of three can come back holding the very chip
+ * we are trying to retire, and a row of two where three fit looks like
+ * something failed.
+ */
+const refresh = async () => {
+  if (!container) return;
+
+  const pool = [];
+  const seen = new Set();
+  for (const trip of await Promise.all([
+    fetchOnce({ redeal: true }),
+    fetchOnce({ redeal: true }),
+  ])) {
+    for (const starter of trip ?? []) {
+      if (!starter.q || seen.has(starter.q)) continue;
+      seen.add(starter.q);
+      pool.push(starter);
+    }
+  }
+  /* Offline, or the API is having a moment. Keep the row that is already
+     there: three real suggestions beat three hardcoded ones, and beat an
+     empty row by a mile. */
+  if (!pool.length) return;
+
+  /* Everything already answered this visit comes off — but only while
+     something is left. A visitor who has worked through most of the pool
+     should see repeats rather than an empty row, so the full filter gives
+     way to the narrow one. */
+  const wide = pool.filter((starter) => !answered.has(starter.q));
+  const fresh = wide.length ? wide : pool.filter((starter) => starter.q !== lastPressed);
+  if (!fresh.length) return;
+
+  /* Three chips, in order of how new they are to this visitor: topics
+     that are not on the row, then ones that are, then — only to fill a
+     gap — ones already answered. The row is a row of three; rendering two
+     because the deal was thin reads as something having failed, and the
+     one question that never makes it back is the one just pressed.
+   
+     The filler tier is why this draws from `pool` rather than from
+     `fresh`: an earlier pass topped up from the filtered set, which has
+     nothing left to give at exactly the moment a top-up is needed. */
+  const onRow = new Set(shown);
+  const inFresh = new Set(fresh.map((starter) => starter.q));
+  const ranked = [
+    ...fresh.filter((starter) => !onRow.has(starter.q)),
+    ...fresh.filter((starter) => onRow.has(starter.q)),
+    ...pool.filter((starter) => !inFresh.has(starter.q) && starter.q !== lastPressed),
+  ];
+  render(ranked.slice(0, 3));
+
+  /* Measured again after the wave has landed. The row is transitioning in
+     at the moment render runs, and a width of zero makes markOverflow bail
+     and leave the previous fade pointing the wrong way. */
+  setTimeout(markOverflow, 500);
+};
+
+document.addEventListener("new-chat", refresh);
 
 // A rotation or a resized window changes whether the row overflows, and in
 // which direction. Skipped once a conversation exists — the chips are gone.

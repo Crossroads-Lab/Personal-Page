@@ -1,5 +1,5 @@
-import "./chat-input-form.js?v=a5a9bd04";
-import "./starter-chips.js?v=4494eb2c";
+import "./chat-input-form.js?v=2135184f";
+import "./starter-chips.js?v=8b4456db";
 import "./quick-links.js?v=b0563e18";
 import "./more.js?v=71249732";
 import "./file-drop.js?v=dcf1269e";

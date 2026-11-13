@@ -840,4 +840,15 @@ newChatButton?.addEventListener("click", () => {
      back; whether to type next is the visitor's decision, and on a phone
      an unrequested keyboard is the single most intrusive thing a page can
      do. */
+
+  /* The chips are not ours to restore. They live in #chat-input-container,
+     not in #content, so the innerHTML above never touched them — which is
+     why the chip that was just pressed came back offering the question it
+     had already answered.
+   
+     An event rather than a call, because starter-chips.js imports this
+     module; importing it back would close the loop and leave one of the
+     two reading the other's exports before they exist. A notification
+     leaves the dependency pointing one way. */
+  document.dispatchEvent(new CustomEvent("new-chat"));
 });
