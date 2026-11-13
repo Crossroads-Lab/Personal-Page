@@ -730,6 +730,24 @@ const copyButton = document.getElementById("copy-answer");
  * answer still copies as plain prose — textContent flattens the <b>
  * wrappers back out, which is exactly what belongs on a clipboard.
  */
+const toast = document.getElementById("toast");
+let toastTimer;
+
+/**
+ * Say something for a moment and then stop.
+ *
+ * The timer is cleared first so a second tap restarts the clock rather
+ * than inheriting the remainder of the first one — otherwise two taps a
+ * second apart leave the message up for 0.6s.
+ */
+const say = (message) => {
+  if (!toast) return;
+  clearTimeout(toastTimer);
+  toast.textContent = message;
+  toast.setAttribute("shown", "");
+  toastTimer = setTimeout(() => toast.removeAttribute("shown"), 1600);
+};
+
 copyButton?.addEventListener("click", async () => {
   const block = content.querySelector(".answer-block");
   const text = (block?.textContent || "").trim();
@@ -737,19 +755,31 @@ copyButton?.addEventListener("click", async () => {
 
   try {
     await navigator.clipboard.writeText(text);
+    say("Copied");
+    copyButton.setAttribute("copied", "");
+    setTimeout(() => copyButton.removeAttribute("copied"), 1600);
   } catch {
     /* Denied, or an insecure context — the Clipboard API wants https or
        localhost. Select the answer instead, so the keyboard shortcut a
-       desktop visitor would reach for actually has something to act on. */
+       desktop visitor would reach for actually has something to act on.
+       
+       And say THAT rather than "Copied", which would be a lie the
+       visitor only discovers when they paste. No tick either: the button
+       did not do the thing. */
     const range = document.createRange();
     range.selectNodeContents(block);
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
+    /* What to tell them depends on what they have. navigator.platform
+       reports "iPhone" there, so the old Mac-or-Ctrl test sent an iPhone
+       a keyboard shortcut it has no keyboard for. A touch device gets
+       the gesture that actually works: the text is already selected, so
+       a long press raises iOS's own Copy callout. */
+    say(matchMedia("(hover: none)").matches
+      ? "Selected — press and hold to copy"
+      : navigator.platform?.startsWith("Mac") ? "Selected — press \u2318C" : "Selected — press Ctrl+C");
   }
-
-  copyButton.setAttribute("copied", "");
-  setTimeout(() => copyButton.removeAttribute("copied"), 1600);
 });
 
 /** Where fast read applies: the answers, not the furniture around them. */

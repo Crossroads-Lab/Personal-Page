@@ -52,10 +52,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=a04a01aa" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=098d13e0" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=7744033d" type="module" defer></script>
+    <script src="scripts/index.js?v=b7d90919" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -284,6 +284,15 @@
       </button>
       </div>
     </div>
+
+    <!-- Said out loud, briefly.
+         
+         role="status" with aria-live="polite" so a screen reader hears
+         it without being interrupted mid-sentence, which is what
+         aria-live="assertive" would do for something this unimportant.
+         Empty until there is something to say; absolutely positioned so
+         appearing shifts nothing. -->
+    <div id="toast" role="status" aria-live="polite"></div>
 
     <!-- Main content area where chat messages will be displayed -->
     <main id="content">

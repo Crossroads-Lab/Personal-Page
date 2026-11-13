@@ -866,3 +866,45 @@ b.bionic {
 #copy-answer[copied] .tick { display: block; }
 #copy-answer[copied] svg:not(.tick) { display: none; }
 #copy-answer[copied] { color: var(--color); }
+
+/*
+ * =====================================================
+ * THE TOAST
+ * =====================================================
+ * Will: "when we tap on copy, a little toast should tell us it is
+ * copied."
+ *
+ * The tick on the button already says it, but only to someone who was
+ * looking at the button — and on a phone your thumb is ON the button at
+ * that moment, covering it. A line of text a little below is the part
+ * you can actually see.
+ *
+ * Absolutely positioned inside .hero, so it appears and disappears
+ * without moving a single thing around it. Just under the tools row,
+ * which is where the tap happened.
+ *
+ * pointer-events: none, because a message is not a target — tapping
+ * where it happens to be should reach whatever is underneath.
+ */
+#toast {
+  position: absolute;
+  top: calc(var(--safearea-padding-top) + 52px);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 3;
+
+  padding: 7px 14px;
+  border-radius: var(--border-radius-round);
+  background: var(--color);
+  color: #FFFFFF;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+#toast[shown] {
+  opacity: 1;
+}
