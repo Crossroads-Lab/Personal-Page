@@ -96,6 +96,19 @@ export const createThinkingNode = (text) => {
   //
   // Both the number and the separator are empty until there is a number to
   // show, so the row does not start with a bare dot hanging off its left.
+  /* The mark goes first, and it is the only part of this row that moves on
+     its own. Three chips filling left to right: what the backend is doing
+     while you wait is a lookup across the corpus, so the mark is three
+     sections lighting up rather than a wheel going round.
+     
+     aria-hidden because the label beside it already announces "Thinking…";
+     a screen reader gains nothing from a decorative pulse, and the CSS
+     removes it entirely for anyone who asked for less motion. */
+  const spinner = host.appendChild(document.createElement("span"));
+  spinner.className = "thinking-spinner";
+  spinner.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 3; i++) spinner.appendChild(document.createElement("i"));
+
   const elapsed = host.appendChild(document.createElement("span"));
   elapsed.className = "thinking-elapsed";
 

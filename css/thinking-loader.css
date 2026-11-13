@@ -6,20 +6,23 @@
  * whether anything is still happening and how long it has been — so it says
  * both, in words and in a number, and in nothing else.
  *
- * THERE IS NO ANIMATION HERE AND THAT IS THE POINT. There used to be a
- * pulsing dot and a light sweeping left to right across the letters, and
- * both are gone. Will: "I don't like the thinking animation, maybe changing
- * text with no animation like Claude is better."
+ * TWO PARTS, AND THEY SAY DIFFERENT THINGS.
  *
- * The argument for taking them out, beyond taste: a sweep looks identical at
- * one second and at thirty, so it cannot tell you the difference between
- * working and stuck, which is the only question anyone is asking while they
- * wait. Text that changes is motion that means something — it moves when the
- * state moves and holds still when it does not.
+ * The words and the number carry the STATE: they move when the state moves
+ * and hold still when it does not, so a visitor can tell working from stuck.
+ * That was the whole argument for removing the old pulsing dot and the light
+ * that swept across the letters — Will: "I don't like the thinking
+ * animation, maybe changing text with no animation like Claude is better" —
+ * and it still holds. A sweep looks identical at one second and at thirty.
  *
- * Which also retires the prefers-reduced-motion block that used to sit at
- * the bottom of this file. Nothing here moves, so there is nothing to
- * reduce.
+ * The mark carries LIVENESS: proof the page itself has not frozen, in the
+ * gap between word changes, which is three seconds long and feels longer.
+ * Will: "I like to have a spinner, fun one that reflects the product."
+ *
+ * So it is not a spinner. It is three chips filling left to right, which is
+ * what the backend is actually doing while you wait — pulling sections out
+ * of the corpus. A rounded square because that is already this page's
+ * shape: the fast-read toggle wears one when it is on.
  */
 
 .thinking-loader {
@@ -50,4 +53,50 @@
 
 .thinking-label {
   color: rgb(from var(--color) r g b / 0.7);
+}
+
+/*
+ * The mark: three chips, filling left to right.
+ *
+ * Squares rather than dots, and filling rather than bouncing, because the
+ * thing being waited on is a lookup across 57 documents — not a cycle. The
+ * row is aria-hidden: the label beside it already says "Thinking…" out loud,
+ * and a screen reader has no use for a decorative pulse.
+ */
+.thinking-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  /* Its own margin rather than a gap on .thinking-loader, which is 0 on
+     purpose — the separator carries its own spaces. */
+  margin-right: 8px;
+  /* Nudged onto the text's optical centre: the row aligns on the baseline,
+     and a 5px square sitting on a baseline looks like it is falling off. */
+  transform: translateY(-1px);
+}
+
+.thinking-spinner i {
+  width: 5px;
+  height: 5px;
+  border-radius: 1.5px;
+  background: var(--color);
+  opacity: 0.22;
+  animation: thinking-chip 1.25s ease-in-out infinite;
+}
+
+.thinking-spinner i:nth-child(2) { animation-delay: 0.16s; }
+.thinking-spinner i:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes thinking-chip {
+  0%, 70%, 100% { opacity: 0.22; }
+  28%           { opacity: 0.85; }
+}
+
+/*
+ * Nothing moves for anyone who asked for that, and nothing is lost either:
+ * the words and the seconds carry the state on their own, which is why they
+ * were built to. A static mark would only be decoration.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .thinking-spinner { display: none; }
 }

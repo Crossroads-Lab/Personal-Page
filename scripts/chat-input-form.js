@@ -2,7 +2,7 @@
 
 import { content, displayTextContent } from "./content.js?v=bc5dff6f";
 import { fastRead, plainRead, fastReadOn, rememberFastRead } from "./bionic.js?v=50e4dccf";
-import { createThinkingNode } from "./createThinkingNode.js?v=31debead";
+import { createThinkingNode } from "./createThinkingNode.js?v=a6fd0ae7";
 import { ask } from "./api.js?v=091fa826";
 
 // --------------------------------------------------------------------------
