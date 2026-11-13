@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-11-12T22:05:09.173Z",
+  "generatedAt": "2026-11-13T23:00:28.855Z",
   "documents": {
     "background|book": "f453fd56852a020e3e6972c6f894fc7505caa85846ebf41acc2b8ff0658bb363",
     "background|demographics_and_eligibility": "dc2af8bbbc9142720ccffa9aca1b929d655aba360ff6ed5db5c913991db19d04",
     "background|education_and_research": "559e5f54e460534e865f3cb4f1d6d735eb960eba47bcd0f0972f514e6fbb4ad1",
     "background|personal_background": "1f27ad686e2e4e3f919a5b0db9d74f5ce4720e54b57c0ba1a385ccc7d56fef06",
+    "background|press_and_interviews": "c5ffbaa36722ea0645955ac7fc3f75328d0f15beb54da3f2ff025724a21036ad",
     "background|skills": "854a6793d4bf88e45fddb6059f8ef9b741cd5195fa4de0dfeee6da09e642cc29",
     "background|summary": "484d38b7f99dc8d5b9febf3f97e4abb2b91de76010a2d42fea398ff4a6d68af3",
+    "background|this_page": "1d074f53a69498e6e1436f561a2be906ed69c3a82b3ddd92027a9f1a8da7c906",
     "career|amazon_a9": "c06702e20e24ab39f2ed71ead1ef33502e68e5e86f5b72b963bf1011b9e5561e",
     "career|crossroads_venture_studio": "208082f6188627841a575081f4b645d59a05ce5f90243112d62051c895652e99",
     "career|google_youtube": "5ebe626c7c197c822725ca57260c6bddf50b650861163a1c1fa42e538fb80493",
@@ -25,6 +27,7 @@
     "logistics|why_i_left_iscribehealth": "b8e0066bb83c14091bae180bfe6a74b936f91618542a93ce1042869bc9a596e2",
     "perspective|ai_adoption": "837dd37d44b1e6e20bd8f232f20203bb5ea54512e8a05a896bbea31ebe035480",
     "perspective|ai_for_good": "d65ad36a888399aaba078c2ed704f0acf1d18235a1e3a4756d36a24ae1dd1b92",
+    "perspective|ai_slop": "065ca3f2d846dd683c8b502f5fbf7e7fd64b2bf570b0ee99f6328e47f0f7c211",
     "perspective|core_values": "e62e6febb3c53044d34dbcb89d30127366d54534311e4598abdb28ad18f3e52c",
     "perspective|customer_centricity": "be8ab023fc13f0cf97be8e4a1e23bdfc60b2d20ec6036ffec87289a5f879393f",
     "perspective|distributed_teams": "37a398e563f8f27fa0a420ad4602949f03f91978b086fe3d4ba493ac99fc7478",
@@ -35,6 +38,8 @@
     "perspective|how_i_run_teams": "bc72c160585a83bb36b6251c6d4fbbf94acfb422fad45fd76e086c3efd01f071",
     "perspective|how_i_see_myself": "a4e9b2ef2cd51a2d22dea43c893b82154cf90683e3170222e0907989783cf2c1",
     "perspective|influences": "c237b5bcd332ce76457a293d1763d2cabfc43c6dc958af8554702dd344e5ddbe",
+    "perspective|pwa_vs_native": "9794d9abc67b9f673fb4f60273580e8ab4b6ff64aa07c83325630068afcf831e",
+    "perspective|why_javascript": "ffae3b58425cb630eb4b809bf3be77be5c847bcea74327f2c9df41bb21747cc1",
     "perspective|work_hours": "a39972cd04f98d765d867bfd2ec6d90ea4aff80e5c238021bdcf4f06254b93a0",
     "stories|apple_offer_and_google": "1a44aac8bd8416b4cd22e6422441ddadffe1c09fd33243c830875ef5f160047f",
     "stories|heali_early_team": "26b3731498acbc9aae6dda4e66b363990ab7a6fc37a52a4054a8e8d3f4286baf",
@@ -52,11 +57,6 @@
     "stories|onboarding_my_own_director": "bf23a5d7e6c46f21975e17ce2117d49d1703384def74b7de3045ab19a72433cb",
     "stories|snap_beauty_score_filter": "be629c0475e42c2e5e2a92603fbd07e394b24cb50ccb5f8da72973bd12ba0e72",
     "stories|told_id_never_make_it": "7f3f8ea13d2db8793d8e2f02ebf59eb0f3ac577db5f54b76efaf57e628f6aeab",
-    "stories|youtube_shipping_past_politics": "81ad666623d03a0acfbcfad9c6159a0cbfab2a2a24759ae20dc822eda60fb372",
-    "background|this_page": "1d074f53a69498e6e1436f561a2be906ed69c3a82b3ddd92027a9f1a8da7c906",
-    "perspective|ai_slop": "065ca3f2d846dd683c8b502f5fbf7e7fd64b2bf570b0ee99f6328e47f0f7c211",
-    "perspective|why_javascript": "ffae3b58425cb630eb4b809bf3be77be5c847bcea74327f2c9df41bb21747cc1",
-    "perspective|pwa_vs_native": "9794d9abc67b9f673fb4f60273580e8ab4b6ff64aa07c83325630068afcf831e",
-    "background|press_and_interviews": "c5ffbaa36722ea0645955ac7fc3f75328d0f15beb54da3f2ff025724a21036ad"
+    "stories|youtube_shipping_past_politics": "81ad666623d03a0acfbcfad9c6159a0cbfab2a2a24759ae20dc822eda60fb372"
   }
 }
