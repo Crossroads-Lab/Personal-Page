@@ -73,7 +73,7 @@
          few words are the ones that survive truncation on a phone. -->
     <meta name="description" content="AI and engineering executive, PhD, three-time founder. 20+ years shipping ML to 480M+ daily users at Snap, Amazon and Google. 30+ patents, 2,200 citations.">
     <meta name="author" content="William Brendel">
-    <meta name="image" content="https://william-brendel.com/assets/profile.webp">
+    <meta name="image" content="https://william-brendel.com/assets/og-card.jpg">
 
     <!-- Apple touch icon, for a page added to the Home Screen. The favicon
          is 588x588, comfortably over the 180 iOS wants. -->
@@ -96,14 +96,30 @@
          different one in the PDF. Both now say the same thing. -->
     <meta property="og:title" content="William Brendel, PhD — AI &amp; Machine Learning Engineering Executive">
     <meta property="og:description" content="AI and engineering executive, PhD, three-time founder. 20+ years shipping ML to 480M+ daily users at Snap, Amazon and Google. 30+ patents, 2,200 citations.">
-    <meta property="og:image" content="https://william-brendel.com/assets/profile.webp">
-    <meta property="og:image:type" content="image/webp">
-    <!-- Dimensions let a crawler lay the card out without fetching the
-         file first, which is the difference between an unfurl that
-         appears immediately and one that appears a second later. -->
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1024">
-    <meta property="og:image:alt" content="William Brendel">
+    <meta property="og:image" content="https://william-brendel.com/assets/og-card.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <!-- 1200x630, and a JPEG, and both for the same reason: the card
+         that was here was a 1024x1024 WebP with an alpha channel.
+         
+         LinkedIn, Slack and X lay a link card out at 1.91:1 and
+         centre-crop anything else to fit. On a head-and-shoulders
+         portrait that crop takes the head. The image is built at the
+         shape they want now, so the crop never happens and the framing
+         is decided here rather than by a scraper.
+         
+         WebP support across those scrapers is uneven, and transparency
+         composites against whatever colour the client happens to use —
+         white in one place, near-black in another. JPEG has neither
+         problem.
+         
+         Dimensions declared so a crawler can lay the card out without
+         fetching the file first, which is the difference between an
+         unfurl that appears immediately and one that appears a second
+         later. assets/profile.webp stays on the server: links shared
+         before today still point at it. -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="William Brendel, PhD — AI &amp; Machine Learning Engineering Executive">
     <meta property="profile:first_name" content="William">
     <meta property="profile:last_name" content="Brendel">
 
@@ -118,8 +134,8 @@
     <meta name="twitter:creator" content="@iamnotanaibot">
     <meta name="twitter:title" content="William Brendel, PhD — AI &amp; Machine Learning Engineering Executive">
     <meta name="twitter:description" content="AI and engineering executive, PhD, three-time founder. 20+ years shipping ML to 480M+ daily users at Snap, Amazon and Google. 30+ patents, 2,200 citations.">
-    <meta name="twitter:image" content="https://william-brendel.com/assets/profile.webp">
-    <meta name="twitter:image:alt" content="William Brendel">
+    <meta name="twitter:image" content="https://william-brendel.com/assets/og-card.jpg">
+    <meta name="twitter:image:alt" content="William Brendel, PhD — AI &amp; Machine Learning Engineering Executive">
 
     <!-- Structured data -->
     <!-- This block had a trailing comma after "image", which is invalid JSON
@@ -161,7 +177,7 @@
             "jobTitle": "AI & Engineering Executive",
             "description": "AI and engineering executive, PhD, three-time founder. 20+ years shipping ML to 480M+ daily users at Snap, Amazon and Google. 30+ patents, 2,200 citations.",
             "url": "https://william-brendel.com/",
-            "image": "https://william-brendel.com/assets/profile.webp",
+            "image": "https://william-brendel.com/assets/profile.jpg",
             "homeLocation": {
               "@type": "Place",
               "address": {
