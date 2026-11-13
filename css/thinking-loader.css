@@ -68,8 +68,10 @@
   align-items: center;
   gap: 3px;
   /* Its own margin rather than a gap on .thinking-loader, which is 0 on
-     purpose — the separator carries its own spaces. */
-  margin-right: 8px;
+     purpose — the separator carries its own spaces. 11, not 8: the chips
+     are small and low-contrast, and at 8 they read as part of the number
+     rather than as their own thing. */
+  margin-right: 11px;
   /* Nudged onto the text's optical centre: the row aligns on the baseline,
      and a 5px square sitting on a baseline looks like it is falling off. */
   transform: translateY(-1px);
