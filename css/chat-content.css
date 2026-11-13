@@ -689,11 +689,29 @@ body[file-over] #file-drop {
  * display: none rather than opacity, so neither is reachable by tab while
  * it is not there.
  */
+/* Nothing until the visitor has asked something — body[chat-used], set
+   once by endDisplay and never cleared for the rest of the visit.
+   
+   NOT body[answer-ready], which is what this was: that comes off again on
+   "new chat", and it took the fast-read toggle with it, so anyone who had
+   turned fast read ON could not turn it off without asking another
+   question. The setting outlived its own switch. */
 #chat-tools {
   display: none;
 }
 
-body[answer-ready] #chat-tools {
+/* New chat hides itself when there is no chat to leave. The row keeps its
+   shape because the toggle is pushed to its end by space-between either
+   way, so nothing moves when this appears and disappears. */
+#new-chat {
+  visibility: hidden;
+}
+
+body[chat-started] #new-chat {
+  visibility: visible;
+}
+
+body[chat-used] #chat-tools {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -720,12 +738,31 @@ body[answer-ready] #chat-tools {
   z-index: 1;
 }
 
+.chat-tool-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
 .chat-tool {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  /* 44, not 32.
+     
+     Will: "Br not clickable." I could not reproduce it in a desktop pane
+     — hit-testing resolved to the button every time — and the most
+     likely explanation is the one the platform guidance already gives:
+     32x32 is below the 44pt minimum iOS asks for, and with
+     -webkit-tap-highlight-color disabled a near-miss gives no feedback
+     at all, so it reads as a dead button rather than as a missed one.
+     
+     The GLYPH is still 17-19px and the visible disc is still 32: the box
+     grows, the ink does not. The pressed square below is drawn with a
+     background on an inner span-sized area via background-clip, so the
+     larger hit box does not become a larger black square. */
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -760,9 +797,26 @@ body[answer-ready] #chat-tools {
    Only the fast-read button can reach this — new chat is an action, not
    a toggle, and carries no aria-pressed at all. */
 .chat-tool[aria-pressed="true"] {
+  color: #FFFFFF;
+  /* The fill is 32x32 inside a 44x44 button: a radial-free background-image
+     cannot do that, so it is a content-box-sized background with padding
+     carrying the rest. Simpler to draw it on a pseudo-element. */
+  background: none;
+}
+
+.chat-tool[aria-pressed="true"]::before {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
   border-radius: 9px;
   background: var(--color);
-  color: #FFFFFF;
+  z-index: -1;
+}
+
+.chat-tool {
+  position: relative;
+  isolation: isolate;
 }
 
 /* The hover rule below is scoped away from the pressed state, or hovering
@@ -805,3 +859,10 @@ b.bionic {
   font-weight: 600;
   color: inherit;
 }
+
+/* The copy button swaps its glyph for a tick rather than growing a word,
+   because a row of icons that suddenly contains text jumps sideways. */
+#copy-answer .tick { display: none; }
+#copy-answer[copied] .tick { display: block; }
+#copy-answer[copied] svg:not(.tick) { display: none; }
+#copy-answer[copied] { color: var(--color); }

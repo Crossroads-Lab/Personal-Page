@@ -29,20 +29,38 @@ const stopThinking = () => (
 /**
  * The opening screen's markup, kept so "new chat" can put it back.
  *
- * Captured on the FIRST question rather than at load, because
- * scripts/quick-links.js fills the icon row from #destinations after this
- * module runs — snapshot too early and the restored screen comes back with
- * an empty row where the links were.
+ * Will: "new chat basically takes you back at the beginning."
  *
- * null until then, which is also how we know not to capture twice: by the
- * second question #content holds an answer, and saving that as the opening
- * screen would make "new chat" restore the conversation it just cleared.
+ * Captured ONCE, on the first animation frame after this module loads.
+ * That timing is the fix for the bug the first version had: it captured
+ * lazily inside startThinking, and showPreloaded — the path a starter
+ * chip takes — does not call startThinking at all. It calls stopThinking,
+ * which empties #content. So pressing a chip, which is the likeliest
+ * first thing anyone does on a phone, wiped the opening screen with
+ * nothing saved, and "new chat" then restored nothing. Typing a question
+ * was the one route that worked, and it is the route I tested.
+ *
+ * A frame rather than immediately, because scripts/quick-links.js fills
+ * the icon row from #destinations during module evaluation — index.js
+ * imports it after this file. A callback queued here runs after all of
+ * that, so the snapshot has the links in it.
+ *
+ * captureOpening is also called at the top of both paths that clear
+ * #content, which is belt and braces: by then the rAF has long since
+ * fired, and the null guard means neither can overwrite the snapshot with
+ * an answer.
  */
 let openingHTML = null;
 
+const captureOpening = () => {
+  if (openingHTML === null) openingHTML = content.innerHTML;
+};
+
+requestAnimationFrame(captureOpening);
+
 // Start thinking.
 const startThinking = (text) => {
-  if (openingHTML === null) openingHTML = content.innerHTML;
+  captureOpening();
   // Set the thinking state.
   document.body.setAttribute("thinking", "");
   // Whatever the tools were for is gone.
@@ -191,6 +209,18 @@ let endDisplay = () => {
   /* There is an answer on screen, so the tools above it have something to
      act on. css/chat-content.css keeps them display: none until this. */
   document.body.setAttribute("answer-ready", "");
+  /* And STICKY, never removed for the rest of the visit.
+   
+     answer-ready alone meant the row vanished on "new chat", taking the
+     fast-read toggle with it — so a visitor who had turned it on could
+     not turn it off again without asking another question first. The
+     setting persisted and the control did not, which is the worst of
+     both. Will: "and BR is not accessible anymore..."
+     
+     chat-used says "this visitor has asked something at least once", and
+     that stays true. The row stays with it; new chat hides itself when
+     there is nothing to clear. */
+  document.body.setAttribute("chat-used", "");
 };
 
 /**
@@ -321,41 +351,12 @@ const answerSlot = () => {
   // returns blocks, and a <p> inside a <span> is invalid nesting.
   const sink = block.appendChild(document.createElement("div"));
 
-  const copy = block.appendChild(document.createElement("button"));
-  copy.type = "button";
-  // Not liquid-glass: this one is opaque on purpose. See css/chat-content.css
-  // — a translucent control sitting on top of body text reads as a glitch.
-  copy.className = "copy-answer";
-  copy.title = "Copy this answer";
-  copy.setAttribute("aria-label", "Copy this answer");
-  copy.textContent = "Copy";
-  copy.onclick = async (event) => {
-    event.stopPropagation();
-    try {
-      // sink.textContent, not the block's — the button's own label is in
-      // there too, and copying "…whole night.Copy" is the kind of bug that
-      // only shows up in somebody else's document.
-      await navigator.clipboard.writeText(sink.textContent.trim());
-      copy.textContent = "Copied";
-      copy.setAttribute("copied", "");
-    } catch {
-      // Denied permission, or an insecure context (the Clipboard API needs
-      // https or localhost). Select the answer so the keyboard shortcut the
-      // button is now suggesting actually does something — telling someone
-      // to press ⌘C with nothing selected is worse than no button at all.
-      const range = document.createRange();
-      range.selectNodeContents(sink);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      copy.textContent = navigator.platform?.startsWith("Mac") ? "Press ⌘C" : "Press Ctrl+C";
-    }
-    setTimeout(() => {
-      copy.textContent = "Copy";
-      copy.removeAttribute("copied");
-    }, 1600);
-  };
-
+  /* No per-answer copy button any more. It was absolutely positioned over
+     the answer and lived inside @media (hover: hover), which meant a
+     phone never had one at all — and there is only ever one answer on
+     screen, since every question clears #content. So it moved into the
+     tools row, where it is reachable by thumb. Will: "the copy should now
+     be next to BR button no?" */
   return content.appendChild(block).firstChild;
 };
 
@@ -456,6 +457,7 @@ export const showPreloaded = (question, text, followUps = [], actions = [], cove
 
   document.body.setAttribute("chat-started", "");
   resetForm();
+  captureOpening();               // before the line below throws it away
   stopThinking();                 // clears #welcome and any running typing
 
   remember({ q: question, a: text });
@@ -718,6 +720,37 @@ const resetForm = () => {
 
 const newChatButton = document.getElementById("new-chat");
 const fastReadButton = document.getElementById("fast-read");
+const copyButton = document.getElementById("copy-answer");
+
+/**
+ * Copy whatever answer is on screen.
+ *
+ * .answer-block's first child is the sink the text is typed into; the
+ * block itself is read rather than the sink so a bionic-transformed
+ * answer still copies as plain prose — textContent flattens the <b>
+ * wrappers back out, which is exactly what belongs on a clipboard.
+ */
+copyButton?.addEventListener("click", async () => {
+  const block = content.querySelector(".answer-block");
+  const text = (block?.textContent || "").trim();
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    /* Denied, or an insecure context — the Clipboard API wants https or
+       localhost. Select the answer instead, so the keyboard shortcut a
+       desktop visitor would reach for actually has something to act on. */
+    const range = document.createRange();
+    range.selectNodeContents(block);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  copyButton.setAttribute("copied", "");
+  setTimeout(() => copyButton.removeAttribute("copied"), 1600);
+});
 
 /** Where fast read applies: the answers, not the furniture around them. */
 const answerBlocks = () => content.querySelectorAll(".answer-block");

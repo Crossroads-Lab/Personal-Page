@@ -52,10 +52,10 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=1ebd9236" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=a04a01aa" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
-    <script src="scripts/index.js?v=5d06e12e" type="module" defer></script>
+    <script src="scripts/index.js?v=7744033d" type="module" defer></script>
 
     <!-- Canonical url -->
     <link href="https://william-brendel.com/" rel="canonical">
@@ -255,6 +255,25 @@
         </svg>
       </button>
 
+      <!-- Copy and fast read group at the right end; new chat holds the
+           left. Copy lives HERE now rather than on the answer itself:
+           the old one was inside @media (hover: hover), so a phone never
+           had a copy button at all. Will: "the copy should now be next
+           to BR button no?" -->
+      <div class="chat-tool-group">
+        <button id="copy-answer" class="chat-tool" type="button"
+                title="Copy the answer" aria-label="Copy the answer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="11" height="11" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <svg class="tick" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </button>
+
       <button id="fast-read" class="chat-tool" type="button"
               title="Fast read" aria-label="Fast reading" aria-pressed="false">
         <!-- Letters, not a glyph. The icon IS the feature: a bold head and
@@ -263,6 +282,7 @@
              about reading. -->
         <span class="br" aria-hidden="true"><b>B</b>R</span>
       </button>
+      </div>
     </div>
 
     <!-- Main content area where chat messages will be displayed -->
