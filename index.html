@@ -52,7 +52,7 @@
     <link href="assets/favicon.png" rel="icon" type="image/png">
 
     <!-- Other links, like styles -->
-    <link href="css/index.css?v=098d13e0" rel="stylesheet" type="text/css">
+    <link href="css/index.css?v=fac42a4c" rel="stylesheet" type="text/css">
 
     <!-- Page script -->
     <script src="scripts/index.js?v=e3df089c" type="module" defer></script>
@@ -330,15 +330,22 @@
     <main id="content">
       <div id="welcome">
         <div>
-          <!-- A <p>, not an <h2>. It reads as a line above the title and it
-               used to be marked up as one, which put an h2 ahead of the h1
-               in the document and gave anyone navigating by heading a
-               hierarchy that starts half way down. It is a greeting, not a
-               section: #welcome h2 in css/chat-content.css styles it either
-               way, so the class carries the look and the tag tells the
-               truth. -->
-          <p class="greeting">Hi, I'm <b>William</b> Brendel</p>
-          <h1>Where should we <span class="accent">start?</span></h1>
+          <!-- The NAME is the h1, and the question is not.
+               
+               An h1 is the strongest on-page statement of what a page is
+               about, and this one spent it on "Where should we start?" — a
+               UI prompt that describes the interface rather than the
+               person. A recruiter's search engine read this page's primary
+               heading as a question about navigation.
+               
+               Nothing moves on screen. The look lives entirely in the
+               classes (.greeting stays small and light, .headline stays
+               large), so swapping which tag carries which class changes the
+               document outline and not one pixel. The greeting was already
+               a <p> for a related reason: as an <h2> it put a level two
+               above the level one for anyone navigating by heading. -->
+          <h1 class="greeting">Hi, I'm <b>William</b> Brendel</h1>
+          <p class="headline">Where should we <span class="accent">start?</span></p>
           <!--
             The four destinations, as icons. Filled by scripts/quick-links.js
             from #destinations at the end of this file, so the hrefs live in
@@ -464,6 +471,33 @@
           </svg>
         </a>
         <h2 id="more-title" class="more-label">More about me</h2>
+
+        <!-- The one paragraph a crawler can actually read.
+             
+             Everything substantial about him lives in the RAG corpus behind
+             the chat, and Google does not type questions into things. Before
+             this, the whole document held 236 indexable words and none of
+             them were "machine learning", "executive", "founder",
+             "leadership" or "LLM" — the words a recruiter searches when they
+             do not already know his name. The page ranked for "William
+             Brendel" and for nothing else.
+             
+             Visible prose rather than a hidden block: it is what "More about
+             me" promises, a visitor who scrolls here wants exactly this, and
+             text written for a crawler and kept from the reader is the thing
+             search engines penalise. Every figure is the resume's. -->
+        <p class="more-intro">
+          I'm an engineering and machine learning executive with a PhD in computer
+          science and AI. Over twenty years I've built and led R&amp;D and platform
+          organisations at Google, Amazon and Snap, shipping machine learning to more
+          than 480 million daily users, and I'm a three-time founder. Most recently I ran
+          engineering for an AI clinical documentation platform, taking it through SOC 2
+          Type II and HIPAA compliance. I hold 30+ patents and publications with 2,200+
+          citations, and I co-wrote a chapter of the Amazon bestseller
+          <em>The AI Transformation</em>. My work now is generative AI, LLM
+          orchestration and retrieval-augmented generation &mdash; and the engineering
+          leadership it takes to ship them.
+        </p>
 
         <!-- 1. The book -->
         <article class="card card--book">

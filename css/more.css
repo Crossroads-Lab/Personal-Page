@@ -220,6 +220,33 @@
   color: var(--text-on-dark-3);
 }
 
+/* The lead paragraph under "More about me".
+   
+   Sized between the label above it and the card bodies below: a little
+   larger and lighter than .card-body so it reads as an introduction
+   rather than as a card that lost its box, and constrained to a
+   comfortable measure instead of running the full width of a desktop
+   window. */
+.more-intro {
+  margin: 10px auto 26px;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--text-on-dark-2);
+}
+
+.more-intro em { font-style: italic; }
+
+@media (max-width: 900px) {
+  .more-intro {
+    font-size: 14px;
+    line-height: 1.65;
+    text-align: left;
+    margin: 10px auto 22px;
+  }
+}
+
 /*
  * =====================================================
  * CARDS

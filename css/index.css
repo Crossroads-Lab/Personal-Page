@@ -1,8 +1,8 @@
 /* Import base styles and variables from common.css and others */
 @import "./common.css?v=d3319bf9";
 @import "./chat-input.css?v=453892bf";
-@import "./chat-content.css?v=1afd7b8c";
-@import "./more.css?v=acf25a18";
+@import "./chat-content.css?v=8d879474";
+@import "./more.css?v=2836a432";
 
 /* 
  * =====================================================
@@ -124,7 +124,7 @@
  * to Noto Serif — a different face, but still a serif italic against a sans,
  * which is the whole point of the contrast.
  */
-#welcome h1 .accent {
+#welcome .headline .accent {
   font-family: "Times New Roman", Times, serif;
   font-style: italic;
   font-size: 1.24em;

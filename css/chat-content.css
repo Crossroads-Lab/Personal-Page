@@ -71,21 +71,22 @@ main::after {
   font-weight: 500;
 }
 
-/* .greeting was an <h2> until it was pointed out that it sits ABOVE the
-   <h1> in the document, so anyone moving through the page by heading met a
-   level two before the level one. It is a greeting, not a section heading.
-   The selectors keep h2 alongside it so nothing breaks if the tag comes
-   back somewhere else. */
+/* Keyed on CLASS, not on tag.
+   
+   .greeting is the h1 now and .headline is a <p>, which is the opposite of
+   how it started; keying the look to the tag would have made that swap a
+   visual change instead of a semantic one. h2 stays in the list so nothing
+   breaks if the greeting is ever marked up that way again. */
 #welcome .greeting,
 #welcome h2,
-#welcome h1 {
+#welcome .headline {
   font-weight: 400;
   margin: 0;
   padding: 0;
   margin-inline: auto;
 }
 
-#welcome h1 {
+#welcome .headline {
   font-size: var(--h1-size);
 }
 

@@ -3,6 +3,15 @@
 User-agent: *
 Allow: /
 
+# Working files that are served because GitHub Pages serves the whole
+# repo. They are not pages; they must not turn up in a search for his
+# name. test.html and old/index.html also carry a noindex meta, which is
+# what actually removes them — Disallow only stops the next crawl, and a
+# page that is never crawled can never be told to drop out of the index.
+# These two have no HTML to put a meta in, so the rule is all there is.
+Disallow: /design/
+Disallow: /assets/William%20Brendel%20Resume%20-%202025.pdf
+
 # The apex, not www. CNAME points GitHub Pages at william-brendel.com and
 # there is no certificate for www.william-brendel.com — it fails TLS
 # outright. This line and sitemap.xml both pointed there, which meant the

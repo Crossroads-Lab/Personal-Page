@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <!-- Not for search. This file is a working artefact, not a page
+         anyone should reach from a search result; old/index.html in
+         particular still carries the previous title and description
+         and would compete with the real page for his own name.
+         noindex rather than only a robots.txt rule, because
+         Disallow stops a crawl, not an entry that is already in the
+         index — and a page that is never crawled can never be told
+         to drop out. -->
+    <meta name="robots" content="noindex, nofollow">
     <!-- Document title -->
     <title>William Brendel, PhD in AI | Product Strategist & Machine Learning Expert</title>
 
