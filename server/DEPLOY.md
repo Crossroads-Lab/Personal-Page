@@ -7,6 +7,11 @@
 > below is a placeholder; the real value lives in your `pp` AWS profile, not
 > here. Never paste a key, an account number, an instance id or an IP into
 > this file.
+>
+> This rule was broken once, by this file: it carried the instance id and
+> the Elastic IP in the table below from 10 Nov until 13 Nov 2026, served
+> at 200 the whole time. Anything that needs an identifier looks it up by
+> tag, as `scripts/ship.sh` already does.
 
 ## It is live
 
@@ -15,8 +20,8 @@ TLS from a t4g.micro in us-east-1, and `william-brendel.com` talks to it.
 
 | | |
 |---|---|
-| instance | `i-09c285c48ade2b871`, t4g.micro, us-east-1a |
-| address | `44.199.113.186` (Elastic IP), `api` A record at GoDaddy |
+| instance | t4g.micro, us-east-1a, tagged `App=personal-page` |
+| address | an Elastic IP; the `api` A record at GoDaddy points at it |
 | certificate | Let's Encrypt, auto-renewing, via Caddy |
 | memory | 344 MB of 910 MB used; 2 GB swap, untouched |
 | disk | 65% of 8 GB with two releases kept |
@@ -41,8 +46,13 @@ One JSON line per question, so a bad answer can be explained afterwards. The
 cited `sources` are the useful field: a wrong answer is nearly always a
 retrieval miss, and that names the documents it actually drew on.
 
+Found by tag rather than written down, the way `scripts/ship.sh` does it —
+this page is public, so the instance id is not printed here.
+
 ```bash
-aws ssm start-session --target i-09c285c48ade2b871 --profile pp
+aws ssm start-session --profile pp --target "$(aws ec2 describe-instances --profile pp \
+  --filters Name=tag:App,Values=personal-page Name=instance-state-name,Values=running \
+  --query 'Reservations[].Instances[].InstanceId' --output text)"
 ```
 
 ```bash
